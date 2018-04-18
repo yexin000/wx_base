@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/pull-refresh.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script> 
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script> 
+		
+		<script type="text/javascript">
+			var page = 1;
+			var hphm = "******";
+			var choiceNum;
+			var nextFlag = 0;
+			var lastFlag = 0;
+			var openId;
+			$(document).ready(function() {
+				insert("可选车号");
+			
+				searchHead();
+				
+				ProgressBar.init();
+				openId = unescape(GetQueryString("openId"));
+				var hdid = "999";
+				var fzjg = localStorage.getItem("fpjg");
+				var queryCon = unescape(GetQueryString("queryCon"));
+				var sfzmhm = unescape(GetQueryString("sfzmhm"));
+				if(queryCon != null && queryCon != "null") {
+					hphm = "G" + queryCon;
+				}
+				if(sfzmhm != null && sfzmhm != "null") {
+					document.getElementById("last_step").style.visibility="visible"; 
+					document.getElementById("next_step").style.visibility="visible"; 					
+				}
+				
+				var params = "{\"hdid\":\""+hdid+"\""+",\"fzjg\":\""+fzjg+"\""
+					+",\"hphm\":\""+hphm+"\""+",\"pagenum\":\""+page+"\""+"}";
+				ProgressBar.show();
+				var result = WebServiceUtil.queryOutServiceCarNumber(params, callback);	
+			});
+	
+			function callback(msg){
+				if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+					var count = head.rownum;
+					var message = head.message;
+					
+					if(message == 0) {
+						nextFlag = 0;
+					} else {
+						nextFlag = 1;
+					}
+					
+					if(head.code == 1) {
+						var body = jsonObject.body;
+						document.getElementById("thelist").innerHTML="";
+						for(var i = 0; i < count; i = i + 2) {
+							var html = "";
+							html = '<li>'
+							+'<div class="ui-grid-a">'
+							+'<div class="li-div-a">'
+							+'<div class="ui-bar ui-bar-a" onclick="javascript:choice(this);" ' + 'id="' + body[i].hphm + '"' + '>'
+							+'<p class="li-div-p">'
+							+body[i].hphm
+							+'</p>'
+							+'</div>'
+							+'</div>'
+							+((i < (count -1)) ? ('<div class="li-div-b">'
+							+'<div class="ui-bar ui-bar-a" onclick="javascript:choice(this);" ' + 'id="' + body[i + 1].hphm + '"' + '>'
+							+'<p class="li-div-p">'
+							+body[i + 1].hphm
+							+'</p>'
+							+'</div>'
+							+'</div>'
+							+'</div>') : "")
+							+'</li>';
+							
+							$("ul").append(html);
+						}
+						
+						scroll(0,0);
+						
+						if(page > 1) {
+							lastFlag = 1;
+						} else {
+							lastFlag = 0;
+						}
+					} else {
+						//eval($("#tmpt").text($.Prompt(head.message)));
+						Showbo.Msg.alert(head.message);
+					}
+				}
+				ProgressBar.hide();
+				document.getElementById("last_td").style.visibility="visible";
+				document.getElementById("next_td").style.visibility="visible";
+			}
+			function nextPage(){
+				ProgressBar.init();
+				var hdid = "999";
+				var fzjg = localStorage.getItem("fpjg");
+				if(nextFlag == 1) {
+					page++;
+					
+					var params = "{\"hdid\":\""+hdid+"\""+",\"fzjg\":\""+fzjg+"\""
+						+",\"hphm\":\""+hphm+"\""+",\"pagenum\":\""+page+"\""+"}";
+					ProgressBar.show();
+					var result = WebServiceUtil.queryOutServiceCarNumber(params, callback);	
+				} else {
+					//eval($("#tmpt").text($.Prompt("没有更多可选车号了")));
+					Showbo.Msg.alert("没有更多可选车号了");
+				}
+			}
+			function lastPage(){
+				ProgressBar.init();
+				var hdid = "999";
+				var fzjg = localStorage.getItem("fpjg");
+				if(lastFlag == 1) {
+					page--;
+					
+					var params = "{\"hdid\":\""+hdid+"\""+",\"fzjg\":\""+fzjg+"\""
+						+",\"hphm\":\""+hphm+"\""+",\"pagenum\":\""+page+"\""+"}";
+					ProgressBar.show();
+					var result = WebServiceUtil.queryOutServiceCarNumber(params, callback);	
+				} else {
+					//eval($("#tmpt").text($.Prompt("已经是第一页了")));
+					Showbo.Msg.alert("已经是第一页了");
+				}
+			}
+			function ToUrl(x)   {         location.href=x;   }
+			function GetQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+			function choice(obj) {
+				$(".ui-bar-a").css("background-color", "#1a82b7");
+				obj.style.backgroundColor = "#00DB00";
+				choiceNum = obj.id;
+			}
+			function todo() {
+			
+			}
+			function nextStep() {
+				if(choiceNum != null && choiceNum != "") {
+					var sfzmhm = unescape(GetQueryString("sfzmhm"));
+					var sfzmmc = unescape(GetQueryString("sfzmmc"));
+					var syr = unescape(GetQueryString("syr"));
+					var sfyj = unescape(GetQueryString("sfyj"));
+					var clsbdh = unescape(GetQueryString("clsbdh"));
+					var fdjh = unescape(GetQueryString("fdjh"));
+					var hgzbh = unescape(GetQueryString("hgzbh"));
+					var gcjk = unescape(GetQueryString("gcjk"));
+					var sjhm = unescape(GetQueryString("sjhm"));
+					var pzbh1 = unescape(GetQueryString("pzbh1")) || "";
+					var hphm = choiceNum;
+					var hpzl = "02";
+					var hdid = "999";
+					var fzjg = localStorage.getItem("fpjg");
+					var params = "{\"sfzmhm\":\""+sfzmhm+"\""+",\"sfzmmc\":\""+sfzmmc+"\""+",\"syr\":\""+syr+"\""
+						+",\"sfyj\":\""+sfyj+"\""+",\"clsbdh\":\""+clsbdh+"\""+",\"fdjh\":\""+fdjh+"\"" + ",\"ip\":\""+returnCitySN["cip"]+"\""
+						+",\"hgzbh\":\""+hgzbh+"\""+",\"gcjk\":\""+gcjk+"\""+",\"sjhm\":\""+sjhm+"\""
+						+",\"hphm\":\""+hphm+"\""+",\"hpzl\":\""+hpzl+"\""+",\"hdid\":\""+hdid+"\""+",\"pzbh1\":\""+pzbh1+"\""
+						+",\"fzjg\":\""+fzjg+"\"}";
+					var result = WebServiceUtil.selectNum(params, commitCallback);
+				} else {
+					//eval($("#tmpt").text($.Prompt("请选择车牌号码")));
+					Showbo.Msg.alert("请选择车牌号码");
+				}
+			}
+			function commitCallback(msg) {
+				if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+					if(head.code == 1) {
+						var jsonObject = eval("("+msg+")");
+						var head = jsonObject.head;
+						var tips = head.message.substring(head.message.indexOf("@@") + 2);
+						//var htmltips = tips.replace(/!/ig,"!<br>");
+						var htmltips = tips.substring(0,tips.lastIndexOf("!") + 1);
+						Showbo.Msg.alert(htmltips);
+						var re = WebServiceUtil.sendSelectSuccuss(openId, tips, sendCallback);
+						var today = new Date();
+						var todayStr = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+						WebServiceUtil.saveSelectSuccussRec(openId, choiceNum, todayStr, saveRecCallback);
+					} else {
+						//eval($("#tmpt").text($.Prompt(head.message)));
+						//var re = WebServiceUtil.sendSelectSuccuss(openId, tips, sendCallback);
+						Showbo.Msg.alert(head.message);
+					}
+				}
+			}
+			
+			function sendCallback(msg) {
+			
+			}
+			function saveRecCallback(msg) {
+			
+			}
+		</script>
+
+		<style type="text/css" media="all">
+			.li-div-a{
+				width: 48%; 
+				margin-right: 6px;
+				float: left;
+			}
+			
+			.li-div-b{
+				width: 48%; 
+				margin-left: 6px;
+				float: left;
+			}
+			
+			.li-div-p {
+				margin-top: 5px;
+				font-size: 20px;
+				font-weight: bold;
+				color: #ffffff;
+				text-shadow: 0 1px 0 #000;
+				letter-spacing: 2px;
+			}
+			
+			#thelist{
+				margin-left: 5px;
+				margin-right: 5px;
+			}
+			.a-but {
+				border: 1px #cccccc solid;
+				padding: 12px 16px;
+				border-radius: 5px;
+				background-color: #F8A114;
+				text-shadow: 0 1px 0 #F8A114;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<div data-role="page" id='page'>
+			<div data-role="content">
+				<div>
+					<ul id="thelist">
+	
+					</ul>
+					<table align="center">
+						<tbody>
+							<tr>
+								<td id="last_td" style="visibility: hidden;padding-top: 12px;padding-bottom: 12px;">
+									<a class="a-but" style="color: #fbfbfb;" onclick="javascript:lastPage();" id="last_page">上一页</a>
+								</td>
+								<td id="next_td" style="visibility: hidden;padding-top: 12px;padding-bottom: 12px;">
+									<a id="next_page" onclick="javascript:nextPage();" class="a-but" style="color: #fbfbfb;">下一页</a>
+								</td>
+							</tr>
+							<tr>
+								<td id="last_step" colspan="1" style="visibility: hidden;padding-top: 12px;padding-bottom: 12px;">
+									<a class="a-but" style="color: #fbfbfb;" 
+										onclick="javascript:history.go(-1);">上一步</a>
+								</td>
+								<td id="next_step" colspan="1" style="visibility: hidden;padding-top: 12px;padding-bottom: 12px;">
+									<a class="a-but" style="color: #fbfbfb;" 
+										onclick="javascript:nextStep();">下一步</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

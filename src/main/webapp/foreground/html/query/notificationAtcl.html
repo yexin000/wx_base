@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">
+		$(document).ready(function(){
+			insert("驾校通报");
+		
+			ProgressBar.init();
+			
+			var xh = unescape(GetQueryString("o"));
+			if (xh != null) {
+				ProgressBar.show();
+				var params = "{\"xh\":\""+xh+"\"}";
+				var result = WebServiceUtil.getSchoolNoteArt(params,callResult);
+			}
+			
+			function callResult(msg){
+				ProgressBar.hide();
+				if(msg != null){
+					var jsonObject = eval("("+msg+")");
+					$.each(jsonObject.body,function(index,item){
+						$("#title").text(item.title);
+						var sj = (item.fbrq).split(" ");
+						var inrq = sj[0];
+						//alert(inrq);	
+						$("#rq").text(inrq);
+						$("#cont").append(item.content);
+					});
+				}
+			}
+		});
+		
+		
+		
+		function GetQueryString(name) {
+     		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     		var r = window.location.search.substr(1).match(reg);
+     		if(r!=null)return  unescape(r[2]); return null;
+		}
+		
+		</script>
+		
+
+	</head>
+
+	<body>
+		<div data-role="page" data-theme="s" id='page'>
+			<div id="cont"></div>
+		</div>
+	</body>
+</html>

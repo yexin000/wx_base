@@ -1,0 +1,394 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="http://counter.sina.com.cn/ip/" charset="gb2312"></script> 
+		
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>	
+		
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/uploadpic.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<!-- 引入 Lightbox (压缩文件) -->
+		<script type="text/javascript" src="/weixin/foreground/js/jquery.lightbox.min.js"></script>
+		<title>宁波微信</title>
+		
+		<script type="text/javascript">
+			var code ;
+			var bzxx;
+			var picCount = 0;
+			var xh = "";
+			var base1 = "";
+			var base2 = "";
+			var base3 = "";
+			$(document).ready(function() {
+				insert("驾驶人联系方式变更");
+			
+				ProgressBar.init();
+				ProgressBar.show();
+				$("#hidetd").hide();
+				token = getCookie("token");
+				if(token == null){
+					code = unescape(getQueryString("code"));
+					getOpenId(code);
+				}else{
+					getBindedInfoByToken(token);
+				}
+				initPhoto();
+				
+				$("input#commit").click(function(){
+				var sfzmmc = $("#cartype option:selected").val();
+				var sfzmhm = $("#sfzmhm").val();
+				var lxdh = $("#lxdh").val();
+				var sjhm = $("#sjhm").val();
+				var lxdz = $("#lxdz").val();
+				var yzbm = $("#yzbm").val();
+				var sjly = "C";
+				var dzyx = $("#dzyx").val();
+				var sqr = getCookie("openId");
+				//var sqrip = ILData[0];
+				var sqrip = "192.168.0.1";
+				
+				var yhjg = $("#yhjg option:selected").val();
+				/*if(base1 == "") {
+					Showbo.Msg.alert("请上传身份证正面照");
+					return;
+				}
+				if(base2 == "") {
+					Showbo.Msg.alert("请上传身份证反面照");
+					return;
+				}*/
+				if (validate_vehicle(sfzmhm, sjhm, lxdh, yhjg) == 0)return;
+				
+				/*if(base1 == "") {
+					Showbo.Msg.alert("请上传身份证正面照");
+					return;
+				}
+				if(base2 == "") {
+					Showbo.Msg.alert("请上传身份证反面照");
+					return;
+				}*/
+				
+				if (yhjg == '1外地用户') {
+					var zzzh = $("#zzzh").val();
+				}else{
+					var zzzh = "";
+				}
+			
+				if(zzzh == ""){
+					bzxx = "#"+yhjg+":";
+				}else{
+					bzxx = "#"+yhjg+":"+zzzh;
+				}
+					
+				ProgressBar.show();
+
+				var params = "{\"token\":\""+token+"\""+",\"sfzmmc\":\""+sfzmmc+"\""+",\"sfzmhm\":\""+sfzmhm+"\""
+				+",\"lxdh\":\""+lxdh+"\""+",\"sjhm\":\""+sjhm+"\""+",\"lxdz\":\""+lxdz+"\""
+				+",\"yzbm\":\""+yzbm+"\""+",\"sjly\":\""+sjly+"\""+",\"dzyx\":\""+bzxx+"\""
+				+",\"sqrip\":\""+sqrip+"\""+",\"sqr\":\""+sqr+"\""+"}";
+				var result = WebServiceUtil.writeContactInfoChange(params, callback);
+						
+				});
+			});
+			
+			function callback(msg){
+				ProgressBar.hide();
+				var jsonObject = eval("("+msg+")");
+				if (jsonObject.head.code != 1) {
+					Showbo.Msg.alert(jsonObject.head.message);
+					//eval($("#tmpt").text($.Prompt(jsonObject.head.message)));
+					return;
+				}
+				var tips = jsonObject.head.message.split("#");
+				Showbo.Msg.alert(tips[0]);
+				xh = tips[1];
+				/*if(xh != "") {
+					WebServiceUtil.jobSavePic(xh + "A", base1, "K", saveCallback);
+					WebServiceUtil.jobSavePic(xh + "B", base2, "K", saveCallback);
+					var yhjg = $("#yhjg option:selected").val();
+					if (yhjg == '1外地用户') {
+						WebServiceUtil.jobSavePic(xh + "C", base3, "K", saveCallback);
+					}
+				}*/
+			}
+			function saveCallback(msg) {
+				
+			}
+			
+			function validate_vehicle(sfzmhm, sjhm, lxdh, yhjg) {
+				if (sfzCheck(sfzmhm) == 0)
+					return 0;
+					
+				if (yhjg == '1外地用户') {
+					var zzzh = $("#zzzh").val();
+					if (zzzh == "") {
+						Showbo.Msg.alert("请输入正确的暂住证号");
+						return 0;
+					}
+					/*if(base3 == "") {
+						Showbo.Msg.alert("请上传暂住证照");
+						return;
+					}*/
+				}
+					
+				if (lxdh != "") {
+					if (isValidTelNum(lxdh) == 0){
+						return 0;
+					}
+				}	
+					
+				if (isValidMobileNum(sjhm)== 0)
+					return 0;
+					
+				
+		
+				//if (dzyx != "") {
+				//	if (isValidEmail(dzyx) == 0){
+				//		return 0;
+				//	}
+				//}
+			};
+			
+			function init(msg) {
+				for ( var i in msg) {
+					if (msg[i].sjlx == '驾驶证') {
+						var selected = document.getElementsByTagName('option')
+						for ( var j = 0; j < selected.length; j++) {
+							if (selected[j].value == msg[i].zm) {
+								selected[j].selected = true;
+								break;
+							}
+						}
+						//$("#sjhm").val(msg[i].sjhm);
+						var params = "{\"sfzmmc\":"+"\"\""+",\"sfzmhm\":"+"\"\""+",\"token\":"+"\""+token+"\"}";
+						var rul = WebServiceUtil.getBindedDriver(params, loadInfo);
+					}
+				}
+			}
+			var infoObject;
+			function loadInfo(msg){
+				ProgressBar.hide();
+				if (msg != null) {
+						var infoObject = eval("("+msg+")");
+						$.each(infoObject.head,function(index,item){
+							if(index == "code"){
+								if (item == "-1") {
+									Showbo.Msg.alert("未找到您的驾驶证信息，请检查您输入的信息是否正确。");
+									//eval($("#tmpt").text($.Prompt("未找到您的驾驶证信息，请检查您输入的信息是否正确。")));
+								} else {
+									for(var i in infoObject.body){
+										$("#sfzmhm").val(infoObject.body[i].sfzmhm);
+										$("#sjhm").val(infoObject.body[i].sjhm);
+										$("#lxdz").val(infoObject.body[i].lxzsxxdz);
+										$("#yzbm").val(infoObject.body[i].lxzsyzbm);
+									}
+								}
+							}
+						});	
+					}
+				
+			}
+			function ToUrl(x)   {         location.href=x;   }
+			
+			function showInput(){
+				var yhjg = $("#yhjg option:selected").val();
+				if (yhjg == '1外地用户') {
+					$("#hidetd").show();
+				}else {
+					$("#hidetd").hide();
+				}
+			} 
+			
+		</script>
+	</head>
+	<body>
+		<div style=" display:none;" id="yinying"></div>
+		<div data-role="page" data-theme="s" tabindex="0" id="page">
+			<div data-role="content" style="padding-bottom: 3em;">
+				<div style="padding: 0 5px;">
+					<table  width="100%" border="0" cellspacing="0" cellpadding="0" class="TestTable">
+						<tbody>
+							<tr>
+								<td>
+									身份证明名称
+									<div class="inputOutL">
+										<select data-role="none" class="inputSelect" name="sfzmmc" id="cartype">
+											<option value="A" selected="selected">
+												居民身份证
+											</option>
+											<option value="B" disabled="disabled">
+												组织机构代码
+											</option>
+											<option value="C" disabled="disabled">
+												军官证
+											</option>
+											<option value="D" disabled="disabled">
+												士兵证
+											</option>
+											<option value="E" disabled="disabled">
+												军官离退休证
+											</option>
+											<option value="F" disabled="disabled">
+												境外人员身份证明
+											</option>
+											<option value="G" disabled="disabled">
+												外交人员身份证明
+											</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									身份证明号码
+									<div class="inputOutL">
+									<input data-role="none" class="inputText" type="text" name="sfzmhm" id="sfzmhm" readonly="readonly"
+										placeholder="请输入身份证明号码">
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td>
+									身份证
+									<div class="inputOutL">
+									<select data-role="none" class="inputSelect" id="yhjg" onchange="showInput()">
+										<option value="0本地用户">本地</option>
+										<option value="1外地用户">外地</option>
+									</select>
+									</div>
+								</td>
+							</tr>
+							<tr id="hidetd">
+								<td>
+									暂住证号
+									<div class="inputOutL">
+									<input data-role="none" class="inputText" type="text" id="zzzh"
+										placeholder="请输入暂住证号码">
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td>
+									手机号码
+									<div class="inputOutL">
+									<input type="text" name="sjhm" id="sjhm"
+										data-role="none" class="inputText" placeholder="请输入手机号码">
+									</div>
+									<label style="color:red; font-size: 12px;">(手机号变更成功后，系统将自动解绑，重新绑定后才可再办理业务)</label>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									固定电话
+									<div class="inputOutL">
+									<input data-role="none" class="inputText" type="text" name="lxdh" id="lxdh"
+										placeholder="请输入固定电话">
+									</div>
+								</td>
+							</tr>
+							
+							<tr style="display:none;">
+								<td>
+									邮箱地址
+									<div class="inputOutL">
+									<input data-role="none" class="inputText" type="text" name="dzyx" id="dzyx" placeholder="请输入邮箱地址">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									联系地址
+									<div class="inputOutL">
+									<textarea class="textarear" data-role="none" id="lxdz" placeholder="请输入联系地址"></textarea>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									邮政编码
+									<div class="inputOutL">
+										<input data-role="none" class="inputText" type="text" name="yzbm" id="yzbm" placeholder="请输入邮政编码">
+									</div>
+								</td>
+							</tr>
+							<tr style="display: none;">
+								<td width="10%">
+									<div>
+										<label>
+											上传资料:
+										</label>
+									</div>
+								</td>
+								<td>
+									<div style="float: left; width: 70%;height: 56px;">
+										
+										<input style="z-index:2;position: relative;opacity: 0; width:100%;" 
+											id="file" type="file" capture="camera" accept="image/*"/ class="input">
+											
+										<a data-role="button" style="top: -44px;position: relative;">选择图片</a>
+									</div>
+									<div style="float: right;">
+										<a href="/weixin/foreground/images/weixin/foreground/jszlxfsbg/sfzzm.jpg" rel="lightbox-tour" title="身份证正面照">
+											<img src="/weixin/foreground/images/help.png" title="资料模版"></img></a>
+										<a href="/weixin/foreground/images/weixin/foreground/jszlxfsbg/sfzfm.png"
+											rel="lightbox-tour" title="身份证反面照"> </a>
+										<a href="/weixin/foreground/images/weixin/foreground/jszlxfsbg/zzz.jpg"
+											rel="lightbox-tour" title="暂住证照"> </a>
+									</div>
+									<div class="clear"></div>
+								</td>
+							</tr>
+							
+							<tr style="display: none;">
+								<td colspan="2" style="padding-left: 35%;">
+									<img src="" style="width: 50px; height: 50px;" id="img1"></weixin/foreground/img>
+									<img src="" style="width: 50px; height: 50px;" id="img2"></weixin/foreground/img>
+									<img src="" style="width: 50px; height: 50px;" id="img3"></weixin/foreground/img>
+								</td>
+							</tr>
+							
+							<tr>
+								<td colspan="2">
+									<div>
+										<input data-role="none" class="inputBtn" type="button" value="提交" id="commit">
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		
+	</body>
+</html>

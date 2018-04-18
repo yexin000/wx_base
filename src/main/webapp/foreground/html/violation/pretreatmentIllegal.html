@@ -1,0 +1,352 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">
+			var punishInfo;
+     		 			
+		 	var punishSheetNo;
+  		 	var punishedID;
+  		 	var punishedName;
+  		 	var archivesNo;
+			var drivingType;
+			var cardNo;
+			var cardType;
+			var certificateOrg;
+  		 			
+  		 	var illegalAddress;
+  		 	var illegalTime;
+  		 	var punishMoney;
+  		 	var punishScore;
+  		 	var punishContent;
+  		 	var punishLaws;
+  		 	var illegalLaws;
+  		 	var punishLaws;
+  		 	var reviewOrg;
+  		 	var suitOrg;
+  		 			
+			function ToUrl(x){   
+				window.location.href=x; 
+			}
+			
+			$(document).ready(function() {
+				addHead("处罚决定书");
+			
+				serialNo = getQueryString("serialNo");
+				jszh = getQueryString("punishedID");
+				ProgressBar.init();
+				var punishSheetNo = getQueryString("punishSheetNo");
+     		 			
+		 		$.get("http://nbjj.hzcdt.com/IllegalHandleServlet?punishedID="
+					+ encodeURI(encodeURI(jszh)+ "&serialNo=" 
+					+ encodeURI(encodeURI(serialNo))),null
+					,function(response){
+						var xmlDoc = loadXML(response);
+						
+						var transReturn = xmlDoc.getElementsByTagName("transReturn")[0].firstChild.nodeValue;
+     		 			if(transReturn != "00" && transReturn != "0001") {
+     		 				var transMsg = xmlDoc.getElementsByTagName("transMsg")[0].firstChild.nodeValue;
+     		 				//Showbo.Msg.alert(transMsg);
+     		 				//eval($("#tmpt").text($.Prompt(transMsg)));
+     		 				$("#tableShow").css({"display":"none"});  
+     		 				$("#tip").css({"display":"block"});  
+     		 				$("#tipText").text(transMsg);
+     		 				ProgressBar.hide();
+     		 				return;
+     		 			}
+						
+     		 			punishInfo = xmlDoc.getElementsByTagName("punishInfo");
+     		 			
+     		 			punishSheetNo = punishInfo[0].getElementsByTagName("punishSheetNo")[0].firstChild.nodeValue;
+     		 			punishedID = punishInfo[0].getElementsByTagName("punishedID")[0].firstChild.nodeValue;
+     		 			punishedName = punishInfo[0].getElementsByTagName("punishedName")[0].firstChild.nodeValue;
+     		 			archivesNo = punishInfo[0].getElementsByTagName("archivesNo")[0].firstChild.nodeValue;
+						drivingType = punishInfo[0].getElementsByTagName("drivingType")[0].firstChild.nodeValue;
+						cardNo = punishInfo[0].getElementsByTagName("cardNo")[0].firstChild.nodeValue;
+						cardType = punishInfo[0].getElementsByTagName("cardType")[0].firstChild.nodeValue;
+						certificateOrg = punishInfo[0].getElementsByTagName("certificateOrg")[0].firstChild.nodeValue;
+     		 			
+     		 			illegalAddress = punishInfo[0].getElementsByTagName("illegalAddress")[0].firstChild.nodeValue;
+     		 			illegalTime = punishInfo[0].getElementsByTagName("illegalTime")[0].firstChild.nodeValue;
+     		 			punishMoney = punishInfo[0].getElementsByTagName("punishMoney")[0].firstChild.nodeValue;
+     		 			punishScore = punishInfo[0].getElementsByTagName("punishScore")[0].firstChild.nodeValue;
+     		 			punishContent = punishInfo[0].getElementsByTagName("punishContent")[0].firstChild.nodeValue;
+     		 			illegalLaws = punishInfo[0].getElementsByTagName("illegalLaws")[0].firstChild.nodeValue;
+     		 			punishLaws = punishInfo[0].getElementsByTagName("punishLaws")[0].firstChild.nodeValue;
+     		 			reviewOrg = punishInfo[0].getElementsByTagName("reviewOrg")[0].firstChild.nodeValue;
+     		 			suitOrg = punishInfo[0].getElementsByTagName("suitOrg")[0].firstChild.nodeValue;
+     		 			
+     		 			$("#punishSheetNo").text(punishSheetNo);
+				 		$("#punishedID").text(punishedID);
+				 		$("#punishedName").text(punishedName);
+				 		$("#punishMoney").text(punishMoney / 100 + "元");
+				 		$("#punishDate").text(illegalTime);
+				 		$("#archivesNo").text(archivesNo);
+				 		$("#drivingType").text(drivingType);
+				 		$("#cardNo").text(cardNo);
+				 		$("#cardType").text(decode(cardType));
+				 		$("#certificateOrg").text(certificateOrg);
+				 		
+				 		$("#illegalTimeNotice").text(illegalTime);
+				 		$("#illegalAddressNotice").text(illegalAddress);
+				 		$("#punishContentNotice").text(punishContent);
+				 		$("#illegalLawsNotice").text(illegalLaws);
+				 		$("#punishLawsNotice").text(punishLaws);
+				 		$("#punishMoneyNotice").text(punishMoney / 100);
+				 		//$("#reviewOrgNotice").text(reviewOrg);
+				 		$("#suitOrgNotice").text(suitOrg);
+				 		$("#punishScoreNotice").text(punishScore);
+				 		
+				 		$("#tableShow").css({"display":"block"});  
+     		 			ProgressBar.hide();
+     		 			
+     		 		});
+		 		
+			});
+			
+			function payPunish() {
+				var punishSheetNo = $("#punishSheetNo").text();
+				var punishedID = $("#punishedID").text();
+				var sjhm = getQueryString("sjhm");
+				var mac = $.md5("02"+punishSheetNo+sjhm+punishedID+"http://nbjj.hzcdt.com/punishResult.html"+"ddffe9b233d60c01f7ea4c55c3a0c0ca");
+				$("#punishSheetNoForm").val(punishSheetNo);
+				$("#punishedIDForm").val(punishedID);
+				$("#phoneNoForm").val(sjhm);
+				$("#macForm").val(mac);
+				document.forms['submit'].submit();
+				
+				/*$.get("http://nbjj.hzcdt.com/NingboWeixin/IllegalPayServlet?punishSheetNo="
+					+ encodeURI(encodeURI(punishSheetNo)) + "&punishedID=" 
+					+ encodeURI(encodeURI(punishedID))  + "&phoneNo=" 
+					+ encodeURI(encodeURI(sjhm)),null
+					,function(response){
+     		 			var xmlDoc = loadXML(response);
+     		 			//alert(response);
+     		 			$("#result").html(response);
+     		 			
+     		 			//if(document.forms['form1'] != null) {
+     		 			//	document.forms['form1'].submit();
+     		 			//} else {
+     		 			//	ToUrl(response);
+     		 			//}
+     		 			//ToUrl("http://nbjj.hzcdt.com/NingboWeixin/punishResult.html");
+     		 		});*/
+			}
+			
+			function getQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+			
+			function loadXML(xmlString){
+		        var xmlDoc=null;
+		        //判断浏览器的类型
+		        //支持IE浏览器 
+		        if(!window.DOMParser && window.ActiveXObject){   //window.DOMParser 判断是否是非ie浏览器
+		            var xmlDomVersions = ['MSXML.2.DOMDocument.6.0','MSXML.2.DOMDocument.3.0','Microsoft.XMLDOM'];
+		            for(var i=0;i<xmlDomVersions.length;i++){
+		                try{
+		                    xmlDoc = new ActiveXObject(xmlDomVersions[i]);
+		                    xmlDoc.async = false;
+		                    xmlDoc.loadXML(xmlString); //loadXML方法载入xml字符串
+		                    break;
+		                }catch(e){
+		                }
+		            }
+		        }
+		        //支持Mozilla浏览器
+		        else if(window.DOMParser && document.implementation && document.implementation.createDocument){
+		            try{
+		                /* DOMParser 对象解析 XML 文本并返回一个 XML Document 对象。
+		                 * 要使用 DOMParser，使用不带参数的构造函数来实例化它，然后调用其 parseFromString() 方法
+		                 * parseFromString(text, contentType) 参数text:要解析的 XML 标记 参数contentType文本的内容类型
+		                 * 可能是 "text/xml" 、"application/xml" 或 "application/xhtml+xml" 中的一个。注意，不支持 "text/html"。
+		                 */
+		                domParser = new  DOMParser();
+		                xmlDoc = domParser.parseFromString(xmlString, 'text/xml');
+		            }catch(e){
+		            }
+		        }
+		        else{
+		            return null;
+		        }
+		
+		        return xmlDoc;
+		    }
+		</script>
+		<style type="text/css">
+			
+		</style>
+		
+	</head>
+
+	<body>
+		<div class="content">
+			<div style="display: none;" id="tableShow">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="inforTable">
+				<tbody>
+					<tr class="whiteBG">
+						<td class="inforBaseL">
+							处罚决定书编号：
+						</td>
+						<td class="inforBaseR" id="punishSheetNo">无
+						</td>
+					</tr>
+					
+					<tr class="whiteBG">
+						<td class="inforBaseL">
+							当 &nbsp;事 &nbsp;人：
+						</td>
+						<td class="inforBaseR" id="punishedName">无
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							驾驶证号：
+						</td>
+						<td class="inforBaseR" id="punishedID">无
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							档案编号：
+						</td>
+						<td class="inforBaseR" id="archivesNo">无
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							驾驶车型：
+						</td>
+						<td class="inforBaseR" id="drivingType">无
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							车牌号码：
+						</td>
+						<td class="inforBaseR" id="cardNo">无
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							车辆类型：
+						</td>
+						<td class="inforBaseR" id="cardType">无
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							发证机关：
+						</td>
+						<td class="inforBaseR" id="certificateOrg">无
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							违法时间：
+						</td>
+						<td class="inforBaseR" id="punishDate">无
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="inforBaseL">
+							罚款金额：
+						</td>
+						<td class="inforBaseR" id="punishMoney">无
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="2">
+					    	<br/>
+					    	<p>	&nbsp;&nbsp;&nbsp;&nbsp; 当事人于
+					    		<label class="label_text" id="illegalTimeNotice"></label>，
+					   			在
+					    	 	<label class="label_text" id="illegalAddressNotice"></label>
+					    	 	违反
+					    	 	<label class="label_text" id=punishContentNotice></label> 
+					    	 	违法行为。以上事实有交通技术监控资料、视听资料等证据证实，违反了
+					    	 	<label class="label_text" id="illegalLawsNotice"></label> 
+					    	 	。根据
+					    	 	<label class="label_text" id="punishLawsNotice"></label> 
+					    	 	之规定，决定予以
+					    	 	<label class="label_text" id="punishMoneyNotice"></label>
+					    	 	元处罚。
+					    	 </p>
+					    	 <p> &nbsp;&nbsp;&nbsp;&nbsp;持本决定书在15日内缴纳罚款，逾期不缴纳罚款的，每日按缴纳数额3%加处罚款。
+					    	 </p>
+					    	 <p>&nbsp;&nbsp;&nbsp;&nbsp;当事人不服处罚决定的，可依据《中华人民共和国行政复议法》在60日内向
+					    	 	宁波市公安局提出行政复议，或者依据《中华人民共和国行政诉讼法》在3个月内向
+					    	 	<label class="label_text" id="suitOrgNotice"></label>人民法院
+					    	 	提起行政诉讼。
+					    	 </p>
+					    	 <p style="font-weight:bold"> &nbsp;&nbsp;&nbsp;&nbsp;根据《机动车申领和使用规定》，本次违法记
+					    	 	<label style="font-weight:bold" class="label_text" id="punishScoreNotice"></label>分。
+					    	 </p>
+					    	 <br/>
+			    	 	</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+						<ul>
+	    	 	<li><input class="inputBtn" type="button" value="缴费" style="float: left;width: 48%" 
+	    	 		onclick="javascript:payPunish();"></li>
+	    	 	<li><input class="inputBtn" type="button" value="返回" style="float: right;width: 48%" onclick="javascript :history.back(-1);"></li>
+    		</ul>
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+			
+			</div>
+			<br/>
+			<br/>
+			
+			<div id="tip" style="display: none;">
+				<div style="padding: 5% 10%;">
+					<p id="tipText" style="color:red;text-align: center;"></p>
+				</div>
+				<hr size="2px" color="#28a5e5"/>
+			</div>
+			
+		</div>
+		<form method="post" action="http://122.224.110.125/nbjjservice/transget_wap.aspx" name="submit" id="submit">
+			<input type="hidden" value="02" name="transType"/>
+			<input type="hidden" value="" name="punishSheetNo" id="punishSheetNoForm"/>
+			<input type="hidden" value="" name="phoneNo" id="phoneNoForm"/>
+			<input type="hidden" value="" name="punishedID" id="punishedIDForm"/>
+			<input type="hidden" value="http://nbjj.hzcdt.com/punishResult.html" name="notifyUrl" />
+		 	<input type="hidden" value="" name="mac" id="macForm"/>
+		</form>
+		
+	</body>
+</html>

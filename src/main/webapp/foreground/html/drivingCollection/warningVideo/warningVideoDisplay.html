@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<!--警示视频播放页面-->
+<html>
+<head>
+    <!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+    --><title>警示视频</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <base href=".">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <style type="text/css">
+        body{
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #161e26;
+
+
+        }
+        .div{
+            width: 100%;
+            height: 100%;
+            background-color: #161e26;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript">
+       window.onload=function(){
+            // 得到的是url中query部分,并将？去掉
+            var urlQuery = window.location.search.substr(1);
+            //  得到需要播放的视频名称
+            var warningVideoName = decodeURI(urlQuery.split('=')[1])+'.mp4';
+            var source=document.createElement('source');
+            source.src='/weixin/foreground/html/drivingCollection/warningVideo/'+warningVideoName;
+            document.getElementById('video').appendChild(source);
+        }
+      
+    </script>
+</head>
+
+<body>
+<div class="div">
+    <video id="video" autoplay="autoplay" controls="controls" width="100%" height="90%" preload="auto">
+
+    </video>
+</div>
+</body>
+</html>

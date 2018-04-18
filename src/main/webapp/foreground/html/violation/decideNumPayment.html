@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myMain.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+
+		<script type="text/javascript">
+			var punishSheetNo = getQueryString("punishSheetNo");
+			var phoneNo = getQueryString("sjhm");
+			var punishedID;
+			$(document).ready(function() {
+				addHead("处罚决定书");
+			
+				ProgressBar.init();
+				ProgressBar.show();
+				$.get("http://nbjj.hzcdt.com/IllegalDecideServlet?punishSheetNo="
+					+ encodeURI(encodeURI(punishSheetNo)),null
+					,function(response){
+     		 			var xmlDoc = loadXML(response);
+						
+						var transReturn = xmlDoc.getElementsByTagName("transReturn")[0].firstChild.nodeValue;
+     		 			if(transReturn != "00" && transReturn != "0001") {
+     		 				var transMsg = xmlDoc.getElementsByTagName("transMsg")[0].firstChild.nodeValue;
+     		 				//Showbo.Msg.alert(transMsg);
+     		 				//eval($("#tmpt").text($.Prompt(transMsg)));
+     		 				$("#tableShow").css({"display":"none"});  
+     		 				$("#tip").css({"display":"block"});  
+     		 				$("#tipText").text(transMsg);
+     		 				ProgressBar.hide();
+     		 				return;
+     		 			}
+     		 			punishInfo = xmlDoc.getElementsByTagName("punishInfo");
+     		 			
+     		 			var punishSheetNo = punishInfo[0].getElementsByTagName("punishSheetNo")[0].firstChild.nodeValue;
+     		 			var punishedName = punishInfo[0].getElementsByTagName("punishedName")[0].firstChild.nodeValue;
+     		 			punishedID = punishInfo[0].getElementsByTagName("punishedID")[0].firstChild.nodeValue;
+     		 			var punishMoney = punishInfo[0].getElementsByTagName("punishMoney")[0].firstChild.nodeValue;
+     		 			var lateFee = punishInfo[0].getElementsByTagName("lateFee")[0].firstChild.nodeValue;
+     		 			var totalMoney = parseInt(punishMoney) + parseInt(lateFee);
+     		 			var punishDate = punishInfo[0].getElementsByTagName("punishDate")[0].firstChild.nodeValue;
+     		 			//var cardNo = punishInfo[0].getElementsByTagName("cardNo")[0].firstChild.nodeValue;
+     		 			//var cardType = punishInfo[0].getElementsByTagName("cardType")[0].firstChild.nodeValue;
+     		 			//var carTypeString = decode(cardType);
+     		 			
+     		 			$("#punishSheetNoLabel").text(punishSheetNo);
+     		 			$("#punishedName").text(punishedName);
+     		 			$("#punishedID").text(punishedID);
+     		 			$("#punishMoney").text(punishMoney/100 + "元");
+     		 			$("#lateFee").text(lateFee/100 + "元");
+     		 			$("#totalMoney").text(totalMoney/100 + "元");
+     		 			$("#punishDate").text(punishDate);
+     		 			//$("#cardNo").text(cardNo);
+     		 			//$("#cardType").text(carTypeString);
+     		 			var params = "{\"hpzl\":" + "\"" + "" + 
+					 		"\"" + ",\"jdsbh\":" + "\"" + punishSheetNo + "\"" + ",\"sfzmhm\":" + "\"" + "" + "\"" + ",\"hphm\":" + "\"" + "" + "\"" +",\"ywlx\":" + "\"" + "C" +"\"}";
+					 	var result = WebServiceUtil.getUnpayedIllegal(params, callback);
+     		 			
+     		 		});
+			});
+			
+			function callback(msg) {
+				ProgressBar.hide();
+				if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+					var count = head.rownum;
+					if(head.code == 1) {
+						var body = jsonObject.body;
+						var hphm = body[0].hphm;
+						var hpzl = body[0].hpzl;
+						var hpzlString = decode(hpzl);
+						$("#cardNo").text(hphm);
+     		 			$("#cardType").text(hpzlString);
+     		 			$("#tableShow").show();
+					} else {
+						Showbo.Msg.alert(head.message);
+					}
+				}
+			}
+			function ToUrl(x){   
+				window.location.href=x; 
+			}
+			
+			function loadXML(xmlString){
+		        var xmlDoc=null;
+		        //判断浏览器的类型
+		        //支持IE浏览器 
+		        if(!window.DOMParser && window.ActiveXObject){   //window.DOMParser 判断是否是非ie浏览器
+		            var xmlDomVersions = ['MSXML.2.DOMDocument.6.0','MSXML.2.DOMDocument.3.0','Microsoft.XMLDOM'];
+		            for(var i=0;i<xmlDomVersions.length;i++){
+		                try{
+		                    xmlDoc = new ActiveXObject(xmlDomVersions[i]);
+		                    xmlDoc.async = false;
+		                    xmlDoc.loadXML(xmlString); //loadXML方法载入xml字符串
+		                    break;
+		                }catch(e){
+		                }
+		            }
+		        }
+		        //支持Mozilla浏览器
+		        else if(window.DOMParser && document.implementation && document.implementation.createDocument){
+		            try{
+		                /* DOMParser 对象解析 XML 文本并返回一个 XML Document 对象。
+		                 * 要使用 DOMParser，使用不带参数的构造函数来实例化它，然后调用其 parseFromString() 方法
+		                 * parseFromString(text, contentType) 参数text:要解析的 XML 标记 参数contentType文本的内容类型
+		                 * 可能是 "text/xml" 、"application/xml" 或 "application/xhtml+xml" 中的一个。注意，不支持 "text/html"。
+		                 */
+		                domParser = new  DOMParser();
+		                xmlDoc = domParser.parseFromString(xmlString, 'text/xml');
+		            }catch(e){
+		            }
+		        }
+		        else{
+		            return null;
+		        }
+		
+		        return xmlDoc;
+		    }
+			
+			function payPunish() {
+				var mac = $.md5("02"+punishSheetNo+phoneNo+punishedID+"http://nbjj.hzcdt.com/punishResult.html"+"ddffe9b233d60c01f7ea4c55c3a0c0ca");
+				$("#punishSheetNoForm").val(punishSheetNo);
+				$("#punishedIDForm").val(punishedID);
+				$("#phoneNoForm").val(phoneNo);
+				$("#macForm").val(mac);
+				document.forms['submit'].submit();
+			}
+			function getQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+		</script>
+
+	</head>
+
+	<body>
+		<div class="content">
+			<div style="display: none;" id="tableShow">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="inforTable">
+				<tbody>
+					<tr class="whiteBG">
+						<td class="inforBaseL">
+							处罚决定书编号 ：
+						</td>
+						<td class="inforBaseR" id="punishSheetNoLabel">无
+						</td>
+					</tr>
+					
+					<tr class="whiteBG">
+						<td class="inforBaseL">
+							姓&nbsp;&nbsp;名 ：
+						</td>
+						<td class="inforBaseR" id="punishedName">无
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							身份证或其他证件号：
+						</td>
+						<td class="inforBaseR" id="punishedID">无
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							号牌号码：
+						</td>
+						<td class="inforBaseR" id="cardNo">无
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							号牌种类：
+						</td>
+						<td class="inforBaseR" id="cardType">无
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="inforBaseL">
+							罚款金额：
+						</td>
+						<td class="inforBaseR" id="punishMoney">无
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="inforBaseL">
+							滞纳金：
+						</td>
+						<td class="inforBaseR" id="lateFee">无
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="inforBaseL">
+							应缴纳总金额为：
+						</td>
+						<td class="inforBaseR" id="totalMoney">无
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="inforBaseL">
+							处理日期：
+						</td>
+						<td class="inforBaseR" id="punishDate">无
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="2">
+							<input  type="button" value="缴费" 
+							id="payPunish" class="inputBtn" onclick="javascript:payPunish();">
+						</td>
+					</tr>
+					</tbody>
+			</table>
+			</div>
+			<div id="tip" style="display: none;">
+				<div style="padding: 5% 10%;">
+					<p id="tipText" style="color:red;text-align: center;"></p>
+				</div>
+				<hr size="2px" color="#28a5e5"/>
+			</div>
+		</div>
+		<form method="post" action="http://122.224.110.125/nbjjservice/transget_wap.aspx" name="submit" id="submit">
+			<input type="hidden" value="02" name="transType"/>
+			<input type="hidden" value="" name="punishSheetNo" id="punishSheetNoForm"/>
+			<input type="hidden" value="" name="phoneNo" id="phoneNoForm"/>
+			<input type="hidden" value="" name="punishedID" id="punishedIDForm"/>
+			<input type="hidden" value="http://nbjj.hzcdt.com/punishResult.html" name="notifyUrl" />
+		 	<input type="hidden" value="" name="mac" id="macForm"/>
+		</form>
+	</body>
+</html>

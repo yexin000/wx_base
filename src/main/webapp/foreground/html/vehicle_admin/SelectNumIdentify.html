@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				insert("自主选号");
+			});
+		
+			var openId;
+			function nextStep() {
+				var syr = $("input#syr").val();
+				var zjhm = $("input#zjhm").val();
+				var qrzjhm = $("input#qrzjhm").val();
+				var sjhm = unescape(GetQueryString("sjhm"));
+				openId = unescape(GetQueryString("openId"));
+				if(syr != null && syr != "") {
+					if(($("#cardtype").val() != "A")
+						|| (sfzCheck(zjhm, window.document.getElementById("zjhm")) == 1 && $("#cardtype").val() == "A")) {
+						if(($("#cardtype").val() != "A")
+							|| (sfzCheck(zjhm, window.document.getElementById("qrzjhm")) == 1 && $("#cardtype").val() == "A")) {
+							if(zjhm == qrzjhm) {
+								ToUrl("/weixin/foreground/html/vehicle_admin/SelectNumCarIdenty.html?sfzmhm=" + escape(zjhm)
+									+ "&sfzmmc=" + escape($("#cardtype").val()) + "&syr=" + escape(syr)
+									+ "&sfyj=" + escape($("#lqfs").attr('name')) + "&sjhm=" + escape(sjhm) + "&openId=" + escape(openId));
+							} else {
+								Showbo.Msg.alert("两次填写的证件号码不一致，请检查");
+								//eval($("#tmpt").text($.Prompt("两次填写的证件号码不一致，请检查")));
+							}
+						} else {
+							if(qrzjhm == null || qrzjhm == "") {
+								Showbo.Msg.alert("请填写确认证件号码");
+								//eval($("#tmpt").text($.Prompt("请填写确认证件号码")));
+							} else {
+								Showbo.Msg.alert("请填写正确的确认证件号码");
+							//	eval($("#tmpt").text($.Prompt("请填写正确的确认证件号码")));
+							}
+						}
+					} else {
+						Showbo.Msg.alert("请填写正确的证件号码");
+					//	eval($("#tmpt").text($.Prompt("请填写正确的证件号码")));
+					}
+				} else {
+					Showbo.Msg.alert("请填写所有人");
+				//	eval($("#tmpt").text($.Prompt("请填写所有人")));
+				} 
+			}
+			
+			function GetQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+			
+			function is_weixn(){
+			    var ua = navigator.userAgent.toLowerCase();
+			    if(ua.match(/MicroMessenger/i)=="micromessenger") {
+			        return true;
+			    } else {
+			        return false;
+			    }
+			}
+			
+			function ToUrl(x)   {    location.href=x;   } 
+		</script>
+	</head>
+	
+	<body>
+		<div data-role="page" data-theme="s" id="page">
+			<div data-role="content" role="main" style="padding-left: 8px; padding-right: 8px;">
+				<form method="post">
+					<table  width="100%" border="0" cellspacing="0" cellpadding="0" class="TestTable">
+						<tbody>
+							<tr>
+								<td colspan="2">
+									所有人
+									<div class="inputOutL">
+									<input data-role="none" class="inputText" type="text" name="syr" id="syr"
+											placeholder="请填写所有人">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									证件种类
+									<div class="inputOutL">
+										<select data-role="none" class="inputSelect" name="sfzmmc" id="cardtype">
+											<option value="A" selected="selected">
+												居民身份证
+											</option>
+											<option value="B">
+												组织机构代码
+											</option>
+											<option value="C">
+												军官证
+											</option>
+											<option value="D">
+												士兵证
+											</option>
+											<option value="E">
+												军官离退休证
+											</option>
+											<option value="F">
+												境外人员身份证明
+											</option>
+											<option value="G">
+												外交人员身份证明
+											</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									证件号
+									<div class="inputOutL">
+									<input data-role="none" class="inputText" type="text" name="zjhm" id="zjhm" onkeyup="this.value=this.value.toUpperCase()"
+									 	 onpaste="return false;" oncopy="return false;" placeholder="请填写证件号">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									确认证件号
+									<div class="inputOutL">
+									<input data-role="none" class="inputText" type="text" name="qrzjhm" id="qrzjhm" onkeyup="this.value=this.value.toUpperCase()"
+										 onpaste="return false;" oncopy="return false;" placeholder="请填写确认证件号">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									号牌领取方式
+									<div class="inputOutL">
+										<input data-role="none" class="inputText" readonly="readonly" type="text" value="邮寄" id="lqfs" name="1"/>
+										<!--<select name="lqfs" id="lqfs">
+											<option value="0" selected="selected">
+												相应上牌点领取
+											</option>
+											<option value="1">
+												邮寄
+											</option>
+										</select>-->
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding: 0 5px;">
+									<input data-role="none" class="inputBtn" type="button" onclick="javascript:history.go(-1)" value="上一步">
+								</td>
+								<td style="padding: 0 5px;">
+									<input data-role="none" class="inputBtn" type="button" onclick="javascript:nextStep()" value="下一步">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+				
+				
+				<hr size="2px" color="#28a5e5"/>
+				<br/>
+				<div style="text-align: left; padding:0 8px;">
+					<div>
+					    <img src="/weixin/foreground/images/before_title.png" />
+					    <a style="font-size: 14px;color: #0F598A;font-weight: bold;">温馨提示</a>
+					 </div>
+					 <div>
+					    <p>&nbsp;&nbsp;&nbsp;&nbsp;请您仔细核对材料并保证信息填写正确，注意大小写，否则您所选号牌将无效。</p>
+					   	<br/><br/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

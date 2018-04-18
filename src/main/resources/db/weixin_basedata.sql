@@ -1,0 +1,132 @@
+﻿INSERT INTO sys_menu VALUES ('1', '系统管理', '', null, '0', to_date('2015-01-25 14:21:58', 'yyyy-mm-dd hh24:mi:ss'), to_date('2015-01-26 10:18:10', 'yyyy-mm-dd hh24:mi:ss'), '2', '');
+INSERT INTO sys_menu VALUES ('2', '菜单管理', '/sysMenu/menu.shtml', '1', '0', to_date('2015-01-25 14:22:32', 'yyyy-mm-dd hh24:mi:ss'), to_date('2015-01-25 14:29:33', 'yyyy-mm-dd hh24:mi:ss'), '0', 'dataList.do');
+INSERT INTO sys_menu VALUES ('3', '用户管理', '/sysUser/list.shtml', '1', '0', to_date('2015-01-25 14:30:33', 'yyyy-mm-dd hh24:mi:ss'), to_date('2015-01-25 14:57:51', 'yyyy-mm-dd hh24:mi:ss'), '0', 'dataList.do');
+INSERT INTO sys_menu VALUES ('4', '角色管理', '/sysRole/role.shtml', '1', '0', to_date('2015-01-25 14:32:51', 'yyyy-mm-dd hh24:mi:ss'), to_date('2015-01-25 15:15:00', 'yyyy-mm-dd hh24:mi:ss'), '0', 'dataList.do|/sysMenu/getMenuTree.do');
+INSERT INTO sys_menu VALUES ('5', '用户授权', '/sysUser/userRole.shtml', '1', '0', to_date('2015-01-25 14:42:26', 'yyyy-mm-dd hh24:mi:ss'), to_date('2015-01-25 15:35:04', 'yyyy-mm-dd hh24:mi:ss'), '0', 'userList.do|/sysRole/loadRoleList.do');
+INSERT INTO sys_menu VALUES ('6', '微信管理', '/wxMenu/list.shtml', null, '0', to_date('2015-01-26 10:18:49', 'yyyy-mm-dd hh24:mi:ss'), null, '1', '');
+INSERT INTO sys_menu VALUES ('7', '公众号管理', '', '6', '0', to_date('2015-01-26 10:19:15', 'yyyy-mm-dd hh24:mi:ss'), null, '1', '');
+INSERT INTO sys_menu VALUES ('8', '微信菜单管理', '', '6', '0', to_date('2015-01-26 10:19:37', 'yyyy-mm-dd hh24:mi:ss'), null, '2', '');
+INSERT INTO sys_menu VALUES ('9', '功能管理', '', '6', '0', to_date('2015-01-26 10:19:53', 'yyyy-mm-dd hh24:mi:ss'), to_date('2015-01-26 17:46:21', 'yyyy-mm-dd hh24:mi:ss'), '3', '');
+INSERT INTO sys_menu VALUES ('10', '参数配置', '/wxCode/list.shtml', '6', '0', to_date('2015-01-26 10:20:18', 'yyyy-mm-dd hh24:mi:ss'), to_date('2015-01-26 17:05:55', 'yyyy-mm-dd hh24:mi:ss'), '4', '');
+insert into SYS_MENU VALUES ('11', '微信菜单管理', '/wxMenu/list.shtml', 6, 0, to_date('2015-01-26 10:19:37', 'yyyy-mm-dd hh24:mi:ss'), null, 2, null);
+
+INSERT INTO sys_menu_btn VALUES ('5', '2', '添加', 'add', 'save.do');
+INSERT INTO sys_menu_btn VALUES ('6', '2', '修改', 'edit', 'getId.do|save.do');
+INSERT INTO sys_menu_btn VALUES ('7', '2', '删除', 'remove', 'delete.do');
+INSERT INTO sys_menu_btn VALUES ('8', '6', '添加', 'add', 'save.do');
+INSERT INTO sys_menu_btn VALUES ('9', '6', '修改', 'edit', 'getId.do|save.do');
+INSERT INTO sys_menu_btn VALUES ('10', '6', '修改密码', 'editPwd', 'updatePwd.do');
+INSERT INTO sys_menu_btn VALUES ('11', '6', '删除', 'remove', 'delete.do');
+INSERT INTO sys_menu_btn VALUES ('12', '7', '添加', 'add', 'save.do');
+INSERT INTO sys_menu_btn VALUES ('13', '7', '修改', 'edit', 'getId.do|save.do');
+INSERT INTO sys_menu_btn VALUES ('14', '7', '删除', 'remove', 'delete.do');
+INSERT INTO sys_menu_btn VALUES ('15', '8', '授权', 'authRole', '/sysUser/getUser.do|/sysUser/addUserRole.do');
+INSERT INTO sys_menu_btn VALUES ('16', '5', '添加', 'add', 'save.do');
+INSERT INTO sys_menu_btn VALUES ('17', '5', '修改', 'edit', 'getId.do|save.do');
+INSERT INTO sys_menu_btn VALUES ('18', '5', '删除', 'remove', 'delete.do');
+INSERT INTO sys_menu_btn VALUES ('19', '4', '添加', 'add', 'save.do');
+INSERT INTO sys_menu_btn VALUES ('20', '4', '修改', 'edit', 'getId.do|save.do');
+INSERT INTO sys_menu_btn VALUES ('21', '4', '删除', 'remove', 'delete.do');
+INSERT INTO sys_menu_btn VALUES ('22', '11', '添加', 'add', 'save.do');
+INSERT INTO sys_menu_btn VALUES ('23', '11', '修改', 'edit', 'getId.do|save.do');
+INSERT INTO sys_menu_btn VALUES ('24', '11', '删除', 'remove', 'delete.do');
+INSERT INTO sys_menu_btn VALUES ('25', '12', '11', '111', '111');
+INSERT INTO sys_menu_btn VALUES ('26', '15', '添加', 'add', 'save.do');
+INSERT INTO sys_menu_btn VALUES ('27', '15', '修改', 'edit', 'getId.do|save.do');
+INSERT INTO sys_menu_btn VALUES ('28', '15', '删除', 'remove', 'delete.do');
+INSERT INTO sys_menu_btn VALUES ('29', '17', 'add', 'add', '');
+INSERT INTO sys_menu_btn VALUES ('30', '18', '添加', 'add', 'save.do');
+INSERT INTO sys_menu_btn VALUES ('31', '18', '修改', 'edit', 'getId.do|save.do');
+INSERT INTO sys_menu_btn VALUES ('32', '18', '删除', 'remove', 'delete.do');
+
+INSERT INTO sys_role VALUES ('1', '系统管理员', to_date('2015-01-25 16:07:00', 'yyyy-mm-dd hh24:mi:ss'), null, to_date('2015-01-26 10:21:00', 'yyyy-mm-dd hh24:mi:ss'), null, '0', null);
+INSERT INTO sys_role VALUES ('3', '管理员', to_date('2015-01-25 16:45:06', 'yyyy-mm-dd hh24:mi:ss'), null, to_date('2015-01-25 16:22:38', 'yyyy-mm-dd hh24:mi:ss'), null, '0', null);
+
+INSERT INTO sys_role_rel VALUES ('1', '6', '1');
+INSERT INTO sys_role_rel VALUES ('3', '5', '1');
+INSERT INTO sys_role_rel VALUES ('18', '5', '1');
+INSERT INTO sys_role_rel VALUES ('18', '11', '0');
+INSERT INTO sys_role_rel VALUES ('18', '3', '0');
+INSERT INTO sys_role_rel VALUES ('18', '4', '0');
+INSERT INTO sys_role_rel VALUES ('18', '5', '0');
+INSERT INTO sys_role_rel VALUES ('18', '19', '2');
+INSERT INTO sys_role_rel VALUES ('18', '20', '2');
+INSERT INTO sys_role_rel VALUES ('18', '16', '2');
+INSERT INTO sys_role_rel VALUES ('18', '17', '2');
+INSERT INTO sys_role_rel VALUES ('18', '22', '2');
+INSERT INTO sys_role_rel VALUES ('18', '23', '2');
+INSERT INTO sys_role_rel VALUES ('18', '24', '2');
+INSERT INTO sys_role_rel VALUES ('19', '8', '0');
+INSERT INTO sys_role_rel VALUES ('19', '1', '0');
+INSERT INTO sys_role_rel VALUES ('19', '2', '0');
+INSERT INTO sys_role_rel VALUES ('19', '6', '0');
+INSERT INTO sys_role_rel VALUES ('19', '7', '0');
+INSERT INTO sys_role_rel VALUES ('19', '3', '0');
+INSERT INTO sys_role_rel VALUES ('19', '4', '0');
+INSERT INTO sys_role_rel VALUES ('19', '5', '0');
+INSERT INTO sys_role_rel VALUES ('19', '11', '0');
+INSERT INTO sys_role_rel VALUES ('19', '7', '2');
+INSERT INTO sys_role_rel VALUES ('19', '8', '2');
+INSERT INTO sys_role_rel VALUES ('19', '10', '2');
+INSERT INTO sys_role_rel VALUES ('19', '13', '2');
+INSERT INTO sys_role_rel VALUES ('19', '15', '2');
+INSERT INTO sys_role_rel VALUES ('19', '19', '2');
+INSERT INTO sys_role_rel VALUES ('19', '20', '2');
+INSERT INTO sys_role_rel VALUES ('19', '16', '2');
+INSERT INTO sys_role_rel VALUES ('19', '17', '2');
+INSERT INTO sys_role_rel VALUES ('19', '22', '2');
+INSERT INTO sys_role_rel VALUES ('19', '23', '2');
+INSERT INTO sys_role_rel VALUES ('1', '3', '1');
+INSERT INTO sys_role_rel VALUES ('3', '3', '1');
+INSERT INTO sys_role_rel VALUES ('18', '3', '1');
+INSERT INTO sys_role_rel VALUES ('1', '1', '1');
+INSERT INTO sys_role_rel VALUES ('3', '1', '1');
+INSERT INTO sys_role_rel VALUES ('18', '1', '1');
+INSERT INTO sys_role_rel VALUES ('20', '2', '0');
+INSERT INTO sys_role_rel VALUES ('20', '1', '0');
+INSERT INTO sys_role_rel VALUES ('20', '6', '0');
+INSERT INTO sys_role_rel VALUES ('20', '5', '2');
+INSERT INTO sys_role_rel VALUES ('20', '6', '2');
+INSERT INTO sys_role_rel VALUES ('20', '7', '2');
+INSERT INTO sys_role_rel VALUES ('20', '8', '2');
+INSERT INTO sys_role_rel VALUES ('1', '1', '0');
+INSERT INTO sys_role_rel VALUES ('1', '2', '0');
+INSERT INTO sys_role_rel VALUES ('1', '3', '0');
+INSERT INTO sys_role_rel VALUES ('1', '4', '0');
+INSERT INTO sys_role_rel VALUES ('1', '5', '0');
+INSERT INTO sys_role_rel VALUES ('1', '6', '0');
+INSERT INTO sys_role_rel VALUES ('1', '7', '0');
+INSERT INTO sys_role_rel VALUES ('1', '8', '0');
+INSERT INTO sys_role_rel VALUES ('1', '9', '0');
+INSERT INTO sys_role_rel VALUES ('1', '10', '0');
+INSERT INTO sys_role_rel VALUES ('1', '5', '2');
+INSERT INTO sys_role_rel VALUES ('1', '6', '2');
+INSERT INTO sys_role_rel VALUES ('1', '7', '2');
+INSERT INTO sys_role_rel VALUES ('1', '19', '2');
+INSERT INTO sys_role_rel VALUES ('1', '20', '2');
+INSERT INTO sys_role_rel VALUES ('1', '21', '2');
+INSERT INTO sys_role_rel VALUES ('1', '16', '2');
+INSERT INTO sys_role_rel VALUES ('1', '17', '2');
+INSERT INTO sys_role_rel VALUES ('1', '18', '2');
+INSERT INTO sys_role_rel VALUES ('1', '12', '2');
+INSERT INTO sys_role_rel VALUES ('1', '13', '2');
+INSERT INTO sys_role_rel VALUES ('1', '14', '2');
+INSERT INTO sys_role_rel VALUES ('1', '15', '2');
+
+INSERT INTO sys_user VALUES ('1', 'admin', 'E10ADC3949BA59ABBE56E057F20F883E', '系统管理员', '0', '33', to_date('2015-01-27 15:20:24', 'yyyy-mm-dd hh24:mi:ss'), '0', to_date('2015-01-25 11:01:15', 'yyyy-mm-dd hh24:mi:ss'), to_date('2015-01-27 15:20:24', 'yyyy-mm-dd hh24:mi:ss'), null, null, '1');
+
+insert into WX_CODE (id, name, code, value, parentid, deleted, createtime, updatetime, remarks)
+values (1, '公众号配置', 'WX_CONFIG', 'WX_CONFIG', null, 0, to_date('30-03-2015 15:55:46', 'dd-mm-yyyy hh24:mi:ss'), null, null);
+insert into WX_CODE (id, name, code, value, parentid, deleted, createtime, updatetime, remarks)
+values (2, '微信APPID', 'APPID', 'wx52d9a1721ad602a4', '1', 0, to_date('30-03-2015 16:19:13', 'dd-mm-yyyy hh24:mi:ss'), null, null);
+insert into WX_CODE (id, name, code, value, parentid, deleted, createtime, updatetime, remarks)
+values (3, '微信APPSECRET', 'APPSECRET', 'ebf523d96abf78f9e84780ce85ec2a65', '1', 0, to_date('30-03-2015 16:19:33', 'dd-mm-yyyy hh24:mi:ss'), null, null);
+insert into WX_CODE (id, name, code, value, parentid, deleted, createtime, updatetime, remarks)
+values (seq_wx_code_id.nextval, 'outService接口调用密钥', 'outServiceXlh', 'E20E80722B099511AF290E2AD42A0E60', '51', 0, sysdate, null, null);
+insert into WX_CODE (id, name, code, value, parentid, deleted, createtime, updatetime, remarks)
+values (seq_wx_code_id.nextval, 'outService接口调用URL', 'outServiceUrl', 'http://115.238.107.211:9080/outService/services/CdtOutAccess?wsdl', '51', 0, sysdate, null, null);
+insert into WX_CODE (id, name, code, value, parentid, deleted, createtime, updatetime, remarks)
+values (seq_wx_code_id.nextval, '微信关注欢迎语', 'wxWelcomeStr', '您好，感谢您关注测试公众平台！', '1', 0, sysdate, null, null);
+insert into WX_CODE (id, name, code, value, parentid, deleted, createtime, updatetime, remarks)
+values (seq_wx_code_id.nextval, '微信自动回复语', 'wxAutoReplyStr', '您的信息已收到', '1', 0, sysdate, null, null);
+commit;

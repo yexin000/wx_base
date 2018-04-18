@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/loginDialog.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/pull-refresh.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/iscroll.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/pull-fresh.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+
+		<script type="text/javascript">
+			var myScroll;
+			var pullDownEl;
+			var pullDownOffset;
+			var pullUpEl;
+			var pullUpOffset;
+			var generatedCount = 0;
+			var page = 1;
+			var wfdm = "";
+			
+			$(document).ready(function() {
+				insert("违法代码查询");
+			
+				ProgressBar.init();
+				$("#table tbody tr:even").css("background", "#FFFFFF");
+				$("#table tbody tr:odd").css("background", "#EEEEEE");
+				
+				wfdm = unescape(GetQueryString("wfdm"));
+				if(wfdm != "") {
+					document.getElementById("pullUp").style.display="none";
+				}
+				var jkid = "A002903";
+				var params = "{\"wfxw\":\"" + wfdm + "\""+",\"page\":\""+ page +"\""+"}";
+				ProgressBar.show();
+				var result = WebServiceUtil.queryOutService(jkid, params, callback);
+			});
+			
+			function pullUpAction () {
+				setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+					if(wfdm == "") {
+						var jkid = "A002903";
+						var params = "{\"wfxw\":\""+wfdm+"\""+",\"page\":\""+ page +"\""+"}";
+						var result = WebServiceUtil.queryOutService(jkid, params, callback);
+					}
+					
+					myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+				}, 2000);	// <-- Simulate network congestion, remove setTimeout from production!
+			}
+			
+			function callback(msg){
+				if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+					var count = head.rownum;
+					
+					if(count > 0) {
+						page++;
+					} else {
+						Showbo.Msg.alert("没有找到该违法代码");
+						//eval($("#tmpt").text($.Prompt("没有找到该违法代码")));
+					}
+					
+					if(head.code == 1) {
+						var codeBody = document.getElementById("codeBody");
+						var body = jsonObject.body;
+						for(var i = 0; i < count; i ++) {
+							var wfdm = body[i].wfxw;
+							var wfxw = body[i].wfms;
+							var wfjfs = body[i].wfjfs;
+							var fkje_min = body[i].fkje_min;
+							var fkje_max = body[i].fkje_max;
+							
+							var clbj = "";
+							if(body[i].zkbj == 1) {
+								clbj = clbj + "暂扣 ";
+							}
+							if(body[i].jgbj == 1) {
+								clbj = clbj + "警告 ";
+							}
+							if(body[i].dxbj == 1) {
+								clbj = clbj + "吊销 ";
+							}
+							if(body[i].jlbj == 1) {
+								clbj = clbj + "拘留 ";
+							}
+							if(body[i].cxvbj == 1) {
+								clbj = clbj + "撤销机动车登记许可 ";
+							}
+							if(body[i].cxdbj == 1) {
+								clbj = clbj + "撤销驾驶人许可 ";
+							}
+							
+							codeBody.innerHTML= codeBody.innerHTML 
+								+ "<tr ><td width=\"30%\" style=\"text-align: center;color: #000000\"><div>"
+								+ "<label>违法代码：</label></div></td>"
+								+ "<td width=\"80%\"><div><div style=\"float: left;\">"
+								+ "<label id=\"label\">" + wfdm + "</label></div></div></td></tr>"
+								+ "<tr ><td width=\"30%\" style=\"text-align: center;color: #000000\"><div>"
+								+ "<label>违法行为：</label></div></td>"
+								+ "<td><div><a><label style=\"margin-bottom: 0px;\">" + wfxw + "</label></a></div></td></tr>"
+								+ "<tr ><td width=\"30%\" style=\"text-align: center;color: #000000\"><div>"
+								+ "<label>记&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分：</label></div></td>"
+								+ "<td><div><label>" + wfjfs + "</label></div></td></tr>"
+								+ "<tr ><td width=\"30%\" style=\"text-align: center;color: #000000\"><div>"
+								+ "<label>罚&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;款：</label></div></td>"
+								+ "<td><div><label>" + ((fkje_min == fkje_max) ? fkje_max : (fkje_min + "-" + fkje_max)) + "</label></div></td></tr>"
+								+ "<tr ><td width=\"30%\" style=\"text-align: center;color: #000000\"><div>"
+								+ "<label>处&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;理：</div></td>"
+								+ "<td><div><label>" + clbj + "</label></div></td></tr>"
+								+ "<br/>";
+						}
+					} else {
+						Showbo.Msg.alert(head.message);
+					//	eval($("#tmpt").text($.Prompt(head.message)));
+					}
+				
+				}
+				ProgressBar.hide();
+			}
+			
+			function GetQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+		</script>
+
+		<style type="text/css">
+			.table {
+				cellspacing: 1px;
+				cellpadding: 0px;
+				text-align: left;
+				border-collapse: collapse;
+				border-radius: 5px;
+				-webkit-box-shadow: 0px -3px 2px -1px rgba(0, 200, 0, 0.5);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div data-role="page" data-theme="s" id='page'>
+			<div id="wrapper">
+				<div id="scroller">
+					<div id="pullDown">
+					</div>
+					<div data-role="content">
+						<form method="post" style="margin-left:10px;margin-right:10px;min-height: 100%;">
+							<table align="center" id="table" class="table" >
+								<tbody id="codeBody">
+									
+								</tbody>
+							</table>
+						</form>
+					</div>
+					<div id="pullUp">
+						<span class="pullUpLabel">上拉加载更多...</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

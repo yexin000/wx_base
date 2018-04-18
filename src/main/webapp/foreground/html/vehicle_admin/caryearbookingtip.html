@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<link rel="stylesheet" href="/weixin/foreground/css/alltip.css">
+
+	<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/alltip.js"></script>
+		
+	<script type="text/javascript">
+		var code ;
+		$(document).ready(function() {
+			code = getQueryString("code");
+		
+			var content = '<p>1. 只允许机动车检验有效期满前三个月（含当月）内预约。</p>'
+					+'<p>2. 如果要取消预约或改约，需提前1天申请。如果不申请取消而爽约，3次以上会被列入黑名单，需经有关部门解禁才可重新预约。</p>'
+					+'<p>3. 预约服务特定时间内有人数限制，如预约指标已提示用完，请另行选择其他时段。预约成功后，办理时必须出示相关证明（手机里保存的确认信息），经核对信息一致后预约方为有效。</p>'
+					+'<p>4. 预约成功后，请您按时到指定机动车检测站办理车辆检验。</p>'
+			var f = Showbo.Msg.contip(content);
+		
+			Showbo.sure = function(){
+				location.href = '/html/vehicle_admin/CarYearCheckBooking.html?code=' + escape(code);;
+			}
+		
+			Showbo.cancel = function(){
+				window.history.back(-1);
+			}
+		});
+	</script>
+
+	</head>
+
+	<body>
+	</body>
+</html>

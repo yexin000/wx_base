@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/check_browser.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/caryearcheckbooking.js"></script>
+		
+<script type="text/javascript">
+	var code;
+	var param_hphm ;
+	var param_hpzl ;
+	$(document).ready(function(){
+		addHead("车辆年检预约");
+	
+		ProgressBar.init();
+		setPosition();	
+		token = getCookie("token");
+		if (token == null) {
+				code = getQueryString("code");
+				getOpenId(code);
+			} else {
+				getBindedInfoByToken(token);
+			}
+		$("#order").click(function(){
+			paramsInJk();
+		});
+	});
+	
+	function init(body){
+		ProgressBar.hide();
+		for(var i in body){
+			if (body[i].sjlx == "机动车") {
+				var hphm = body[i].hm;
+				var lx = body[i].zm;
+				var hplx = decode(body[i].zm);
+				$("#hpInfo").append("<option data-hpzl=\""+lx+"\" data-hphm=\""+hphm+"\" value=\""+i+"\">"+hplx+":"+hphm+"</option>");
+			}
+		}
+		putCarInfo();
+	}
+	
+	function putCarInfo(){
+		param_hphm = $("#hpInfo").find("option:selected").attr("data-hphm");
+		param_hpzl = $("#hpInfo").find("option:selected").attr("data-hpzl");
+		getData();
+	}
+</script>
+	</head>
+	<body>
+		<div class="content">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="TestTable">
+						<tbody>
+							<tr>
+								<td>
+									车牌信息:
+									<div class="inputOutL">
+										<select class="inputSelect" id="hpInfo" onchange="putCarInfo()"></select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									检测站:
+									<div class="inputOutL">
+										<select class="inputSelect" name="checkStation" id="checkStation" onchange="putlxdz()"></select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									地址:
+									<div class="inputOutL">
+										<input type="text" name="checkAddr" id="checkAddr" value="">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: left;">
+									预约日期:
+									<div class="inputOutL">
+										<select class="inputSelect" name="yyrq" id="yyrq" onchange="putBookingDate()"></select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									请选择预约时间:
+									<div class="inputOutL">
+										<select class="inputSelect" name="yysj" id="yysj" onchange="putBookingTime()"></select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<input class="inputBtn" id="order" type="button" value="预约">
+									</div>
+								</td>
+							</tr>							
+						</tbody>
+					</table>
+			</div>
+	</body>
+</html>
+

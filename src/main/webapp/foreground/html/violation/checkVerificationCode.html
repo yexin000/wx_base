@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+			
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">
+			var serialNo;
+			var jszh;
+			function ToUrl(x){   
+				window.location.href=x; 
+			}
+			
+			$(document).ready(function() {
+				addHead("验证驾驶证信息");
+			
+				ProgressBar.init();
+				ProgressBar.show();
+				serialNo = getQueryString("serialNo");
+				jszh = getQueryString("jszh");
+				
+				$.get("http://nbjj.hzcdt.com/IllegalDriverInfoServlet?punishedID="
+					+ encodeURI(encodeURI(jszh)),null
+					,function(response){
+     		 			var xmlDoc = loadXML(response);
+     		 			
+     		 			var transReturn = xmlDoc.getElementsByTagName("transReturn")[0].firstChild.nodeValue;
+     		 			if(transReturn != "00" && transReturn != "0001") {
+     		 				var transMsg = xmlDoc.getElementsByTagName("transMsg")[0].firstChild.nodeValue;
+     		 				//Showbo.Msg.alert(transMsg);
+     		 			//	eval($("#tmpt").text($.Prompt(transMsg)));
+     		 				$("#tableShow").css({"display":"none"});  
+     		 				$("#tip").css({"display":"block"});  
+     		 				$("#tipText").text(transMsg);
+     		 				ProgressBar.hide();
+     		 				return;
+     		 			}
+     		 			
+     		 			var drivinglicense = xmlDoc.getElementsByTagName("drivinglicense");
+     		 			var sjhm = drivinglicense[0].getElementsByTagName("sjhm")[0].firstChild.nodeValue;
+     		 			var punishedName = drivinglicense[0].getElementsByTagName("punishedName")[0].firstChild.nodeValue;
+     		 			
+     		 			if(sjhm != "null") {
+	     		 			$("#xm").text(punishedName);
+	     		 			$("#sjhm").text(sjhm);
+	     		 			$("#jszh").text(jszh);
+     		 			} else {
+     		 				$("#tableShow").css({"display":"none"});  
+     		 				$("#tip").css({"display":"block"});  
+     		 				$("#tipText").text("您输入的驾驶照号有误或未登记手机号码。");
+     		 			}
+     		 			
+     		 			ProgressBar.hide();
+     		 		});
+			});
+			
+			function illegalHandle() {
+				var code = $("#code").val();
+				if(code == "") {
+					Showbo.Msg.alert("请输入验证码");
+					//eval($("#tmpt").text($.Prompt("请输入验证码")));
+				} else {
+					var sjhm = $("#sjhm").text();
+					var code = $("#code").val();
+					var params = "{\"sjhm\":\""+sjhm+"\""+",\"yzm\":\""+code+"\"}";
+					var result = WebServiceUtil.checkZscgCode(params, getCode);
+				}
+			}
+			
+			function getCode(msg) {
+				var sjhm = $("#sjhm").text();
+       			if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+					if(head.code == 1) {
+						ToUrl('./dealBreakLawNotice.html?jszh=' + jszh + '&serialNo=' + serialNo + '&sjhm=' + sjhm);
+					} else {
+						Showbo.Msg.alert("验证码不正确,请重试");
+					//	eval($("#tmpt").text($.Prompt("验证码不正确,请重试")));
+					}
+				}
+       		}
+			var InterValObj; //timer变量，控制时间
+			var count = 30; //间隔函数，1秒执行
+			var curCount;//当前剩余秒数
+			function sendMessage() {
+				var sjhm = $("#sjhm").text();
+				if(isValidMobileNum(sjhm)) {
+					curCount = count;
+					
+					var params = "{\"sjhm\":\""+sjhm+"\"}";
+					var result = WebServiceUtil.getZscgCode(params, callback);	
+					
+					//设置button效果，开始计时
+					$("#btnSendCode").attr("disabled", true);
+					$("#btnSendCode").val(curCount + "秒后重新获取");
+					//$("#btnSendCode").button("refresh");
+					InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+				} else {
+					Showbo.Msg.alert("请输入正确的手机号码");
+				//	eval($("#tmpt").text($.Prompt("请输入正确的手机号码")));
+				}
+			}
+			function callback(msg) {
+				if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+					if(head.code == 1) {
+						//eval($("#tmpt").text($.Prompt("验证码已发送")));
+						//Showbo.Msg.alert(jsonObject.body[0].yzm);
+					//	eval($("#tmpt").text($.Prompt(jsonObject.body[0].yzm)));
+					} else {
+						Showbo.Msg.alert("验证码发送失败");
+					//	eval($("#tmpt").text($.Prompt("验证码发送失败")));
+					}
+				}
+			}
+			function SetRemainTime() {
+	            if (curCount == 0) {                
+					window.clearInterval(InterValObj);//停止计时器
+					$("#btnSendCode").attr("disabled", false);//启用按钮
+					$("#btnSendCode").val("重新发送验证码");
+					//$("#btnSendCode").button("refresh");
+	            }
+	            else {
+	                curCount--;
+	                $("#btnSendCode").val(curCount + "秒后重新获取");
+	                //$("#btnSendCode").button("refresh");
+	            }
+       		}
+			function getQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+			
+			function loadXML(xmlString){
+		        var xmlDoc=null;
+		        //判断浏览器的类型
+		        //支持IE浏览器 
+		        if(!window.DOMParser && window.ActiveXObject){   //window.DOMParser 判断是否是非ie浏览器
+		            var xmlDomVersions = ['MSXML.2.DOMDocument.6.0','MSXML.2.DOMDocument.3.0','Microsoft.XMLDOM'];
+		            for(var i=0;i<xmlDomVersions.length;i++){
+		                try{
+		                    xmlDoc = new ActiveXObject(xmlDomVersions[i]);
+		                    xmlDoc.async = false;
+		                    xmlDoc.loadXML(xmlString); //loadXML方法载入xml字符串
+		                    break;
+		                }catch(e){
+		                }
+		            }
+		        }
+		        //支持Mozilla浏览器
+		        else if(window.DOMParser && document.implementation && document.implementation.createDocument){
+		            try{
+		                /* DOMParser 对象解析 XML 文本并返回一个 XML Document 对象。
+		                 * 要使用 DOMParser，使用不带参数的构造函数来实例化它，然后调用其 parseFromString() 方法
+		                 * parseFromString(text, contentType) 参数text:要解析的 XML 标记 参数contentType文本的内容类型
+		                 * 可能是 "text/xml" 、"application/xml" 或 "application/xhtml+xml" 中的一个。注意，不支持 "text/html"。
+		                 */
+		                domParser = new  DOMParser();
+		                xmlDoc = domParser.parseFromString(xmlString, 'text/xml');
+		            }catch(e){
+		            }
+		        }
+		        else{
+		            return null;
+		        }
+		
+		        return xmlDoc;
+		    }
+		</script>
+	</head>
+
+	<body>
+		<div class="content">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" id="tableShow"
+				class="inforTable">
+				<tbody>
+					<tr class="whiteBG">
+						<td class="inforBaseL" style="width:30%">
+							姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：
+						</td>
+						<td class="inforBaseR">
+							<label id="xm"></label>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="inforBaseL">
+							驾驶证号：
+						</td>
+						<td class="inforBaseR" id="jszh">
+							<label></label>
+						</td>
+					</tr>
+					
+					<tr class="whiteBG">
+						<td class="inforBaseL">
+							联系电话：
+						</td>
+						<td class="inforBaseR">
+							<p style="width: 65%;float: left;margin-top: 8px;">
+								<label id="sjhm"></label></p>
+							<input  class="inputBut" type="button" value="获取验证码" id="btnSendCode"
+								onclick="javascript:sendMessage();">
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="inforBaseL">
+							验 证 码：
+						</td>
+						<td class="inforBaseR">
+							<input class="inputOutL" type="text" name="code" id="code" value=""
+									placeholder="请输入验证码" class="inputText">
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="2">
+							<input  type="button" value="违法处理"
+							id="" class="inputBtn" onclick="javascript:illegalHandle();">
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+			<div id="tip" style="display: none;">
+				<div style="padding: 5% 10%;">
+					<p id="tipText" style="color:red;text-align: center;"></p>
+				</div>
+				<hr size="2px" color="#28a5e5"/>
+			</div>
+		</div>
+	</body>
+</html>

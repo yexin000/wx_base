@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/menu.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script src="/weixin/foreground/js/trafficpolice.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/jquery.validate.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<style>
+			h1{font-size:20px;} 
+		</style>
+		<script type="text/javascript">  
+			$(document).ready(function(){
+				insert("收费标准查询");
+				
+				ProgressBar.init();
+				var xh = unescape(GetQueryString("xh"));
+				var params = "{\"xh\":\""+xh+"\""+"}";
+				ProgressBar.show();
+				var result = WebServiceUtil.getSchoolNoteArt(params, callback);	
+			});
+		 
+			function callback(msg){
+				var jsonObject = eval("("+msg+")");
+				var body = jsonObject.body;
+				
+				var title = body[0].title;
+				var content = body[0].content;
+				$("#title").text(title);
+				$("#content").append(content);
+				ProgressBar.hide();
+			}
+			function GetQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+		</script> 
+	</head>
+	<body >
+		<div data-role="page" data-theme="s" tabindex="0" id='page'>
+			<div data-role="content" class="center" role="main">
+				<h1 id="title" role="heading" style="text-align:center">
+				</h1>
+				<p id="content"></p>
+			</div>
+			
+		</div>
+	</body>
+</html>

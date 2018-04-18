@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css">
+
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/jquery-1.9.1.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script src="/weixin/foreground/js/checkcode.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+		<script src="/weixin/foreground/js/add_bind_driver.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script type="text/javascript">
+		var xm ;
+		var jszh ;
+		var sjhm ;
+		var dabh ;
+		$(document).ready(function(){
+			addHead("绑定驾驶证");
+			
+			ProgressBar.init();
+			 token = getCookie("token");
+				if(token == null){
+					token = getQueryString("token");
+				}
+			
+			
+				$("#next").click(function(){
+					
+					 xm = $("input#xm").val();
+					 jszh = $("input#jszh").val();
+					 sjhm = $("input#driver_sjhm").val();
+					 dabh = $("input#dabh").val();
+					if(validate_driver(xm,jszh,sjhm,dabh)==0) return;
+					
+					bindUserDriver(jszh,xm,dabh,sjhm,"0","");
+					
+					
+				});
+				
+				$("#driver_commit").click(function(){
+					
+					var yzm = $("#code").val();
+					bindUserDriver(jszh,xm,dabh,sjhm,"1",yzm);
+					
+					
+				});
+				
+				
+			});
+		
+		function setDriverMsg(xm,jszh,sjhm,dabh){
+			
+			//alert(xm);
+			$("#txt_xm").html(xm);
+			$("#txt_jszh").html(jszh);
+			$("#txt_sjhm").html(sjhm);
+			$("#txt_dabh").html(dabh);
+			
+		};
+		
+		function getQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null)
+				return unescape(r[2]);
+			return null;
+		}
+		
+		function validate_driver(xm,jszh,sjhm,dabh){
+			if(xm==""){
+				Showbo.Msg.alert("请输入姓名");
+			//	eval($("#tmpt").text($.Prompt("请输入姓名")));
+				return 0;
+			};
+			
+			if(check_jszh(jszh,$("input#jszh")) == 0)return 0;
+			if(isValidMobileNum(sjhm) ==0)return 0;
+			if(check_dabh(dabh) ==0)return 0;
+		};
+		</script>
+
+	</head>
+
+	<body>
+		<div class="content">
+			<div id="code_input" style="display: none;" >
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="TestTable">
+				<tbody>
+					<tr class="whiteBG">
+						<td width="30%" class="inforBaseL">
+							姓&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp名：
+						</td>
+						<td class="inforBaseR">
+							<label id = "txt_xm"></label>
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							驾&nbsp驶&nbsp证&nbsp号：
+						</td>
+						<td class="inforBaseR">
+							<label id = "txt_jszh"></label>
+						</td>
+					</tr>
+					
+					<tr class="whiteBG">
+						<td width="30%" class="inforBaseL">
+							档&nbsp案&nbsp编&nbsp号：
+						</td>
+						<td class="inforBaseR">
+							<label id = "txt_dabh"></label>
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							手&nbsp机&nbsp号&nbsp码：
+							
+						</td>
+						<td class="inforBaseR">
+							<p style="width: 65%;float: left;margin-top: 8px;">
+								<label id = "txt_sjhm"></label></p>
+							<input id="codeButton" class="inputBut" type="button" value="发送验证码" onclick="javascript:sendMessage('driver');">
+						</td>
+					</tr>
+					
+				<tr class="whiteBG">
+						<td width="30%" class="inforBaseL">
+							验 证 码：
+						</td>
+						<td class="inforBaseR">
+							<input class="inputOutL" type="text" name="code" id="code" value=""
+									placeholder="  请输入验证码" class="inputText">
+						</td>
+					</tr>
+					<tr>
+							<td colspan="2">
+								<div>
+									<input class="inputBtn" id="driver_commit" type="button" value="绑定">
+								</div>
+							</td>
+						</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		
+		
+			<div id="driver_input">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="TestTable">
+					<tbody>
+						<tr>
+							<td>
+								姓&nbsp&nbsp&nbsp&nbsp名：
+								<div class="inputOutL">
+									<input type="text" name="sfzhm" id="xm" placeholder="请输入姓名"
+										class="inputText">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								驾&nbsp驶&nbsp证&nbsp号(宁波核发)：
+								<div class="inputOutL">
+									<input type="text" name="sfzhm" id="jszh" placeholder="请输入18位身份证号"
+									 	onkeyup="this.value=this.value.toUpperCase()" maxlength="18" class="inputText">
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								手&nbsp机&nbsp号&nbsp码：
+								<div class="inputOutL">
+									<input type="text" name="sjhm" id="driver_sjhm"
+									placeholder="请输入车管所登记手机号码" class="inputText">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								档&nbsp案&nbsp编&nbsp号：
+								<div class="inputOutL">
+									<input type="text" name="dabh" id="dabh" placeholder="请输入档案编号末四位"
+										maxlength="4" class="inputText">
+								</div>
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<div>
+									<input class="inputBtn" id="next" type="button" value="下一步">
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,31 @@
+.probar
+{	
+	width: 80px;
+	height: 70px;
+	border-radius: 5px;
+	background: rgba(0,0,0,.7);
+	margin-top:-35px;
+    margin-left:-40px;
+	text-align: center;
+	position: fixed;
+    top:40%;
+    left:50%;
+	z-index: 9999;
+}
+
+
+.mask {
+	margin: 0;
+	padding: 0;
+	border: none;
+	width: 100%;
+	height: 100%;
+	background: #333;
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	z-index: 5;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+}

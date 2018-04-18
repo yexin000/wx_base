@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css">
+
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/jquery-latest.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/jquery.initselect.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		
+		<script src="/weixin/foreground/js/checkcode.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+			
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script src="/weixin/foreground/js/add_bind_car.js" type="text/javascript"></script>
+		
+		<script type="text/javascript">
+		
+		var syr ="" ;
+		var hpzl ;
+		var hphm ;
+		var sjhm;
+		var clsbdh;
+			$(document).ready(function(){
+				addHead("绑定机动车");
+				if(window.localStorage){ 
+					$("#hphm").val(localStorage.getItem("fpjg"));
+				}else{
+					$("#hphm").val(getCookie("fpjg"));
+				}
+			
+				$("#hpzl").initselect('hpzl');
+				
+				ProgressBar.init();
+				token = getCookie("token");
+				if(token == null){
+					token = getQueryString("token");
+				}
+				
+				
+				$("#next").click(function(){
+					
+					// syr = $("input#syr").val();
+					 hpzl = $("#hpzl option:selected").val();
+					 hphm = $("input#hphm").val();
+					 sjhm = $("input#vehicle_sjhm").val();
+					 clsbdh = $("input#clsbdh").val();
+					//if(validate_vehicle(syr,hpzl,hphm,sjhm,clsbdh)==0) return;
+					if(validate_vehicle(hpzl,hphm,sjhm,clsbdh)==0) return;
+					//bindUserVehicle(syr,hpzl,hphm.substring(1,7),clsbdh,sjhm,"0","");
+					bindUserVehicle(hpzl,hphm.substring(1,7),clsbdh,sjhm,"0","");
+
+				});
+				
+				
+				$("#vehicle_commit").click(function(){
+					var yzm = $("#code").val();
+					//bindUserVehicle(syr,hpzl,hphm.substring(1,7),clsbdh,sjhm,"1",yzm);
+					bindUserVehicle(hpzl,hphm.substring(1,7),clsbdh,sjhm,"1",yzm);
+				});
+				
+			});
+			
+			
+			
+			function validate_vehicle(hpzl,hphm,sjhm,clsbdh){
+				//if(syr==""){
+				//	eval($("#tmpt").text($.Prompt("请输入所有人姓名")));
+				//	return 0;
+				//};
+				if(checkHphm(hpzl,hphm.substring(1)) ==0)return 0;
+				if(isValidMobileNum(sjhm) ==0)return 0;
+				if(checkClsbm(clsbdh) ==0)return 0;
+			};
+			
+			function setVehicleMsg(cpxx,clsbdh,sjhm){
+
+				
+				//alert(syr);
+				
+				//$("#txt_syr").html(syr);
+				$("#txt_cpxx").html(cpxx);
+				$("#txt_clsbdh").html(clsbdh);
+				$("#txt_sjhm").html(sjhm);
+			};
+		</script>
+		
+	</head>
+
+	<body>
+		<div class="content" id="code_input" style="display: none;" >
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="TestTable">
+				<tbody>
+					<!--<tr class="whiteBG">
+						<td width="30%" class="inforBaseL">
+							所&nbsp&nbsp&nbsp有&nbsp&nbsp&nbsp人：
+						</td>
+						<td class="inforBaseR">
+							<label id = "txt_syr">微笑刺客</label>
+						</td>
+					</tr>
+					-->
+					<tr>
+						<td class="inforBaseL">
+							车&nbsp牌&nbsp信&nbsp息：
+						</td>
+						<td class="inforBaseR">
+							<label id = "txt_cpxx">2837493848393002839</label>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="inforBaseL">
+							车辆识别代号：
+						</td>
+						<td class="inforBaseR">
+							<label id = "txt_clsbdh">283749</label>
+						</td>
+					</tr>
+					
+					<tr class="whiteBG">
+						<td width="30%" class="inforBaseL">
+							手&nbsp机&nbsp号&nbsp码：
+						</td>
+						<td class="inforBaseR">
+							<p style="width: 65%; float: left;margin-top: 8px;">
+								<label id ="txt_sjhm">18175966558</label></p>
+							<input id="codeButton" style="font-size: 11px" class="inputBut" type="button" value="发送验证码" onclick="javascript:sendMessage('vehicle');">
+						</td>
+					</tr>
+					<tr>
+						<td class="inforBaseL">
+							验 证 码：
+						</td>
+						<td class="inforBaseR">
+							<input class="inputOutL" type="text" name="code" id="code" value=""
+									placeholder="  请输入验证码" class="inputText">
+						</td>
+					</tr>
+					<tr>
+							<td colspan="2">
+								<div>
+									<input class="inputBtn" id="vehicle_commit" type="button" value="绑定">
+								</div>
+							</td>
+						</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="content" id="vehicle_input" >
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"
+					class="TestTable">
+					<tbody>
+						<!--<tr>
+							<td>
+								所&nbsp&nbsp有&nbsp&nbsp人：
+								<div class="inputOutL">
+									<input type="text" name="syr" id="syr" placeholder="请输入所有人姓名"
+										class="inputText">
+								</div>
+							</td>
+						</tr>-->
+
+						<tr>
+							<td>
+								号&nbsp牌&nbsp种&nbsp类：
+								<div class="inputOutL">
+									<select class="inputSelect" name="carType" id="hpzl">
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								号&nbsp牌&nbsp号&nbsp码：
+								<div class="inputOutL">
+									<input type="text" name="hphm" id="hphm" value=""
+										onkeyup="this.value=this.value.toUpperCase()" maxlength="9"
+										placeholder="请输入号牌号码" class="inputText">
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="left">
+								手&nbsp机&nbsp号&nbsp码：
+								<div class="inputOutL">
+									<input type="text" name="vehicle_sjhm" id="vehicle_sjhm"
+										placeholder="请输入车管所登记手机号码" class="inputText">
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td class="left">
+								车辆识别代号：
+								<div class="inputOutL">
+									<input type="text" name="clsbdh" id="clsbdh"
+										placeholder="请输入车辆识别代号末六位"
+										onkeyup="this.value=this.value.toUpperCase()"
+										class="inputText">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div>
+									<input class="inputBtn" id="next" type="button" value="下一步">
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	</body>
+</html>

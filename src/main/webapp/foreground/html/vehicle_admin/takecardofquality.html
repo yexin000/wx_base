@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.prompt.css" type="text/css"></link>
+		
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myMain.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/jquery.prompt.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/jquery-migrate-1.1.1.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		
+<style type="text/css">
+.prompt_tmp{
+	width:400px;
+	margin:10px;
+}
+.prompt_tmp pre{
+	text-align:left;
+	padding-left:5px;
+}
+
+
+		
+</style>
+		
+		<script type="text/javascript">
+			function ToUrl(x)   {         location.href=x;   } 
+			
+			
+			var code="";
+			$(document).ready(function(){
+				insert("补换领合格标志");
+				ProgressBar.init();
+				ProgressBar.show();
+				token = getCookie("token");
+				var params = '{"token":"TOKEN","sfzmmc":"SFZMMC","sfzmhm":"SFZMHM"}';
+				params = params.replace("TOKEN",getQueryString("zscgToken"))
+						.replace("SFZMMC",getQueryString("SFZMMC")).replace("SFZMHM",getQueryString("SFZMHM"));
+				var rul = WebServiceUtil.selectBindedCar(params,loadInfo);
+				
+				$("input#submit").click(function(){
+					
+					var hpxx = $("#cpxx").val();
+					
+					//申请原因
+					var insqyy = $("#chengeIdCard option:selected").val();
+					//邮政编码
+					var inyzbm = $("#yzbm").val().replace(/[ ]/g,"");
+					//手机号码 
+					var inlxdh = $("#lxdh").val().replace(/[ ]/g,"");
+					var inyjdz	= $("#yjdz").val().replace(/[ ]/g,"");
+					//获得备注
+					var inbz = $("#bz").val();
+					sqr = getCookie("openId");
+					
+					if(validate_vehicle(cacheHpzl,hpxx,inlxdh,inyzbm)==0) return;
+					
+					var params = "{\"token\":\""
+						+ getQueryString("zscgToken")
+						+ "\",\"hpzl\":\""
+						+ cacheHpzl
+						+ "\",\"hphm\":\""
+						+ hpxx
+						+ "\",\"lxdh\":\""
+						+ inlxdh
+						+ "\",\"yzbm\":\""
+						+ inyzbm
+						+ "\",\"zsxxdz\":\""
+						+ inyjdz
+						+ "\",\"sjly\":\"C\",\"sqr\":\""
+						+ sqr
+						+ "\",\"sqrip\":\"192.168.1.1\",\"ywlx\":\"2\",\"stdcgs\":\"\",\"bz\":\""
+						+ inbz
+						+ "\",\"sqyy\":\""
+						+ insqyy + "\"}";
+						ProgressBar.show();
+						var result = WebServiceUtil.getMarkOfConformity(params,callback);
+
+					});
+			});
+
+			function validate_vehicle(hpzl, hphm, sjhm, yzbm) {
+
+				if (checkHphm(hpzl, hphm) == 0)
+					return 0;
+				if (isValidMobileNum(sjhm) == 0)
+					return 0;
+				if (isValidPostalCode(yzbm) == 0)
+					return 0;
+			};
+			
+
+			function callback(msg) {
+				var jsonObject = eval("(" + msg + ")");
+				ProgressBar.hide();
+				if (jsonObject.head.code != 1) {
+					Showbo.Msg.alert(jsonObject.head.message);
+				//	eval($("#tmpt").text($.Prompt(jsonObject.head.message)));
+					return;
+				}
+				//eval($("#tmpt").text($.Prompt("机动车补领合格标志成功")));
+				Showbo.Msg.alert(jsonObject.head.message);
+			}
+
+			var infoObject;
+			function loadInfo(msg) {
+				ProgressBar.hide();
+				if (msg != null) {
+					infoObject = eval("(" + msg + ")");
+					if (infoObject.head.code != 1) {
+						Showbo.Msg.alert(infoObject.head.message);
+						Showbo.todo = function(){
+							window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe1514fa969a3bc65&redirect_uri=http%3A%2F%2Fjhwxv2.test.hzcdt.com%2Fweixin%2Fforeground%2Fhtml%2Fvehicle_admin%2FWxZscgRegister.html&response_type=code&scope=snsapi_base&state=0#wechat_redirect";
+						};
+						return;
+					} else {
+						if(infoObject.head.rownum <= 0){
+							Showbo.todo = function(){
+								window.history.go(-2);
+							};	
+						}
+					}
+					var body = infoObject.body;
+					for ( var i in body) {
+						$("#cpxx").append("<option value="+infoObject.body[i].hphm+">"
+										+ decode(infoObject.body[i].hpzl) + ":浙" + infoObject.body[i].hphm
+										+ "</option>");
+						$("#lxdh").val(infoObject.body[i].sjhm);
+						$("#yjdz").val(infoObject.body[i].zsxxdz);
+						$("#yzbm").val(infoObject.body[i].yzbm1);
+					}
+					changeInfo();
+					document.getElementsByTagName('span')[0].innerHTML = $("#cpxx").find(
+							"option:selected").text();
+				}
+			}
+
+			var cacheHpzl;
+			var sqr;
+
+			function changeInfo() {
+				for ( var i in infoObject.body) {
+					if (infoObject.body[i].hphm == $("#cpxx").val()) {
+						cacheHpzl = infoObject.body[i].hpzl;
+						$("#lxdh").val(infoObject.body[i].sjhm);
+						$("#yjdz").val(infoObject.body[i].zsxxdz);
+						$("#yzbm").val(infoObject.body[i].yzbm1);
+						break;
+					}
+				}
+			}
+		</script>
+	</head>
+
+	<body>
+		<div data-role="page" data-theme="s" id="page">
+			<div data-role="content">
+				<form method="post">
+					<table align="center">
+						<tbody>
+							<tr>
+								<td width="35%" >
+									<div>
+										<label style="padding-left: 5px">
+											车牌信息：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<select class="inputSelect" name="cpxx" id="cpxx" onchange="changeInfo();">
+											
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%">
+									<div>
+										<label style="padding-left: 5px">
+											补领原因：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<select id="chengeIdCard" name="chengeIdCard">
+											<option value="B">
+												遗失
+											</option>
+											<option value="C">
+												损坏
+											</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%">
+									<div>
+										<label style="padding-left: 5px">
+											邮政编码：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<input maxlength="6" id="yzbm"
+											type="text" placeholder="请输入邮政编码" value=""/>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%">
+									<div>
+										<label style="padding-left: 5px">
+											手机号码：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<input id="lxdh" type="text" maxlength="11" 
+											placeholder="请输入手机号码" value=""/>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%">
+									<div>
+										<label style="padding-left: 5px">
+											邮寄地址：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<textarea id="yjdz"  placeholder="请输入邮寄地址"></textarea>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td width="10%">
+									<div>
+										<label style="padding-left: 5px">
+											备注：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<textarea id="bz" style="resize: none; width: 180px; height: 30px;"
+											placeholder="添加备注，可不填写"></textarea>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div>
+										<input id="submit" pid="tmpt" type="button" value="申请" data-theme="s"
+											data-corners="false" onclick="" />
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+				
+			</div>
+		</div>
+	</body>
+</html>
+

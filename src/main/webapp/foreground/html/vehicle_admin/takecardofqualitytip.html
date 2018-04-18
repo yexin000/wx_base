@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<link rel="stylesheet" href="/weixin/foreground/css/alltip.css">
+
+	<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/alltip.js"></script>
+		
+	<script type="text/javascript">
+		$(document).ready(function() {
+		
+			var content = '<p>1.该申请仅限于因机动车检验合格证标 志遗失补领或损坏换领。</p>'
+			     +'<p>2.机动车检验合格标志遗失或损坏申请 人提出补换领申请后，车管所将根据您的 申请为您制作核发机动车检验合格标'
+				 +'志。如办理换领业务的原机动车检验合 格标志请自行销毁不得继续使用。</p>'
+			     +'<p>3.请特别注意：补换领检验合格标志不 收取工本费一旦您提交了网上办理的申 请您就必须支付相应的邮递费用 。</p>'
+			
+			var f = Showbo.Msg.contip(content);
+			
+			Showbo.sure = function(){
+				location.href = "/weixin/foreground/html/vehicle_admin/takecardofquality.html?zscgToken="
+						+ getQueryString("zscgToken") + "&sfzmmc=" + getQueryString("sfzmmc") + "&sfzmhm=" + getQueryString("sfzmhm");
+			}
+		
+			Showbo.cancel = function(){
+				window.history.back(-1);
+			}
+		});
+	</script>
+
+	</head>
+
+	<body>
+	</body>
+</html>

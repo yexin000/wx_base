@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+			var appid = "wxe1514fa969a3bc65";
+			function GetQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+			var code = GetQueryString("code");
+			if( code == null){
+				var redirect = encodeURIComponent(window.location.href);
+				var codeurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appid + "&redirect_uri="+redirect+"&response_type=code&scope=snsapi_base&state=0#wechat_redirect";
+	    		window.location.href = codeurl;
+			}
+		</script>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="format-detection" content="email=no" />
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=0" />
+		<title>考试预约</title>
+		
+		<link rel="stylesheet" href="../../css/progressbar.css">
+		<link rel="stylesheet" href="../../css/ningboweb.css">
+		<link rel="stylesheet" href="../../css/myAlert.css">
+		<script src="../../js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="../../js/writedwr.js"></script>
+		<script type="text/javascript" src="../../js/spin.min.js"></script>
+		<script type="text/javascript" src="../../js/progressbar.js"></script>
+		<script type="text/javascript" src="../../js/myAlert.js"></script>
+		<script type="text/javascript" src="../../js/local_save.js"></script>
+		<script type='text/javascript' src='/weixin/dwr/interface/JsapiService.js'></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript">
+			var openId = "";
+			var appid = "wxe1514fa969a3bc65";
+			$(document).ready(function(){
+				var code =  getQueryString("code");
+				openId = getCookie("OPENID");
+				if(openId != null && openId != "") {
+					getWxIsBind();
+				} else {
+					getOpenId(code);
+				}
+			});
+
+			function getWxIsBind() {
+				var zscgParams = '{"wxid":"WXID","time":"TIME","ywlx":"YWLX"}';
+				zscgParams = zscgParams.replace("WXID", openId).replace("TIME", new Date()).replace("YWLX", "1");
+				WebServiceUtil.wxZscgIsbind(zscgParams, zscgCallback);
+			}
+
+			function getOpenId(coded) {
+				if(is_weixn()){
+					WebServiceUtil.madeUrl(coded, callbackOpenId);
+				}else{
+					location.href = "../error.html";
+				}
+			}
+			
+			function is_weixn(){
+			    var ua = navigator.userAgent.toLowerCase();
+			    if(ua.match(/MicroMessenger/i)=="micromessenger") {
+			        return true;
+			    } else {
+			        return false;
+			    }
+			}
+
+			function callbackOpenId(msg) {
+				var jsonObject = eval("(" + msg + ")");
+				if(jsonObject.openid == 'undefined'){
+					Showbo.Msg.alert("服务器异常，请关闭页面重新进入");
+					Showbo.todo = function(){
+						closePage();
+					};
+				} else {
+					openId = jsonObject.openid;
+					if(openId != null && openId != "") {
+						setCookie("OPENID", openId);
+						getWxIsBind();
+					} else {
+						//Showbo.Msg.alert("服务器异常，请关闭页面重新进入");
+						//Showbo.todo = function(){
+							closePage();
+						//};
+					}
+				}
+			}
+
+			window.onload = function() {
+				JsapiService.sign(document.location.href , jsapiCallback);
+			}
+
+			function jsapiCallback(data) {
+				if(data != null) {
+					var dataJson = eval("("+data+")");
+					wx.config({
+					  debug: false,
+					  appId: appid,
+					  timestamp: dataJson.timestamp,
+					  nonceStr: dataJson.nonceStr,
+					  signature: dataJson.signature,
+					  jsApiList: [
+						'closeWindow'
+					  ]
+				  });
+				} else {
+					alert("Error!!!!");
+				}
+			}
+
+			function closePage() {
+				wx.closeWindow();
+			}
+
+			function zscgCallback(msg) {
+				if (msg != null) {
+					var jsonObject = eval("(" + msg + ")");
+					if (jsonObject.head.code != 1) {
+						Showbo.Msg.alert(jsonObject.head.message);
+						Showbo.todo = function(){
+							window.location.href = "./WxExamRegister.html";
+						};
+					} else {
+						var sfzmhm = jsonObject.body[0].sfzmhm;
+						window.location.href = "http://115.238.107.211:6080/drv_web/wxindex.do?wxid="+openId+"&sfzmhm="+sfzmhm;
+					}
+				}
+			}
+
+			function getQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+		</script>
+	</head>
+</html>

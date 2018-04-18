@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+  		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv=Content-Type content="text/html;charset=gbk">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		
+		<script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/pageparams.js"></script>
+    
+    	<script type="text/javascript">
+			$(document).ready(function(){
+			var str = 'Could not invoke service iFirx did not defind!';
+			//var strCode = 'Could not invoke service';
+			if (str.indexOf('Could not invoke service')>=0) {
+				alert("服务器正忙，请稍候再试！");
+			}
+			
+			
+				Pageparams.postRequest('page');
+				/*$.post("http://nbwxtest.hzcdt.com/weixin/wxCode/queryListByCode.do",{code:"pp"},function(data){
+					if(window.localStorage){   
+   						//支持   
+   						localStorage.setItem("d_title",data.rows[0].value);
+						localStorage.setItem("d_floot",data.rows[1].value);
+					}else{
+						//不支持
+						Cookie.write("d_title", data.rows[0].value);
+						Cookie.write("d_title", data.rows[0].value);	
+					}
+					
+					alert(JSON.stringify(data));
+					
+				//	document.title=	data.rows[0].value;
+				//	addHead("测试页面参数接口",data.rows[1].value);
+					
+				});*/
+				showData();
+			});
+			
+			function showData(){
+				document.title=	localStorage.getItem("d_title");
+				addHead("测试页面参数接口",localStorage.getItem("d_floot"));
+			}	
+		</script>
+
+  </head>
+  
+  <body>
+  
+  	<input style="margin-top: 50px;" type="button" value="测试localStorage" onclick="location.href ='./test1.html'"/>
+  
+  </body>
+</html>

@@ -1,0 +1,344 @@
+/*---------------------------------------------------
+m1 鏀粯淇℃伅
+---------------------------------------------------*/
+.m1{background:#fff; position:relative; padding:25px 0; border-bottom:1px solid #c8c8c8;}
+.m1 .mh{padding-left:30px; line-height:25px;}
+.m1 .mh .mc1{ margin:20px 15px 0 0;}
+.m1 .mh .mc2{padding-top:7px;}
+.m1 .mb{padding-left:29px; padding-bottom:18px;}
+.m1 h2{ font-size:16px;}
+.m1 .mr1{ font-size:13px; padding-left:6px;}
+/*---------------------------------------------------
+m2 浜岀淮鐮�
+---------------------------------------------------*/
+.m2{padding:10px; background:#EFEFEF;}
+.m2 .mh{margin-left:-8px; margin-bottom:9px;}
+.m2 .mh .mc{width:50%; padding-left:8px; box-sizing:border-box;}
+.m2 .mb{border:1px solid #DFDFDF; background:#fff; padding-bottom:20px; text-align:center; color:#797979;}
+.m2 .mb .mr1{ text-align:left; padding:10px; margin-bottom:8px; border-bottom:1px solid #c8c8c8;}
+.m2 .mb .mr1 .mc1{margin-right:3px; font-size:15px;}
+.m2 .mb .mr2{text-align:left;margin-bottom:10px; padding:0 15px 5px 10px; font-size:15px;}
+.m2 .mr2 strong{ color:#000; font-size:18px;}
+.m2 .mb .mr3{position:relative;}
+.m2 .mb .mr3 .f_icon_s{position:absolute; left:50%; top:8px; margin-left:51px;}
+.m2 .mb .mr4{width:7em; line-height:1.5; margin:0 auto;}
+.m2 .mf{border:1px solid #DFDFDF; margin-top:-1px; background:#fff; padding:13px 9px; line-height:1.5;}
+.m2 .mf .mr2 .mc{width:50%; float:left;}
+.m2 .mf dt{color:#BDBDBD;}
+.m2 .mf .mr1{ margin-bottom:9px;}
+.m2 .list_st_border{ border-width:0 0 1px 0; text-align:left;}
+.m2 .list_st_border li{ line-height:1.5; padding:5px 10px;}
+/*---------------------------------------------------
+m2 璁㈠崟璇︽儏 浜岀淮鐮�
+---------------------------------------------------*/
+.m2 .mr3 .f_icon7{position:absolute; top:50px;}
+.m2 .mr3 .f_icon7,
+.m2 .mr3 .f_icon7_act{right:10px;}
+.m2 .mr3 .f_icon7_left{ left:10px;}
+.m2 .mr4{ font-size:16px; margin-top:10px !important;}
+.txtrefund{ color:#666; font-size:12px; text-indent:10px; margin-bottom:12px;}
+.refund span{ margin-left:16px;}
+.refund span.codeSequence{ margin-left:0px;}
+.refund i{ position:absolute; right:10px; top:50%; margin-top:-5px;}
+.m2 .w_slider{  margin:0 10px;}
+/*---------------------------------------------------
+m3 閲嶆柊鏀粯
+---------------------------------------------------*/
+.m3{padding:20px 10px;}
+/*---------------------------------------------------
+m4 璁㈠崟淇℃伅
+---------------------------------------------------*/
+.m4{margin:10px;}
+.m4 h2{font-size:16px; text-indent:11px;}
+.m4 .mh{margin-bottom:7px;}
+.m4 .mb{border:1px solid #BCBCBC; background:#fff; line-height:1.5;}
+.m4 .mb .s1{margin-right:10px;}
+.m4 .mb dt{margin-right:23px;}
+.m4 .mb dd{overflow:hidden;}
+.m4 .mb .mr1{ padding:10px; font-size:16px;}
+.m4 .mb .mr2{ padding:10px; border-top:1px solid #BCBCBC; font-size:16px;}
+.m4 .mf{margin-top:10px;}
+.m4 .mfr1 .mc{ width:48%;}
+/*---------------------------------------------------
+m5 鍟嗘埛鍏堜粯
+---------------------------------------------------*/
+.m5{margin:10px;}
+.m5 h2{font-size:16px; text-indent:11px;}
+.m5 .mh{margin-bottom:7px;}
+.m5 .mb{margin-bottom:10px;}
+.m5 .mb .mr2{padding:10px 10px 0;}
+.m5 .mb .wr1 .wc1{ display:inline-block; width:70px;}
+.m5 .mb .wr1 .wc2{overflow:hidden; font-size:15px; }
+.m5 .wc2 .cui-view {text-align:right;}
+.m5 .mb .wr2{text-align:center;}
+.m5 .mb .wr2 img{vertical-align:middle; margin:0 auto;}
+.m5 .mb .wr3{ color:#A1A1A1; text-align:center;}
+.m5 .mr1 .mc1{ display:block; overflow:hidden; margin-right:50px; line-height:1.5; padding:10px 0; font-size:15px;}
+.m5 .mr1 .mc2{position:absolute; right:27px; top:50%; margin-top:-21px;}
+.m5 .mb .wr2 #qrcode{width:250px;height:250px;margin: 0px auto;}
+.m5 input{padding: 0; vertical-align:middle; font-style:normal;}
+.m5 .list_st_border li:active{ background:none;}
+#checkAmountPlaceholder {position: absolute;top: 12px;line-height: 20px;left: 80px;color: #aaa;}
+/*.list_st_border li{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}*/
+
+
+/*---------------------------------------------------
+m5_1 璁㈠崟璇︽儏
+---------------------------------------------------*/
+.m5_1 .mb .wr1 .wc1{ width:auto;}
+.m5_1 .page{ text-align:center; margin-top:-10px;}
+.m5_1 .wr4 .wc1{ padding:10px;}
+.m5_1 .wr4 .wc2{ overflow:hidden;}
+.m5_1 li{ position:relative;}
+/*---------------------------------------------------
+m5_2 濂楅缁撹处 璁㈠崟璇︽儏
+---------------------------------------------------*/
+.m5_2 .list_st_border li{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);}
+/*---------------------------------------------------
+m6 骞荤伅
+---------------------------------------------------*/
+.m6 h2{position:absolute; clip:rect(0,0,0,0);}
+
+/*---------------------------------------------------
+m7 绮鹃€夊晢鎴�/鐗归€夊椁�
+---------------------------------------------------*/
+.m7{margin-bottom:40px;}
+
+.m7 .mb li{border:1px solid #DADADA; margin-bottom:10px; background:#fff;}
+.m7 .mb img{width:100%;border:0 none;}
+.m7 .mb h3{ font-size:16px;}
+.m7 .mb .mr2{padding:10px;}
+.m7 .mb .wb{ padding:6px 10px 10px;}
+.m7 .ul1 .wr1{ margin-bottom:2px;}
+.m7 .ul1 .wr1 .wc2{ font-size:13px; color:#797979;}
+.m7 .mb .wr2 .wc1{padding-top:2px;}
+.m7 .mb .wr2 .wc1,
+.m7 .mb .wr3 .wc1{color:#797979; font-size:13px;}
+/*.m7 .mb .wr2 .wc2{overflow:hidden;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}*/
+.m7 .mb .wr2 .wc2{overflow:hidden; text-overflow:ellipsis; color:#797979; font-size: 13px;}
+.m7 .mf{position:relative;height:40px;}
+.m7 .mf .f_icon_s{ margin-right:5px;}
+.m7 .cui-f-layer{ position:absolute; width:100px; top:-130px; left:25%;}
+.m7 .cui-f-layer li{padding:8px 10px; position: relative;}
+/*.m7 .f_icon1{ left:37px;}*/
+.m7 .f_icon1{ position: absolute; right: 0;padding-top: 5px;}
+.m7 .mr3{color:#8D8D8D; text-align:center; line-height:1.5;}
+.m7 .mr3 .f_icon_s{margin-bottom: 10px;}
+.m7 .wr1 .wc1{font-size: 16px; overflow:hidden;}
+.m7 .w_market{margin:0px;}
+.m7 .cprice{ font-size:18px;}
+/*---------------------------------------------------
+m8 绠€浠�
+---------------------------------------------------*/
+.m8{ border:1px solid #BCBCBC; background:#fff; padding:10px; margin-bottom:10px; margin:10px;}
+.m8 h2{position:absolute; clip:rect(0,0,0,0);}
+.m8 .mr2{ line-height:1.5; margin-bottom:5px;}
+.m8 .mr3 .s2{font-size:13px; color:#797979;}
+.m8 h3{ font-size:16px;}
+.m8 .mc1 .txt16{ font-size:16px; color:#666; vertical-align:top;}
+/*---------------------------------------------------
+m9 姒傝/鍥炬枃璇︽儏
+---------------------------------------------------*/
+.m9{  margin-bottom:10px; margin:10px;}
+.m9 .mh{border:1px solid #BCBCBC; border-bottom:none;}
+.m9 .mb1 .mr1,
+.m9 .mb2{background:#fff; padding:10px 5px 10px 10px; line-height:1.5;border:1px solid #BCBCBC; border-top:none;}
+.m9 .mb h3{margin:5px 0;}
+.m9 .mb p{margin-bottom:5px; word-break:break-word;}
+.m9 .mb img{width:100%; vertical-align:middle;}
+.m9 .mb2 .mr3{ margin:5px 0 10px;}
+.m9 .mb2 li{ margin-bottom:20px;}
+
+/*---------------------------------------------------
+m11 濂楅缁撳笎
+---------------------------------------------------*/
+
+/*---------------------------------------------------
+m12 绔嬪嵆鏀粯
+---------------------------------------------------*/
+
+/*---------------------------------------------------
+m13 鍟嗘埛璇︽儏_濂楅
+---------------------------------------------------*/
+.m13{padding:10px;}
+.m13 h2{font-size:16px; text-indent:11px; margin-bottom:5px;}
+.m13 h2.shopname{line-height: 20px; text-indent:0; font-family:"Microsoft YaHei";}
+.m13 .mh{padding:0 10px;}
+.m13 .mr{margin-bottom:10px;}
+.m13 .mr1 .list_st_border li,
+.m13 .mr2 .list_st_border li,
+.m13 .mr3 .list_st_border li{line-height:1.5; padding:10px 10px 10px 37px;}
+.m13 .list_st_border .w_market,
+.m13 .list_st_border .f_icon_s{ position:absolute; left:10px; top:50%;-webkit-transform:translate(0,-50%); transform:translate(0,-50%);}
+.m13 .list_st_border li pre{white-space: normal;}
+.m13 .mr2 .list_st_border .li1{ word-break:break-word; padding-left:10px;}
+.m13 .mr2 .mc1:after{content:''; width:0; height:100%; display:inline-block; vertical-align:middle;}
+.m13 .mr2 .mc2{overflow:hidden;}
+.m13 .mr4{ margin-left:10px;}
+.m13 .mr4 h3{color:#8D8D8D; margin-bottom:5px;}
+.m13 .mr4 li{color:#C6C6C6; margin-bottom:5px;}
+.m13 .mr4 p{color:#C6C6C6; font-size:12px;}
+.m13 .mr4 pre{color:#C6C6C6; font-size:12px; margin-bottom:5px;}
+.m13 .mr3 .f_icon_s{ margin-right:5px;}
+.m13 .mr3 .w_market{ margin-left:0; margin-right:5px; position: absolute; top: 50%; -webkit-transform:translate(0,-50%);transform:translate(0,-50%);}
+.m13 .mr3 .cprice{ right: 20px; position: absolute; top: 50%; -webkit-transform:translate(0,-50%);transform:translate(0,-50%);}
+.m13 .mr3 p{ margin-left: 12px; margin-right: 70px;}
+.m13 p{margin-right:15px;}
+.m13 .w_market{ margin-left:0;}
+
+/*---------------------------------------------------
+m14 绛涢€夋棤缁撴灉
+---------------------------------------------------*/
+.m14 .mr2{text-align:center; padding-top:75px; margin-bottom:5px;}
+.m14 .mr3{color:#8D8D8D; text-align:center; line-height:1.5;}
+.m14 .w_succeed_icon{ border-color:#BEBEBE;}
+.m14 .w_succeed_icon:before,
+.m14 .w_succeed_icon:after{background:#BEBEBE;}
+/*---------------------------------------------------
+m15 寮瑰嚭閫夋嫨鎺т欢
+---------------------------------------------------*/
+.m15{position:fixed; left:0; top:0; right:0; bottom:0; background:rgba(0,0,0,0.3); z-index:9999;}
+.m15 .cui-pop-box {
+-webkit-transform: translate(-50%,-50%);
+top: 50%;
+left: 50%;
+position: absolute;
+}
+.m15 .cui-pop-box .cui-hd{background:#1491c5;height:auto; max-height:55px; line-height:30px; padding:10px 34px 10px 0;}
+.m15 .cui-pop-box .cui-hd .cui-top-close{background:none; top:50%; right:0; margin-top:-12px; position:absolute;}
+.m15 .cui-pop-box .cui-hd .cui-top-close:before,.m15 .cui-pop-box .cui-hd .cui-top-close:after{background:#fff; height:15px;}
+.m15 .cui-select-view li:active{ background:none;}
+.m15 .cui-bd{ overflow-y:scroll;-webkit-overflow-scrolling:touch;}
+/*濡備綍鐢ㄦ惡绋嬬粨甯�*/
+.m15_1 .mc1{ width:50px;}
+.m15_1 .mc2{overflow:hidden;}
+.m15_1 dd{color:#939393}
+.m15_1 .cui-select-view li{white-space:normal; padding:14px 20px;}
+.m15_1 .f_icon_s10,
+.m15_1 .f_icon_s13{margin-left:3px;}
+.m15_1 .f_icon_s12 { margin-top:18px;}
+.m15_1 .f_icon_s11,.m15_1 .f_icon_s13{margin-top:15px;}
+
+/*---------------------------------------------------
+m17 鏀粯鏂瑰紡
+---------------------------------------------------*/
+.m17{padding:10px;}
+.m17 .mh{margin-bottom:5px;}
+.m17 li{line-height:1.5; padding:10px; position:relative;}
+.m17 li .mc2{position:absolute; right:30px; top:20px;}
+.m17 .mr1{margin-bottom:10px;}
+.m17 .mr2{text-align:right;}
+.m17 .mf{margin-top:40px;}
+.m17 .mf .mr{text-align:center; margin-bottom:14px;}
+
+.affixed{
+	position: fixed;
+	width: 100%;
+  left: 0;
+  z-index:999;
+}
+.affixed-bottom
+{
+    position:fixed;
+	width: 100%;
+	left:0;
+	bottom:0;
+    z-index:999;
+}
+/* 瀹氫綅搴曢儴鐨勫崰浣� */
+.affixed-bottom-div
+{
+    height:44px;
+}
+#ViewProductSum{ padding-bottom:5px; border-bottom:1px solid #ccc;}
+
+
+/*---------------------------------------------------5.7楂樼鍟嗘埛---------------------------------------------------*/
+/*---------------------------------------------------
+m13 鍟嗘埛璇︽儏
+---------------------------------------------------*/
+.m13 .mr5{ background:#fff; border: 1px solid #cfcfcf; padding:10px;}
+.m13 .mr5 h3{ margin-bottom:5px;}
+.m13 .mr5 p{ margin:0;}
+.help{ display:block; text-align:right; margin-top:10px;font-size:15px;}
+.help a{color: #099fde; }
+.m13 .mr2 span.mc2{display:inline-block; vertical-align:middle; line-height:normal; width:80%; overflow:hidden; white-space:nowrap;}
+.m13 .mr2 span.mc3{ position:absolute; right:25px; top:0; display:inline-block; width:110px; height:40px; line-height:40px; text-align:right; color:#666; display:inline-block; background:url(../img/bg_mask.png) no-repeat;background-size:135px 40px;}
+
+/*---------------------------------------------------
+m16 璁㈠崟鍒楄〃
+---------------------------------------------------*/
+.m16{padding:10px; color:#666;}
+.m16 .list_st_border{ margin-bottom:10px;}
+.m16 .mr1{padding:0 10px; line-height:32px; border-bottom:1px solid #cfcfcf;}
+.m16 .mr1.warning{ background:#fffce7;}
+.m16 .mr1 .cprice{ float:right;}
+.m16 .mr2{ padding:10px; overflow:hidden;}
+.m16 .mr2 p{ display:inline-block; width:85%; color:#000; font-size:16px;}
+.m16 .mr2 span{ float:right; margin-top:2px;}
+.m16 .mr3{ padding:6px 10px; text-align:right;border-top: 1px solid #e6e6e6;}
+.m16 .mr3 button{ background:#ff9a14; color:#fff; padding:0 10px; line-height:25px; border-radius:3px; }
+
+.m16 .mf{ margin:0 auto; text-align:center;}
+.m16 .mf .mr1{ margin:30px 0 10px; border:none;}
+.m16 .mf .f_text1{ display:block; font-size:15px; color:#666; margin-bottom:15px;}
+/*---------------------------------------------------
+甯歌闂
+---------------------------------------------------*/
+.helplist{background:#fff; color:#000;font-size: 16px; border:1px solid #cfcfcf; border-bottom:none; margin:10px;}
+.question {padding: 12px 10px; background:#fff;border-bottom: 1px solid #cfcfcf;-webkit-user-select: none;}
+.answer { display:none; background: #efefef;padding: 12px 10px;border-bottom: 1px solid #cfcfcf;}
+
+.demowrap{width: 100%; overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.democontent{width: 200%; overflow-y:hidden;}
+.demom1,.demom2{ float:left; width: 50%;-webkit-box-sizing:border-box;box-sizing:border-box;}
+
+/*---------------------------------------------------
+OrderList澶撮儴鏍峰紡
+---------------------------------------------------*/
+.btn-drop {
+display: inline-block;
+line-height: 34px;
+padding: 0 10px;
+border: 1px solid #006591;
+background-color: #149fde;
+border-radius: 4px;
+}
+
+.btn-drop:after {
+display: inline-block;
+content: "";
+margin-left: 5px;
+vertical-align: -2px;
+width: 0;
+height: 0;
+border-style: solid;
+border-width: 6px;
+border-color: #fff transparent transparent transparent;
+}
+
+/*---------------------------------------------------
+OrderList澶撮儴鏍峰紡
+---------------------------------------------------*/
+element.style {
+position: absolute;
+top: 12px;
+line-height: 20px;
+left: 39px;
+}
+/*---------------------------------------------------
+5.7.3甯歌鍙戝竷 07/16
+---------------------------------------------------*/
+.m18 .mr2 .list_st_border li,.m18 .mr3 .list_st_border li{ padding:10px; background:none;}
+.m18 .refund i{margin-top:-9px;}
+.m18 .checkbox_wrap_c i{ border-radius:0;}
+.wc2 p.w9{ width:90%;}
+/*---------------------------------------------------
+寰俊璺宠浆
+---------------------------------------------------*/
+.wm1 {background:url(../img/img01.png) no-repeat;background-size:172px 191px;width:172px;height:191px;margin:20px auto;}
+.wm2{ text-align:center;}
+.wm2 button{ width:50%; height:28px; line-height:28px; text-align:center; background:#0c9012; color:#fff; border-radius:4px;}
+.wm3{ margin:20px; color:#3e3e3e;}
+.wm3 h2{ font-size:16px; font-weight:700; color:#000; margin-bottom:10px;}
+.wm4{ text-align:center; color:#919191;}

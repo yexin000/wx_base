@@ -1,0 +1,167 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/oper_min.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+			
+		<script type="text/javascript">
+			var openId;
+			$(document).ready(function() {
+				insert("可选车号");
+				if(window.localStorage){ 
+					$("#fzjg").html(localStorage.getItem("fpjg"));
+				}else{
+					$("#fzjg").html(getCookie("fpjg"));
+				}
+			
+				openId = unescape(GetQueryString("openId"));
+				var sfzmhm = unescape(GetQueryString("sfzmhm"));
+				if(sfzmhm != null && sfzmhm != "null") {
+					document.getElementById("choice_td_last").style.display='block'; 
+					document.getElementById("choice_td_query").style.display='block'; 
+					document.getElementById("search_td").style.display='none'; 
+				} else {
+					document.getElementById("choice_td_last").style.display='none'; 
+					document.getElementById("choice_td_query").style.display='none'; 
+					document.getElementById("search_td").style.display='block'; 
+				}
+				// 获取可选号牌区间
+				ProgressBar.init();
+				ProgressBar.show();
+				if(window.localStorage){ 
+					var params = "{\"hdid\":\"999\",\"fzjg\":\""+localStorage.getItem('fpjg')+"\"}";
+				}else{
+					var params = "{\"hdid\":\"999\",\"fzjg\":\""+getCookie('fpjg')+"\"}";
+				}
+				WebServiceUtil.getNumArea(params, callbackGetNumArea);
+			});
+			function callbackGetNumArea(msg) {
+				ProgressBar.hide();
+				if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+					if(head.code == 1) {
+						var body = jsonObject.body;
+						var minhphm = body[0].minhphm;
+						var maxhphm = body[0].maxhphm;
+						document.getElementById("hphmarea").innerHTML = "(" + "浙" + minhphm + "-" + "浙" + maxhphm + ")";
+					} else {
+						Showbo.Msg.alert(head.message);
+					}
+				}
+			}
+			function writein() {
+				if(document.getElementById('hp').value.length < 5) {
+					document.getElementById('hp').value += "*";
+				}
+			}
+			function commit(){
+				var sfzmhm = unescape(GetQueryString("sfzmhm"));
+				var sfzmmc = unescape(GetQueryString("sfzmmc"));
+				var syr = unescape(GetQueryString("syr"));
+				var sfyj = unescape(GetQueryString("sfyj"));
+				var clsbdh = unescape(GetQueryString("clsbdh"));
+				var fdjh = unescape(GetQueryString("fdjh"));
+				var hgzbh = unescape(GetQueryString("hgzbh"));
+				var gcjk = unescape(GetQueryString("gcjk"));
+				var sjhm = unescape(GetQueryString("sjhm"));
+				var pzbh1 = unescape(GetQueryString("pzbh1"));
+				
+				var queryCon = document.getElementById('hp').value;
+				if (queryCon.length != 5) {
+					Showbo.Msg.alert("您输入的号牌号码或通配符的长度不对！");
+					return; 
+				}
+				ToUrl("/weixin/foreground/html/vehicle_admin/choicecarnumber.html?queryCon=" + escape(queryCon)
+					+ "&sfzmmc=" + escape(sfzmmc) + "&syr=" + escape(syr) + "&sfzmhm=" + escape(sfzmhm)
+					+ "&clsbdh=" + escape(clsbdh) + "&sfyj=" + escape(sfyj) + "&sjhm=" + escape(sjhm)+ "&pzbh1=" + escape(pzbh1)
+					+ "&fdjh=" + escape(fdjh) + "&hgzbh=" + escape(hgzbh) + "&gcjk=" + escape(gcjk) + "&openId=" + escape(openId));
+			}
+			function GetQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+			function ToUrl(x)   {         location.href=x;   }
+		</script>
+	</head>
+
+	<body>
+		<div data-role="page" data-theme="s" id="page">
+			<div data-role="content" class="center" role="main"
+					style="margin-bottom: 3.8em;">
+				<table align="center" style="margin-left:20px;margin-right:20px">
+					<tbody>
+						<tr>
+							<td colspan="3" style="color: #FF9900">
+								<p>
+									查询规则：1.*作为通配符号;
+								</p>
+								<p style="padding-left: 80px;">
+									2.如要查询A1开头的号牌，则输入A1***，以此类推;
+								</p>
+								<p style="padding-left: 80px;">
+									3.此处查询车号仅用于本应用及互联网选号。
+								</p>
+								<p style="padding-left: 80px;">
+									4.当前可选号牌区间<font id="hphmarea"></font>。
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								请输入号牌号码：
+							</td>
+						</tr>
+						<tr>
+							<td id="fzjg">
+							</td>
+							<td>
+								<input id="hp" type="text"  maxLength="5" value="" onkeyup="this.value=this.value.toUpperCase()" >
+							</td>
+							<td>
+								<input type="button" value="*" onclick="javascript:writein();">
+							</td>
+						</tr>
+						<tr>
+							<td id="search_td" colspan="3" style="display:block;">
+								<input style="background-color: #red" type="button" value="查询" onclick="javascript:commit();">
+							</td>
+						</tr>
+						<tr>
+							<td id="choice_td_last" colspan="1" style="display:none;">
+								<input style="background-color: #red" type="button" value="上一步" onclick="javascript:history.go(-1)">
+							</td>
+							<td id="choice_td_query" colspan="2" style="display:none;">
+								<input style="background-color: #red" type="button" value="查询" onclick="javascript:commit();">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+		</div>
+	</body>
+</html>

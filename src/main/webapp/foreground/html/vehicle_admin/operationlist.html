@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/oper_min.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+        <script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">
+			var count = 0;
+			var check = 0;
+		    var code;
+			$(document).ready(function (){
+				insert("业务进度查询");
+			
+				ProgressBar.init();
+		   		var params = '{"token":"TOKEN","loginid":"LOGINID"}';
+				params = params.replace("TOKEN",getQueryString("zscgToken"))
+						.replace("LOGINID",getQueryString("loginid"));
+				ProgressBar.show();
+		   		var result = WebServiceUtil.operationList(params, callback);
+				
+		  	});
+			
+		  	function callback(msg){
+		  		if(msg != null) {
+		  			var jsonObject = eval("("+msg+")");
+		  			var head = jsonObject.head;
+					var count = head.rownum;
+					
+					if(head.code == 1) {
+						var jobList = document.getElementById("jobList");
+						var body = jsonObject.body;
+						for(var i = 0; i < count; i ++) {
+							var ywlx = body[i].ywlx;
+							var ywlc = body[i].ywlc;
+							var hphm = "浙" + body[i].hm;
+							if(hphm.length > 10) {
+								hphm = body[i].hm;
+							} else {
+								hphm = "浙" + body[i].hm;
+							}
+							var sqsx = body[i].sqsx;
+							var xh = body[i].xh;
+							var zt = body[i].zt - 1;
+							var ywlcs = new Array();
+							ywlcs = ywlc.split(",");
+							var lcCount = ywlcs.length;
+							
+							jobList.innerHTML = jobList.innerHTML 
+								+ "<div id=\"J_oper_plugin\" class=\"li-div-block\">"
+								+ "<div class=\"div\" id=\"li" + i + "\" data-sqsx=\""+sqsx+"\" data-xh=\""+xh+"\" data-zt=\""+zt+"\" onclick=\"javascript:divListClick(this)\" style=\"background-color: #eee; height: 35px;\">"
+								+ "<div style=\"background-color: #eee; height:35px; width: 40%; float: left;\">"
+								+ "<label class=\"li-div-la1\"><p class=\"li-div-la1-p\">" + ywlx + "  </p></label></div><div>"
+								+ "<p class=\"li-div-img\">" 
+								+ hphm 
+								+ "<img id=\"img-li" + i + "\" style=\"margin-left:5px;\" src=\"/weixin/foreground/images/carat-r-black.png\"></img></p></div></div>"
+								+ "<div name=\"list\" class=\"logis-detail\" id=\"child-li" + i + "\" style=\"display: none; background-color: #fff\">"
+								+ "<ul class=\"li-div-top\" id=\"lcList" + i + "\" style=\"padding-right: 0px; list-style-type: none; margin-top: 0px; padding-left: 0px;\">";
+								+ "</ul></div></div>";
+								
+							var lcList = document.getElementById("lcList" + i);
+							for(var j = 0; j < lcCount; j ++) {
+								if(j == zt) {
+									lcList.innerHTML = lcList.innerHTML 
+										+ "<li style=\"background-color: #feedd1\">"
+										+ "<div class=\"logis-detail-d logis-detail-first li-div-block cur-child-1\">"
+										+ "<div class=\"logis-detail-content cur-child-2\"> <p class=\"logis-detail-content-time\"><br/></p>"
+										+ "<p class=\"logis-detail-content-detail\">" + ywlcs[j] + "</p>"
+										+ "</div></div></li>";
+									$(".cur-child-1").css("background","#F40");
+									$(".cur-child-1").css("border-left","2px solid #F40");
+									$(".cur-child-2").css("background","#feedd1");
+									$(".cur-child-2").css("color","#f40");
+								} else {
+									lcList.innerHTML = lcList.innerHTML 
+										+ "<li style=\"background-color: #feedd1\">"
+										+ "<div class=\"logis-detail-d logis-detail-first li-div-block other-child\">"
+										+ "<div class=\"logis-detail-content\"> <p class=\"logis-detail-content-time\"><br/></p>"
+										+ "<p class=\"logis-detail-content-detail\">" + ywlcs[j] + "</p>"
+										+ "</div></div></li>";
+								}
+							}
+							/*lcList.innerHTML = lcList.innerHTML 
+								+ "<div><input onclick=\"backtodo(this)\" id="+i+" style=\"background-color:#f8a114\" type=\"button\" value=\"退办业务\"/></div>"
+								+"<div style=\"height:10px;\"></div>";	*/
+						}
+						
+						if(count == 0) {
+							//eval($("#tmpt").text($.Prompt("没有正在办理的业务。")));
+							Showbo.Msg.alert("没有正在办理的业务。");
+						}
+		  			} else {
+		  				Showbo.Msg.alert(head.message);
+		  				Showbo.todo = function(){
+							window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe1514fa969a3bc65&redirect_uri=http%3A%2F%2Fjhwxv2.test.hzcdt.com%2Fweixin%2Fforeground%2Fhtml%2Fvehicle_admin%2FWxZscgRegister.html&response_type=code&scope=snsapi_base&state=0#wechat_redirect";
+						};
+					}
+				}
+				ProgressBar.hide();
+		  	}
+
+			var itemId = "";
+			var itemUl = "";
+		  	function backtodo(o){
+				var btnId = o.id;
+				itemId = "li"+o.id;
+				itemUl = "lcList"+o.id;
+				var ywlx= $.trim($("#li"+o.id).find("div").find("p").html());
+				var zt = $("#li"+o.id).attr("data-zt")
+				var ywxh = $("#li"+o.id).attr("data-xh");
+				var sx = $("#li"+o.id).attr("data-sqsx");
+				
+				if (zt != 0) {
+					Showbo.Msg.alert("业务正在办理中，暂时不支持退办！");
+					return ;
+				}
+				ProgressBar.show();
+				var params = "{\"token\":\""+token+"\",\"xh\":\""+ywxh+"\",\"ywlx\":\""+ywlx+"\",\"sqsx\":\""+sx+"\",\"sjly\":\"C\"}";
+				var rel = WebServiceUtil.backTodoOper(params,dobackResult);
+			}
+
+			function dobackResult(msg){
+				var jsonObj = eval("("+msg+")");
+				var head = jsonObj.head;
+				if (head.code == 1) {
+					ProgressBar.hide();
+					Showbo.Msg.alert(head.message);
+					$("#"+itemId).remove();
+					$("#"+itemUl).remove();
+				}else{
+					ProgressBar.hide();
+					Showbo.Msg.alert(head.message);
+				}
+			}
+		  	
+		  	function divListClick(o) {
+				if (check == 0) {
+					check = 1;
+					document.getElementById("child-" + o.id).style.display= "";
+					$("img#img-"+o.id).attr("src", "/weixin/foreground/images/carat-d-black.png");
+				} else {
+					check = 0;
+					document.getElementById("child-" + o.id).style.display= "none";
+					$("img#img-"+o.id).attr("src", "/weixin/foreground/images/carat-r-black.png");
+				}
+			}
+	
+			function ToUrl(x)   {         location.href=x;   }  
+		</script>
+
+		<style type="text/css">
+			.li-div {
+				text-align: left;
+				padding-left: 20px;
+				padding-right: 10px;
+				margin-bottom: 10px;
+			}
+			
+			.li-div-la1 {
+				display: inline;
+				padding-top: 10px;
+				padding-left: 25px;
+				text-align: left;
+			}
+			
+			.li-div-la1-p{
+				letter-spacing:2px;
+				font-weight: bold;
+				font-size: 14px;
+				overflow:hidden;   
+   				text-overflow:ellipsis;   
+    			white-space:nowrap; 
+			}
+			
+			.li-div-la2 {
+				display: inline;
+				float: left;
+				width: 100%;
+				margin-bottom: 0px;
+				color:#000000;
+			}
+			
+			.li-div-la2-p{
+				font-size: 12px;
+			}
+			
+			.li-div-img {
+				float: right;
+				padding-top: 10px;
+				padding-right: 14px;
+			}
+			#J_oper_plugin .logis-detail ul li:first-child .logis-detail-first {
+				border-left: 2px solid #60dd0d;
+			}
+			#J_oper_plugin .logis-detail ul li:first-child .logis-detail-first .logis-detail-content {
+				background: #ffffff;
+				color: #000000;
+			}
+			#J_oper_plugin .logis-detail  .cur-child-1:after {
+				background: #f40;
+				border: 2px solid #EEE;
+			}
+			#J_oper_plugin .logis-detail  .other-child:after {
+				background: #60dd0d;
+				border: 2px solid #EEE;
+			}
+			.cur-child-1 {
+				border-left: 2px solid #F40;
+				background: #feedd1;
+			}
+			.cur-child-2 {
+				color: #f40;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div data-role="page" data-theme="s" id='page'>
+			<div class="father center" data-role="content" align="center" id="jobList" role="main"
+				style="text-align: center; padding:0 px; padding-left: 0px; padding-right: 0px;margin-bottom: 3.8em;">
+			</div>
+		</div>
+	</body>
+</html>

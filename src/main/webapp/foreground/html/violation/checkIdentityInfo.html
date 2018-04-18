@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				addHead("验证驾驶证信息");
+    		});
+		
+			function ToUrl(x){   
+				window.location.href=x; 
+			}
+			
+			function nextStep() {
+				var jszh = $("#jszh").val();
+				if(jszh == "") {
+					Showbo.Msg.alert("请输入18位身份证号");
+				} else {
+					if(check_jszh(jszh,$("input#jszh")) == 0)
+						return;
+					var serialNo = getQueryString("serialNo");
+					ToUrl('./checkVerificationCode.html?jszh=' + jszh + '&serialNo=' + serialNo);
+				}
+			}
+			
+			function getQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+		</script>
+	</head>
+
+	<body>
+		
+		<div class="content">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="TestTable">
+				<tbody>
+					<tr>
+						<td>
+							驾驶证号：
+							<div class="inputOutL">
+								<input type="text" name="jszh" id="jszh"
+									onkeyup="this.value=this.value.toUpperCase()" value=""
+									placeholder="请输入18位身份证号" class="inputText">
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="2">
+							<input  type="button" value="下一步" 
+							id="" class="inputBtn" onclick="javascript:nextStep();">
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>

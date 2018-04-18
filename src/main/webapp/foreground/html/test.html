@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+
+		<title>测试</title>
+		<script type="text/javascript">
+	$(document).ready(function() {
+		$.post("http://nbwxtest.hzcdt.com/MsgTestServlet",
+    	{
+     	 params:'{"token":"f65d77c6de0467b20449b15892b07afc","hpzl":"02","hphm":"A08242","clsbdh":"003512","sjhm":"13858061668","sjlx":"0","yzm":""}'
+
+    	},
+    function(data,status){
+      alert("数据：" + data + "\n状态：" + status);
+    });
+		
+		
+	});
+
+	function todo() {
+		location.href = "./operationcenter.html";
+	}
+</script>
+
+	</head>
+	<body>
+
+		
+	</body>
+</html>

@@ -1,0 +1,81 @@
+body,div,ol,ul,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,p,pre,form,fieldset,legend,input,button,textarea{ margin:0; padding:0;}
+html {  width: 100%; font-family: 'Microsoft YaHei'; font-size: 100px; outline: 0; -webkit-text-size-adjust:none;}
+body {  width:100%; margin: 0; -webkit-user-select: none; position: relative; background-color:#eee; color: #2a2a2a ;}
+button{ border: none; }
+input,textarea{-webkit-appearance: none;}
+a:hover,a:link,a:visited,a{ color:inherit; text-decoration:none;}
+ul,li{list-style:none}
+.floatL{ float: left ;}
+.floatR{ float: right ;}
+.clear{ clear: both ;}
+.img48 { position: relative; padding-left: 0.7rem ;}
+.img48 img{ width: 0.48rem ; position: absolute ; left: 0.14rem; top: 0.08rem ;}
+.img32 { position: relative; padding-left: 0.6rem ;}
+.img32 img{ width: 0.32rem ; position: absolute ; left: 0.14rem; top: 0.46rem ;}
+.img38 { position: relative ; padding-left: 0.7rem ;}
+.img38 img{ width: 0.38rem ;position: absolute ; top: 0.08rem ; left: 0.14rem ; }
+.borderB{ border-bottom: 1px solid #d2d2d2 ;}
+.lh92{ line-height: 0.92rem ;}
+.marT15{ margin-top: 0.15rem}
+.marT20{ margin-top: 0.2rem}
+.marT114{ margin-top: 1.114rem}
+.padB20{ padding-bottom: 0.2rem}
+.marB15{ margin-bottom: 0.15rem}
+.borderB{ border-bottom: 1px solid #d2d2d2 ;}
+.fc-gray{ color: #bbb !important; }
+.fc-red{ color: #ff2e2e !important; }
+.fc-green{ color: #4aba16 !important; }
+.hidden{ display: none; }
+.href-div{ position: relative}
+.href-a{ display:block; position: absolute; width: 100%; height:0.92rem}
+
+.section-1{ position: relative ; margin: 0.2rem ; margin-bottom: 0 ; padding: 0.2rem ; background-color: #fff ; border: 1px solid #d2d2d2 ;}
+.section-1 .ps-lt{ font-size: 0.44rem ; color: #555 ;}
+.section-1 .ps-lt p.ft40{ font-size: 0.4rem ;}
+.section-1 .ps-lt pre{ font-family: 'Microsoft YaHei';}
+.ps-title{ position: absolute ; left: 0; top: 0.12rem; width: 3.1rem; padding-left: 0.3rem; height: 0.8rem; line-height: 0.8rem; color: #fff ; font-weight: 600; background-color: #3bbaff ;}
+
+.modular-nav ul li img{
+	margin-top: 0.5rem ;
+	width: 1rem ;}
+.modular-nav ul li p{ width:3.33rem; color: #fff ; margin-top: 0.1rem ;}
+.time{ float: right ; font-size: 0.3rem ; color: #999 ; margin-right: 0.08rem ;}
+
+.section-2{ padding: 0.1rem 0.2rem 0.2rem ; background-color: #fff ; border: 1px solid #d2d2d2 ; }
+.section-2 p{ color: #2a2a2a; font-size: 0.26rem; line-height: 0.38rem; text-indent: 2em; letter-spacing: 0.02rem;}
+.btns{ margin-left: 1.35rem; width: 4.46rem; height: 0.66rem}
+a.btn1,a.btn2{ display: block; text-align: center; width: 2.06rem ; height: 0.65rem; line-height : 0.65rem; font-size: 0.32rem ; color: #fff ; border-radius: 0.36rem;}
+a.btn1{ background-color: #42b45d ;}
+a.btn2{ background-color: #f39800 ;}
+a.btn3{ display: block; text-align: center; width: 4.46rem ; height: 0.77rem ; line-height : 0.77rem; font-size: 0.36rem ; color: #fff ; background-color: #28a5e5 ; margin-left: 1.37rem; border-radius: 0.36rem}
+a.btn1:active{ background-color: #b8b8b8; }
+a.btn3:active,a.btn2:active{ background-color: #eb9c1f; }
+.spacL60{  letter-spacing: 0.6rem ; }
+.appointment-title{ font-size: 0.36rem; color: #333; margin: 0 0 0 0.8rem; height: 0.65rem; padding-top: 0.3rem;}
+
+.title1{ font-size: 0.36rem; line-height: 0.64rem; height: 0.64rem; padding-left: 0.45rem; font-family: 'Microsoft YaHei';}
+.title2{ font-size: 0.26rem; line-height: 0.72rem; height: 0.72rem; padding-left: 0.45rem; font-family: 'Microsoft YaHei';}
+.section-3{ background-color: #fff ; border-top: 1px solid #d2d2d2 ;}
+.section-3 .ps-lt{ font-size: 0.32rem ; color: #2a2a2a ; padding: 0 0.28rem 0 0.9rem; background-size: auto 0.38rem}
+.icon-address{ background: url(../images/icon_address.png) no-repeat 0.38rem center}
+.icon-write{ background: url(../images/icon_write.png) no-repeat 0.38rem center}
+.icon-speech{ background: url(../images/icon_speech.png) no-repeat 0.38rem center}
+.icon-photo{ background: url(../images/icon_photo.png) no-repeat 0.38rem center}
+.icon-goto{ background: url(../images/icon_input.gif) no-repeat 0 center}
+.icon-sele{ background: url(../images/icon_sele.png) no-repeat 0 center}
+.icon-sele1{ background: url(../images/icon_sele.png) no-repeat -0.42rem center}
+.icon-goto,.icon-sele,.icon-sele1{ display: inline-block; float: right; height: 0.92rem; width: 0.38rem; background-size: auto 0.38rem; }
+
+.pic-info{ font-size: 0.44rem; margin-left: 0.4rem; color: #999; line-height: 1.28rem; }
+.textarea{ height:2.22rem ;width: 4.8rem; margin: 0.26rem 0 0 1.04rem; line-height: 0.32rem; padding: 0.2rem 0.2rem; font-size: 0.30rem; background-color: #fff; border: 1px solid #d2d2d2; resize: none; overflow: auto; outline: none; word-break:break-all; color: #666}
+.interval{ border-top: 1px solid #d2d2d2; height: 0.15rem; background-color: #eee}
+.recording-time{ position: relative; font-size: 0.30rem; width: 4.46rem; height: 0.47rem; line-height: 0.47rem; margin-left: 1.35rem; border: 1px solid #c9c9c9; border-radius: 0.08rem; }
+.recording-time .explain{ position: absolute; left: 0; top: 0; height: 0.47rem; line-height: 0.47rem; padding-left: 0.2rem;  z-index: 60; color: #9f9f9f;}
+.recording-time .value{ display: inline-block; color: #ebe04b}
+
+.top{ z-index:1; position: fixed; top: 0; width: 100%; height: 0.94rem;line-height: 0.94rem; text-align: center; font-size: 0.32rem; color: #fff ;  letter-spacing: 0.08rem; background: #28a5e5 url() no-repeat 0.4rem center; background-size: 0.38rem 0.38rem;}
+.pics{ margin-left: 2.8rem; width: 3.4rem;}
+.pic{ display: inline-block; height: 1.47rem; width: 1.47rem; background: url(../images/picBg.gif) no-repeat 0 0 ; background-size: 1.47rem 1.47rem;}
+.pic img{ width: 1.47rem; height: 1.47rem}
+
+.info-confirm{ width: 2.8rem; height: 2.8rem; border-radius: 0.08rem; background: #000 url(../images/icon_speeching.png) no-repeat center center; background-size: 1.48rem 1.48rem; opacity: 0.69; position: fixed; left: 50%; top: 50%; margin-left: -1.4rem; margin-top: -1.4rem; z-index: 999; opacity: nomal; }

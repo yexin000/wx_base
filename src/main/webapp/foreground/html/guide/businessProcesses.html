@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var dwmc = decodeURI(GetQueryString("ywmc"));
+		if(dwmc.length > 10) {
+			dwmc = dwmc.substring(0,9) + "...";
+		}
+		addHead(dwmc);
+		
+		var ywlx = decodeURI(GetQueryString("ywlx"));
+		var ywdm = decodeURI(GetQueryString("ywdm"));
+		
+		var params = "{\"ywlx\":\""+ywlx+"\",\"ywdm\":\""+ywdm+"\"}";
+		var rel = WebServiceUtil.businessProcesses(params,relBack);
+		
+	});
+	
+		
+	function relBack(msg){
+		var jsonObj = eval("("+msg+")");
+		var body = jsonObj.body;
+		if (jsonObj.head.rownum == 0) {
+			//Showbo.Msg.alert(jsonObj.head.message);
+			Showbo.Msg.alert("该办理点还未提供本业务的业务流程");
+			return ;
+		}
+		
+		if (jsonObj.head.code != 1) {
+			//Showbo.Msg.alert(jsonObj.head.message);
+			Showbo.Msg.alert("服务器正忙，请稍后再试");
+			return ;
+		}
+		
+		for(var i in body){
+			$("#bt").html(body[i].title);
+			var cont = (body[i].syzl).replace(/\n/g,'<br/>');
+			$("#cont").html(cont);
+		}
+		$("div.content").css("display","block");
+	}
+		
+	function GetQueryString(name) {
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+   		var r = window.location.search.substr(1).match(reg);
+   		if(r!=null)return  decodeURI(r[2]); return null;
+	}
+</script>
+
+	</head>
+
+	<body>
+		<div class="content" style="display: none;">
+			<div  style="padding:10px; border-bottom: 2px #eeeeee solid; color:#f8a114; font-size: 20px;text-align: center;">
+				<p id="bt"> </p>
+			</div>
+			<p id="cont" style="padding: 8px 0;"> </p>
+		</div>
+		<br/>
+	</body>
+</html>

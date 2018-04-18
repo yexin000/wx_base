@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script type='text/javascript' src='/weixin/dwr/engine.js'></script>
+		<script type='text/javascript' src='/weixin/dwr/interface/WebServiceUtil.js'></script>
+		<script type="text/javascript" src="/weixin/foreground/js/pubnote.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+			
+		<script type="text/javascript">
+			$(document).ready(function(){
+				// 得到url中query部分,并将？去掉
+				var urlQuery = window.location.search.substr(1);
+				// 将urlQuery以&分割成数组
+				var urlQueryArr=urlQuery.split('&');
+				//得到头部文本
+				var headText=decodeURI(urlQueryArr[1].split('=')[1]);
+				addHead(headText);
+				//显示具体的交管信息
+				displayTrafficInfor();
+			});
+		</script>	
+			
+	</head>
+
+	<body>
+		<div class="content" >
+		
+			<div style="border-bottom: 2px #eeeeee solid;">
+					<h6 id="titleText" style="color: #000000; font-size: 20px;text-align: center;">
+						
+					</h6>
+			</div>
+			
+			<div id= "content"></div>
+			
+		</div>
+	</body>
+</html>

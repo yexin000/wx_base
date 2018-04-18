@@ -1,0 +1,203 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>-->
+		
+		<title></title>
+		<script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/pageparams.js"></script>
+		<script type="text/javascript">
+			Pageparams.postRequest('page');
+		</script>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">
+		var code;
+		var sfzmhm;
+		var lat;
+		var lng; 
+		$(document).ready(function(){
+			addHead("占道移车提醒");
+			if(window.localStorage){ 
+				$("#hphm01").html(localStorage.getItem("fpjg"));
+			}else{
+				$("#hphm01").html(getCookie("fpjg"));
+			}
+			
+			ProgressBar.init();
+			token = getCookie("token");
+			if (token == null) {
+				code = getQueryString("code");
+				getOpenId(code);
+			} //else {
+			//	getBindedInfoByToken(token);
+			//}
+			
+			$("#submit").click(function(){
+				var hpKind = $("#carType option:selected").val();
+				var hphm02 = $("#cardNumber").val().replace(/[ ]/g,"");
+				var hm = ($("#hphm01").html().substring(1))+hphm02;
+				hphm = hm;
+				//var dlwz = $("#location").val().replace(/[ ]/g,"");
+				//var sjhm = $("#telnum").val().replace(/[ ]/g,"");
+				var detail = $("#ly").val().replace(/[ ]/g,"");
+				
+				if (checkHphm(hpKind,hm) == 0)return; 
+				
+				//if (check_dlwz(dlwz) == 0)return; 
+				
+				//if (isValidMobileNum(sjhm) == 0) return; 
+				ProgressBar.show();
+				//var params = "{\"token\":\""+token+"\",\"sfzmhm\":\""+sfzmhm+"\",\"hpzl\":\""+hpKind+"\",\"hphm\":\""+hphm+"\",\"lxdz\":\""+dlwz+"\",\"sjhm\":\""+sjhm+"\",\"sjly\":\"C\",\"bz\":\""+detail+"\"}";
+				var params = "{\"token\":\""+token+"\",\"sfzmhm\":\""+""+"\",\"hpzl\":\""+hpKind+"\",\"hphm\":\""+hphm+"\",\"lxdz\":\"\",\"sjhm\":\"\",\"sjly\":\"C\",\"bz\":\""+detail+"\"}";
+				var result =  WebServiceUtil.writeMoveCarMsg(params,resultFunc);
+			});
+		});
+		
+			function resultFunc(msg){
+				ProgressBar.hide();
+				var jsonObject = eval("("+msg+")");
+				var head = jsonObject.head;
+				for ( var i in head) {
+					Showbo.Msg.alert(head.message);
+				//	eval($("#tmpt").text($.Prompt(head.message)));
+				}
+			}
+		
+			function init(msg){
+				ProgressBar.hide();
+				/*if (isBanding) {
+					$("#isbind").css({"display":"block"});
+					$("#noBindInfo").css({"display":"none"});
+				} else{
+					$("#isbind").css({"display":"none"});
+					$("#noBindInfo").css({"display":"block"});
+				}
+				*/
+			}
+			
+		
+	
+	</script>
+
+<style type="text/css">
+.td_left {
+	text-align: center;
+	width: 35%;
+}
+</style>
+	</head>
+
+	<body>
+		<div id="reverseNarrative"></div>
+			<div class="content" >
+				<table  width="100%" border="0" cellspacing="0" cellpadding="0" class="TestTable">
+					<tbody>
+						<tr>
+							<td>
+								号牌种类
+								<div  class="inputOutL">
+									<select data-role="none" class="inputSelect" id="carType">
+										<option value="02">
+											小型汽车
+										</option>
+										<option value="01">
+											大型汽车
+										</option>
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								号牌号码
+								<div  class="inputOutL">
+									<label style="float: left;font-size: 14px;color: #000000;" id="hphm01" ></label>
+									<input data-role="none" class="inputText" type="text" id="cardNumber" maxlength="5"
+										onkeyup="this.value=this.value.toUpperCase();"
+										style="width: 80%;padding: 0px;" placeholder="请输入号牌号码">
+								</div>
+							</td>
+						</tr>
+						<!--<tr>
+							<td class="td_left">
+								地理位置：
+							</td>
+							<td>
+								<div>
+									<textarea id="location" type="text" value=""></textarea>
+								</div>
+							</td>
+						</tr>-->
+						<!--<tr>
+							<td class="td_left">
+								手机号码：
+							</td>
+							<td>
+								<div>
+									<input type="text" id="telnum" value="" maxlength="11"
+										placeholder="请输入车管所登记手机号码">
+								</div>
+							</td>
+						</tr>-->
+						<tr>
+							<td>
+								用户留言
+								<div  class="inputOutL">
+									<textarea class="textarear" data-role="none" id="ly" placeholder="所在地理位置，可不填写" rows="5" cols="24"></textarea>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div>
+									<input id="submit" data-role="none" class="inputBtn" type="button" value="提交"/>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<hr size="2px" color="#28a5e5"/>
+								<br/>
+								<div class="rightPack packTrafic_div">
+					           		<div class="titleDiv">
+					           			<img src="/weixin/foreground/images/before_title.png" />
+					           			<a style="font-size: 14px;color: #0F598A;font-weight: bold;">温馨提示</a>
+					           		</div>
+					           		<div class="hr"></div>
+					               	<div class="traficff_div">
+					                   	<p>&nbsp;&nbsp;&nbsp;&nbsp;1、指机动车堵塞本人或他人的车辆、车位以及通道（消防通道等）；</p>
+					                   	<p>&nbsp;&nbsp;&nbsp;&nbsp;2、被提醒车辆仅限宁波籍车辆；</p>
+					                   	<p>&nbsp;&nbsp;&nbsp;&nbsp;3、提交后，将以短信方式通知机动车的车主。</p>
+					                   	<br/><br/>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+		
+			</div>
+	</body>
+</html>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.WeixinUserDao">
+	<!-- Result Map -->
+	<resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.WeixinUser">
+		<result column="xh" property="xh" jdbcType="INTEGER"/>
+		<result column="wxid" property="wxid" jdbcType="VARCHAR"/>
+		<result column="zt" property="zt" jdbcType="VARCHAR"/>
+		<result column="ylzd1" property="ylzd1" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<!-- sys_user table all fields -->
+	<sql id="Base_Column_List">
+		xh,wxid,zt,ylzd1
+	</sql>
+
+
+	<!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+		where 1=1
+		<trim suffixOverrides=",">
+			<if test="xh != null">
+				and xh = #{xh}
+			</if>
+			<if test="wxid != null and wxid != ''">
+				and wxid = #{wxid}
+			</if>
+			<if test="zt != null and zt != ''">
+				and zt = #{zt}
+			</if>
+		</trim>
+	</sql>
+
+
+	<!-- 插入记录 -->
+	<insert id="add" parameterType="Object">
+		<selectKey resultType="java.lang.Integer" order="BEFORE"
+			keyProperty="xh">
+			SELECT SEQ_WEIXIN_USER_XH.NEXTVAL AS ID FROM DUAL
+		</selectKey>
+		insert into
+		weixin_user(xh,wxid,zt) 
+		values(#{xh},#{wxid},#{zt})
+	</insert>
+	<insert id="insertWeixinUser" parameterType="Object">
+		<selectKey resultType="java.lang.Integer" order="BEFORE"
+			keyProperty="xh">
+			SELECT SEQ_WEIXIN_USER_XH.NEXTVAL AS ID FROM DUAL
+		</selectKey>
+		insert into
+		weixin_user(xh,wxid,zt) 
+		values(#{xh},#{wxid},#{zt})
+	</insert>
+
+	<!-- 根据id，修改记录 -->
+	<update id="update" parameterType="Object">
+		update weixin_user set
+		xh=#{xh},wxid=#{wxid},zt=#{zt} 
+		where id=#{id}
+	</update>
+
+	<!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateBySelective" parameterType="Object">
+		update weixin_user set
+		<trim suffixOverrides=",">
+			<if test="wxid != null  and wxid != '' ">
+				wxid=#{wxid},
+			</if>
+			<if test="zt != null  and zt != '' ">
+				zt=#{zt},
+			</if>
+			<if test="ylzd1 != null  and ylzd1 != '' ">
+				ylzd1=#{ylzd1},
+			</if>
+		</trim>
+		where wxid=#{wxid}
+	</update>
+	
+	<!-- 更新微信用户操作时间 -->
+	<update id="updateUserOperTime" parameterType="string">
+		update weixin_user set ylzd1=to_char(sysdate, 'YYYY-MM-DD HH24:MI:SS') where wxid=#{wxid}
+	</update>
+
+	<!-- 删除记录 -->
+	<delete id="delete" parameterType="Object">
+		delete from weixin_user where xh = #{xh}
+	</delete>
+
+	<!-- 根据id查询 系统用户 -->
+	<select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+		select
+		<include refid="Base_Column_List" />
+		from weixin_user where xh = #{xh}
+	</select>
+
+	<!-- 系统用户 列表总数 -->
+	<select id="queryByCount" resultType="java.lang.Integer"
+		parameterType="Object">
+		select count(1) from weixin_user
+		<include refid="Example_Where_Clause" />
+	</select>
+
+	<!-- 查询系统用户列表 -->
+	<select id="queryByList" resultMap="BaseResultMap"
+		parameterType="Object">
+		select
+		<include refid="Base_Column_List" />
+		from weixin_user
+		<include refid="Example_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+		<if
+			test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+			${pager.mysqlQueryCondition}
+		</if>
+	</select>
+	
+	<!-- 根据wxid查询 系统用户 -->
+	<select id="queryWeixinUser" resultMap="BaseResultMap" parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from weixin_user where wxid = #{wxid}
+	</select>
+
+</mapper>   

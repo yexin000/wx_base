@@ -1,0 +1,660 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+	function GetQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+			var code = GetQueryString("code");
+			if( code == null){
+				var redirect12 = encodeURIComponent("http://jhwxv2.test.hzcdt.com/weixin/foreground/html/vehicle_admin/congestionReport.html");
+				var codeurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe1514fa969a3bc65"+"&redirect_uri="+redirect12+"&response_type=code&scope=snsapi_base&state=0#wechat_redirect";
+	    		window.location.href = codeurl;
+			}
+			
+</script>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="format-detection" content="email=no" />
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=0" />
+		<title>拥堵上报</title>
+		<link rel="stylesheet" type="text/css" href="../../css/yd-main.css">
+		<link rel="stylesheet" href="../../css/progressbar.css">
+		<link rel="stylesheet" href="../../css/myAlert.css">
+		<link rel="stylesheet" href="../../css/ningboweb.css">
+
+		<script type="text/javascript" src="../../js/myMain.js"></script>
+
+		<script src="../../js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="../../js/jquery-1.9.1.js" type="text/javascript"></script>
+		<script type="text/javascript" src="../../js/writedwr.js"></script>
+		<script type="text/javascript" src="../../js/spin.min.js"></script>
+		<script type="text/javascript" src="../../js/progressbar.js"></script>
+
+		<script type="text/javascript" src="../../js/myAlert.js"></script>
+		<script type="text/javascript" src="../../js/append.js"></script>
+		<script type='text/javascript'
+			src='/weixin/dwr/interface/JsapiService.js'></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript"
+			src="http://api.map.baidu.com/api?v=2.0&ak=No9ggzTkqcHKgKIFR6nbvD5S"></script>
+		<style type="text/css">
+			body, html,#allmap {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+			#l-map{height:400px;width:100%;}
+			#r-result{width:100%;}
+		</style>
+		<script type="text/javascript">
+	var xh = "";   //图片序号
+	var base1 = "";  //图片信息
+	var voice = "";  //音频信息
+	var openId;    
+	var isSelected = false;
+	var filetype = '';   //选择的上传文件类型
+	var filename = '';  //文件名称
+	var address = ''; //地点信息
+	var lat = '';
+	var lng = '';
+	
+	$(document).ready(function(){
+		var code =  getQueryString("code");
+		getOpenId(code);
+		ProgressBar.init();
+	});
+	
+	//获取地点信息
+	getLocation = function (obj) {
+		ProgressBar.show();
+		var geolocation = new BMap.Geolocation();
+		geolocation.getCurrentPosition(function(r){
+			ProgressBar.hide();
+			if(this.getStatus() == BMAP_STATUS_SUCCESS){
+				lat = r.point.lat;
+	   			lng = r.point.lng;
+	   			var pt = r.point;
+	   			var gc = new BMap.Geocoder();
+				gc.getLocation(pt, function(rs){
+					var addComp = rs.addressComponents;
+					address = addComp.province +  addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+					document.getElementById("yddd").value=address;
+					document.getElementById("curAddrLabel").text=address;
+				});
+				Showbo.Msg.confirm("是否打开地图选取位置？");
+				Showbo.todo = function(){
+					$("#mainObj").hide();
+					$(".mapObj").show();
+					var map = new BMap.Map("l-map");
+					var point = new BMap.Point(lng,lat);
+					map.centerAndZoom(point, 12);
+					var marker = new BMap.Marker(point);// 创建标注
+					map.addOverlay(marker);             // 将标注添加到地图中
+					marker.disableDragging();           // 不可拖拽
+					
+					map.addEventListener("click", showInfo);
+					function showInfo(e){
+						// 移除所有覆盖物
+						map.clearOverlays();
+						var point = new BMap.Point(e.point.lng,e.point.lat);
+						map.centerAndZoom(point, map.getZoom());
+						var marker = new BMap.Marker(point);// 创建标注
+						
+						map.addOverlay(marker); 
+						var gc = new BMap.Geocoder();
+						gc.getLocation(point, function(rs){
+							var addComp = rs.addressComponents;
+							address = addComp.province +  addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+							document.getElementById("yddd").value=address;
+							document.getElementById("curAddrLabel").text=address;
+							ProgressBar.hide();
+						});
+					}
+				};
+				Showbo.nodo = function() {
+					Showbo.todo = function(){
+					};
+				};
+			} else {
+				Showbo.Msg.alert("定位失败");
+			}       
+		},{enableHighAccuracy: true});
+	}
+
+	function chooseAddr() {
+		Showbo.todo = function(){
+		};
+		$(".mapObj").hide();
+		$("#mainObj").show();
+	}
+	
+	//点击提交
+	commit_method = function(data){
+		if(openId == null || openId == ''){
+			Showbo.Msg.alert("服务器正忙，请关闭页面重新进入");
+			return;
+		}
+		filetype = data;
+		var sbnr = '';   //上报内容
+		var type = '';   //信息类型
+		address = document.getElementById("yddd").value;
+		if(address == '' || address ==null){
+			Showbo.Msg.alert("请先输入您的地点信息");
+			return;
+		}
+		
+		//获取当前时间
+		var today = new Date();
+		var mounth = (today.getMonth() + 1) < 10 ? ("0" + (today.getMonth() + 1)) : (today.getMonth() + 1).toString(mounth);
+		var day = today.getDate() < 10 ?("0" + today.getDate()) : today.getDate().toString();
+		var hours = today.getHours() < 10 ?("0" + today.getHours()) : today.getHours().toString();
+		var seconds = today.getSeconds() < 10 ?("0" + today.getSeconds()) : today.getSeconds().toString();
+		var minutes = today.getMinutes() < 10 ?("0" + today.getMinutes()) : today.getMinutes().toString();
+		var todayStr = today.getFullYear().toString() + mounth + day + hours + minutes + seconds; 
+		
+		 if(filetype == '0'){    //选择上传文字
+			  sbnr = document.getElementById('writing').value;
+			  if (sbnr == "") {
+				  Showbo.Msg.alert("请填写要上报的内容");
+				  return;
+			  }
+			  type = 'A';
+				
+			ProgressBar.show();
+			filename = "";
+			var params = '{"sbnr":"SBNR","wxid":"WXID","type":"TYPE","filename":"FILENAME","yddd":"YDDD","ydjd":"YDJD","ydwd":"YDWD"}';
+			params = params.replace("SBNR",sbnr.replace(/[\n]/ig,'')).replace("WXID",openId).replace("TYPE",type).replace("FILENAME",filename)
+					.replace("YDDD",address).replace("YDJD","").replace("YDWD","");
+		
+			//调用上传信息接口
+			WebServiceUtil.congestionUpload(params,congestionCallback);
+		  }else if(filetype == '1'){   //选择上传语音
+			  var value = $("#recording").text();
+			  if(value == '停止录音'){
+				//停止录音
+				wx.stopRecord({
+				    success: function (res) {
+				    	//停止计时
+						clearTimeout(rep_timer);
+				    	 $("#recording").html("重新录音");
+				         voice = res.localId;
+				         type = 'C';
+						 filename = openId+todayStr+".amr";
+						 var params = '{"sbnr":"SBNR","wxid":"WXID","type":"TYPE","filename":"FILENAME","yddd":"YDDD","ydjd":"YDJD","ydwd":"YDWD"}';
+						params = params.replace("SBNR",sbnr).replace("WXID",openId).replace("TYPE",type).replace("FILENAME",filename)
+								.replace("YDDD",address).replace("YDJD","").replace("YDWD","");
+
+						ProgressBar.show();
+						//调用上传信息接口
+						WebServiceUtil.congestionUpload(params,congestionCallback);
+						return;
+				    }
+				});
+			  } else if (voice == "") {
+				  Showbo.Msg.alert("请先录音");
+				  return;
+			  }else{
+				  type = 'C';
+				  filename = openId+todayStr+".amr";
+				  var params = '{"sbnr":"SBNR","wxid":"WXID","type":"TYPE","filename":"FILENAME","yddd":"YDDD","ydjd":"YDJD","ydwd":"YDWD"}';
+				  params = params.replace("SBNR",sbnr).replace("WXID",openId).replace("TYPE",type).replace("FILENAME",filename)
+						  .replace("YDDD",address).replace("YDJD","").replace("YDWD","");
+
+				  ProgressBar.show();
+				  //调用上传信息接口
+				  WebServiceUtil.congestionUpload(params,congestionCallback);
+			  }
+		  }else if(filetype == '2'){   //选择上传图片
+			  if (base1 == "") {
+				  Showbo.Msg.alert("请选择需要上传的照片");
+				  return;
+			  } 
+			  type = 'B';
+			  filename = openId+todayStr+".jpg"; 
+			  var params = '{"sbnr":"SBNR","wxid":"WXID","type":"TYPE","filename":"FILENAME","yddd":"YDDD","ydjd":"YDJD","ydwd":"YDWD"}';
+				params = params.replace("SBNR",sbnr).replace("WXID",openId).replace("TYPE",type).replace("FILENAME",filename)
+						.replace("YDDD",address).replace("YDJD","").replace("YDWD","");
+				ProgressBar.show();
+				//调用上传信息接口
+				WebServiceUtil.congestionUpload(params,congestionCallback);
+		  }
+		 
+		 
+	}
+	
+	congestionCallback = function(msg){
+		ProgressBar.hide();
+		var jsonObject = eval("(" + msg + ")");
+		if (jsonObject.head.code != 1) {
+			Showbo.Msg.alert(jsonObject.head.message);
+			return;
+		}else{
+			if(filetype == '0'){    //选择上传文字信息
+				Showbo.Msg.alert(jsonObject.head.message); 
+			}else if(filetype == '1'){   //选择上传语音信息
+				//Showbo.Msg.alert(jsonObject.head.message); 
+				uploadSound(jsonObject.head.message);
+			}else if(filetype == '2'){   //选择上传图片信息
+				//Showbo.Msg.alert(jsonObject.head.message); 
+				uploadPhoto(jsonObject.head.message);  
+			}
+		}
+		
+	}
+	
+	window.onload = function() {
+		var code =  getQueryString("code");
+		JsapiService.sign(document.location.href , jsapiCallback);
+	}
+  
+  function jsapiCallback(data) {
+		if(data != null) {
+			var dataJson = eval("("+data+")");
+			wx.config({
+			  debug: false,
+			  appId: 'wxe1514fa969a3bc65',
+			  timestamp: dataJson.timestamp,
+			  nonceStr: dataJson.nonceStr,
+			  signature: dataJson.signature,
+			  jsApiList: [
+				'chooseImage',
+				'uploadImage',
+				'startRecord',
+				'stopRecord',
+				'onVoiceRecordEnd',
+				'playVoice',
+				'stopVoice',
+				'onVoicePlayEnd',
+				'pauseVoice',
+				'uploadVoice'
+			  ]
+		  });
+		} else {
+			alert("Error!!!!");
+		}
+	}
+  
+//点击选择照片
+	takePhoto = function (obj) {
+		wx.chooseImage({
+			count: 1, 
+			success: function (res) {
+				base1 = res.localIds;
+				document.getElementById("img1").src = res.localIds;
+			}
+		});
+	};
+	
+	//上传图片
+	uploadPhoto = function (message) {
+		var localIds = [];
+		if (base1 == "") {
+		  Showbo.Msg.alert("请选择需要上传的照片");
+		  return;
+		} 
+		var i = 0;
+		localIds = [base1];
+		var length = localIds.length;
+		var serverIds = [];
+		function upload() {
+			wx.uploadImage({
+				localId: localIds[i].toString(),
+				isShowProgressTips: 1,
+				success: function (res) {
+					if(i == 0) {
+						serverId1 = res.serverId;
+					}
+      				i++;
+					serverIds.push(res.serverId);
+      				if (i < length) {
+        				upload();
+					}
+      				Showbo.Msg.alert(message);
+      			   //图片上传成功后，调用uploadFile接口
+					WebServiceUtil.uploadFile(filename,serverId1,uploadFileBack);
+				},
+				fail: function (res) {
+					alert(JSON.stringify(res));
+				}
+			});
+		}
+		upload();
+	};
+	
+	
+	//上传语音
+	uploadSound = function (message) {
+		if (voice == "") {
+		  Showbo.Msg.alert("请先录音");
+		  return;
+		} 
+		wx.uploadVoice({
+			  localId: voice, // 需要上传的音频的本地ID，由stopRecord接口获得
+			  isShowProgressTips: 1, // 默认为1，显示进度提示
+			  success: function (res) {
+			  		var serverId = res.serverId; // 返回音频的服务器端ID
+			  		Showbo.Msg.alert(message);
+			  		//录音上传成功后，调用uploadFile接口
+					WebServiceUtil.uploadFile(filename,serverId,uploadFileBack);
+			  },
+		    fail: function (res) {
+				alert(JSON.stringify(res));
+			}
+		});
+	};
+	
+	uploadFileBack = function(data){
+		
+	};
+	
+	//监听录音
+	wx.onVoiceRecordEnd({
+	    complete: function (res) {
+	         voice = res.localId;
+	       //停止计时
+			clearTimeout(rep_timer);
+			$("#recording").html("重新录音");
+	    }
+	});
+	
+	
+	var localId = '';
+	var rep_timer = null;
+	var rep_start = (+new Date());
+	//录音
+	startRecording = function(){
+		var value = $("#recording").text();
+		if(value == '停止录音'){
+			//停止录音
+			wx.stopRecord({
+			    success: function (res) {
+			    	//停止计时
+					clearTimeout(rep_timer);
+			    	 $("#recording").html("重新录音");
+			         voice = res.localId;
+			    }
+			});
+		}else{
+			rep_start = (+new Date());
+			//停止计时
+			clearTimeout(rep_timer);
+			
+			//开始录音
+			wx.startRecord({
+				 success: function () {
+					$("#recording").html("停止录音");
+			        rep_timer = setInterval("onTimer()", 1000);
+			      },
+			      cancel: function () {
+			    	  Showbo.Msg.alert("用户拒绝授权录音");
+			      }
+			});
+		}
+	} ;
+	
+	//播放录音
+	play = function(){
+		var play = $("#play").text();
+		var value = $("#recording").text();
+		if(play == "停止"){
+			//停止播放
+			wx.stopVoice({
+				localId: voice,  // 需要停止的音频的本地ID，由stopRecord接口获得
+			    success: function (res) {
+			    	 $("#play").html("重新播放");
+			    }
+			});
+		}else{
+			if(value == '开始录音'){
+				Showbo.Msg.alert("您还没有开始录音");
+				return;
+			}
+			if(value == '停止录音'){
+				Showbo.Msg.alert("请先停止录音");
+				return;
+			}
+			//监听播放完毕
+			wx.onVoicePlayEnd({
+			    success: function (res) {
+			    	$("#play").html("重新播放");
+			    	voice = res.localId;  // 返回音频的本地ID
+			    }
+			});
+			//开始播放
+			wx.playVoice({
+			    localId: voice,
+			    success: function () {
+					$("#play").html("停止");
+			      }
+			});
+		
+		}
+	};
+	
+			
+	function ToUrl(x) {
+		location.href = x;
+	}
+	
+	// 计时函数
+	function onTimer(){
+		var now = (+new Date());
+		var timedif = Math.floor((now-rep_start)/1000);
+		var lefttime = 0 + timedif;
+		if(lefttime > 59){
+		   //停止录音
+			wx.stopRecord({
+			    success: function (res) {
+			    	Showbo.Msg.alert("录音最长为60秒");
+				    clearTimeout(rep_timer);
+				    $("#recording").html("重新录音");
+			         voice = res.localId;
+			    }
+			});
+			return ;
+		}
+		var s = lefttime%60;
+		var m = Math.floor(lefttime/60);
+
+		var ss = s < 10 ? ("0" + s) : s;
+		var sm = s > 59 ? ("0" + 1) : m;
+		var rep_cureunt = sm + ":" +ss;
+
+		if(parseInt(sm,10) <= 0){
+			$("div#turnTime").html("录音时长 : <label class='value'>"+rep_cureunt+"</label>");
+		}else{
+			$("div#turnTime").html("录音时长 : <label class='value'>"+rep_cureunt+"</label>");
+		}
+	}
+	
+	
+	function getOpenId(coded) {
+		if(is_weixn()){
+			WebServiceUtil.madeUrl(coded, callbackOpenId);
+		}else{
+			location.href = "../error.html";
+		}
+	}
+	
+	function is_weixn(){
+	    var ua = navigator.userAgent.toLowerCase();
+	    if(ua.match(/MicroMessenger/i)=="micromessenger") {
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+	
+	function callbackOpenId(msg) {
+		var jsonObject = eval("(" + msg + ")");
+		openId = jsonObject.openid;
+		if(openId != null && openId != "null") {
+			WebServiceUtil.isSelectedInMonth(openId, callbackIsSelected);
+		}
+	}
+
+	function callbackIsSelected(msg) {
+		if(msg == true) {
+			isSelected = true;
+		} else {
+			isSelected = false;
+		}
+	}
+	
+</script>
+
+	</head>
+	<body>
+		<div id="l-map" style="display: none;" class="mapObj"></div>
+		<div id="curAddr" class="mapObj" style="display: none;margin-left: 1.37rem;"><a style="font-size: 14px;font-weight: bold;"  id="curAddrLabel"></a></div>
+		<a class="btn3 marT20 mapObj" href="javascript:chooseAddr();" style="display: none;">选择该位置并关闭地图</a>
+		<div id="mainObj">
+		<div class="top" style="z-index: 1;">
+			拥堵上报
+		</div>
+		<section class="section-2 marT114">
+		<div class="ps-lt">
+			<p style="font-size: 14px;font-weight: bold;">
+				欢迎使用拥堵上报功能，遇紧急、重大情况请立即拨打110。举报人应仔细阅读举报范围说明、举报注意事项，确保举报信息真实有效，并承担相应法律责任。遇紧急、重大交通违法或其它违法行为请立即拨打110、122报警。
+			</p>
+		</div>
+		</section>
+		<section class="section-3 marT15">
+		<div class="href-div borderB">
+			<div class="ps-lt icon-address">
+				<i class="icon-goto" onClick="getLocation(this);"></i>
+				<label class="lh92">
+					定位功能
+				</label>
+				<input id="yddd" class="lh92"
+					style="width: 60%; float: right; border: 0; font-size: 0.25rem; color: #2a2a2a;"
+					placeholder="请输入地址" value="" />
+			</div>
+		</div>
+		</section>
+		<div class="title1">
+			信息类型
+		</div>
+		<section class="section-3">
+		<!--语音上报-->
+		<div class="href-div borderB">
+			<a class="href-a" onClick="setTab('tab',2,3)"></a>
+			<div id="tab2" class="ps-lt icon-speech">
+				<i class="icon-sele"></i>
+				<label class="lh92">
+					语音上报
+				</label>
+			</div>
+		</div>
+		<div id="tab-center2" class="hidden">
+			<div class="title2">
+				上传资料
+			</div>
+			<div class="btns">
+				<a id="recording" class="btn1 floatL"
+					href="javascript:startRecording();">开始录音</a>
+				<a id="play" class="btn2 floatR" href="javascript:play();">播放</a>
+				<div class="clear"></div>
+			</div>
+			<div class="recording-time marT20">
+				<div id="turnTime" class="explain">
+					录音时长 :
+					<label class="value">
+						00:00
+					</label>
+				</div>
+			</div>
+			<a class="btn3 marT20" href="javascript:commit_method(1);">提交</a>
+			<div class="interval marT15 borderB"></div>
+		</div>
+		<!--文字上报-->
+		<div class="href-div borderB">
+			<a class="href-a" onClick="setTab('tab',1,3)"></a>
+			<div id="tab1" class="ps-lt icon-write">
+				<i class="icon-sele"></i>
+				<label class="lh92">
+					文字上报
+				</label>
+			</div>
+		</div>
+		<div id="tab-center1" class="hidden">
+			<textarea id="writing" class="textarea" maxlength="250" placeholder="请在此输入"></textarea>
+			<a class="btn3 marT20" href="javascript:commit_method(0);">提交</a>
+			<div class="interval marT15 borderB"></div>
+		</div>
+		<!--照片上报-->
+		<div class="href-div borderB">
+			<a class="href-a" onClick="setTab('tab',3,3)"></a>
+			<div id="tab3" class="ps-lt icon-photo">
+				<i class="icon-sele"></i>
+				<label class="lh92">
+					照片上报
+				</label>
+			</div>
+		</div>
+		<div id="tab-center3" class="hidden">
+			<div class="title2">
+				上传资料
+			</div>
+			<div class="pics">
+				<a class="pic" onClick="takePhoto(this);"> <img src="" id="img1" />
+				</a>
+				<div class="clear"></div>
+			</div>
+			<a class="btn3 marT20" href="javascript:commit_method(2);">提交</a>
+			<div class="interval marT15"></div>
+		</div>
+		</section>
+		</div>
+		<!--开始录音弹出图片
+<div class="info-confirm padB30"></div>
+-->
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script>
+	(function (doc, win) {
+	  var docEl = doc.documentElement,
+		resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+		recalc = function () {
+		  var clientWidth = docEl.clientWidth;
+		  if (!clientWidth) return;
+		  docEl.style.fontSize = 100 * (clientWidth / 720) + 'px';
+		};
+
+	  if (!doc.addEventListener) return;
+	  win.addEventListener(resizeEvt, recalc, false);
+	  doc.addEventListener('DOMContentLoaded', recalc, false);
+	})(document, window);
+	function setTab(name,cursel,n){
+		for(i=0;i<=n;i++){
+			var obj= $('#'+name+i+' i');
+			var objC=document.getElementById(name+'-center'+i);
+			if(objC!=null){
+				if(i==cursel ) {
+					if($(objC).hasClass('hidden'))
+					{
+						$(objC).removeClass('hidden');
+						obj.removeClass('icon-sele');
+						obj.addClass('icon-sele1')
+					} else {
+						$(objC).addClass('hidden') ;
+						obj.removeClass('icon-sele1');
+						obj.addClass('icon-sele')
+					}
+				} else {
+					if(!$(objC).hasClass('hidden')) $(objC).addClass('hidden') ;
+					if(obj.hasClass('icon-sele1'))
+					{
+						obj.removeClass('icon-sele1');
+						obj.addClass('icon-sele')
+					} 
+				}
+			}
+		}
+	}
+</script>
+	</body>
+</html>

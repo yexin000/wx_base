@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+
+		<script type="text/javascript">
+	
+	window.onload=function(){
+		addHead("机动车信息");
+		
+		var msg = unescape(GetQueryString("msg"));
+		if(msg != null){
+			var jsonObject = eval("("+msg+")");
+			$.each(jsonObject.body,function(index,item){
+				var hpzl = decode(item.hpzl);
+				$("#hplx").text(hpzl);
+				$("span#hphm").text(item.hphm);
+				$("#zt").text(item.zt);
+				$("#njyxqz").text(item.yxqz);
+				$("#sjhm").text(item.sjhm);
+				$("#lxdz").text(item.zsxxdz);
+			});
+		}
+	}
+	function GetQueryString(name) {
+     	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     	var r = window.location.search.substr(1).match(reg);
+     	if(r!=null)return  unescape(r[2]); return null;
+	}
+	
+</script>
+
+<style type="text/css">
+.table {
+	cellspacing: 0px;
+	cellpadding: 0px;
+	text-align: left;
+	border-collapse: collapse;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px -3px 2px -1px rgba(0, 200, 0, 0.5);
+}
+</style>
+	</head>
+
+	<body>
+			<div class="content pad0">
+				<table  width="100%" border="0" cellspacing="0" cellpadding="0" class="inforTable">
+						<tbody>
+							<tr class="whiteBG">
+								<td width="30%" class="inforBaseL">
+											机动车信息：
+								</td>
+								<td class="inforBaseR" >
+										<span id="hplx"> </span>
+										<span class="padLR blue" id="hphm">
+										</span>
+								</td>
+							</tr>
+							<tr>
+								<td class="inforBaseL">
+											机动车状态：
+								</td>
+								<td class="inforBaseR" id="zt">
+												<a href="" class="red"> </a>
+								</td>
+							</tr>
+							<tr class="whiteBG">
+								<td class="inforBaseL">
+											年检有效期满：
+								</td>
+								<td class="inforBaseR" id="njyxqz">
+											
+								</td>
+							</tr>
+							<tr>
+								<td class="inforBaseL">
+											手机号码：
+								</td>
+								<td class="inforBaseR" id="sjhm">
+											
+								</td>
+							</tr>
+
+							<tr class="whiteBG">
+								<td class="inforBaseL" valign="top">
+											联系地址：
+								</td>
+								<td class="inforBaseR" id="lxdz">
+											
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			</div>
+	</body>
+</html>

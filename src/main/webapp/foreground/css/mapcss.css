@@ -1,0 +1,955 @@
+﻿body, h1, h2, h3, h4, h5, h6, hr, p, blockquote,dl, dt, dd, ul, ol, li, pre, fieldset, lengend, button, input, textarea, th, td { margin: 0;padding: 0;-webkit-text-size-adjust:none;}
+body{font: 14px/1 "华文细黑", "黑体", helvetica,sans-serif;color:#666666;background-color:#fbfbfb;}
+ul,li,dt,dd,dl{list-style:none;}
+a{text-decoration:none;}
+a:hover{text-decoration:none;}
+input[type=button] {border: 0;}
+
+.clearfix:after {clear: both;content: "";display: table;height: 0;visibility: hidden;}
+.clearfix {display: block;*zoom:1}
+/*对话框弹出浮沉*/
+.message_box {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(95, 96, 99, 0.7);
+	/*display:table;*/
+	display: none;
+	z-index: 1500;
+}
+/*对话框显示样式*/
+.message_box1, .message_box3{display:block;}
+
+.message_box .outer {
+	/*display:table-cell;vertical-align:middle;*/
+	/*margin-top: 109px;*/
+}
+.message_box_confirm {
+	width: 247px;
+	height: 156px;
+	background: #EFEFEF;
+	background-size: 247px 136px;
+	margin: 0 auto;
+	z-index: 100;
+	position: fixed;
+	top: 50%;
+	margin-top: -78px;
+	left: 50%;
+	margin-left: -123px;
+}
+.message_box_confirm div {
+	padding: 13px 10px 0 10px;
+}
+.message_box_confirm  p {
+	font-size: 15px;
+	font-family: "STXihei";
+	color: #2e2e2e;
+	line-height: 21px;
+}
+.message_box_confirm .confirm_button, .message_box_confirm .cancel_button {
+	width: 106px;
+	height: 36px;
+	padding: 0;
+	margin-top: 14px;
+	font-size: 16px;
+	text-align: center;
+	line-height: 36px;
+}
+.message_box_confirm .confirm_button {
+	float: right;
+	width: 106px;
+	height: 36px;
+	background: url("../images/confirm_box_button_nobg.png") no-repeat center center;
+	background-size: 106px 170px;
+	background-position: 0px -80px;
+	color: #ffffff;
+}
+.message_box_confirm .confirm_button:active {
+	background: url("../images/confirm_box_button_nobg.png") no-repeat center center;
+	background-size: 106px 170px;
+	background-position: 0 -126px;
+}
+.message_box_confirm .cancel_button {
+	float: left;
+	background: url("../images/confirm_box_button_nobg.png") no-repeat center center;
+	background-size: 106px 170px;
+	background-position: 0 0;
+	color: #3d3c3c;
+}
+.message_box_confirm .cancel_button:active {
+	background: url("../images/confirm_box_button_nobg.png") no-repeat center center;
+	background-size: 106px 170px;
+	background-position: 0 -39px;
+}
+/*绑定驾驶证8A start*/
+.bangding {
+	width: 100%;
+}
+.bangding a {color: #328BD7;}
+/*驾驶证号码、所有车辆样式*/
+.bangding dl {
+	border-bottom: 1px solid #d5d8de;
+}
+.bangding dl:first-child {
+	border-bottom: none;
+}
+.bangding dl:first-child dd {
+	height: 27px;
+}
+.bangding dl:first-child dd {
+	background: url(../images/bg_dashed.png) repeat-x left bottom;
+	background-size: 9px 1px;
+}
+.bangding dl:nth-child(2) dd {
+	height: 28px;
+}
+.bangding dl ,
+.gzcl {padding: 0 20px;}
+.bangding dt {
+	height: 32px;
+	line-height: 30px;
+	color: #9c9c9c;
+	font-size: 13px;
+}
+.bangding dd {
+	height: 32px;
+	line-height: 18px;
+	color: #666666;
+	font-size: 18px;
+}
+.bangding .no_border {
+	border: none;
+}
+/*关注车辆样式*/
+.bangding .gzcl {
+	margin-bottom: 62px;
+}
+.gzcl li div{
+	width: 52px;
+	height: 25px;
+	margin-top: 8px;
+	float: right;
+	background: url("../images/btn_yc.png") no-repeat center center;
+	background-size: 116px 24px;
+	background-position: 0 0;
+	cursor: pointer;
+}
+.gzcl li div:active {
+	background-size: 116px 24px;
+	background-position: -65px 0;
+}
+
+.gzcl h3 {
+	float: left;
+	font-size: 18px;
+	font-weight: normal;
+}
+.gzcl .button_add {
+	padding: 14px 0px;
+	height: 32px;
+}
+.gzcl .button_add div {
+	float: left;
+	margin-top: 0;
+	width: 122px;
+	height: 32px;
+	background: url("../images/btn_tjgz.jpg") no-repeat center center;
+	background-size: 261px 31px;
+	background-position: 0 0;
+	cursor: pointer;
+}
+.gzcl .button_add div:active {
+	background-size: 261px 31px;
+	background-position: -140px 0;
+}
+.gzcl span {
+	display: block;
+	padding-top: 13px;
+	height: 14px;
+	font-size: 14px;
+	color: #9c9c9c;
+}
+.gzcl li {
+	line-height: 44px;
+	height: 44px;
+	background: url(../images/bg_dashed.png) repeat-x left bottom;
+	background-size: 9px 1px;
+}
+/*解除绑定按钮样式*/
+.jcbd {
+	height: 35px;
+	padding: 14px 0;
+}
+.jcbd div {
+	margin: 0px auto;
+	width: 267px;
+	height: 35px;
+	background: url("../images/btn_jcbd.png") no-repeat center center;
+	background-size: 269px 80px;
+	background-position: -1px -3px;
+	cursor: pointer;
+}
+.jcbd div:active {
+	background-size: 269px 80px;
+	background-position: -1px -41px;
+}
+/*绑定驾驶证8A end*/
+/*交通公告列表页 start*/
+.cz_wrapper {
+	width: 100%;
+}
+.news_list li {
+	border-bottom: 1px solid #d5d8de;
+	/*padding: 10px 12px 0 0;*/
+    /*text-indent: 22px;*/
+}
+/*新闻标题*/
+.news_list .title{
+	display: block;
+	font-size: 16px;
+	color: #201f1f;
+	padding: 10px 12px 0 0;
+}
+.news_list p {
+	font-size: 16px;
+	line-height: 21px;
+	white-space:pre-wrap;
+	word-wrap:break-word;
+	padding-left: 22px;
+}
+/*新闻时间*/
+.news_list .time {
+	display: block;
+	text-align: right;
+	color: #a2a1a1;
+	font-size: 13px;
+	line-height:30px;
+	font-family: "helvetica";
+}
+/*加载更多效果样式*/
+.load_more {
+	display:block;
+	width:100%;
+	line-height: 63px;
+	font-size: 14px;
+	color: #c2c1c1;
+}
+.load_more span{
+	display:block;
+	margin:0 auto;
+	width:85px;
+}
+.load_more span.loading{
+	background:url("../images/loading.gif") no-repeat left center;
+	padding-left:13px;
+	width: 77px;
+	background-size: 12px 12px;
+}
+/*交通公告列表页 end*/
+/*交通公告内容页 start*/
+/*文章标题*/
+.news_head{
+	padding:10px 14px 8px 17px;
+	border-bottom: 1px solid #d5d8de;
+}
+.news_head h1 {
+	font-size: 18px;
+	color: #201f1f;
+	font-weight: bold;
+	white-space:pre-wrap;
+	word-wrap:break-word;
+	line-height: 24px;
+}
+/*文章日期*/
+.news_head span {
+	float:left;
+	color: #a2a1a1;
+	font-size: 12px;
+	line-height:16px;
+	font-family: "helvetica";
+	text-indent: 1px;
+}
+.news_content {
+	padding: 8px 14px 10px 17px;
+}
+/*内容样式*/
+.news_content p {
+	text-indent: 20px;
+	line-height: 24px;
+	font-size: 15px;
+}
+/*内容页图片抓取样式*/
+.news_content p img {
+	width: 90%;
+}
+/*交通公告内容页 end*/
+
+/*绑定页*/
+.box{padding:0 14px}
+/*输入框*/
+.box h3{color:#4b4b4b;line-height:37px;font-size:15px;}
+.box input[type="text"],.box input[type="number"]{width:100%;
+display:block;
+border-radius: 3px;
+border:#b7b7b7 solid 1px;
+color:#4b4b4b;
+-webkit-box-shadow:1px 1px 4px 1px rgba(0,0,0,0.18) inset;
+box-shadow:1px 1px 4px 1px rgba(0,0,0,0.18) inset;
+padding:10px 0px;
+text-indent: 8px;
+font:14px "华文细黑", "黑体",helvetica, sans-serif;
+outline:none;
+}
+
+.box h1 {font-size: 17px; color: #000;font-weight: bold; padding: 16px 0 5px 0;}
+.box h3 {font-weight: normal;position: relative;}
+.box .cz_sign {
+	width: 15px;
+	height: 15px;
+	background:url("../images/sign1.png") no-repeat center center;
+	background-size: 15px 15px;
+	display: block;
+	position: absolute;
+	top: 12px;
+	left: 120px;
+	cursor: pointer;
+}
+/*绑定菊花图和绑定成功样式*/
+.floating_layer {
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	position: absolute;
+	top: 0;
+	left: 0;
+	/*background-color: #5f6063;*/
+	background-color: rgba(0, 0, 0, 0);
+	/*display:table;*/
+	/*visibility: hidden;*/
+}
+.floating_layer .outer {
+	/*display:table-cell;vertical-align:middle;*/
+}
+.cz_slideup_box {
+	/*width: 135px;*/
+	width: 115px;
+	/*height: 80px;*/
+	padding: 32px 10px;
+	height: auto;
+	background-color: #47484a;
+	opacity: 0.9;
+	border-radius: 12px;
+	z-index: 10;
+	margin: 0px auto;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-left: -68px;
+	margin-top: -35px;
+}
+.cz_slideup_box .loadding, .cz_slideup_box .sucess {
+	width: 70px;
+	height: 18px;
+	margin: 0px auto;
+	color: #eaeaea;
+	font-size: 16px;
+	/*padding-top: 30px;*/
+	font-family: "STXihei";
+	font-weight: bold;
+	text-align: center;
+}
+.cz_slideup_box .loadding {
+	/*display: none;*/
+	padding-left: 20px;
+	background: url("../images/loadinfo.gif") no-repeat left 0px;
+	background-size: 18px 18px;
+}
+.cz_slideup_box .tips {
+	word-wrap: break-word;
+	word-break: normal;
+	font-size: 16px;
+	color: #eaeaea;
+	line-height: 21px;
+	margin-top: -2px;
+	text-align: center;
+}
+::-webkit-input-placeholder {color:#b7b7b7;}
+:-moz-placeholder {color:#b7b7b7;}
+::-moz-placeholder {color:#b7b7b7;}
+:-ms-input-placeholder {color:#b7b7b7;}
+
+/*提交按钮*/
+.submit_btn{
+width:100%;
+margin:14px 0;
+height:35px;
+padding:0 1px;
+cursor:pointer;
+border:0;
+background: url("../images/btn_all_1.png") no-repeat center 0 content-box,
+			url("../images/btn_all_1.png") repeat left -39px content-box,
+			url("../images/btn_all_1.png") no-repeat left -80px padding-box,
+			url("../images/btn_all_1.png") no-repeat right -118px padding-box;
+background-size: 30px 390px;
+}
+
+.submit_btn:active{
+background: url("../images/btn_all_1.png") no-repeat center -157px content-box,
+			url("../images/btn_all_1.png") repeat left -198px content-box,
+			url("../images/btn_all_1.png") no-repeat left -237px padding-box,
+			url("../images/btn_all_1.png") no-repeat right -277px padding-box;
+background-size: 30px 390px;
+}
+
+
+/*机动车违法信息页*/
+/*没有结果的*/
+.noresult {
+	text-align:center;width:100%;height:100%;display:table;
+}
+.noresult .outer {
+	width:100%; height:300px;
+	display:table-cell;vertical-align:middle;
+	margin: 0 auto;
+}
+.noresult .outer .img {
+	width:200px;
+	height:99px;
+	background:url("../images/noresult.jpg") no-repeat center top;
+	background-size:79px 79px;
+	margin: 0 auto;
+}
+/*现在去绑定页面*/
+.noresult .outer .btn {
+	width: 122px;
+	height: 34px;
+	background: url("../images/btn_xzjqbd.jpg") no-repeat center center;
+	background-size: 260px 32px;
+	background-position: 0 0;
+	cursor: pointer;
+	margin: 0 auto;
+	margin-top: 21px;
+}
+.noresult .outer .btn:active {
+	background-size: 260px 32px;
+	background-position: -133px 0;
+}
+.noresult .outer p {
+	width: 270px;
+	text-align: center;
+	margin: 0 auto;
+	line-height: 20px;
+
+}
+.noresult .outer .p_content {
+	width: 270px;
+	text-align: center;
+	margin: 0 auto;
+	line-height: 20px;
+}
+.noresult .outer .bind_tips {
+	width: 100%;
+	text-align: center;
+	color: #504e4e;
+}
+.search{position:fixed;width:45px;height:45px;right:18px;bottom:20px;z-index:10;}
+.search a{display:block;width:100%;height:100%;background:url("../images/search_1.png") no-repeat center center;
+background-size:45px 45px;
+}
+
+
+/*违法信息*/
+.info{width:100%;border-top:#399eea 5px solid;}
+.info .hd,.info .hd2{background:#fefefe url("../images/title_bg.png") repeat-x bottom;padding:18px 15px 25px 16px;}
+.info .hd h3{float:left;height:40px;
+padding:0 30px;
+background:url("../images/card_s.png") no-repeat left -40px padding-box,
+		   url("../images/card_s.png") no-repeat right -80px padding-box,
+		   url("../images/card_s.png") repeat left top content-box;
+background-size:30px 120px;
+}
+
+.info .hd h3 span{display:inline-block;margin:10px -15px 0;font-size:20px;color:#fff;font-weight:400;}
+
+
+.info .hd .sub{float:left;margin-left:22px;line-height:21px;color:#000;}
+.info .hd .sub span,.info .hd2 .sub span{color:#ffa200;}
+
+/*违法信息列表*/
+.info .bd{background:#fbfbfb url("../images/bd_bg.png") repeat-x left bottom;line-height:23px;
+background-size:10px 4px;
+}
+
+.info .bd li{width:100%;border-bottom:#d8d8d8 1px solid;}
+.info .bd li.last{border-bottom:none;}
+.info .bottom{background:#fbfbfb;}
+.info .bottom li.last{border-bottom:#d8d8d8 1px solid;}
+
+/*base*/
+.info .bd .base{padding:5px 15px 8px 17px;position:relative;}
+.info .bd dl{margin-right:30px;}
+.info .bd dt{float:left;clear:both;width:70px;}
+/*地点、时间间距修改*/
+.info .bd li .base dl dt {
+    width: 50px;
+}
+.info .bd li .base dl dd {
+    padding-left: 50px;
+}
+
+.info .bd dd{color:#000;word-wrap:break-word;padding-left:70px;}
+.info .bd .base .down,.info .bd .base .up{position:absolute; right:17px;top:50%;width:20px;height:20px;margin-top:-10px;}
+.info .bd .base .down{background:url("../images/down.png") no-repeat 0 0;
+background-size:20px 40px;
+}
+.info .bd .base .up{background:url("../images/down.png") no-repeat 0 -20px;
+background-size:20px 40px;
+}
+.info .bd .base .down a,.info .bd .base .up a{display:block;width:100%;height:100%;}
+
+/*detail*/
+.info .bd .detail{background-color:#edf0f7;padding:8px 15px 9px 17px;display:none;}
+.info .bd dd.img{float:left;clear:both;padding-left:0;border:1px solid #b7c5cf;padding:4px; background-color:#fff;margin-left:-3px;min-height: 200px;min-width: 200px;}
+.info .bd dd.img img {width: 200px;max-width: 566px;height: 200px;}
+/*查询违法信息*/
+/*.logo{
+	width:100%;
+	height:98px;
+	background-size:73px 76px;
+	margin-bottom: 10px;
+}*/
+
+/*查询按钮*/
+.query_btn{
+width:100%;
+margin:14px 0;
+height:35px;
+padding:0 1px;
+cursor:pointer;
+border:0;
+background: url("../images/btn_chaxun.png") no-repeat center 0px content-box,
+			url("../images/btn_chaxun.png") repeat left -40px content-box,
+			url("../images/btn_chaxun.png") no-repeat left -81px padding-box,
+			url("../images/btn_chaxun.png") no-repeat right -120px padding-box;
+background-size: 30px 315px;
+}
+
+.query_btn:active{
+background: url("../images/btn_chaxun.png") no-repeat center -158px content-box,
+			url("../images/btn_chaxun.png") repeat left -198px content-box,
+			url("../images/btn_chaxun.png") no-repeat left -241px padding-box,
+			url("../images/btn_chaxun.png") no-repeat right -280px padding-box;
+background-size: 30px 315px;
+}
+
+
+
+/*违法信息*/
+.info .hd2{padding:14px 15px 19px 16px;}
+.info .hd2 .sub{float:left;color:#000;}
+.info .bd h3{height:27px;float:left;
+padding:0 27px;font-weight:400;
+background:url("../images/card_s_2.png") no-repeat left -27px padding-box,
+		   url("../images/card_s_2.png") no-repeat right -54px padding-box,
+		   url("../images/card_s_2.png") repeat left top content-box;
+background-size:27px 81px;
+}
+.info .bd h3 span{display:inline-block;margin:7px -19px 0;font-size:14px;line-height:14px;color:#fff;font-weight:400;}
+
+
+.info .bd .short dt{width:43px;}
+.info .bd .short dd{padding-left:43px;}
+
+/*驾驶人违法查询*/
+.info .hd2 .user{height:18px;margin-bottom:10px;margin-top:-2px;}
+.info .hd2 .user span{display:inline-block;padding-left:8px;font-size:18px;color:#000;font-weight:bold;}
+
+
+/*账号公告_6A start*/
+.box .sub_button {
+	padding-top: 13px;
+	height: 34px;
+	width: 293px;
+	margin: 0 auto;
+}
+.box .sub_button .cancel_button, .box .sub_button .submit_button {
+	width: 138px;
+	height: 34px;
+}
+.box .sub_button .cancel_button {
+	float: left;
+	background: url("../images/btn_qx.png") no-repeat center center;
+	background-size: 293px 34px;
+	background-position: 0 0;
+}
+.box .sub_button .cancel_button:active {
+	background-size: 293px 34px;
+	background-position: -155px 0;
+}
+.box .sub_button .submit_button {
+	float: right;
+	background: url("../images/btn_tj.png") no-repeat center center;
+	background-size: 293px 34px;
+	background-position: 0 0;
+}
+.box .sub_button .submit_button:active {
+	background-size: 293px 34px;
+	background-position: -155px 0;
+}
+/*账号公告_6A end*/
+/*办事指南 start*/
+.bszn {
+	width: 100%;
+}
+.bszn li {
+	line-height: 60px;
+	font-size: 30px;
+	/* padding: 0 21px 0 16px; */
+	border-bottom: 1px solid #dfdfdf;
+}
+.bszn h3 {
+	color: #666666;
+	font-size: 17px;
+	padding: 0 21px 0 16px;
+}
+.bszn span {
+	float: right;
+	height: 19px;
+	width: 19px;
+	background: url(../images/button_arrow_down.png) no-repeat center center;
+	margin-top: 20px;
+	background-size: 19px 19px;
+}
+.bszn .content{display:none;}
+.bszn .content li {
+	line-height: 20px;
+    /*padding: 15px 0;*/
+	background: #edf0f7;
+}
+.bszn .content li a {
+	display: block;
+	color: #666666;
+	font-size: 14px;
+	padding: 15px 21px 15px 16px;
+}
+/*办事指南 end*/
+/*我的机动车违法信息 start*/
+.car_info {
+	width: 100%;
+}
+.car_info div {
+	margin-top: 21px;
+	width: 122px;
+	height: 34px;
+	background: url("../images/all_button.png") no-repeat center center;
+	background-size: 320px 721px;
+	background-position: -14px -392px;
+	cursor: pointer;
+}
+.car_info div:active {
+	background-size: 320px 721px;
+	background-position: -165px -392px;
+}
+.car_info p {
+	width: 280px;
+	color: #504e4e;
+	margin-top: 152px;
+}
+.car_info p, .car_info div {
+	margin-left: auto;
+	margin-right: auto;
+}
+/*我的机动车违法信息 end*/
+/*绑定驾驶证 start*/
+.jsz {
+	padding-top: 13px;
+	height: 46px;
+    width: 267px;
+    width: 100%;
+    border-top: 1px solid #D5D8DE;
+    position: fixed;
+    bottom: 0;
+    background-color:#fbfbfb;
+    z-index: 1000;
+}
+.jsz div {
+	margin: 0px auto;
+	width: 267px;
+	height: 35px;
+	background: url("../images/btn_bdjsz.png") no-repeat center center;
+	background-size: 267px 71px;
+	background-position: 0 0;
+}
+.jsz div:active {
+	background-size: 267px 71px;
+	background-position: 0 -37px;
+}
+.jsz .btn_no_font {
+	margin: 0px auto;
+	width: 267px;
+	height: 35px;
+	background: url("../images/btn_bdjsz_no_font.png") no-repeat center center;
+	background-size: 267px 71px;
+	background-position: 0 0;
+	color: #fff;
+	line-height: 32px;
+	text-indent: 110px;
+}
+.jsz .btn_no_font:active {
+	background-size: 267px 71px;
+	background-position: 0 -37px;
+}
+/*该车辆没有未处理的违法信息样式*/
+.jsz .btn_my_car_info {
+	width: 266px;
+	height: 34px;
+	background: url("../images/btn_wdclwfcx.png") no-repeat;
+	background-size: 266px 78px;
+	background-position: 0 0;
+	text-align: center;
+	color: #fff;
+	line-height: 32px;
+}
+.jsz .btn_my_car_info a {
+	color: #fff;
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+.jsz .btn_my_car_info:active {
+	background-size: 266px 78px;
+	background-position: 0 -44px;
+}
+/*是否关注车辆样式 start*/
+.jsz .gzcl_my_car {
+	height: 24px;
+	width: 100%;
+	background: none;
+	line-height: 24px;
+	margin-top: 5px;
+}
+.jsz .gzcl_my_car * {background: none;}
+.jsz .gzcl_my_car .content {
+	float: left;
+	color: #666666;
+	width: 155px;
+	margin-left: 10px;
+}
+.jsz .gzcl_my_car .btn_sy {
+	width: 114px;
+	height: 24px;
+	float: right;
+	margin-right: 15px;
+}
+.jsz .gzcl_my_car .btn_sy .btn_y, .jsz .gzcl_my_car .btn_sy .btn_n{
+	width: 51px;
+	height: 24px;
+	list-style: 24px;
+	text-align: center;
+}
+.jsz .gzcl_my_car .btn_sy .btn_y {
+	float: left;
+	background: url("../images/btn_sf.png") no-repeat;
+	background-size: 114px 54px;
+	background-position: 0 0;
+	color: #fff;
+}
+.jsz .gzcl_my_car .btn_sy .btn_y:active {
+	background-size: 114px 54px;
+	background-position: 0 -29px;
+}
+.jsz .gzcl_my_car .btn_sy .btn_n {
+	float: right;
+	background: url("../images/btn_sf.png") no-repeat;
+	background-size: 114px 54px;
+	background-position: -61px 0;
+	color: #4c4c4c;
+}
+.jsz .gzcl_my_car .btn_sy .btn_n:active {
+	background-size: 114px 54px;
+	background-position: -61px -29px;
+}
+/*是否关注车辆样式 end*/
+/*绑定驾驶证 end*/
+/*引导查询样式 start*/
+.ydcx, .ydcx1 {
+	display: block;
+	width: 270px;
+	margin: 14px auto 0 auto !important;
+	background: url("../images/bg_arrow_right.png") no-repeat;
+	background-position: 206px 1px;
+	background-size: 6px 14px;
+	color: #328bd7;
+	text-indent: -10px;
+}
+.ydcx a, .ydcx1 a {
+	color: #328bd7;
+}
+.ydcx1 {
+	background: url("../images/bg_arrow_right.png") no-repeat;
+	background-size: 6px 14px;
+	background-position: 212px 4px;
+}
+/*.ydcx span{
+	display: inline-block;
+	width: 6px;
+	height: 14px;
+	background: url("../images/bg_arrow_right.png") no-repeat 206px 4px;
+	background-size: 6px 14px;
+}*/
+/*引导查询样式 end*/
+/*菊花预加载 start*/
+#preloader {
+	display: inline;
+	height: 0;
+	width: 0;
+	background:url("../images/loadinfo.gif");
+}
+/*菊花预加载 end*/
+/*新底部浮沉样式*/
+.new_bg_bottom {
+	width: 100%;
+	height: 28px;
+	background: rgba(0, 0, 0, 0.6);
+	padding-top: 12px;
+	position: fixed;
+	bottom: 0;
+	z-index: 1000;
+}
+.new_bg_bottom .bottom_content {
+	height: 17px;
+	width: 100%;
+}
+.new_bg_bottom .bottom_content .click_href {
+	height: 17px;
+	width: 255px;
+	margin-left: 14px;
+	display: block;
+	float: left;
+}
+.new_bg_bottom .bottom_content .sign {
+	float: left;
+	width: 17px;
+	height: 17px;
+}
+.new_bg_bottom .bottom_content .describe {
+	font-size: 15px;
+	color: #ffffff;
+	line-height: 17px;
+	text-align: left;
+	float: left;
+	text-indent: 10px;
+}
+.new_bg_bottom .bottom_content .describe_btn_my_car {
+	line-height: 18px;
+}
+.new_bg_bottom .bottom_content .describe_btn_my_plus {
+	line-height: 16px;
+}
+.new_bg_bottom .bottom_content .sign_close {
+	float: right;
+	width: 12px;
+	height: 12px;
+	background: url("../images/btn_bottom_close.png") no-repeat;
+	background-size: 12px 12px;
+	margin-top: 2px;
+	margin-right: 14px;
+	cursor: pointer;
+}
+/*绑定按钮*/
+.new_bg_bottom .bottom_content .btn_bd {
+	background: url("../images/btn_bottom_bd.png") no-repeat;
+	background-size: 17px 17px;
+}
+/*查看车辆违法信息样式*/
+.new_bg_bottom .bottom_content .btn_my_car {
+	height: 14px;
+	background: url("../images/btn_bottom_my_car.png") no-repeat;
+	background-size: 17px 14px;
+	margin-top: 2px;
+}
+/*关注该车辆样式*/
+.new_bg_bottom .bottom_content .btn_my_plus {
+	background: url("../images/btn_bottom_plus.png") no-repeat;
+	background-size: 17px 17px;
+}
+/*小图变大图 start*/
+.float_layer_bigImg {
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.85);
+	display: none;
+	position: fixed;
+	_position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+.float_layer_bigImg .img_layer {
+	position: fixed;
+	top:0;
+	left:0;
+	display:block;
+	/*overflow: hidden;*/
+}
+.float_layer_bigImg .img_loading {
+	width: 24px;
+	height: 24px;
+	background: url("../images/loadinfo.gif") no-repeat center center;
+	position: fixed;
+	margin-top: -12px;
+	margin-left: -12px;
+	top: 50%;
+	left: 50%;
+	z-index: 101;
+
+}
+.float_layer_bigImg .close {
+	width: 53px;
+	height: 53px;
+	position: fixed;
+	background: url("../images/close.png") no-repeat;
+	background-size: 53px 53px;
+	top: 0;
+	right: 0;
+	z-index: 102;
+}
+/*小图变大图 end*/
+
+/*无证芯编号点此查询 start*/
+.box .no_num {
+	margin: 0 auto;
+	margin-top: 30px;
+	display: block;
+	color: #328BD7;
+	width: 150px;
+	height: 14px;
+	text-align: center;
+	background: url("../images/bg_arrow_right.png") no-repeat right 1px;
+	background-size: 6px 14px;
+}
+
+
+/*page card */
+.page_card_container{
+	margin:0 auto;
+	height:50px;
+}
+.page_card{
+	text-align:center;
+	line-height:2;
+	width:49.7%;
+	heiht:50px;
+	border:1px solid gray;
+}
+
+.page_card_left{
+	float:left;
+
+}
+
+.page_card_right{
+	float:right;
+}

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="../../js/wx_common.js"></script>
+		--><title></title>
+		<script type="text/javascript" src="../../js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="../../js/pageparams.js"></script>
+		<script type="text/javascript">
+			Pageparams.postRequest('page');
+		</script>		
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="../../css/myAlert.css">
+		<link rel="stylesheet" href="../../css/ningboweb.css">
+		<link rel="stylesheet" href="../../css/progressbar.css"/>
+		
+		<script src="../../js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="../../js/jquery.validate.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="../../js/spin.min.js"></script>
+		<script type="text/javascript" src="../../js/progressbar.js"></script>
+		
+		<script type="text/javascript" src="../../js/writedwr.js"></script>
+		<script type="text/javascript" src="../../js/md5.js"></script>
+		<script type="text/javascript" src="../../js/getBindInfo.js"></script>
+		
+		<script type="text/javascript" src="../../js/myAlert.js"></script>
+		<script type="text/javascript" src="../../js/append.js"></script>
+		
+		<script type="text/javascript">   
+			var vehicle = "vehicle";
+		
+			var driver = "driver";
+		
+			var vio = "vio";
+		
+			var code ;
+			function ToUrl(x)   {location.href=x; }  
+			$(document).ready(function(){
+				addHeadLogout("掌上车管");
+			
+				ProgressBar.init();
+				token = getCookie("token");
+				code = getQueryString("code");
+				if (token == null) {
+					code = getQueryString("code");
+					getOpenId(code);
+				} else {
+					//getBindedInfoByToken(token);
+				}
+			
+				var lis = document.getElementsByName('item');
+				for(var i=0;i<lis.length;i++){
+					lis[i].onclick = function(){
+						for(var j=0;j<lis.length;j++){
+							lis[j].style.backgroundColor = "#fbfbfb";
+						}
+					this.style.backgroundColor = "#ebebeb";
+					}
+				}
+
+				init("");
+			}); 
+			
+			function init(body){
+				ProgressBar.hide();
+				ProgressBar.show();
+				var zscgParams = '{"wxid":"WXID","time":"TIME","ywlx":"YWLX"}';
+				openId = getCookie("openId");
+				if(openId == null || openId == "null") {
+					window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe1514fa969a3bc65&redirect_uri=http%3A%2F%2Fjhwxv2.test.hzcdt.com%2Fweixin%2Fforeground%2Fhtml%2Fvehicle_admin%2FWxZscgRegister.html&response_type=code&scope=snsapi_base&state=0#wechat_redirect";
+				}
+				zscgParams = zscgParams.replace("WXID", openId).replace("TIME", new Date()).replace("YWLX", "0");
+				WebServiceUtil.wxZscgIsbind(zscgParams, zscgCallback);
+			}
+			
+			Showbo.todo = function() {
+				//ToUrl('/html/intentBind.html');
+			}
+
+			function zscgCallback(msg) {
+				ProgressBar.hide();
+				if (msg != null) {
+					var jsonObject = eval("(" + msg + ")");
+					if (jsonObject.head.code != 1) {
+						Showbo.Msg.alert(jsonObject.head.message);
+						Showbo.todo = function(){
+							window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe1514fa969a3bc65&redirect_uri=http%3A%2F%2Fjhwxv2.test.hzcdt.com%2Fweixin%2Fforeground%2Fhtml%2Fvehicle_admin%2FWxZscgRegister.html&response_type=code&scope=snsapi_base&state=0#wechat_redirect";
+						};
+					} else {
+						var zscgToken = jsonObject.body[0].token;
+						var sfzmmc = jsonObject.body[0].sfzmmc;
+						var sfzmhm = jsonObject.body[0].sfzmhm;
+						var loginid = jsonObject.body[0].loginid;
+						var usertype = jsonObject.body[0].usertype; 
+						var xm = jsonObject.body[0].xm;
+						$("#loginUser").text(xm+",您好");
+						// 自主选号
+						$("#zzxh").click(function(){
+							ToUrl("./SelectNumByselftip.html");
+						});
+						// 补领号牌
+						$("#bhlhp").click(function(){
+							ToUrl("./exchangeflappertip.html?zscgToken=" + zscgToken + "&sfzmmc=" + sfzmmc + "&sfzmhm=" + sfzmhm);
+						});
+						// 异地委托年检
+						$("#ydwtnj").click(function(){
+							ToUrl("./entrustwithouttip.html?zscgToken=" + zscgToken + "&sfzmmc=" + sfzmmc + "&sfzmhm=" + sfzmhm);
+						});
+						//  补领合格标志
+						$("#blhgbz").click(function(){
+							ToUrl("./takecardofqualitytip.html?zscgToken=" + zscgToken + "&sfzmmc=" + sfzmmc + "&sfzmhm=" + sfzmhm);
+						});
+						// 补领行驶证
+						$("#blxsz").click(function(){
+							ToUrl("./takedrivercartip.html?zscgToken=" + zscgToken + "&sfzmmc=" + sfzmmc + "&sfzmhm=" + sfzmhm);
+						});
+						// 补领驾驶证
+						$("#bljsz").click(function(){
+							ToUrl("./DriverCardChangetip.html?zscgToken=" + zscgToken + "&sfzmmc=" + sfzmmc + "&sfzmhm=" + sfzmhm);
+						});
+						$("#ywjdcx").click(function(){
+							ToUrl("./operationlist.html?zscgToken=" + zscgToken + "&loginid=" + loginid);
+						});
+					}
+				}
+			}
+		</script>
+	</head>
+
+	<body>
+			<div class="content">
+				<div style="color: #fe9900; font-size: 18px;padding-top: 8px;">
+					机动车业务
+					<hr size="1px" color="#28a5e5"/>
+				</div>
+				<ul class="inforSerch" >
+					<!-- <li name="item">
+						<div id="jdclxfsbg">
+								<img src="/weixin/foreground/img/icon13.png"></img>
+								<br/>
+								<p style="font-size: 14px;">联系方式变更</p>
+						</div>
+					</li> -->
+					<li name="item">
+						<div id="bhlhp">
+								<img src="/weixin/foreground/img/icon14.png"></img>
+								<br/>
+								<p style="font-size: 14px;">补领号牌</p>
+						</div>
+					</li>
+					<li name="item">
+						<div id="ydwtnj" >
+							<img src="/weixin/foreground/img/icon15.png"></img>
+							<br/>
+								<p style="font-size: 14px;">异地委托年检</p>
+						</div>
+					</li>
+					<li name="item" >
+						<div id="blhgbz">
+								<img src="/weixin/foreground/img/icon16.png"></img>
+								<br/>
+								<p style="font-size: 14px;">补领合格标志</p>
+						</div>
+					</li>
+						<li name="item">
+						<div id="blxsz">
+							<img src="/weixin/foreground/img/icon17.png"></img>
+							<br/>
+									<p style="font-size: 14px;">补领行驶证</p>
+						</div>
+					</li>
+					<li name="item">
+						<div id="zzxh" >
+							<img src="/weixin/foreground/img/icon18.png"></img>
+							<br/>
+									<p style="font-size: 14px;">自主选号</p>
+						</div>
+					</li>
+					</ul><div class="clear"></div><br/>
+					
+					<div style="color: #fe9900; font-size: 18px;">
+						驾驶证业务
+						<hr size="1px" color="#28a5e5"/>
+					</div>
+					<ul class="inforSerch" >
+					<!-- <li name="item">
+						<div id="jsrlxfsbg">
+							<img src="/weixin/foreground/img/icon19.png"></img>
+							<br/>
+									<p style="font-size: 14px;">联系方式变更</p>
+						</div>
+					</li> -->
+					<li name="item">
+						<div id="bljsz">
+							<img src="/weixin/foreground/img/icon20.png"></img>
+							<br/>
+									<p style="font-size: 14px;">补领驾驶证</p>
+						</div>
+					</li>
+					</ul><div class="clear"></div>
+					<br/>
+					
+					<div style="color: #fe9900; font-size: 18px;">
+						业务导办
+						<hr size="1px" color="#28a5e5"/>
+					</div>
+					<ul class="inforSerch" >
+					<li name="item">
+						<div id="carGuide" onclick="javascript:ToUrl('/weixin/foreground/html/guide/CarJobGuidDetail.html?type=' + vehicle);">
+							<img src="/weixin/foreground/img/icon4.png"></img>
+							<br/>
+									<p style="font-size: 14px;">机动车业务导办</p>
+						</div>
+					</li>
+					<li name="item">
+						<div id="driverGuide" onclick="javascript:ToUrl('/weixin/foreground/html/guide/CarJobGuidDetail.html?type=' + driver);">
+							<img src="/weixin/foreground/img/icon5.png"></img>
+							<br/>
+									<p style="font-size: 14px;">驾驶证业务导办</p>
+						</div>
+					</li>
+					<li name="item">
+						<div id="driverGuide" onclick="javascript:ToUrl('/weixin/foreground/html/guide/CarJobGuidDetail.html?type=' + vio);">
+							<img src="/weixin/foreground/img/icon6.png"></img>
+							<br/>
+									<p style="font-size: 14px;">违法处理导办</p>
+						</div>
+					</li>
+					</ul><div class="clear"></div><br/>
+					
+					<div style="color: #fe9900; font-size: 18px;padding-top: 8px;">
+						信息查询
+						<hr size="1px" color="#28a5e5"/>
+					</div>
+					<ul class="inforSerch" >
+					<li name="item" class="ul-li-div">
+						<div id="ywjdcx">
+								<img src="/weixin/foreground/img/icon7.png"></img>
+								<br/>
+									<p style="font-size: 14px;">业务进度查询</p>
+						</div>
+					</li>
+					<li name="item" class="ul-li-div">
+						<div onclick="javascript:ToUrl('./vehiclepledge.html');">
+								<img src="/weixin/foreground/img/icon10.png"></img>
+								<br/>
+									<p style="font-size: 14px;">抵押登记查询</p>
+						</div>
+					</li>
+					<li name="item">
+						<div onclick="javascript:ToUrl('./choicecarnumber.html');" class="ul-li-div">
+								<img src="/weixin/foreground/img/icon14.png"></img>
+								<br/>
+									<p style="font-size: 14px;">可选车号查询</p>
+						</div>
+					</li>
+					<li name="item">
+						<div onclick="javascript:ToUrl('/weixin/foreground/html/query/selectschoolmsg.html');" class="ul-li-div">
+								<img src="/weixin/foreground/img/icon1.png"></img>
+								<br/>
+									<p style="font-size: 14px;">驾校信息查询</p>
+						</div>
+					</li>
+					<li name="item">
+						<div onclick="javascript:ToUrl('/weixin/foreground/html/query/schoolnotification.html');" class="ul-li-div">
+								<img src="/weixin/foreground/img/icon11.png"></img>
+								<br/>
+									<p style="font-size: 14px;">驾校通报查询</p>
+						</div>
+					</li>
+					</ul><div class="clear"></div><br/>
+					
+					<div style="color: #fe9900; font-size: 18px;">
+						车管指南
+						<hr size="1px" color="#28a5e5"/>
+					</div>
+					<ul class="inforSerch" >
+						<li name="item">
+						<div onclick="javascript:ToUrl('/weixin/foreground/html/query/newestPubnote.html');" class="ul-li-div">
+								<img src="/weixin/foreground/img/icon17.png"></img>
+									<br>
+									<p style="font-size: 14px;">最新公告</p>
+						</div>
+						</li>
+						<li name="item">
+						<div onclick="javascript:ToUrl('/weixin/foreground/html/query/standardcharge.html');" class="ul-li-div">
+								<img src="/weixin/foreground/img/icon8.png"></img>
+									<br>
+									<p style="font-size: 14px;">收费标准</p>
+						</div>
+						</li>
+						<li name="item">
+						<div onclick="javascript:ToUrl('/weixin/foreground/html/exam/examGuide.html');" class="ul-li-div">
+								<img src="/weixin/foreground/img/i_21.png"></img>
+									<br>
+									<p style="font-size: 14px;">考试指南</p>
+						</div>
+						</li>
+						<li name="item">
+						<div onclick="javascript:ToUrl('/weixin/foreground/html/vehicle_admin/procedureInfo.html');" class="ul-li-div">
+								<img src="/weixin/foreground/img/i_11.png"></img>
+									<br>
+									<p style="font-size: 14px;">流程资料</p>
+						</div>
+						</li>
+					</ul><div class="clear"></div><br/>
+					
+					<div style="color: #fe9900; font-size: 18px;">
+						网点地图
+						<hr size="1px" color="#28a5e5"/>
+					</div>
+					<ul class="inforSerch" >
+						<li name="item">
+						<div onclick="javascript:ToUrl('/weixin/foreground/html/query/WebPointMap.html');" class="ul-li-div">
+								<img src="/weixin/foreground/img/icon3.png"></img>
+									<br>
+									<p style="font-size: 14px;">网点地图</p>
+						</div>
+						</li>
+					</ul><div class="clear"></div><br/>
+				</div>
+	</body>
+</html>					

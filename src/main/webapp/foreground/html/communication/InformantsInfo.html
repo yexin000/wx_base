@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="email=no"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=0"/>
+<link rel="stylesheet" href="/weixin/foreground/css/violationsMain.css" type="text/css"></link>
+<body>
+<section class="section-3">
+	<div class="ps-lt">
+    	<div class="lh128 borderB">
+        	<div><input class="input1 lh128 marR20" placeholder="请输入姓名" value=""/></div><label>姓名</label>
+        </div>
+    	<div class="lh128 borderB">
+        	<div><input class="input1 lh128 marR20" placeholder="请输入联系方式" value=""/></div><label>联系方式</label>
+        </div>
+    </div>
+</section>
+<!--modular-nav-->
+<div class="marL20 marT30 marB30">
+	<a class="btn3" href="identify2.html">提交</a>
+    <div class="clear"></div>
+</div>
+<script>
+	(function (doc, win) {
+	  var docEl = doc.documentElement,
+		resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+		recalc = function () {
+		  var clientWidth = docEl.clientWidth;
+		  if (!clientWidth) return;
+		  docEl.style.fontSize = 100 * (clientWidth / 1080) + 'px';
+		};
+
+	  if (!doc.addEventListener) return;
+	  win.addEventListener(resizeEvt, recalc, false);
+	  doc.addEventListener('DOMContentLoaded', recalc, false);
+	})(document, window);
+</script>
+</body>
+</html>

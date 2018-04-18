@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/pageparams.js"></script>
+		<script type="text/javascript">
+			Pageparams.postRequest('page');
+		</script>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css" />
+		
+		<script src="/weixin/foreground/js/jquery.validate.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">   
+		var code;
+		$(document).ready(function(){
+			addHead("更多查询");
+			$("#c-ui-header-return").hide();
+		
+			ProgressBar.init();
+			//token = getCookie("token");
+			//if (token == null) {
+			//	code = getQueryString("code");
+			//	getOpenId(code);
+			//} else {
+			//	getBindedInfoByToken(token);
+			//}
+			var lis = document.getElementsByName('item');
+			for(var i=0;i<lis.length;i++){
+				lis[i].onclick = function(){
+					for(var j=0;j<lis.length;j++){
+						lis[j].style.backgroundColor = "#fbfbfb";
+					}
+					this.style.backgroundColor = "#ebebeb";
+				}
+			}
+		});
+		
+		function ToUrl(x){   
+			location.href=x+'?code='+escape(code)+"&flag=1&t="+(+new Date()); 
+			//alert(x+'?code='+escape(code));  
+		}   
+		
+		var jszh ;
+		var sfzmc ;
+		//绑定后跳转页面
+		function init(body){
+			//alert(isBanding);
+			ProgressBar.hide();
+			if(isBanding){
+				
+				$("#carInfo").click(function(){
+					for(var i in body){
+						if (body[i].sjlx == "机动车") {
+							location.href='./bindCarInfo.html?token='+escape(token);
+							return;
+						}else{
+							ToUrl('./CarInfoBaseQuery.html');
+						}
+					}
+				});
+				
+				$("#driverInfo").click(function(){
+					for(var i in body){
+						if (body[i].sjlx == "驾驶证") {
+							jszh = body[i].hm;
+							sfzmc = body[i].zt;
+							location.href='./bindDriverInfo.html?token='+escape(token)+"&hm="+escape(jszh)+"&zm="+escape(sfzmc);
+							return;
+						}else{
+							ToUrl('./DriverQuery.html');
+						}
+					}
+				});
+				
+			}else{
+				$("#carInfo").click(function(){
+					ToUrl('./CarInfoBaseQuery.html');
+				});
+				
+				$("#driverInfo").click(function(){
+					ToUrl('./DriverQuery.html');
+				});
+			}
+		}
+		</script> 
+		
+
+	</head>
+	<body >
+		<div id='page'>
+	
+		<div class="content">
+					<ul class="inforSerch" >
+						<!--<li name="item" >
+						<div id="lostLaw" onclick="javascript:ToUrl('./outthelaw.html');">
+								<img src="/weixin/foreground/img/icon8.png"></img>
+								<br/>
+									违法查询
+						</div>
+						</li>
+						
+						<li name="item" >
+						<div onclick="javascript:ToUrl('./trafficstatus.html');">
+								<img src="/weixin/foreground/img/icon3.png"></img>
+								<br/>
+									实时路况
+						</div>
+						</li>
+						
+						<li name="item" >
+							<div onclick="javascript:ToUrl('./WebPointMap.html');">
+									<img src="/weixin/foreground/img/icon2.png"></img>
+									<br/>
+									网点地图
+							</div>
+						</li>
+						
+						<li name="item">
+						<div id="carInfo">
+								<img src="/weixin/foreground/img/icon4.png"></img>
+								<br/>
+									机动车信息
+						</div>
+						</li>
+						
+						<!--<li name="item" >
+						<div id="driverInfo">
+								<img src="/weixin/foreground/img/icon5.png"></img>
+								<br/>
+									驾驶人信息
+						</div>
+						</li>
+						<li name="item">
+						<div onclick="javascript:ToUrl('./vehiclepledge.html');">
+								<img src="/weixin/foreground/img/icon9.png"></img>
+								<br/>
+								抵押查询
+						</div>
+						</li>
+						-->
+						<li name="item">
+						<div onclick="javascript:ToUrl('./lawsAndRegulations.html');">
+								<img src="/weixin/foreground/img/icon1.png"></img>
+								<br/>
+									法律法规
+						</div>
+						</li>
+						<li name="item">
+						<div onclick="javascript:ToUrl('../vehicle_admin/choicecarnumber.html');">
+								<img src="/weixin/foreground/img/icon10.png"></img>
+								<br/>
+									可选车号
+						</div>
+						</li>
+						<!--<li name="item">
+						<div onclick="javascript:ToUrl('./userLogin.html');">
+								<img src="/weixin/foreground/img/icon11.png"></img>
+								<br/>
+								公共通行证
+						</div>
+						</li>
+						
+						<li name="item">
+						<div onclick="javascript:ToUrl('./schoolnotification.html');">
+								<img src="/weixin/foreground/img/icon12.png"></img>
+								<br/>
+								驾校通报
+							</a>
+						</div>
+						</li>-->
+						<li name="item" >
+						<div onclick="javascript:ToUrl('./selectschoolmsg.html');">
+								<img src="/weixin/foreground/img/icon6.png"></img>
+								<br/>
+									驾校信息
+						</div>
+						</li>
+						
+						
+						<li name="item">
+						<div onclick="javascript:ToUrl('./standardcharge.html');">
+								<img src="/weixin/foreground/img/icon12.png"></img>
+								<br/>
+								收费标准
+						</div>
+						</li>
+						<li name="item" >
+							<div onclick="javascript:ToUrl('./WebPointMap.html');">
+									<img src="/weixin/foreground/img/icon2.png"></img>
+									<br/>
+									业务网点
+							</div>
+						</li>
+					</ul>
+					<div class="clear"></div><!--清除浮动-->
+				</div>
+			</div>
+	</body>
+</html>

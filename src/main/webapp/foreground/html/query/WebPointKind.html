@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<!--[if (gte IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!-->
+<html class="ie">
+<!--<![endif]-->
+<head>
+	<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+	--><title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+    <meta content="telephone=no" name="format-detection" />
+    
+    <link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+	<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+    <link rel="stylesheet" type="text/css" href="/weixin/foreground/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="/weixin/foreground/css/style.css" />
+    
+    <script src="/weixin/foreground/js/require.min.js"></script>
+    <script src="/weixin/foreground/js/include.libs.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/libs.js"></script>
+    <script src="/weixin/foreground/js/common.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/main_r.js"></script>
+   
+	<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+	
+	<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+	<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+	
+    <!--[if IE]><link rel="stylesheet" href="../res/style/ie_hack.css" /><![endif]-->
+    <!--[if !IE]><!-->
+    <script>if (/*@cc_on!@*/false) { document.write('<link type= "text/css" rel="stylesheet" href="../dest/res/style/ie_hack.css" />'); }</script><!--<![endif]-->
+
+    <style type="text/css">
+        .map-content span {
+            height: 25px;
+            background: #31a9e9;
+            color: #fff;
+            padding: 0 5px;
+            font-size: 14px;
+            position: relative;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    </style>
+    <style type="text/css" id="css_2">
+        .m7 .mh {
+            -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+        }
+    </style>
+    	<script language="javascript" type="text/javascript">
+    		var ywlen = 0;
+    		//var ywlxmc = "机动车业务" ;
+    		var ywlx = "";
+    		$(document).ready(function (){
+    			$("#main").hide();
+    			addHead("选择业务类型");
+    		
+				var params = "{}";
+	   			var result = WebServiceUtil.getJobGuideTypeName(params, callback);
+	   			
+    		});
+    		
+    		function callback(msg){
+
+    			var jsonObject = eval("("+msg+")");
+    			var body = jsonObject.body;
+    			ywlen = body.length;
+    			for (var i in body){
+    				if (i==0) {
+						ywlx = body[i].ywlx;
+					}
+    				$("#filtermenu").append("<li name='left'><a id=\"job"+i+"\" data-ywlx=\""+body[i].ywlx+"\" href=\"#\" onclick=\"javascript:doClick_jy(this)\">"
+    								+body[i].ywlxmc
+    								+"</a></li>");
+    							
+    				$("#ywlist").append("<ul class=\"filter_r\" id=\"job_link"+i+"\" style=\"display:none\"></ul>");			
+    				
+    				var ywname = body[i].ywmc;
+    				var ywArray = ywname.split(',');
+    					
+    				for(var j in ywArray){
+    					$("#job_link"+i).append("<li id=\"car"+i+""+j+"\" data-ywdm=\""+(ywArray[j].split('='))[0]+"\" onclick=\"javascript:doChoose(this)\">"
+    						+(ywArray[j].split('='))[1]
+    						+"</li>");
+    	
+    				}
+    				
+    			}
+    			$("#job_link0").css("display","block");
+    			var lis = document.getElementsByName('left');
+    			lis[0].style.backgroundColor = "#ccc";
+    			$("#main").show();
+    		}
+    		
+			function doClick_jy(o){
+				//获得父元素li
+				var lis = document.getElementsByName('left');
+				for(var i=0;i<lis.length;i++){
+					lis[i].style.backgroundColor = "#EFEFEF";
+				}
+				var parLi = o.parentNode;
+				parLi.style.backgroundColor = "#ccc";
+				
+				ywlxmc = o.innerHTML;
+				var jobId=o.id;
+				ywlx = $("#"+jobId).attr('data-ywlx');
+				var link;
+				var id;
+				var linkId;
+				for(var i=0;i<=ywlen;i++){
+					linkId="job_link"+i;
+					id = "job" + i;
+					if(jobId != id){
+						$("#"+linkId).css("display","none");
+					} else {
+						$("#"+linkId).css("display","block");
+					}
+				}
+			}
+			
+			function doChoose(o){
+				var carId = o.id;
+				var ywlxdm = $("#"+carId).attr('data-ywdm');
+				window.location.href="./WebPointMap.html?kind=" + escape(o.innerHTML)+"&ywlx="+escape(ywlx)+"&ywlxdm="+escape(ywlxdm)+"&flag=1";
+			}
+		</script>
+</head>
+<body>
+	<div id="main" >
+				<div id="id_viewport4" page-url="areafilter">
+					<div class="w_filter" id="ywlist">
+						<ul class="filter_l" id="filtermenu">
+							<!--
+							<li><a id="job1" href="#" class="car" onclick="javascript:doClick_jy(this)">机动车业务</a></li>
+							<li><a id="job2" href="#" class="card" onclick="javascript:doClick_jy(this)">驾驶证业务</a></li>
+							<li><a id="job3" href="#" class="illegal" onclick="javascript:doClick_jy(this)">违法处理业务</a></li>
+						-->
+						</ul>
+						<!--<ul class="filter_r" id="job_link1" style="display:block">
+							<li id="car1" onclick="javascript:doChoose(this)">注册登记</li>
+							<li id="car2" onclick="javascript:doChoose(this)">变更登记</li>
+							<li id="car3" onclick="javascript:doChoose(this)">转移登记</li>
+							<li id="car4" onclick="javascript:doChoose(this)">抵押登记</li>
+							<li id="car5" onclick="javascript:doChoose(this)">注销登记</li>
+						</ul>
+						<ul class="filter_r" id="job_link2" style="display:none">
+							<li id="card1" onclick="javascript:doChoose(this)">初次申领</li>
+							<li id="card2" onclick="javascript:doChoose(this)">增驾申请</li>
+							<li id="card3" onclick="javascript:doChoose(this)">军警换证</li>
+							<li id="card4" onclick="javascript:doChoose(this)">外籍换证</li>
+							<li id="card5" onclick="javascript:doChoose(this)">临时入境</li>
+						</ul>
+						<ul class="filter_r" id="job_link3" style="display:none">
+							<li id="illegal1" onclick="javascript:doChoose(this)">违法处理</li>
+						</ul>
+					--></div>
+				</div>
+			</div>
+</body>
+</html>
+
+

@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+--><title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<base href=".">
+<meta name="viewport"
+	content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+
+<script src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+<script src="/weixin/foreground/js/check_browser.js" type="text/javascript"></script>
+<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+
+<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		addHead("违法详情");
+		
+		var object = unescape(getQueryString("object"));
+		var mark = unescape(getQueryString("mark"));
+		
+		var cltext = "";
+		
+		if(mark == "null") { //用户查询
+			var jsonObject = object;
+			cltext = "未处理";
+			$("#hphm").text(getQueryString("hphm"));//号牌号码
+			$("#hpzl").text(decode(getQueryString("hpzl")));//号牌种类
+			$("#wfsj").text(getQueryString("wfsj"));//违法时间
+			$("#wfdz").text(getQueryString("wfdz"));//违法地址
+			$("#wfxw").text(getQueryString("wfxw"));//违法行为
+			$("#cjjg").text(getQueryString("cjjg"));//采集机关
+			$("#zt").text(cltext);//状态
+			$("#fkje").text(getQueryString("fkje") / 100);//罚款金额
+			$("#wfjf").text(getQueryString("wfjf"))//违法记分
+			$("#cjjg_tr").hide();
+		} else { //游客查询
+			var jsonObject = eval("(" + object + ")");
+			if(jsonObject.clbj == 0){
+				if(jsonObject.kcl == 0){
+					cltext = "未处理";
+				}else if(jsonObject.kcl == 1){
+					cltext = "不可在线处理";
+				}
+			}else{
+				if(jsonObject.jkbj == 0){
+					cltext = "已处理未缴款";
+				}else if(jsonObject.jkbj == 1){
+					cltext = "已处理已缴款";
+				}
+			}
+			$("#hphm").text(jsonObject.hphm);//号牌号码
+			$("#hpzl").text(decode(jsonObject.hpzl));//号牌种类
+			$("#wfsj").text((jsonObject.wfsj).substring(0,19));//违法时间
+			$("#wfdz").text(jsonObject.wfdz);//违法地址
+			$("#wfxw").text(jsonObject.wfxwmc);//违法行为
+			$("#cjjg").text(jsonObject.cjjgmc);//采集机关
+			$("#zt").text(cltext);//状态
+			$("#fkje").text(jsonObject.fkje);//罚款金额
+			$("#wfjf").text(jsonObject.wfjfs)//违法记分
+			$("#cjjg_tr").hide();	
+		}
+	});
+	
+	function ToUrl(x){   
+		location.href=x; 
+	}
+</script>
+
+<style type="text/css">
+.table {
+	cellspacing: 0px;
+	cellpadding: 0px;
+	text-align: left;
+	border-collapse: collapse;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px -3px 2px -1px rgba(0, 200, 0, 0.5);
+}
+
+.li-one-div1{
+	float: left; font-size: 18px; font-weight: bold; margin-top: 10px; margin-bottom: 10px; margin-left: 10px;
+}
+.but:hover {
+	/*background-color:#FF6600;*/
+}
+</style>
+</head>
+
+<body>
+		<div class="content pad0">
+			<ul>
+			<li style="background-color: e5e5e5">
+				<div class="li-one-div1" style="">
+					<p id="hphm"></p>
+				</div>
+				<div class="clear"></div> <!--清除浮动-->
+				<hr color="#cccccc" size="1px;">
+			</li>
+		</ul>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0"
+			class="inforTable">
+			<tbody>
+				<tr class="whiteBG">
+					<td width="30%" class="inforBaseL">号牌种类：</td>
+					<td class="inforBaseR" id="hpzl"></td>
+				</tr>
+				<tr>
+					<td class="inforBaseL">违法时间：</td>
+					<td class="inforBaseR" id="wfsj"></td>
+				</tr>
+				<tr class="whiteBG">
+					<td class="inforBaseL">违法地点：</td>
+					<td class="inforBaseR" id="wfdz"></td>
+				</tr>
+				<tr>
+					<td class="inforBaseL">违法行为：</td>
+					<td class="inforBaseR" id="wfxw"></td>
+				</tr>
+				<tr class="whiteBG" id="cjjg_tr">
+					<td class="inforBaseL">采集机关：</td>
+					<td class="inforBaseR" id="cjjg"></td>
+				</tr>
+				<tr>
+					<td class="inforBaseL" valign="top">状态：</td>
+					<td class="inforBaseR" id="zt"></td>
+				</tr>
+				<tr class="whiteBG">
+					<td class="inforBaseL" valign="top">罚款金额：</td>
+					<td class="inforBaseR" id="fkje"></td>
+				</tr>
+				<tr>
+					<td class="inforBaseL" valign="top">违法计分：</td>
+					<td class="inforBaseR" id="wfjf"></td>
+				</tr>
+				
+				<tr>
+					<td colspan="2">
+						<input  type="button" value="下一步" 
+						id="" class="inputBtn" onclick='ToUrl("./checkIdentityInfo.html?serialNo=" 
+							+ getQueryString("serialNo"))'>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+			</div>
+</body>
+</html>

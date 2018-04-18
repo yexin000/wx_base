@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<!--行车宝典概要页面。主要显示行车宝典内容概要-->
+<html>
+<head>
+    <!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+    --><title></title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <base href=".">
+    <meta name="viewport"
+          content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta http-equiv="pragma"   content="no-cache" />   
+<meta http-equiv="Cache-Control" content="no-cache" />   
+<meta http-equiv="expires" content="0" />
+
+    <link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+    <link rel="stylesheet" href="/weixin/foreground/css/main.css">
+    <link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+    <link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+    <link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+
+    <style type="text/css">
+        .li-div {
+            margin-top: 5px;
+            text-align: left;
+            padding-left: 20px;
+            padding-right: 10px;
+            height: auto;
+            width: 70%;
+            float: left;
+        }
+
+        .li-div-la1 {
+            color: #cccccc;
+            display: inline;
+        }
+
+        .li-div-la2 {
+            margin-bottom: 0px;
+            display: inline;
+            float: left;
+            width: 90%;
+            color: #444444;
+        }
+
+        .li-div-p {
+            width: 200px;
+            white-space: nowrap;
+            word-break: keep-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #000000;
+        }
+
+        .li-div-img {
+            float: right;
+            margin-right:5px;
+            width: 10%;
+        }
+
+    </style>
+
+    <script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script type='text/javascript' src='/weixin/dwr/engine.js'></script>
+    <script type='text/javascript' src='/weixin/dwr/interface/WebServiceUtil.js'></script>
+    <script type="text/javascript" src="/weixin/foreground/js/pubnote.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+
+    <script type="text/javascript">
+	
+        $(document).ready(function(){
+		
+            // 得到url中query部分,并将？去掉
+            var urlQuery = window.location.search.substr(1);
+            // 将urlQuery以&分割成数组
+            var urlQueryArr=urlQuery.split('&');
+            //得到头部文本
+            var headText=decodeURI(urlQueryArr[0].split('=')[1]);
+            var bh=decodeURI(urlQueryArr[1].split('=')[1]);
+            addHead(headText);
+            //调用getTrafficControlInforByLbbh方法，这个方法需要传递一个类型编号
+             getTrafficInforByLbbh(bh,headText);
+		
+        });
+
+    </script>
+</head>
+
+<body>
+<div class="content">
+    <ul id="rowList" style="border-top: 2px solid #cccccc;">
+
+    </ul>
+</div>
+</body>
+</html>

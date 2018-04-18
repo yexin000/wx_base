@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  		<!-- <script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>-->
+		<title></title>
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/pageparams.js"></script>
+		<script type="text/javascript">
+			Pageparams.postRequest('page');
+		</script>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css"/>
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script> 
+		
+		<script type="text/javascript">
+			var InterValObj; //timer变量，控制时间
+			var count = 30; //间隔函数，1秒执行
+			var curCount;//当前剩余秒数
+			$(document).ready(function(){
+    			addHead("微信掌上车管注册");
+				ProgressBar.init();
+				openId = getCookie("openId");
+				if (openId == null) {
+					code = getQueryString("code");
+					getOpenId(code);
+				} else {
+					//getBindedInfoByToken(token);
+				}
+    			});
+		
+			function init(msg) {
+
+			}
+
+		
+			var loginid = null;
+			function ToUrl(x){
+				window.location.href=x;
+			}
+			function register() {
+				var sfzmhm = $("#sfzmhm").val();
+				var xm = $("#xm").val();
+				var sjhm = $("#sjhm").val();
+				var code = $("#code").val();
+				if(check_jszh(sfzmhm, document.getElementById("sfzmhm")) == 0) {
+					return;
+				}
+				if(xm == null || xm == "null" || xm == "") {
+					Showbo.Msg.alert("请输入姓名");
+					return;
+				}
+
+				if(code == null || code == "null" || code == "") {
+					Showbo.Msg.alert("请输入验证码");
+					return;
+				}
+				
+				if(isValidMobileNum(sjhm)) {
+					ProgressBar.show();
+					var params = '{"sfzmhm":"SFZMHM","xm":"XM","sjhm":"SJHM","ip":"IP","wxid":"WXID","sjlx":"SJLX","yzm_in":"YZM_IN","ywlx":"YWLX"}';
+					params = params.replace("SFZMHM",sfzmhm).replace("XM",xm)
+								.replace("SJHM",sjhm).replace("IP",returnCitySN["cip"])
+								.replace("WXID",getCookie("openId")).replace("SJLX","1").replace("YZM_IN",code)
+								.replace("YWLX", "0");
+					var result = WebServiceUtil.wxZscgBind(params, registerCallback);	
+				}
+			}
+
+			function registerCallback(msg) {
+				ProgressBar.hide();
+				if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+
+					Showbo.Msg.alert(head.message);
+					if(head.code == 1) {
+						Showbo.todo = function(){
+							window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe1514fa969a3bc65&redirect_uri=http%3A%2F%2Fjhwxv2.test.hzcdt.com%2Fweixin%2Fforeground%2Fhtml%2Fvehicle_admin%2Foperationcenter.html&response_type=code&scope=snsapi_base&state=0#wechat_redirect";
+						};
+					} else {
+
+					}
+				}
+			}
+			function callback(msg) {
+				ProgressBar.hide();
+				if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+					Showbo.Msg.alert(head.message);
+				}
+			}
+
+			function sendMessage() {
+				var sfzmhm = $("#sfzmhm").val();
+				var xm = $("#xm").val();
+				var sjhm = $("input#sjhm").val();
+				if(check_jszh(sfzmhm, document.getElementById("sfzmhm")) == 0) {
+					return;
+				}
+				if(xm == null || xm == "null") {
+					Showbo.Msg.alert("请输入姓名");
+					return;
+				}
+				if(isValidMobileNum(sjhm)) {
+					curCount = count;
+					ProgressBar.show();
+					var params = '{"sfzmhm":"SFZMHM","xm":"XM","sjhm":"SJHM","ip":"IP","wxid":"WXID","sjlx":"SJLX","yzm_in":"YZM_IN","ywlx":"YWLX"}';
+					params = params.replace("SFZMHM",sfzmhm).replace("XM",xm)
+								.replace("SJHM",sjhm).replace("IP",returnCitySN["cip"])
+								.replace("WXID",getCookie("openId")).replace("SJLX","0").replace("YZM_IN","")
+								.replace("YWLX", "0");
+					var result = WebServiceUtil.wxZscgBind(params, callback);	
+					
+					//设置button效果，开始计时
+					$("#btnSendCode").attr("disabled", true);
+					$("#btnSendCode").val(curCount + "秒后重新获取");
+					$("#btnSendCode").removeClass("inputBut").addClass("inputButAfter");
+					InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+				} else {
+					Showbo.Msg.alert("请输入正确的手机号码");
+				//	eval($("#tmpt").text($.Prompt("请输入正确的手机号码")));
+				}
+			}
+			//timer处理函数
+			function SetRemainTime() {
+	            if (curCount == 0) {                
+					window.clearInterval(InterValObj);//停止计时器
+					$("#btnSendCode").attr("disabled", false);//启用按钮
+					$("#btnSendCode").val("重新发送验证码");
+					$("#btnSendCode").removeClass("inputButAfter").addClass("inputBut");
+	            }
+	            else {
+	                curCount--;
+	                $("#btnSendCode").val(curCount + "秒后重新获取");
+	            }
+       		}
+		</script>
+  </head>
+  
+  <body>
+    <div class="content">
+    	<div style="padding: 15px 0 0 0;">
+    	<table style="margin-top: 0px;" width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="TestTable">
+				<tbody>
+					<tr>
+						<td>
+							身份证明号码：
+							<div class="inputOutL">
+								<input type="text" name="sfzmhm" id="sfzmhm" value="" onkeyup="this.value=this.value.toUpperCase()"
+									placeholder="请输入身份证明号码" class="inputText">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							姓&nbsp;&nbsp;&nbsp;&nbsp;名：
+							<div class="inputOutL">
+								<input type="text" name="xm" id="xm" value=""
+									placeholder="请输入姓名" class="inputText">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							手机号码：
+							<div class="inputOutL">
+								<div style="float: left;width: 55%;">
+								<input data-role="none" class="inputText" type="text" name="sjhm" id="sjhm"
+									placeholder="请输入手机号码" maxlength="11">
+								</div>
+								<div style="float: right;">
+								<input style="width: 100%;border: none;" data-role="none" class="inputBut" id="btnSendCode" type="button"
+									value="发送验证码" onclick="javascript:sendMessage();" />
+								</div>
+								<div class="clear"></div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							验证码：
+							<div class="inputOutL">
+								<input data-role="none" class="inputText" type="text" name="code" id="code"
+									placeholder="请输入验证码">
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>				
+			</div>
+			<div style="padding: 10px 0">
+				<input class="but" type="button" value="注  册" 
+					onclick="javascript:register();">
+			</div>	
+	    </div>
+  </body>
+</html>

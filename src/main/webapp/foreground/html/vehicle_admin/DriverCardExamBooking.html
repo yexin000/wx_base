@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css">
+
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/driverCardExamBooking.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">
+		var xm ;
+		var sfzh;
+		var sfzm;
+	$(document).ready(function(){
+		insert("科目三安全文明常识补...");
+	
+		ProgressBar.init();
+		
+		token = getCookie("token");
+		getBindedInfoByToken(token);
+		
+	});
+	
+	function init(body){
+		for(var i in body){
+			if (body[i].sjlx == "学员") {
+				xm = body[i].xm;
+				sfzh = body[i].hm;
+				sfzm = body[i].zm
+				//alert(xm+","+sfzh+","+sfzm);
+				$("#name").val(xm);
+				$("#sfzNumber").val(sfzh);
+			} 
+		}
+		getStudentMsg();
+	}
+	
+</script>
+
+	</head>
+	<body>
+		<div data-role="page" data-theme="s" tabindex="0" id='page'>
+			<div data-role="content" style="padding-left: 8px; padding-right: 8px;">
+				<form novalidate="novalidate" data-theme="s">
+					<table  width="100%" border="0" cellspacing="0" cellpadding="0" class="TestTable">
+						<tbody>
+							<tr>
+								<td>
+									姓 名
+									<div class="inputOutL">
+									<input data-role="none" class="inputText" type="text" name="name" id="name" value="">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									身份证号
+									<div class="inputOutL">
+									<input data-role="none" class="inputText" type="text" name="sfzNumber"
+										id="sfzNumber" >
+										</div>
+								</td>
+							</tr>
+							<!-- <tr>
+								<td>
+									教练车号牌&nbsp;:
+								</td>
+								<td>
+									<input class="input-ui" type="text" name="hpNumber"
+										id="hpNumber" onkeyup="this.value=this.value.toUpperCase()"
+										value="">
+								</td>
+							</tr> -->
+							<tr>
+								<td>
+									考试科目
+									<div class="inputOutL">
+									<select data-role="none" class="inputSelect" id="testSubject" name="testSubject">
+										<option value="1" disabled="disabled">
+											科目一
+										</option>
+										<option value="2" disabled="disabled">
+											科目二
+										</option>
+										<option value="3" disabled="disabled">
+											科目三
+										</option>
+										<option value="4" selected="selected">
+											科目三安全文明常识
+										</option>
+									</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									考试日期
+									<div class="inputOutL">
+									<select data-role="none" class="inputSelect" id="testDate" name="testDate">
+									</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									考试地点
+									<div class="inputOutL">
+									<select data-role="none" class="inputSelect" id="testAddr" name="testAddr">
+									</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									考试场次
+									<div class="inputOutL">
+									<select data-role="none" class="inputSelect" id="testcc" name="testcc">
+									</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+										<input data-role="none" class="inputBtn" id="order" onclick="javascript:writeData();" type="button" value="预约">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+
+		</div>
+	</body>
+</html>

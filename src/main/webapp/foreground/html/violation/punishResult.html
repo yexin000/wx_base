@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		<title></title>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				
+			}
+			function getQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="result" style="display:none;"></div>
+	</body>
+</html>

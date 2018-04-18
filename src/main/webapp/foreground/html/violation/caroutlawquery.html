@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+	--><title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<base href=".">
+	<meta name="viewport"
+		content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	
+	<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+	<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+	<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+	<link rel="stylesheet" href="/weixin/foreground/css/oper_min.css">
+	<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+	<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+	
+	<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+	<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+	
+	<style type="text/css">
+		ul {
+		}
+		
+		li {
+			width: 33.3%;
+			float: left;
+		}
+		
+		.li-card {
+			color: #000000;
+			height: 31px;
+			font-size: 14px;
+			padding-top: 10px;
+		}
+		
+		.li-card-current {
+			font-weight: bolder;
+			background-color: #ffffff;
+		}
+		
+		.img-right {
+			position: absolute;
+			top: 0em;
+			right: 0em;
+		}
+	</style>
+	
+	<script type="text/javascript">
+		var code;
+		$(document).ready(function() {
+			insert("非绑定车辆处理");
+			if(window.localStorage){ 
+				$("#hphm01").html(localStorage.getItem("fpjg"));
+			}else{
+				$("#hphm01").html(getCookie("fpjg"));
+			}
+			
+			// 清空所有input
+			$(":text").val("");
+			$(":text#carNum").val(localStorage.getItem("fpjg"));
+			$(":text#cartypebtn").val("小型汽车(非营运)");
+			$("li.li").click(function() {
+				$("div.outlaw").css("display","none");
+				$("div#outlaw-"+this.id).css("display","block");
+				$("div.li-card").removeClass("li-card-current");
+				$("div#li-card-" + this.id).addClass("li-card-current");
+				$("h5").text($("div#li-card-" + this.id).text()+"查询");
+				/*$("h5").append($("img#img").attr("src","/weixin/foreground/images/carat-d-white.png"));
+				$("ul#card").css("display","none");*/
+				
+			});
+			
+			$("input#tab1").click(function(){
+				var hp = ($("#hphm01").text()+$("#hphm02").val()).replace(/[ ]/g,"");
+				//var hphm = hp.substring((hp.length)-6);
+				if(hp.substring(0,1) != "浙") {
+					Showbo.Msg.alert("请输入正确的号牌号码");
+					return;
+				}
+				var hphm = hp.replace(/浙/g,"");
+				var sbdh = $("input#sbm").val();
+				//var hpzl = $("#cartype option:selected").val();
+				var hpzl = "02";
+				if (checkHphm(hpzl,hphm) == 0)return;
+				if (check_sbdh(sbdh) == 0) return;
+				window.location.href="http://nbjj.hzcdt.com/bindLostLaw.html?hphm="
+					+escape(hphm)+"&sbdh="+escape(sbdh)+"&hpzl="+escape(hpzl)+"&mark=1";
+			});
+			
+		});
+	
+	</script>
+
+</head>
+
+<body>
+	<div data-role="page" data-theme="s" id='page'>
+		<div data-role="content" align="center"
+			style="padding-left: 10px; padding-right: 10px;">
+
+			<ul style="height: 75%; margin-top: 2px;">
+				<div id="outlaw-li1" class="outlaw"	style="display: block; margin-top: 12px;">
+					<form method="post">
+						<table  width="100%" border="0" cellspacing="0" cellpadding="0" class="TestTable">
+							<tbody>
+								<tr>
+									<td>
+										号牌种类
+										<div class="inputOutL">
+											<!-- <select name="cartype" id="cartype">
+												<option value="02" selected="selected">小型汽车</option>
+											</select> -->
+											<input id="cartypebtn" data-role="none" class="inputText" readonly="readonly" type="text" value="小型汽车(非营运)"/>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										号牌号码
+										<div class="inputOutL">
+											<label style="float: left;padding-top: .5em;padding-left: .5em;font-size: 14px;color: #000000;" id="hphm01" ></label>
+											<input data-role="none" class="inputText" style="width: 80%;padding: 0px;" type="text"
+												id="hphm02" onkeyup="this.value=this.value.toUpperCase()"
+												value="" placeholder="  请输入号牌号码" maxlength="5">
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										车辆识别代号(末六位)
+										<div class="inputOutL">
+											<input data-role="none" class="inputText" id="sbm" type="text" placeholder="请输入车架号末六位" value="" maxlength="6" onkeyup="this.value=this.value.toUpperCase()"/>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div>
+											<input data-role="none" class="inputBtn" id="tab1" type="button" value="查询"/>
+											<label style="color:red; font-size: 12px;text-align: center;" >(仅限宁波籍非营运小型汽车)</label>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+
+			</ul>
+		</div>
+
+	</div>
+</body>
+</html>

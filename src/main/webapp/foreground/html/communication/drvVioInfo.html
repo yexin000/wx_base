@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+
+		<script type="text/javascript">
+	$(document).ready(function() {
+		$("#content").hide();
+		addHead("累积记分");
+
+    	ProgressBar.init();
+    	
+		ProgressBar.show();
+		var jszh = unescape(GetQueryString("jszh"));
+		var dabh = unescape(GetQueryString("dabh"));
+		
+		//调用查询驾驶人违法信息接口
+		var params = "{\"jszh\":" + "\"" + jszh + "\"" + ",\"dabh\":" + "\"" + dabh  +"\"}";
+		var result = WebServiceUtil.queryDrvVioJh(params,getInfo);
+		
+	});
+	
+	var ljjf;
+	var wfsj ;
+	var wfdz ;
+	var wfjfs ;
+	var fkje ;
+	var cljg ;
+	var jkbj ;
+	
+	function getInfo(msg){
+		var jsonObj = eval("("+msg+")")
+		var body = jsonObj.body;
+		if (jsonObj.head.code == 1) {
+			for(var i in body){
+				if (i == 0) {
+					ljjf = body[i].ljjf;
+				}
+				wfsj = (body[i].wfsj);
+				wfdz = body[i].wfdz;
+				wfjfs = body[i].wfjfs;
+				fkje = body[i].fkje;
+				cljg = body[i].cljgmc;
+				jkbj = body[i].jkbj;
+				if (undefined == wfsj){
+					wfsj = "";
+				}else{
+					wfsj = (body[i].wfsj).split(".")[0];
+				}
+				if (undefined == wfdz) {
+					wfdz = "";
+				}
+				if (undefined == wfjfs) {
+					wfjfs = "";
+				}
+				if (undefined == fkje) {
+					fkje = "";
+				}
+				if (undefined == cljg) {
+					cljg = "";
+				}
+				if (undefined == jkbj) {
+					jkbj = "";
+				}
+				if(jkbj == 1) {
+					jkbj = "已缴款";
+				}else if(jkbj == "0") {
+					jkbj = "未缴款";
+				}else if(jkbj == "" || jkbj == null) {
+					jkbj = "";
+				}
+				writeItem(wfsj,wfdz,wfjfs,fkje,cljg,jkbj);
+				
+			}	
+			ProgressBar.hide();
+			
+			if (wfdz=="" && wfjfs=="" && wfsj=="" && fkje=="") {
+				$("#zfs").html("您的驾驶证本年度当前积分已达：<span style='color: red;'>"+ljjf+"</span>分，您3天内在外市、浙江省高速和铁路公安等交警部门处理记分违法且未在本清单内的，请自行相加，未相加记分造成的相关后果由操作本人负责。");
+			}else{
+				$("#zfs").html("您的驾驶证本年度当前积分已达：<span style='color: red;'>"+ljjf+"</span>分，您3天内在外市、浙江省高速和铁路公安等交警部门处理记分违法且未在本清单内的，请自行相加，未相加记分造成的相关后果由操作本人负责。 <br/>记分违法记录清单如下：");
+			}
+			
+			//$("#ljjf").text(ljjf);
+			$("#content").show();
+		}else{
+			ProgressBar.hide();
+			Showbo.Msg.alert(jsonObj.head.message);
+			Showbo.todo = function(){
+				history.back(-1);
+			};
+		}
+		
+	}
+	
+	function writeItem(sj,dd,fs,je,jg,hk){
+	
+		if (sj == "" && dd=="" && fs=="" && je=="" && jg=="" && hk=="") {
+			
+		}else{
+		$("#content").append("<table width='100%' border='1px solid #000' cellspacing='0' cellpadding='0' class='inforTable'>"
+				+"<tbody><tr class='whiteBG'><td width='30%' class='inforBaseL'>"
+				+"违法时间：</td><td class='inforBaseR'>"
+				+sj
+				+"</td></tr><tr><td class='inforBaseL'>违法地址：</td><td class='inforBaseR'>"
+				+dd
+				+"</td></tr><tr class='whiteBG'><td class='inforBaseL'>违法记分：</td><td class='inforBaseR'>"
+				+fs
+				+"</td></tr><tr><td class='inforBaseL'>罚款金额：</td><td class='inforBaseR'>"
+				+je
+				+"</td></tr><tr><td class='inforBaseL'>处理机关：</td><td class='inforBaseR'>"
+				+jg
+				+"</td></tr><tr><td class='inforBaseL'> 状     态：</td><td class='inforBaseR'>"
+				+hk
+				+"</td></tr></tbody></table>"
+				+"<div style='height: 10px;'></div>");
+		}
+	}
+	function GetQueryString(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null)
+			return unescape(r[2]);
+		return null;
+	}
+</script>
+
+
+	</head>
+
+	<body>
+		<div id="content" class="content">
+			<div style="margin: 6em 0 2em; font-size:16px">
+				<p id="zfs"></p>
+			</div>
+			
+		</div>
+	</body>
+</html>
+

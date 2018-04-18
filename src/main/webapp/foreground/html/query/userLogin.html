@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+  		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css"/>
+		<link rel="stylesheet" href="/weixin/foreground/css/pull-refresh.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+    			addHead("用户登录");
+    		});
+		
+		
+			var loginid = null;
+			function ToUrl(x){
+				window.location.href=x;
+			}
+			function login() {
+				ProgressBar.init();
+				var username = $("#username").val();
+				var password = $("#password").val();
+				loginid = username;
+				var params = "{\"loginid\":\"" + username + "\""
+					+ ",\"password\":\"" + password + "\"" + "}";
+				ProgressBar.show();
+				var result = WebServiceUtil.publicPassListLogin(params, callback);
+			}
+			function callback(msg) {
+				if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+					
+					
+					if(head.code == 1) {
+						ToUrl('./publicPassList.html?loginid=' + escape(loginid));
+					} else {
+						Showbo.Msg.alert(head.message);
+						//eval($("#tmpt").text($.Prompt(head.message)));
+					}
+				}
+				ProgressBar.hide();
+			}
+		</script>
+  </head>
+  
+  <body>
+    <div class="content">
+    
+    	<div style="padding: 10px 0;">
+			<p style="font-size: 18px;font-weight:700">
+				公共通行证用户在此登陆：
+			</p>
+			<p>1.公共通行证录入。</p>
+			<p>2.公共通行证查询。</p>
+		</div>
+    <hr size="1px" color="#28a5e5"/>
+    	<div style="padding: 15px 0 0 0;">
+    	<table style="margin-top: 0px;" width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="TestTable">
+				<tbody>
+					<tr>
+						<td>
+							用户名：
+							<div class="inputOutL">
+								<input type="text" name="username" id="username" value=""
+									placeholder="请输入用户名" class="inputText">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							密&nbsp;&nbsp;&nbsp; 码：
+							<div class="inputOutL">
+								<input type="password" name="password" id="password" value=""
+									placeholder="请输入帐号密码" class="inputText">
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>				
+			</div>
+			<div style="padding: 10px 0">
+				<input class="but" type="button" value="登  录" 
+					onclick="javascript:login();">
+			</div>	
+	    </div>
+  </body>
+</html>

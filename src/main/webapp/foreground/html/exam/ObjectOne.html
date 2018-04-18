@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv=Content-Type content="text/html;charset=gbk">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/exam.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/objectOne.js"></script>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				
+				$("#ExamArea").hide();
+				$("#i_img").hide();
+				$("#i_video").hide();
+				$(".wait").hide();
+				
+				addHead("科目一考试");
+				
+				//token = "5ef6cafbc53e0c459b4a8db496183c80";
+				token = getCookie("token");
+    			ProgressBar.init();
+    			ProgressBar.show();
+    			
+    			var msg = "";
+				if(window.localStorage){ 
+					var msg = localStorage.getItem("Question");
+				}else{
+					var msg = getCookie("Question");
+				}
+				
+				objOne.passMsg(msg);
+			});
+			
+			dwr.engine.setErrorHandler(function() { 
+      	 		// 覆盖dwr.engine.defaultErrorHandler = function(message, ex) 
+      	 		Showbo.Msg.alert("服务器正忙，请重新操作。");
+				Showbo.todo = function() {return;}
+       		});
+		</script>
+
+  </head>
+  
+  <body>
+     <div class="content" style="margin-top: 3.6em;">
+     	<div id="ExamArea">
+				<p id="quest_T">
+					1.驾驶机动车在道路上违反道路交通安全法的行为，属于什么行为？<span style="color: #f00">[多选题]</span>
+				</p>
+				
+				<div style="background-color: #fff;width:100%;text-align: center;">
+					<img style="max-width: 300px;" id="i_img"></img></div>
+				<video id="i_video" autoplay="autoplay" controls="controls">
+					Your browser does not support the video tag.
+				</video>
+				
+				<ul id="ExamOpt">
+					<li id="ExamOptA" class="kH">
+						A.1年
+					</li>
+					<li id="ExamOptB" class="kH">
+						B.3年
+					</li>
+					<li id="ExamOptC" class="kH">
+						C.4年
+					</li>
+					<li id="ExamOptD" class="e kH">
+						D.无
+					</li>
+				</ul>
+				
+			</div>
+			
+			<div> <input style=" display:block; background-color: #fe9900; width: 120px;margin-top: 15px;border-radius: 5px; color:#fff;" 
+					class="wait" type="button" value="暂停考试？" onclick="javascript:objOne.wait();"> </div>
+			<div> <input style=" display:none; background-color: #228b22; width: 120px;margin-top: 15px;border-radius: 5px; color:#fff;" 
+					class="follow" type="button" value="继续考试！" onclick="javascript:objOne.follow();"> </div>
+     </div>
+     
+     <div class="floot">
+			<a class="prev foot_low" onClick="javascript:objOne.getPreQuestion();">
+				<img class="a-img" src="/weixin/foreground/img/i-11.png"><b>上一题</b></img>
+			</a>       
+			<a class="prev foot_low" onClick="javascript:objOne.getNextQuestion();"><b>下一题</b>
+				<img class="a-img" height="20px" src="/weixin/foreground/img/i-12.png"></img>
+			</a>
+			<a class="prev foot_low">
+				<img class="a-img" src="/weixin/foreground/img/i-08.png"><b id="countTime"></b></img>
+			</a>  
+			<a class="prev foot_low" onClick="javascript:objOne.stop();">
+				<img class="a-img" height="20px" src="/weixin/foreground/img/i-07.png"><b>交 卷</b></img>
+			</a>
+	</div>
+  </body>
+</html>

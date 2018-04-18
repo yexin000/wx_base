@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		$("table.inforTable").hide();
+		addHead("驾驶人信息");
+	
+		ProgressBar.init();
+		var tokenInfo = unescape(GetQueryString("token"));
+		var sfzh = unescape(GetQueryString("hm"));
+		var sfzm = unescape(GetQueryString("zm"));
+		if (tokenInfo != null) {
+			ProgressBar.show();
+			var params = "{\"sfzmmc\":\""+sfzm+"\",\"sfzmhm\":\""+sfzh+"\",\"token\":\""+tokenInfo+"\"}"
+			var info = WebServiceUtil.getBindedDriver(params,backInfo);
+		}
+	});	
+	
+	function backInfo(msg){
+	 	var jsonObject = eval("("+msg+")");
+	 	var body = jsonObject.body;
+	 	for(var i in body){
+	 		$("#xm").html(body[i].xm);
+			$("#jszh").text(body[i].sfzmhm);
+			$("#dabh").text(body[i].dabh);
+			$("#zt").text(body[i].zt);
+			$("#qfrq").text(body[i].qfrq);
+			$("#syrq").text(body[i].syrq);
+			$("#sjhm").text(body[i].sjhm);
+			$("#lxdz").text(body[i].lxzsxxdz);
+	 	}
+		$("table.inforTable").show();
+	 	ProgressBar.hide();
+	}
+
+	function GetQueryString(name) {
+     	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     	var r = window.location.search.substr(1).match(reg);
+     	if(r!=null)return  unescape(r[2]); return null;
+	}
+</script>
+
+<style type="text/css">
+.table {
+	cellspacing: 0px;
+	cellpadding: 0px;
+	border-collapse: collapse;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px -3px 2px -1px rgba(0, 200, 0, 0.5); 
+}
+</style>
+	</head>
+
+	<body>
+			<div class="content pad0">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="inforTable">
+						<tbody>
+							<tr class="whiteBG">
+								<td class="inforBaseL">
+											姓&nbsp;&nbsp;&nbsp;&nbsp;名：
+								</td>
+								<td class="inforBaseR" id="xm">
+									
+								</td>
+							</tr>
+							<tr>
+								<td class="inforBaseL">
+											驾驶证号：
+								</td>
+								<td class="inforBaseR" id="jszh">
+									
+								</td>
+							</tr>
+							
+							<tr class="whiteBG">
+								<td class="inforBaseL">
+											档案编号：
+								</td>
+								<td class="inforBaseR" id="dabh">
+
+								</td>
+							</tr>
+							<tr>
+								<td class="inforBaseL">
+											驾证状态：
+								</td>
+								<td class="inforBaseR" id="zt">
+							
+								</td>
+							</tr>
+							<tr class="whiteBG">
+								<td class="inforBaseL">
+											清分日期：
+								</td>
+								<td class="inforBaseR" id="qfrq">
+
+								</td>
+							</tr>
+							<tr>
+								<td class="inforBaseL">
+											审验日期：
+								</td>
+								<td class="inforBaseR" id="syrq">
+
+								</td>
+							</tr>
+							<tr class="whiteBG">
+								<td class="inforBaseL">
+											手机号码：
+								</td>
+								<td class="inforBaseR" id="sjhm">
+
+								</td>
+							</tr>
+							<tr>
+								<td class="inforBaseL">
+											联系地址：
+								</td>
+								<td class="inforBaseR" id="lxdz">
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			</div>
+	</body>
+</html>
+

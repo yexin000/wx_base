@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<!--行车宝典一级页面-->
+<html>
+<head>
+    <!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+    --><title></title>
+
+    <script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/pageparams.js"></script>
+    <script type="text/javascript">
+        Pageparams.postRequest('page');
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta http-equiv="pragma"   content="no-cache" />   
+<meta http-equiv="Cache-Control" content="no-cache,must-revalidate" />   
+<meta http-equiv="expires" content="Wed,26 Feb 1997 08:21:57 GMT" /> 
+
+    <link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+    <link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+
+    <script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+ 
+
+    <script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+
+    <script type="text/javascript">
+        var code;
+        $(document).ready(function(){
+            addHead("行车宝典");
+            ProgressBar.init();
+            var lis = document.getElementsByName('item');
+            for(var i=0;i<lis.length;i++){
+                lis[i].onclick = function(){
+                    for(var j=0;j<lis.length;j++){
+                        lis[j].style.backgroundColor = "#fbfbfb";
+                    }
+                    this.style.backgroundColor = "#ebebeb";
+                }
+            }
+        });
+        /**
+         * @param headText:头部文本
+         * @param bh：编号
+         * @constructor
+         */
+        function ToUrl(headText,bh){
+            location.href='/weixin/foreground/html/drivingCollection/drivingCollectionItem.html?headText='+decodeURI(headText)+'&bh='+decodeURI(bh);
+        }
+        /**
+         * 转到warningVideoItem.html页面
+         * @param url
+         */
+        function toWarningVideoItem(url){
+            location.href=url;
+        }
+    </script>
+
+
+</head>
+<body >
+<div class="content">
+    <ul class="inforSerch" >
+        <li name="item">
+            <div onclick="javascript:ToUrl('安全行车','190000');">
+                <img src="/weixin/foreground/img/AnQuanxingche.png"></img>
+                <br/>
+                安全行车
+            </div>
+        </li>
+
+        <li name="item">
+            <div onclick="javascript:ToUrl('安全自救知识','192000');">
+                <img src="/weixin/foreground/img/anquanzijiu.png"></img>
+                <br/>
+                安全自救知识
+            </div>
+        </li>
+        <li name="item">
+            <div onclick="javascript:toWarningVideoItem('/weixin/foreground/html/drivingCollection/warningVideo/warningVideoItem.html');">
+                <img src="/weixin/foreground/img/jingshishipin.png"></img>
+                <br/>
+                警示视频
+            </div>
+        </li>
+        <li name="item">
+            <div onclick="javascript:ToUrl('雨雪雾天行车','191000');">
+                <img src="/weixin/foreground/img/yuwutianxingche.png"></img>
+                <br/>
+                雨雪雾天行车
+            </div>
+        </li>
+ 		<!--  <li name="item">
+            <div onclick="javascript:toWarningVideoItem('/weixin/foreground/html/drivingCollection/sayTraffic/sayTrafficVideoItem.html');">
+                <img src="/weixin/foreground/img/icon1.png"></img>
+                <br/>
+               	 吕奇说交通
+            </div>
+        </li>-->
+    </ul>
+    <div class="clear"></div><!--清除浮动-->
+</div>
+
+</body>
+</html>

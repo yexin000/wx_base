@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/loginDialog.css" />
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+
+		<script type="text/javascript">
+	$(document).ready(function() {
+		insert("驾驶人违法详情");
+	
+		$("#table tbody tr:even").css("background", "#FFFFFF");
+		$("#table tbody tr:odd").css("background", "#EEEEEE");
+		
+		
+		//弹出登录
+		$("td#hphp").click(function(){
+			$("body").append("<div id='mask'></div>");
+			$("#mask").addClass("mask").fadeIn("slow");
+			$("#LoginBox").fadeIn("slow");
+		});
+		$(".addr").on('click', function () {
+			//获取
+			$("li#"+this.id).text();
+			$("label#label").text($("li#"+this.id).text());
+			$("#LoginBox").fadeOut("fast");
+			$("#mask").css({ display: 'none' });
+		});
+		//关闭
+		$("#closeBtn").hover(function () { $(this).css({ color: 'black' }) }, function () { $(this).css({ color: '#999' }) }).on('click', function () {
+			$("#LoginBox").fadeOut("fast");
+			$("#mask").css({ display: 'none' });
+		});
+		
+	});
+	window.onload = function() {		
+		$("#jszh").text(unescape(GetQueryString("jszh")));
+		$("#hphm").text(unescape(GetQueryString("hphm")));
+		$("#hpzl").text(unescape(GetQueryString("hpzl")));
+		$("#wfsj").text(unescape(GetQueryString("wfsj")));
+		$("#wfdz").text(unescape(GetQueryString("wfdz")));
+		$("#wfxwmc").text(unescape(GetQueryString("wfxwmc")));
+		$("#cjjg").text(unescape(GetQueryString("cjjg")));
+		$("#ztText").text(unescape(GetQueryString("ztText")));
+		$("#wfjfs").text(unescape(GetQueryString("wfjfs")));
+		$("#ljjf").text(unescape(GetQueryString("ljjf")));
+	}
+	function GetQueryString(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null)
+			return unescape(r[2]);
+		return null;
+	}
+</script>
+
+<style type="text/css">
+.table {
+	cellspacing: 0px;
+	cellpadding: 0px;
+	text-align: left;
+	border-collapse: collapse;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px -3px 2px -1px rgba(0, 200, 0, 0.5);
+}
+</style>
+	</head>
+
+	<body>
+		<div data-role="page" data-theme="s" id='page'>
+			<div data-role="content">
+				<form method="post">
+					<table align="center" id="table" class="table">
+						<tbody>
+							<tr>
+								<td width="30%" style="text-align: center;color: #000000">
+									<div>
+										<label>
+											驾驶证号：
+										</label>
+									</div>
+								</td>
+								<td id="jszh" width="80%">
+									<div>
+										<div style="float: left;">
+											<label id="label">
+											</label>
+										</div>
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td width="30%" style="text-align: center;color: #000000">
+									<div>
+										<label>
+											号牌号码：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<a><label id="hphm" style="margin-bottom: 0px;">
+											</label>
+										</a>
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td width="30%" style="text-align: center;color: #000000">
+									<div>
+										<label>
+											号牌种类：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<a><label id="hpzl" style="margin-bottom: 0px;">
+											</label>
+										</a>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td width="30%" style="text-align: center;color: #000000">
+									<div>
+										<label>
+											违法时间：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<label id="wfsj" >
+										</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td width="30%" style="text-align: center;color: #000000">
+									<div>
+										<label>
+											违法地点：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<label id="wfdz">
+										</label>
+									</div>
+								</td>
+							</tr>
+
+							<tr>
+								<td width="30%" style="text-align: center;color: #000000">
+									<div>
+										<label>
+											违法行为：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<label id="wfxwmc">
+										</label>
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td width="30%" style="text-align: center;color: #000000">
+									<div>
+										<label>
+											采集机关：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<label id="cjjg">
+										</label>
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td width="30%" style="text-align: center;color: #000000">
+									<div>
+										<label>
+											状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<label id="ztText">
+										</label>
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td width="30%" style="text-align: center;color: #000000">
+									<div>
+										<label>
+											违法记分：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<label id="wfjfs">
+										</label>
+									</div>
+								</td>
+							</tr>
+							
+														<tr>
+								<td width="30%" style="text-align: center;color: #000000">
+									<div>
+										<label>
+											累积记分：
+										</label>
+									</div>
+								</td>
+								<td>
+									<div>
+										<label id="ljjf">
+										</label>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

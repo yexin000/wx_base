@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<base href=".">
+<meta name="viewport"
+	content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css">
+<link rel="stylesheet" href="/weixin/foreground/css/oper_min.css">
+<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+
+<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+
+<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+
+<style type="text/css">
+
+.ul-li-one {
+	background-color: #f1f1f1;
+	color: #fe0002;
+}
+
+.li-one-div1 {
+	float: left;
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+}
+
+.li-one-div2 {
+	float: right;
+	margin-right: 5%
+}
+
+.div-p {
+	float: left;
+	margin-top: 10px;
+	font-size: 16px;
+}
+
+.div-img {
+	width: 20px;
+	height: 20px;
+	margin-top: 12px;
+}
+
+.li-title{
+	
+	padding: 30px; 
+	text-align: center; 
+	font-size: 18px; 
+	color: #060606;
+}
+</style>
+<script type="text/javascript">
+	var code;
+	var illegalCount = 0;
+	var illegalSerial;
+	var hphm = '';  //号牌号码
+	var hpzl = '';  //号牌种类
+	var clsbdh = '';   //车辆识别代号
+	$(document).ready(function() {
+		insert("违法信息");
+	
+		illegalSerial = new Array();
+		$("#noBindInfo").hide();
+		$("#bindList").show();
+		ProgressBar.init();
+		hphm ="浙" + unescape(getQueryString("hphm"));
+		hpzl = unescape(getQueryString("hpzl"));
+		clsbdh = unescape(getQueryString("clsbdh"));
+		init("123");
+	});
+	
+	//查询违法信息方法
+	function init(msg) {
+		 ProgressBar.show();
+		 var params = "{\"hpzl\":" + "\"" + hpzl + 
+		 		"\"" + ",\"hphm\":" + "\"" + hphm + "\"" +",\"clsbdh\":" + "\"" + clsbdh +"\"}";
+		 //调用机动车违法查询接口
+		WebServiceUtil.queryVehVioJh(params,vioInfoCallback);	
+	}
+	
+	vioInfoCallback = function(msg){
+		ProgressBar.hide();
+		if (msg != null) {
+			var infoObject = eval("(" + msg + ")");
+			$.each(infoObject.head, function(index, item) {
+				if (index == "code") {
+					if (item == "-1") {
+						document.getElementById("countUl").style.display="none";
+						Showbo.Msg.alert(infoObject.head.message);
+						Showbo.todo = function(){
+							history.back(-1);
+						};
+					} else {
+						if(infoObject.head.rownum == 0){
+							Showbo.Msg.alert("没有违法记录");
+						}
+						else{
+							for ( var i in infoObject.body) {
+								illegalCount ++;
+								$("#bindList").append(getIllegalListQuery(infoObject.body[i]));
+							}
+						}
+					}
+				}
+			});
+			$("#countShow").html(illegalCount);
+			document.getElementById("countUl").style.visibility="visible";
+			$("#car_tips").hide();
+		}
+	};
+	
+
+	function getIllegalListQuery(object) {
+		var stringObject = escape(JSON.stringify(object));
+		var color = "";
+		var clbj = object.clbj;
+		if(clbj == "0"){
+			clbj = "未处理违法记录";
+		}else if(clbj == "1"){
+			clbj = "已处理违法记录";
+		}
+		var cltext = "";
+		var wfsj = object.wfsj; 
+		var wfdz = object.wfdz;
+		var wfxw = object.wfxwmc;
+		var cjjg = object.cjjgmc;
+		var wfjf = object.wfjfs;
+		var fkje = object.fkje;
+		var hpzl = object.hpzl;
+		var xh = object.xh;
+		var jkzt = '';
+		var ul = "<ul>"
+				+ "<li class=\"ul-li-one\" style=\"color: "
+				+ color
+				+ ";\"><div class=\"li-one-div1\" style=\"\">"
+				+ "<p>"
+				+ clbj
+				+ "</p></div>"
+				+ "<div class=\"li-one-div2\" "+ " >"
+				+ "<p class=\"div-p\">"
+				+ cltext
+				+ "</p>"
+				+ "</div>"
+				+ "<div class=\"clear\"></div>"
+				+ "<hr color=\"#cccccc\" size=\"1px;\">"
+				+ "</li>"
+				+ "<li style=\"background-color: #ffffff;\">"
+				+ "<div style=\"color: #000000; padding-top: 10px; padding-left: 10px; padding-bottom: 10px;\">"
+				+ "<p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+				+ "违法记分:" +  wfjf
+				+ "</p>"
+				+ "<p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+				+ "罚款金额:" +  fkje
+				+ "</p>"
+				+ "<p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+				+ "采集机关:" +  cjjg
+				+ "</p>"
+				+ "<p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+				+ "违法时间:" + wfsj.substring(0,19)
+				+ "</p><p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+				+ "违法地址:" + wfdz 
+				+ "</p>"
+				+ "<p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+				+ "违法行为:" + wfxw 
+				+ "</p>"
+		//		+ "<p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+		//		+ "交款状态:" + jkzt 
+		//		+ "</p>"
+				+ "</div>"
+				+ "<hr color=\"#cccccc\" size=\"1px;\">" 
+				+ "</li>" 
+				+ "</ul>";
+		return ul;		
+	}
+
+
+	function loadInfo(msg) {
+		ProgressBar.hide();
+		if (msg != null) {
+			var infoObject = eval("(" + msg + ")");
+			$.each(infoObject.head, function(index, item) {
+				if (index == "code") {
+					if (item == "-1") {
+							Showbo.Msg.alert("服务器正忙，请稍后重试");
+					} else {
+						if(infoObject.head.rownum == 0){
+							Showbo.Msg.alert("没有违法记录");
+						}
+						else{
+							for ( var i in infoObject.body) {
+								illegalCount ++;
+								$("#bindList").append(getIllegalList(infoObject.body[i]));
+							}
+						}
+					}
+				}
+			});
+			$("#countShow").html(illegalCount);
+			document.getElementById("countUl").style.visibility="visible";
+		}
+	}
+
+	function getIllegalList(object) {
+		var stringObject = escape(JSON.stringify(object));
+		var color = "";
+		var hphm = object.hphm;
+		var cltext = "";
+		var wfsj = object.wfsj; 
+		var wfdz = object.wfdz;
+		var wfxw = object.wfxwmc;
+		var cjjg = object.cjjgmc;
+		var wfjf = object.wfjfs;
+		var fkje = object.fkje;
+		var hpzl = object.hpzl;
+		var xh = object.xh;
+		if(object.clbj == 0){
+			if(object.kcl == 0){
+				color = "#fe0002";
+				cltext = "未处理";
+			}else if(object.kcl == 1){
+				color = "#ff9902";
+				cltext = "不可在线处理";
+			}
+		}else{
+			if(object.jkbj == 0){
+				color = "#666666";
+				cltext = "已处理未缴款";
+			}else if(object.jkbj == 1){
+				color = "#33CC99";
+				cltext = "已处理已缴款";
+			}
+		}
+		for(var i = 0; i < illegalSerial.length; i++) {
+ 			if(xh == illegalSerial[i]) {
+ 				color = "#fe0002";
+				cltext = "未处理";
+ 			}
+ 		}
+ 		var onclickStr = (color == "#fe0002")?"onclick=\"ToUrl('./breakLawDetail.html?hpzl=" + escape(hpzl)
+					+ "&hphm=" + escape(hphm) + "&wfsj=" + escape(wfsj) + "&wfdz=" + escape(wfdz) + "&wfxw=" + escape(wfxw) + "&cjjg=" + escape(cjjg)
+					+ "&fkje=" + escape(fkje * 100)+ "&serialNo=" + escape(xh) + "&wfjf=" + escape(wfjf) + "&mark=" + escape("null") + "');\"":"";
+		var ul = "<ul>"
+				+ "<li class=\"ul-li-one\" style=\"color: "
+				+ color
+				+ ";\"><div class=\"li-one-div1\" style=\"\">"
+				+ "<p>"
+				+ hphm
+				+ "</p></div>"
+				+ "<div class=\"li-one-div2\" " + onclickStr + " >"
+				+ "<p class=\"div-p\">"
+				+ cltext
+				+ "</p>"
+				+ "<img src=\"/weixin/foreground/img/arrow3.png\" class=\"div-img\"></img>"
+				+ "</div>"
+				+ "<div class=\"clear\"></div>"
+				+ "<hr color=\"#cccccc\" size=\"1px;\">"
+				+ "</li>"
+				+ "<li style=\"background-color: #ffffff;\">"
+				+ "<div style=\"color: #000000; padding-top: 10px; padding-left: 10px; padding-bottom: 10px;\">"
+				+ "<p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+				+ "违法记分:" +  wfjf
+				+ "</p>"
+				+ "<p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+				+ "罚款金额:" +  fkje
+				+ "</p>"
+				+ "<p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+				+ "采集机关:" +  cjjg
+				+ "</p>"
+				+ "<p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+				+ "违法时间:" + wfsj.substring(0,19)
+				+ "</p><p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+				+ "违法地址:" + wfdz 
+				+ "</p>"
+				+ "<p style=\"margin-bottom: 2px; margin-top: 2px;\">"
+				+ "违法行为:" + wfxw 
+				+ "</p>"
+				+ "</div>"
+				+ "<hr color=\"#cccccc\" size=\"1px;\">" 
+				+ "</li>" 
+				+ "</ul>";
+		return ul;		
+	}
+	
+	function ToUrl(x) {
+		location.href = x;
+	}
+	
+	function tobind(){
+		location.href='./addBind.html';
+	}
+	
+	function loadXML(xmlString){
+        var xmlDoc=null;
+        //判断浏览器的类型
+        //支持IE浏览器 
+        if(!window.DOMParser && window.ActiveXObject){   //window.DOMParser 判断是否是非ie浏览器
+            var xmlDomVersions = ['MSXML.2.DOMDocument.6.0','MSXML.2.DOMDocument.3.0','Microsoft.XMLDOM'];
+            for(var i=0;i<xmlDomVersions.length;i++){
+                try{
+                    xmlDoc = new ActiveXObject(xmlDomVersions[i]);
+                    xmlDoc.async = false;
+                    xmlDoc.loadXML(xmlString); //loadXML方法载入xml字符串
+                    break;
+                }catch(e){
+                }
+            }
+        }
+        //支持Mozilla浏览器
+        else if(window.DOMParser && document.implementation && document.implementation.createDocument){
+            try{
+                /* DOMParser 对象解析 XML 文本并返回一个 XML Document 对象。
+                 * 要使用 DOMParser，使用不带参数的构造函数来实例化它，然后调用其 parseFromString() 方法
+                 * parseFromString(text, contentType) 参数text:要解析的 XML 标记 参数contentType文本的内容类型
+                 * 可能是 "text/xml" 、"application/xml" 或 "application/xhtml+xml" 中的一个。注意，不支持 "text/html"。
+                 */
+                domParser = new  DOMParser();
+                xmlDoc = domParser.parseFromString(xmlString, 'text/xml');
+            }catch(e){
+            }
+        }
+        else{
+            return null;
+        }
+
+        return xmlDoc;
+    }
+	
+</script>
+</head>
+
+<body>
+	<div data-role="page" data-theme="s" id='page'>
+		<div data-role="content" style="padding-bottom: 3em;">
+			<ul id="countUl" style="visibility:hidden">
+				<li class="li-title">您共有 <span id="countShow" style="color: red;">0</span> 条违法记录</li>
+				<li style="text-align: center;display: none;" id="car_tips"><label style="color:red; font-size: 12px;" >(仅限宁波籍非营运小型汽车)</label></li>
+			</ul>
+			<div style="display: block;" id="bindList">
+			</div>
+
+			<!-- 未绑定的跳转div -->
+			<div id="noBindInfo" style="display: none; padding: 8px;">
+				<p style="padding-left: 10px; padding-top: 20px; font-size: 26px; font-weight: bold; color: #797979; font-family: Arial, Lucida Grande, Verdana, Microsoft YaHei, hei">
+						您好，微信用户
+					</p>
+					<p style="text-indent: 2em;"><label>已有机动车？</label>
+						<label style="color: #060606">若须办理、查询机动车相关业务、信息，请点击'帐号绑定'选择'绑定机动车'！</label></p>
+					<p style="text-indent: 2em;"><label>已有驾驶证？</label>
+						<label style="color: #060606">若须办理、查询驾驶证相关业务、信息，请点击'帐号绑定'选择'绑定驾驶证'！</label></p>
+					<p style="text-indent: 2em;"><label>您还是学员？</label>
+						<label style="color: #060606">若您要在微信平台上预约驾驶证考试，请点击'帐号绑定'选择'绑定学员'！</label></p>
+					<br/>
+				<div>
+					<input type="button" value="绑定帐号" onclick="tobind()">
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

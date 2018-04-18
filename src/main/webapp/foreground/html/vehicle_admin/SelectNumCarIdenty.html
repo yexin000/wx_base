@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<!-- 引入 jQuery (使Lightbox正常工作) -->
+		<script type="text/javascript" src="/weixin/foreground/js/jquery-1.3.2.min.js"></script>
+		<!-- 引入 Lightbox (压缩文件) -->
+		<script type="text/javascript" src="/weixin/foreground/js/jquery.lightbox.min.js"></script>
+		
+		<script type="text/javascript">
+			var openId;
+			
+			$(document).ready(
+				function(){
+					insert("自主选号");
+					cjtp();
+				}
+			);
+			
+			function nextStep() {
+				var cjh = $("input#cjh").val();
+				var qrcjh = $("input#qrcjh").val();
+				
+				if ((checkCjh(cjh, qrcjh)) == 0) {
+					return;
+				}
+				
+				if ((checkClsbdh("车架号",cjh)) == 0) {
+					showUnitInfo(this);
+				}else{
+					comfirmDeal();
+				}
+				
+			}
+			
+			function checkCjh(cjh, qrcjh){
+				if(cjh == null || cjh == "") {
+					Showbo.Msg.alert("请填写车架号");
+					return 0;
+				}
+				if(qrcjh == null || qrcjh == "") {
+					Showbo.Msg.alert("请填写确认车架号");
+					return 0;
+				}
+				
+				if(cjh != qrcjh) {
+					Showbo.Msg.alert("两次填写的车架号不一致,请重新输入");
+					return 0;
+				}
+				return 1;
+			}
+			
+			function checkInputData(gcjk, fdjh, hgzhm, pzbh1) {
+				if(gcjk == "1") {// 国产
+					if(fdjh == null || fdjh == "") {
+						Showbo.Msg.alert("请填写发动机号");
+						return 0;
+					}
+					if(hgzhm == null || hgzhm == "") {
+						Showbo.Msg.alert("请填写合格证号码");
+						return 0;
+					}
+				} else if(gcjk == "2"){ // 进口
+					if(pzbh1 == null || pzbh1 == "ⅩⅨ") {
+						Showbo.Msg.alert("请填写进口货物凭证编号");
+						return 0 ;
+					}
+				}
+				return 1;
+			}
+			function GetQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+			function ToUrl(x)   {    location.href=x;   }
+			
+			function cjtp(){
+				var val = $("#gcjk option:selected").val();
+				if (val == 1) {
+					$("#in").css("display","block");
+					$("#out").css("display","none");
+					$("#change01").show();
+					$("#change02").show();
+					$("#change03").hide();
+					$("#change04").hide();
+				}
+				if (val == 2) {
+					$("#in").css("display","none");
+					$("#out").css("display","block");
+					$("#change01").hide();
+					$("#change02").hide();
+					$("#change03").show();
+					$("#change04").show();
+				}
+			} 
+			
+			
+			
+			
+			
+			
+			function showUnitInfo(object){
+	           var screenWidth = $(window).width();
+	           //当前窗口宽度  
+	           var screenHeight = $(window).height();
+	           //当前窗口高度             
+	           $("#yinying").css({"display":"block",
+	            					"position": "fixed",
+	            					"background": "#000",
+	            					"z-index": "1001",
+	            					"-moz-opacity": "0.5",
+	            					"opacity":".50",
+	            					"filter": "alpha(opacity=50)",
+	            					"width":screenWidth,
+	            					"height":screenHeight
+	           });   
+	           $("#dialog").css({"display":"block"});   
+	           $("#dialog").attr("name",object.id);
+	           return ;      
+			}
+			//弹框的取消效果
+			function hide(){
+				$("#yinying").css({"display":"none"});
+				$("#dialog").css({"display":"none"});
+			}
+			
+			//弹框确认
+			function comfirmDeal(){
+				$("#yinying").css({"display":"none"});
+				$("#dialog").css({"display":"none"});
+				
+				var cjh = $("input#cjh").val();
+				var qrcjh = $("input#qrcjh").val();
+				
+				var fdjh = $("input#fdjh").val();
+				var gcjk = $("#gcjk").val();
+				var hgzhm = $("input#hgzhm").val();
+				var pzbh1 = $("input#jkhwpz").val();
+				openId = unescape(GetQueryString("openId"));
+				
+				if(checkInputData(gcjk, fdjh, hgzhm, pzbh1) == 0) {
+					return;
+				}
+				
+				var sfzmhm = unescape(GetQueryString("sfzmhm"));
+				var sfzmmc = unescape(GetQueryString("sfzmmc"));
+				var syr = unescape(GetQueryString("syr"));
+				var sfyj = unescape(GetQueryString("sfyj"));
+				var sjhm = unescape(GetQueryString("sjhm"));
+				ToUrl("/weixin/foreground/html/vehicle_admin/screencarnumber.html?sfzmhm="
+					+ escape(sfzmhm) + "&sfzmmc=" + escape(sfzmmc) + "&syr=" + escape(syr) + "&sjhm=" + escape(sjhm)
+					+ "&clsbdh=" + escape(cjh) + "&sfyj=" + escape(sfyj)+ "&pzbh1=" + escape(pzbh1)
+					+ "&fdjh=" + escape(fdjh) + "&hgzbh=" + escape(hgzhm) + "&gcjk=" + escape($("#gcjk").val()) + "&openId=" + escape(openId));
+				
+			}
+			
+			
+			
+			
+			
+		</script>
+	</head>
+
+	<body>
+		<div data-role="page" data-theme="s" id="page">
+			<div data-role="content" role="main" style="padding-left: 8px; padding-right: 8px;">
+				<form method="post">
+					<table  width="100%" border="0" cellspacing="0" cellpadding="0" class="TestTable">
+						<tbody>
+							<tr>
+								<td colspan="2">
+									国产/进口
+									<div class="inputOutL">
+										<select data-role="none" class="inputSelect" name="gcjk" id="gcjk" onchange="cjtp()">
+											<option value="1" selected="selected">
+												国产
+											</option>
+											<option value="2">
+												进口
+											</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr >
+								<td colspan="2" style="height: 85px;">
+									车架号
+									<div class="inputOutL">
+									<div >
+									<input data-role="none" class="inputText" type="text" name="cjh" id="cjh" onkeyup="this.value=this.value.toUpperCase()"
+											onpaste="return false;" oncopy="return false;" placeholder="请填写车架号">
+									</div>
+									<div style="float: right; position: relative;top: -40px;height: 0px;">
+										<a id="in" href="/weixin/foreground/images/zzxh/clsbdhin.png" rel="lightbox-tour" title="国产车架号">
+											<p style="text-decoration: underline;margin-top: 6px;">样板照片</p></a>
+										<a id="out" href="/weixin/foreground/images/zzxh/clsbdhout.png" rel="lightbox-tour" title="进口车架号">
+											<p style="text-decoration: underline;margin-top: 6px;">样板照片</p></a>
+									</div>
+									
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									确认车架号
+									<div class="inputOutL">
+									<input data-role="none" class="inputText" type="text" name="qrcjh" id="qrcjh" onkeyup="this.value=this.value.toUpperCase()"
+										 onpaste="return false;" oncopy="return false;"	placeholder="请填写确认车架号">
+									</div>
+								</td>
+							</tr>
+							
+							<tr id="change01">
+								<td colspan="2" style="height: 85px;">
+									发动机号
+									<div class="inputOutL">
+									<div >
+									<input data-role="none" class="inputText" type="text" name="fdjh" id="fdjh" onkeyup="this.value=this.value.toUpperCase()"
+										onpaste="return false;" oncopy="return false;" placeholder="请填写发动机号">
+									</div>
+									<div style="float: right; position: relative;top: -40px;height: 0px;">
+										<a href="/weixin/foreground/images/zzxh/fdjh.png" rel="lightbox-tour" title="发动机号">
+											<p style="text-decoration: underline;margin-top: 6px;">样板照片</p></a>
+									</div>
+									
+									</div>
+								</td>
+							</tr>
+							<tr id="change02" >
+								<td colspan="2" style="height: 85px;">
+									合格证号码
+									<div class="inputOutL">
+									<div >
+									<input data-role="none" class="inputText" type="text" name="hgzhm" id="hgzhm" onkeyup="this.value=this.value.toUpperCase()"
+										onpaste="return false;" oncopy="return false;" placeholder="请填写合格证号码">
+									</div>
+									<div style="float: right; position: relative;top: -40px; height: 0px;">
+										<a href="/weixin/foreground/images/zzxh/hgzh.png" rel="lightbox-tour" title="合格证号">
+											<p style="text-decoration: underline;margin-top: 6px;">样板照片</p></a>
+									</div>
+									</div>
+								</td>
+							</tr>
+							
+							<tr id="change03">
+								<td colspan="2" style="height: 85px;">
+									进口货物凭证编号
+									<div class="inputOutL">
+									<div >
+									<input data-role="none" class="inputText" type="text" name="jkhwpz" id="jkhwpz" onkeyup="this.value=this.value.toUpperCase()"
+										onpaste="return false;" oncopy="return false;" placeholder="请填写进口货物凭证编号" value="ⅩⅨ">
+									</div>
+									<div style="float: right; position: relative;top: -40px; height: 0px;">
+										<a href="/weixin/foreground/images/zzxh/pzbh.png" rel="lightbox-tour" title="进口货物凭证编号">
+											<p style="text-decoration: underline;margin-top: 6px;">样板照片</p></a>
+									</div>
+									</div>
+								</td>
+							</tr>
+							<tr id="change04"><td><p style="color:red; font-size: 12px;">(例如：ⅩⅨ1234567)</p></td></tr>
+							<tr>
+								<td style="padding: 0 5px;">
+									<input data-role="none" class="inputBtn" type="button" onclick="javascript:history.go(-1)" value="上一步">
+								</td>
+								<td style="padding: 0 5px;">
+									<input data-role="none" class="inputBtn" type="button" onclick="javascript:nextStep()" value="下一步">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+				
+				<hr size="2px" color="#28a5e5"/>
+				<br/>
+				<div style="text-align: left; padding:0 8px;">
+					<div>
+					    <img src="/weixin/foreground/images/before_title.png" />
+					    <a style="font-size: 14px;color: #0F598A;font-weight: bold;">温馨提示</a>
+					 </div>
+					 <div>
+					    <p>&nbsp;&nbsp;&nbsp;&nbsp;请您仔细核对材料并保证信息填写正确，注意大小写，否则您所选号牌将无效。</p>
+					   	<br/><br/>
+					</div>
+				</div>
+				
+				
+			</div>
+		</div>
+		
+		
+		<div style=" display:none;" id="yinying"></div>
+		<div id="dialog" style="display:none; width: 220px; height:180px; margin-top: -90px;margin-left:-110px;z-index: 1002;top:50%;left: 50%;position: fixed;" >
+	 		<ul>
+	 			<li style="background-color: #f8a114;color: #ffffff; padding: 8px; font-size:16px; ">
+	 				<p style="text-align: center;">提 示</p>
+	 			</li>
+	 			<li style="background-color:#ffffff; padding:29px 8px;"><p id="confirm"></p></li>
+	 			<hr size="1px;" color="#cccccc"/>
+	 			<li style="background-color:#f6f6f6; ">
+	 			<div id="_DialogButtons_0" style="text-align: center; background-color: #f8a114;">
+	 				<div style="float: left;width: 50%;background-color: #f8a114; height: 37px;" >
+	 					<input style="border: none;" type="button" value="确 认" onclick="comfirmDeal()">
+	 				</div>
+	 				<div style="float: right;width: 50%;background-color: #cccccc; height: 37px;">
+	 					<input style="border: none;" type="button" value="取 消" onclick="hide();">
+	 				</div> 
+	 			</div>
+	 			<div class="clear"></div>
+	 			</li>
+	 		</ul>
+	 	</div>
+		
+		
+		
+		
+		
+		
+		
+	</body>
+</html>

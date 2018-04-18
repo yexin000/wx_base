@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv=Content-Type content="text/html;charset=gbk">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		
+		<script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">
+			function getQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+		
+		
+			$(document).ready(function(){
+				$(".content").hide();
+				addHead("考试得分");
+
+				var scour = getQueryString("grade");
+				$("#rel").html();
+				if (scour < 80) {
+					var str_fauls = "";
+					str_fauls += "<br/><p>很遗憾！</p><br/>";
+					str_fauls += "<p>您才得了"+scour+" 分，没有过关！</p>";
+					str_fauls += "<br/><p>继续加油哦！</p><br/>";
+					$("#rel").html(str_fauls);
+				}else{
+					var str_pass = "";
+					str_pass += "<br/><p>恭喜你！</p><br/>";
+					str_pass += "<p>您获得了"+scour+" 分，顺利过关。</p>";
+					str_pass += "<br/><p>再接再厉哦！</p><br/>";
+					$("#rel").html(str_pass);
+				}
+				$(".content").show();
+				
+				$(".but").click(function(){
+					
+					location.href = "./ObjectLogin.html?mark=ok";
+				
+				});
+				
+			});
+			
+			
+		</script>
+
+  </head>
+  
+  <body>
+	<div class="content">
+		<div id="rel" style="margin-left: 30%;width: 60%;">
+		<br/>
+			<p>很遗憾！</p>
+		<br/>
+			<p>您才得了 89 分，没有过关。</p>
+		<br/>
+			<p>继续加油哦！</p>
+		<br/>	
+		</div>
+		<input type="button" class="but" value="重新登录考试">
+	</div>
+  </body>
+</html>

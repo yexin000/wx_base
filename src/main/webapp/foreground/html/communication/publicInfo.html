@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/pageparams.js"></script>
+		<script type="text/javascript">
+			Pageparams.postRequest('page');
+		</script>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type='text/javascript' src='/weixin/dwr/engine.js'></script>
+		<script type='text/javascript' src='/weixin/dwr/interface/WebServiceUtil.js'></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">   
+		var code;
+		$(document).ready(function(){
+			addHead("交管信息");
+		
+			ProgressBar.init();
+			var lis = document.getElementsByName('item');
+			for(var i=0;i<lis.length;i++){
+				lis[i].onclick = function(){
+					for(var j=0;j<lis.length;j++){
+						lis[j].style.backgroundColor = "#fbfbfb";
+					}
+					this.style.backgroundColor = "#ebebeb";
+				}
+			}
+		});
+		
+		function ToUrl(headText,bh){
+			location.href='/weixin/foreground/html/communication/publicNotification.html?headText='+encodeURI(headText)+'&bh='+encodeURI(bh);
+		}   
+		</script> 
+		
+
+	</head>
+	<body >
+		<div class="content">
+					<ul class="inforSerch" >
+						
+						<li name="item">
+							<div onclick="javascript:ToUrl('市区单行线','181000');">
+								<img src="/weixin/foreground/img/ShiQuDanXingXian.png"></img>
+								<br/>
+								市区单行线
+							</div>
+						</li>
+						<li name="item">
+							<div onclick="javascript:ToUrl('黄标车限行区','182000');">
+								<img src="/weixin/foreground/img/HuangBiaoCheXianXingQu.png"></img>
+								<br/>
+								黄标车限行区
+							</div>
+						</li>
+						<li name="item">
+							<div onclick="javascript:ToUrl('货车限行区','183000');">
+								<img src="/weixin/foreground/img/HuoCheXianXingQu.png"></img>
+								<br/>
+								货车限行区
+							</div>
+						</li>
+						<li name="item">
+							<div onclick="javascript:ToUrl('道路禁行','184000');">
+								<img src="/weixin/foreground/img/DaoLuJinXing.png"></img>
+								<br/>
+								道路禁行
+							</div>
+						</li>
+						<li name="item">
+							<div onclick="javascript:ToUrl('电子警察','185000');">
+								<img src="/weixin/foreground/img/DianZiJingCha.png"></img>
+								<br/>
+								电子警察
+							</div>
+						</li>
+						<li name="item">
+							<div onclick="javascript:ToUrl('重点整治工作','186000');">
+								<img src="/weixin/foreground/img/ZhongDianZhengZhi.png"></img>
+								<br/>
+								重点整治工作
+							</div>
+						</li>
+						<li name="item">
+							<div onclick="javascript:ToUrl('道路施工及限行措施','180000');">
+								<img src="/weixin/foreground/img/DaoLuShiGongJiXianXing.png"></img>
+								<br/>
+								道路施工及限行措施
+							</div>
+						</li>
+					</ul>
+					<div class="clear"></div><!--清除浮动-->
+				</div>
+			
+	</body>
+</html>

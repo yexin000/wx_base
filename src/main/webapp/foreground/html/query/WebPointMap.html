@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/pageparams.js"></script>
+		<script type="text/javascript">
+			Pageparams.postRequest('page');
+		</script>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=No9ggzTkqcHKgKIFR6nbvD5S"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+<script language="javascript"> 
+	var lat = "";
+	var lng = ""; 
+	
+	var ywkind = "";
+	var ywkdmind = "";
+
+function GetQueryString(name) {
+	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+   	if(r!=null)return  unescape(r[2]); return null;
+}
+			
+function ToUrl(x){         
+	window.location.href=x;   
+} 
+
+function sendAddress(e){
+	var src = $(e).find("img").attr("src");
+	var bh = $(e).attr("bh"); 
+	ToUrl('/weixin/foreground/html/query/webPointDealMap.html?src='+escape(src)+'&bh='+escape(bh));
+}
+
+function callback(msg){
+	//alert(msg);
+	var jsonObject = eval("("+msg+")");
+	if (jsonObject.head.rownum == 0){
+		Showbo.Msg.alert("没有筛选到符合条件的结果");
+	//	eval($("#tmpt").text($.Prompt("没有筛选到符合条件的结果。")));
+		ProgressBar.hide();
+	}else{
+		jsonToString(msg);
+	}
+}
+
+function toShowUl(msg,optionValue){
+	var jsonObject = eval("("+msg+")");
+		var i = 1;
+		var distenceArray = new Array(jsonObject.body.length);
+		if (optionValue == "01") {
+			$("ul#list").html("");
+			$.each(jsonObject.body,function(index,item){
+				//alert(item.lxdh);
+					$("ul#list").append("<li bh=\""+item.id+"\" data-lat=\""+item.bd_lat+"\" data-lng=\""+item.bd_lng+"\" data-lxdh=\""+item.lxdh+"\" id=\"li\" onclick=\"javascript:sendAddress(this)\" class=\"ui-li-static ui-body-inherit ui-li-has-thumb ui-first-child ui-last-child\">"
+								+"<img style=\"margin-top: 6px;width: 70px;height: 60px;padding-left: 5px;\" src=\""+item.picurl+"\">"
+								+"<label class=\"li-p1\">"
+								+item.dwmc
+								+"</label>"
+								+"<p class=\"li-p2\" style='width: 95%;	white-space: nowrap;overflow: hidden;text-overflow: ellipsis;' id=\"address-li\">"
+								+item.lxdz
+								+"</p>"
+								+"</li>");
+					});
+				}else if(optionValue == "02"){
+					$("ul#list").html("");
+					$.each(jsonObject.body,function(index,item){
+						if (i<(distenceArray.length+1)) {
+							distenceArray[i] = parseFloat(item.distance);
+							i++;
+						}
+					});
+					/*获取最近距离,数组的index初始值是1*/
+					var minVal = distenceArray[1];
+					for ( var n = 0; n < distenceArray.length; n++) {
+						if (minVal > distenceArray[n]) {
+							minVal = distenceArray[n];
+						}
+					}
+                	$.each(jsonObject.body,function(index,item){
+                		if ((parseFloat(item.distance)) == minVal) {
+							$("ul#list").append("<li bh=\""+item.id+"\" data-lat=\""+item.bd_lat+"\" data-lng=\""+item.bd_lng+"\" data-lxdh=\""+item.lxdh+"\" onclick=\"javascript:sendAddress(this)\" class=\"ui-li-static ui-body-inherit ui-li-has-thumb ui-first-child ui-last-child\">"
+								+"<img style=\"margin-top: 6px;width: 70px;height: 60px;padding-left: 5px;\" src=\""+item.picurl+"\">"
+								+"<label class=\"li-p1\">"
+								+item.dwmc
+								+"</label>"
+								+"<p class=\"li-p2\" style='width: 95%;	white-space: nowrap;overflow: hidden;text-overflow: ellipsis;'>"
+								+item.lxdz
+								+"</p>"
+								+"</li>");
+						}
+                	});
+				}else if (optionValue == "03") {
+					$("ul#list").html("");
+					$.each(jsonObject.body,function(index,item){
+					if (parseFloat(item.distance)<= 2000) {
+						$("ul#list").append("<li bh=\""+item.id+"\" data-lat=\""+item.bd_lat+"\" data-lng=\""+item.bd_lng+"\" data-lxdh=\""+item.lxdh+"\" onclick=\"javascript:sendAddress(this)\" class=\"ui-li-static ui-body-inherit ui-li-has-thumb ui-first-child ui-last-child\">"
+								+"<img style=\"margin-top: 6px;width: 70px;height: 60px;padding-left: 5px;\" src=\""+item.picurl+"\">"
+								+"<label class=\"li-p1\">"
+								+item.dwmc
+								+"</label>"
+								+"<p class=\"li-p2\" style='width: 95%;	white-space: nowrap;overflow: hidden;text-overflow: ellipsis;'>"
+								+item.lxdz
+								+"</p>"
+								+"</li>");
+					}
+					});
+				}else if (optionValue == "04") {
+					$("ul#list").html("");
+					$.each(jsonObject.body,function(index,item){
+					if (parseFloat(item.distance)<= 1000) {
+						$("ul#list").append("<li bh=\""+item.id+"\" data-lat=\""+item.bd_lat+"\" data-lng=\""+item.bd_lng+"\" data-lxdh=\""+item.lxdh+"\" onclick=\"javascript:sendAddress(this)\" class=\"ui-li-static ui-body-inherit ui-li-has-thumb ui-first-child ui-last-child\">"
+								+"<img style=\"margin-top: 6px;width: 70px;height: 60px;padding-left: 5px;\" src=\""+item.picurl+"\">"
+								+"<label class=\"li-p1\">"
+								+item.dwmc
+								+"</label>"
+								+"<p class=\"li-p2\" style='width: 95%;	white-space: nowrap;overflow: hidden;text-overflow: ellipsis;'>"
+								+item.lxdz
+								+"</p>"
+								+"</li>");
+					}
+					});
+				}else if (optionValue == "05") {
+					$("ul#list").html("");
+					$.each(jsonObject.body,function(index,item){
+					if (parseFloat(item.distance)<= 500) {
+						$("ul#list").append("<li bh=\""+item.id+"\" data-lat=\""+item.bd_lat+"\" data-lng=\""+item.bd_lng+"\" data-lxdh=\""+item.lxdh+"\" onclick=\"javascript:sendAddress(this)\" class=\"ui-li-static ui-body-inherit ui-li-has-thumb ui-first-child ui-last-child\">"
+								+"<img style=\"margin-top: 6px;width: 70px;height: 60px;padding-left: 5px;\" src=\""+item.picurl+"\">"
+								+"<label class=\"li-p1\">"
+								+item.dwmc
+								+"</label>"
+								+"<p class=\"li-p2\" style='width: 95%;	white-space: nowrap;overflow: hidden;text-overflow: ellipsis;'>"
+								+item.lxdz
+								+"</p>"
+								+"</li>");
+					}
+					});
+				}else if (optionValue == "06") {
+					$("ul#list").html("");
+					$.each(jsonObject.body,function(index,item){
+					if (parseFloat(item.distance)<= 100) {
+						$("ul#list").append("<li bh=\""+item.id+"\" data-lat=\""+item.bd_lat+"\" data-lng=\""+item.bd_lng+"\" data-lxdh=\""+item.lxdh+"\" onclick=\"javascript:sendAddress(this)\" class=\"ui-li-static ui-body-inherit ui-li-has-thumb ui-first-child ui-last-child\">"
+								+"<img style=\"margin-top: 6px;width: 70px;height: 60px;padding-left: 5px;\" src=\""+item.picurl+"\">"
+								+"<label class=\"li-p1\">"
+								+item.dwmc
+								+"</label>"
+								+"<p class=\"li-p2\" style='width: 95%;	white-space: nowrap;overflow: hidden;text-overflow: ellipsis;'>"
+								+item.lxdz
+								+"</p>"
+								+"</li>");
+					}
+					});
+				}
+				ProgressBar.hide();
+}
+
+function jsonToString(msg){
+	var optionValue = $("#area option:selected").val();
+	var selectVal = $("#area option:selected").html();
+	$("span").html(selectVal);
+	$("#zjjl").click(function(){
+			optionValue = "02";
+			var lis = document.getElementById("list").getElementsByTagName("li");
+  			$("#area").get(0).options[1].selected = true;
+   			var selectText = $("#area").get(0).options[1].text;	
+   			$("span").html(selectText);
+			toShowUl(msg,optionValue);
+			return ;
+	});
+	toShowUl(msg,optionValue);
+}
+
+$(document).ready(function(){
+	insert("业务网点");
+	$("#header").css('z-index','1');$("div.floot").css('z-index','1');
+	ProgressBar.init();
+	
+	func();
+});
+
+function func(){
+	//是否显示返回键
+	var flag = unescape(GetQueryString("flag"));
+	if (flag != 1) {
+		$("#c-ui-header-return").css("display","none");
+	}
+	
+	ProgressBar.show();
+	var geolocation = new BMap.Geolocation();
+	geolocation.getCurrentPosition(function(r){
+		if(this.getStatus() == BMAP_STATUS_SUCCESS){
+			lat = r.point.lat;
+   			lng = r.point.lng;
+   			
+			var params = "{\"ostype\":\"A\",\"ywlx\":\""+ywkind+"\",\"ywdm\":\""+ywkdmind+"\",\"lat\":\""+lat+"\",\"lng\":\""+lng+"\",\"distance\":\"\",\"flag\":\"0\"}";
+			var result = WebServiceUtil.getJobGuideAddrName(params, callback);
+		}
+		else {
+			//alert('failed'+this.getStatus());
+			Showbo.Msg.alert("定位失败");
+		//	eval($("#tmpt").text($.Prompt('failed'+this.getStatus())));
+		}        
+	},{enableHighAccuracy: true})
+	
+	var ywkindtext = unescape(GetQueryString("ywlx"));
+	var ywkdmindtext = unescape(GetQueryString("ywlxdm"));
+    var kindbutton = unescape(GetQueryString("kind"));
+    if(kindbutton != null && kindbutton != "null") {
+    	//业务类型
+		$("#jobKind").text(kindbutton);
+	}
+	if (ywkindtext == null || ywkindtext == "null") {
+		ywkind = "";
+	} else {
+		ywkind = ywkindtext;
+	}
+	
+	if (ywkdmindtext == null || ywkdmindtext == "null") {
+		ywkdmind = "";
+	} else {
+		ywkdmind = ywkdmindtext;
+	}
+}
+</script>  
+
+<style type="text/css">
+.select {   
+	padding-top: 5px;
+    text-align: center;     
+    font-size: 1.2em;
+    color: #fff; 
+    background: url(/weixin/foreground/images/carat-d-white.png) no-repeat center right;
+}   
+.select select {   
+    position: absolute;   
+    left: 0px;   
+    top: 0px;   
+    width: 100%;   
+    height: 3em;   
+    opacity: 0;   
+} 
+
+.li-p1{
+	font-size: 18px; 
+	font-weight: 700; 
+	text-shadow: #eee;
+	width: 95%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.li-p2{
+	font-size: 12px; 
+	color: #aeaeae;
+}
+</style>	
+</head>
+	
+	<body>
+		<div data-role="page" data-theme="s" tabindex="0" id='page'>
+			<div style="margin-top: 3.3em; background:#fe9900; position: fixed;width: 100%;z-index:1">
+				<ul>
+					<li style="float:left;width:33.3%;margin:0px;padding:0px;" id="control">
+						<div class="select">  
+							<span>全城</span>
+								<select data-role="none" style="-webkit-appearance: none; background-color:#fe9900; border:none; height: 32px; width:33.3%; font-size: 1.2em; color: #fff;" id="area" onchange="javascript:func()">
+									<optgroup label="区域">
+										<option value="01">
+											全城
+										</option>
+										<option value="02">
+											距离最近
+										</option>
+										<option value="03">
+											2km
+										</option>
+										<option value="04">
+											1km
+										</option>
+										<option value="05">
+											500m
+										</option>
+										<option value="06">
+											100m
+										</option>
+									</optgroup>
+								</select>
+							</div>
+					</li>
+					<li id="but" style="float:left;width:33.3%;margin:0px;padding:0px;">
+						<input data-role="none" style="border-left:2px solid #eee;height: 32px;background: #fe9900; color:#fff; font-size: 1.2em;margin: 0;" type="button" id="jobKind" onclick="window.location.href='/weixin/foreground/html/query/WebPointKind.html'" value="业务类型"/>
+					</li>
+					<li style="float:left; width:33.3%;margin:0px;padding:0px;">
+						<input data-role="none" style="border-left:2px solid #eee; height: 32px;background: #fe9900; color:#fff; font-size: 1.2em;margin: 0;"  id="zjjl" type="button" value="距离最近">
+					</li>
+				</ul>
+				</div>
+				
+				<div data-role="content" style="padding-top: 4.6em;padding-left: 0px;padding-right: 0px;">
+				<ul data-role="listview" data-inset="true" id="list">
+					<!--<li onclick="javascript:sendAddress(this)">
+						<img style="width: 60px; height: 70px; margin-top: 6px;" src="/weixin/foreground/images/ningbo.jpg">
+							<label class="li-p1">
+								宁波车管所
+							</label>
+							<p class="li-p2" id="address">
+								宁波市中兴北路33临
+							</p>
+					</li>-->
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

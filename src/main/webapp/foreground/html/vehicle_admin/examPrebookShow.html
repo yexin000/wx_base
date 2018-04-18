@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+			function GetQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+			var wxid = GetQueryString("wxid");
+			var sfzmhm = GetQueryString("sfzmhm");
+			alert("wxid="+wxid);alert("sfzmhm="+sfzmhm);
+		</script>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="format-detection" content="email=no" />
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=0" />
+		<title>考试预约</title>
+		
+		<link rel="stylesheet" href="../../css/progressbar.css">
+		<link rel="stylesheet" href="../../css/myAlert.css">
+		<script type="text/javascript" src="../../js/writedwr.js"></script>
+		<script type="text/javascript" src="../../js/spin.min.js"></script>
+		<script type="text/javascript" src="../../js/progressbar.js"></script>
+		<script type="text/javascript" src="../../js/myAlert.js"></script>
+		<script type='text/javascript' src='/weixin/dwr/interface/JsapiService.js'></script>
+	</head>
+</html>

@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+  		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		
+		<script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/check_browser.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">		
+		
+			var code="";
+			
+			$(document).ready(function(){
+				setPosition();
+				//addHead();
+				//addFoot();
+				//$("#c-ui-header-return").hide();
+				$("#title").text("学员登录");
+    			
+    			if (localStorage.getItem("xxkh") != "" || localStorage.getItem("xxkh") != null) {
+					$("#username").val(localStorage.getItem("xxkh"));
+				}
+    			
+    			ProgressBar.init();
+    			ProgressBar.hide();
+    			//token = "237eb7f36db6cfeb383766fbe4644b9b";
+    			token = getCookie("token");
+    			if(token == null){
+					code = unescape(getQueryString("code"));
+					getOpenId(code);
+				}
+    		});
+
+			function init(){}
+    		
+    		function login(){
+    			var xxkh = $("#username").val().replace(/[ ]/g,"");
+    			var sfzh = $("#idcard").val().replace(/[ ]/g,"");
+    			var sjhm = $("#phnum").val().replace(/[ ]/g,"");
+    			
+    			if(xxkh.length > 20 || xxkh == ""  ) {
+				Showbo.Msg.alert("学习卡号不正确，请重新输入。");
+				return;
+			}
+    			
+    			if(sfzhmCheck(sfzh,$("input#idcard")) == 0)return;
+    			if(isValidMobileNum(sjhm) ==0)return;
+    			
+    			ProgressBar.show();
+    			var params = "{\"token\":\""+token+"\",\"xxkh\":\""+xxkh+"\",\"sfzmhm\":\""+sfzh+"\",\"sjhm\":\""+sjhm+"\"}";
+    			
+    			if(window.localStorage){   
+					//支持   
+					localStorage.setItem("xxkh",xxkh);
+					localStorage.setItem("params",params);
+				}else{
+					//不支持
+					Cookie.write("xxkh",xxkh);
+					Cookie.write("params", params);
+				}
+    			
+    			//var result = WebServiceUtil.checkStudent(params,getCheck);
+    			
+    			return WebServiceUtil.checkStudent(params,
+    					{callback:function(msg){
+    						//alert(msg);
+    						ProgressBar.hide();
+    						if(window.localStorage){   
+   								//支持   
+   								localStorage.setItem("Question",msg);
+							}else{
+								//不支持
+								Cookie.write("Question", msg);
+							}
+    			
+    						var jsonObj = eval("("+msg+")");
+    			
+    						if (jsonObj.head.code == '1') {
+								location.href = "./ObjectOne.html";
+							}else {
+								if ((jsonObj.head.message).indexOf('Could not invoke service')>=0) {
+									Showbo.Msg.alert("服务器正忙,请稍后重试!");
+									return;
+								}
+								Showbo.Msg.alert(jsonObj.head.message);
+								return ;
+							} },
+						
+    					errorHandler:function(message){
+    						ProgressBar.hide(); 
+    						Showbo.Msg.alert("服务器无应答，请重新登录！");
+							Showbo.todo = function() {return}; 
+						},
+    					timeout:60000});
+    		}
+		</script>
+  </head>
+  
+  <body>
+    <div class="content">
+    	<table style="margin-top: 0px;" width="100%" border="0" cellspacing="0" cellpadding="0"
+				class="TestTable">
+				<tbody>
+					<tr>
+						<td>
+							学习卡号：
+							<div class="inputOutL">
+								<input type="text" id="username" value="" maxlength="20"
+									placeholder="请输入学习卡号" class="inputText">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							身份证号：
+							<div class="inputOutL">
+								<input type="text" id="idcard" value="" maxlength="18"
+									placeholder="请输入身份证号" class="inputText">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							手机号码：
+							<div class="inputOutL">
+								<input type="text" id="phnum" value="" maxlength="11"
+									placeholder="请输入手机号码" class="inputText">
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>	
+			
+			<div style="padding: 10px 0">
+				<input class="but" type="button" value="登  录" 
+					onclick="javascript:login();">
+			</div>				
+		</div>
+			
+  </body>
+</html>

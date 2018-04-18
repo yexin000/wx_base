@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+    --><title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <base href=".">
+    <meta name="viewport"
+          content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="Cache-Control"
+          content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+
+    <link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css">
+    <link rel="stylesheet" href="/weixin/foreground/css/main.css"/>
+    <link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+    <link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+    <link rel="stylesheet" href="/weixin/foreground/css/progressbar.css"/>
+
+    <link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css"/>
+    <link rel="stylesheet" href="/weixin/foreground/css/progressbar.css"/>
+    <link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+    <link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+
+    <script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js"></script>
+    <script src="/weixin/foreground/js/check_browser.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+    <script type='text/javascript' src='/weixin/dwr/engine.js'></script>
+    <script type='text/javascript' src='/weixin/dwr/interface/WebServiceUtil.js'></script>
+    <script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+    <style type="text/css">
+        #header {
+            margin-top: -1px;
+            height: 26px;
+        }
+        #c-ui-header-return {
+            position:fixed;
+        }
+
+        #wrapper {
+            position: absolute;
+            z-index: 1;
+            top: 60px;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            overflow: auto;
+        }
+
+        #scroller {
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            padding: 2px;
+        }
+
+        #scroller ul {
+            list-style: none;
+            padding-bottom: 10px;
+            margin: 0;
+            width: 100%;
+            text-align: left;
+        }
+
+        #scroller li a {
+            padding: 0px 10px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+        }
+
+        .floot {
+            position: absolute;
+            z-index: 2;
+        }
+
+    </style>
+    <script type="text/javascript">
+    	//插入标题栏
+        function insert(headText){
+            //"<div id='header' role='banner' class='ui-header po-h'>"
+            //初始化元素：在div中添加
+            var div_1 = document.createElement('div');
+            div_1.id = 'header';
+            div_1.setAttribute('class','ui-header po-h');
+            div_1.role = 'banner';
+            div_1.innerHTML = "<h5>"+headText+"</h5><i id=\"c-ui-header-return\" style=\"position:fixed;\" class=\"returnico i_bef\" onClick=\"javascript :history.back(-1);\"></i>";
+
+            var div_2 = document.createElement('div');
+            // div_2.id = 'foot';
+            div_2.setAttribute('class','floot');
+
+            if(window.localStorage){
+                div_2.innerHTML = localStorage.getItem("d_floot");
+            }else{
+                div_2.innerHTML = getCookie("d_floot");
+            }
+
+            var dm_div = document.getElementById('page');
+            dm_div.insertBefore(div_1,dm_div.firstChild);
+            dm_div.insertBefore(div_2,dm_div.firstChild);
+        }
+        function getQueryValue(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null)
+                return decodeURI(r[2]);
+            return null;
+        }
+        
+        $(document).ready(function () {
+            insert("栏目意见");
+            ProgressBar.init();
+            //得到客户端ip地址
+            var v_feedbackip;
+            var url = 'http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_=' + Math.random();
+            $.getJSON(url, function (data) {
+                v_feedbackip = data.Ip;
+            });
+            //得到微信版本号
+            var wechatVersion = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i)[1];
+            //给提交按钮添加点击事件
+            $("#submit").click(
+                    function () {
+                        //得到栏目选项值
+                        var optionValue = $("#options").val();
+                        //得到手机号
+                        var telnum= $.trim($("#telnum").val());
+                        //验证手机号的正则表达式
+                        var regTel =/^0{0,1}(13[0-9]|15[0-9]|18[0-9]|14[0-9]|17[0-9])[0-9]{8}$/;
+                        if(!regTel.test(telnum)){
+                        	alert("您的手机号码输入有误，请您检查！");
+                        	return;
+                        }
+                        //得到建议的具体内容
+                        var suggestionContent = $.trim($("#suggestion").val());
+                        if(suggestionContent=='' || suggestionContent==null || suggestionContent==undefined){
+                            alert('建议不能为空！');
+                            return;
+                          }
+                        suggestionContent+="(联系方式："+telnum+")";
+                        //得到openId
+                        openId = getCookie("openId");
+                        if (isEmpty(openId)) {
+                            //var code = getQueryValue("code");
+                            getOpenId(getQueryValue("code"));
+                        }
+                        ProgressBar.show();
+                        //拼接参数
+                        var params = "{'title':'" + optionValue + "','content':'" + suggestionContent + "','type':'9098','os':'C','version':'" + wechatVersion + "','feedbackuser':'" + openId + "','feedbackip':'" + v_feedbackip + "','list':'','code':'','msg':''}";
+                        if (isEmpty(openId)) {
+                 			alert('服务器正忙，请关闭页面重新进入');
+                 			window.location.reload();//刷新当前页面.
+                 			return;
+                        }
+                        //调用dwr接口
+                        var result = WebServiceUtil.userFeedback(params, callBack);
+                    }
+            );
+        });
+        function isEmpty(data){
+			if(data=="" || data==undefined || data==null){
+				return true;
+			}
+			return false;
+		}
+        function callBack(msg) {
+
+            ProgressBar.hide();
+            var jsonObject = eval("(" + msg + ")");
+            var head = jsonObject.head;
+            for (var i in head) {
+                Showbo.Msg.alert(head.message);
+            }
+        }
+    </script>
+</head>
+
+<body>
+<div data-role="page" data-theme="s" tabindex="0" id='page'>
+    <div id="wrapper" >
+        <div id="scroller" data-role="content" data-theme="a" >
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="TestTable">
+                <tbody>
+                <tr>
+                    <td>
+                        请选择栏目
+                        <div class="inputOutL">
+                            <select data-role="none" class="inputSelect" id="options">
+                                <option value="1">
+                                    违法查询
+                                </option>
+                                <option value="2">
+                                    路况查询
+                                </option>
+                                <option value="3">
+                                    交管信息
+                                </option>
+                                <option value="4">
+                                    办事指南
+                                </option>
+                                <option value="5">
+                                    法律法规
+                                </option>
+                                <option value="6">
+                                    事故快处快撤
+                                </option>
+                                <option value="7">
+                                    投诉建议
+                                </option>
+                                <option value="8">
+                                    行车宝典
+                                </option>
+                                <option value="9">
+                                    更多服务
+                                </option>
+                                <option value="10">
+                                  吕奇说交通
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+					<td>
+						联系方式（手机号码）
+						<div  class="inputOutL">
+							<label style="float: left;font-size: 14px;color: #000000;" id="hphm01" ></label>
+							<input data-role="none" class="inputText" type="text" id="telnum" maxlength="15" 
+								style="width: 80%;padding: 0px;" placeholder="请输入您的联系方式">
+						</div>
+					</td>
+				</tr>
+                <tr>
+                    <td>
+                        意见建议
+                        <div class="inputOutL">
+                    <textarea class="textarear" data-role="none" id="suggestion" placeholder="请在此输入您的意见建议" rows="6"
+                              cols="15"></textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div>
+                            <input id="submit" data-role="none" class="inputBtn" type="button" value="提交"/>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+  </div>
+</body>
+</html>

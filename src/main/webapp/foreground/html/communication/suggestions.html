@@ -1,0 +1,153 @@
+﻿<!DOCTYPE HTML>
+<!--意见建议页面-->
+<html>
+<head>
+    <!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>-->
+
+    <title></title>
+    <script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/pageparams.js"></script>
+    <script type="text/javascript">
+        Pageparams.postRequest('page');
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <base href=".">
+    <meta name="viewport"
+          content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css"/>
+    <link rel="stylesheet" href="/weixin/foreground/css/progressbar.css"/>
+    <link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+    <link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+
+    <script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+
+    <script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+
+    <script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+    <script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+  
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            addHead("栏目意见");
+            ProgressBar.init();
+            //得到客户端ip地址
+            var v_feedbackip;
+            var url = 'http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_='+Math.random();
+                $.getJSON(url, function(data){
+                v_feedbackip=data.Ip;
+            });
+  	   
+            //得到微信版本号
+            var wechatVersion = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i)[1] ;
+            //给提交按钮添加点击事件
+            $("#submit").click(
+                    function(){
+                        //得到选项值
+                        var optionValue=$("#options").val();
+                        //得到建议的具体内容
+                        var suggestionContent=$("#suggestion").val().trim();
+                        //得到token
+                        token = getCookie("token");
+                        if (token == null) {
+                            var code = getQueryString("code");
+                            getOpenId(code);
+                        }
+			            ProgressBar.show();
+                        //拼接参数
+                         var params="{'v_title':'"+optionValue+"','v_content':'"+suggestionContent+"','v_type':'9098','v_os':'C','v_version':'"+wechatVersion+"','v_feedbackuser':'"+token+"','v_feedbackip':'"+v_feedbackip+"','v_list':'','v_code':'','v_msg':''}";
+
+
+                        //调用dwr接口
+                        var result = WebServiceUtil.userFeedback(params, callBack);
+                    }
+            );
+        });
+
+        function callBack(msg) {
+   
+            ProgressBar.hide();
+            var jsonObject = eval("(" + msg + ")");
+            var head = jsonObject.head;
+            for (var i in head) {
+                Showbo.Msg.alert(head.message);
+            }
+        }
+
+    </script>
+
+    <style type="text/weixin/foreground/css">
+        .td_left {
+            text-align: center;
+            width: 35%;
+        }
+    </style>
+</head>
+
+<body>
+<div id="reverseNarrative"></div>
+<div class="content">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="TestTable">
+        <tbody>
+        <tr>
+            <td>
+                请选择有意见的栏目
+                <div class="inputOutL">
+                    <select data-role="none" class="inputSelect" id="options">
+                        <option value="1">
+                            违法查询
+                        </option>
+                        <option value="2">
+                            路况查询
+                        </option>
+                        <option value="3">
+                            交管信息
+                        </option>
+                        <option value="4">
+                            办事指南
+                        </option>
+                        <option value="5">
+                            法律法规
+                        </option>
+                        <option value="6">
+                           事故快处快撤
+                        </option>
+                        <option value="7">
+                            意见建议
+                        </option>
+                        <option value="8">
+                           行车宝典
+                        </option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                意见建议
+                <div class="inputOutL">
+                    <textarea class="textarear" data-role="none" id="suggestion" placeholder="请在此输入您的意见建议" rows="6"
+                              cols="15"></textarea>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>
+                    <input id="submit" data-role="none" class="inputBtn" type="button" value="提交"/>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

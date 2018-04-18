@@ -1,0 +1,155 @@
+#dvMsgBox {
+	display: none;
+	position: fixed;
+	font-size: 12px;
+	width: 300px;
+	background: transparent url(top-bottom.png) repeat-x;
+	overflow: hidden;
+	z-index: 999;
+	backGround-color: #ffffff;
+	border-top: 5px solid #f8a114;
+	border-radius: 5px;
+	
+}
+
+#dvMsgBox .top {
+	height: 24px;
+	background: transparent url(left-corners.png) no-repeat;
+	/*padding-left:6px;*/
+	display: none;
+}
+
+#dvMsgBox .top .right {
+	height: 100%;
+	background: transparent url(right-corners.png) no-repeat right top;
+	padding-right: 6px;
+}
+
+#dvMsgBox .top .right .title {
+	cursor: move;
+	background: transparent url(top-bottom.png) repeat-x;
+	height: 100%;
+	line-height: 24px;
+	color: #15428b;
+	vertical-align: middle;
+	font-weight: bold;
+	overflow: hidden;
+}
+
+#dvMsgBox .body {
+	background: transparent url(left-right.png) repeat-y;
+	/*padding-left:0px;*/
+	padding: 30px 8px;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+	border-top: 1px solid #eee;
+}
+
+#dvMsgBox .body .rightAlert {
+	background: transparent url(left-right.png) repeat-y right;
+	padding-right: 2px;
+	font-size: 14px;
+}
+
+#dvMsgBox .body .right .ct {
+	/*background-color:#cddef3 !important;background-color:#cadaec;*/
+	line-height: 20px;
+	vertical-align: middle;
+	width: 100%;
+}
+
+#dvMsgBox .body .right .ct .pro {
+	width: 280px;
+	border: solid 1px #6593cf;
+	height: 25px;
+	background: #ffffff;
+	line-height: 23px;
+	overflow: hidden;
+}
+
+#dvMsgBox .body .right .ct .pro .bg {
+	width: 0%;
+	height: 100%;
+	background: #c9dffc;
+}
+
+#dvMsgBox .bottom {
+	background: transparent url(left-corners.png) no-repeat left bottom;
+	padding-left: 0px;
+	border-top:1px solid #cccccc;
+	border-bottom: 1px solid #eee;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+}
+
+#dvMsgBox .bottom .right {
+	height: 100%;
+	background: transparent url(right-corners.png) no-repeat right bottom;
+	padding-right: 6px;
+}
+
+#dvMsgBox .bottom .right .btn {
+	height: 100%;
+	background: transparent url(top-bottom.png) repeat-x left bottom;
+	text-align: center;
+}
+
+#dvMsgBox .bottom .right .btn input {
+	height: 28px;
+	text-align: center;
+	line-height: 22px;
+	vertical-align: middle;
+	cursor: pointer;
+	width: 45%;
+	background-color:#f8a114;
+	border-radius: 3px;
+}
+
+#dvMsgBox .bottom .right .btn input.btn {
+	/*background: url(btn.gif) no-repeat;*/
+}
+
+#dvMsgBox .bottom .right .btn input.btnfocus {
+	/*background: url(btnfocus.gif) no-repeat;*/
+	background-color: #f8a114;
+}
+
+#dvMsgBox .icon {
+	width: 32px;
+	height: 32px;
+	float: left;
+	margin-right: 10px;
+}
+
+#dvMsgBox .error {
+	background: url(icon-error.gif) no-repeat;
+}
+
+#dvMsgBox .info {
+	background: url(icon-info.gif) no-repeat;
+}
+
+#dvMsgBox .warning {
+	background: url(icon-warning.gif) no-repeat;
+}
+
+#dvMsgBox .clear {
+	clear: both;
+}
+
+#dvMsgBox .height {
+	height: 5px;
+	line-height: 10px;
+}
+
+#ShowBolightBox {
+	display: none;
+	-moz-opacity: 0.5;
+	filter: alpha(opacity =     50);
+	opacity: 0.5;
+	background-color: #000000;
+	z-index: 100;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+}

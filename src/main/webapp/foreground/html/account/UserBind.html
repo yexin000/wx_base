@@ -1,0 +1,425 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/pageparams.js"></script>
+		<script type="text/javascript">
+			Pageparams.postRequest('page');
+		</script>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		
+		<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/user_bind.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">
+			
+			var code="";
+			$(document).ready(function(){
+				insert("账号关联");
+				addBut();
+			
+				//getOpenId(getQueryString("code"));
+				//getBindedInfo();
+				$("#home_content").css("display","block");
+				
+				ProgressBar.init();
+				ProgressBar.show();
+				token = getCookie("token");
+				if(token == null){
+					code = unescape(getQueryString("code"));
+					getOpenId(code);
+				}else{
+					getBindedInfoByToken(token);
+				}
+				
+				initDisplay();
+				$("#unbind_driver").click(function(){
+					//alert($(this).data("sfzmhm"));
+					role = "driver";
+					unbindDriver($(this).data("sfzmmc"),$(this).data("sfzmhm").substring(1));
+			    });
+				
+				$("#unbind_student").click(function(){
+					//alert($(this).data("sfzmhm"));
+					role = "student";
+					unbindDriver($(this).data("sfzmmc"),$(this).data("sfzmhm").substring(1));
+			    });
+					
+			});
+				
+			function initDisplay(){
+				//$("#vehicle").css("background-color","#F8A114");
+				$("#driver_home").hide();
+				$("#student_home").hide();
+				$("#vehicle_home").hide();
+			}
+				
+			function getQueryString(name) {
+			    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			    var r = window.location.search.substr(1).match(reg);
+			    if (r != null) {
+					return unescape(r[2]);
+				} 
+				return null;
+			}
+			    
+			function ToUrl(x){
+				window.location.href=x+'?token='+escape(token)+'&bindrole='+escape(bindRole)+'&vehicleNum='+escape(vehicleNum);
+			}	
+		</script>
+		
+		<style type="text/css">
+
+         .left{
+              text-align: right;
+              padding:5px;
+         }
+         .right{
+              text-align: left;
+              padding:5px;
+         }
+		.selecter ul{
+			list-style:none;
+			height: 40px;
+		}
+			
+		.selecter li{
+			
+			float:left;
+			width: 50%;
+			background:#CCC;
+			line-height:40px;
+			text-align:center;
+		}
+			
+		.ul-li-one {
+			background-color: #f1f1f1;
+			color: #fe0002;
+			height: 40px;
+		}
+			
+		.li-one-div1 {
+			float: left;
+			font-size: 18px;
+			font-weight: bold;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			margin-left: 10px;
+		}
+			
+		 #vehicle_home table tr td, #driver_home table tr td,#student_home table tr td{
+		 	border-bottom:#ccc solid 1px; 
+		 	line-height:30px;}
+		 
+		 table tr  .left{
+		 	text-align: right;
+            	padding-right:5px;
+             	width:40%; 
+		  	color: #333;
+		 }
+		 
+		 .left-text{
+		 	font-weight: 700;
+		 	font-size: 16px;
+		 	color: #28a5e5;
+		 	padding: 5px 10px 0 10px;
+		 }
+		 
+		 table tr  .right{
+		 	text-align: left;
+             padding:5px;
+             color: #333;
+		 
+		 }
+		 
+		.inputBtn{
+			background:#fe9900;
+			border-radius: .25em;
+			-webkit-border-radius: 0.25em;
+			color:#fff;
+			font-weight:bold;
+			padding: .5em 0;
+			font-size: 1.0em;
+			margin:0.5em 0;
+			width: 100%;}
+	    button.inputBtn:hover{
+			box-shadow:none;
+			background:#df8e0b;}
+		
+		.addImg{
+			position:fixed;
+			top:.45em;
+			right:.25em;
+		}
+		</style>
+	</head>
+
+	<body>
+		<div data-role="page" data-theme="s" tabindex="0" id='page'>
+			<!-- 未绑定的跳转div -->
+			<div data-role="none" style="display: none;padding:3em 8px 0px;" id="unbind">
+				<p style="padding-left: 10px; padding-top: 20px; font-size: 26px; font-weight: bold; color: #797979; font-family: Arial, Lucida Grande, Verdana, Microsoft YaHei, hei">
+						您好，微信用户
+					</p>
+					<br/>
+					<div style="font-size: 16px;">
+					<p style="text-indent: 2em;"><label>已有机动车？</label></p>
+						<p style="text-indent: 2em;color: #060606">若须办理、查询机动车相关业务、信息，请点击'帐号绑定'选择'绑定机动车'！</p>
+					<p style="text-indent: 2em;"><label>已有驾驶证？</label></p>
+						<p style="text-indent: 2em;color: #060606">若须办理、查询驾驶证相关业务、信息，请点击'帐号绑定'选择'绑定驾驶证'！</p>
+					<p style="text-indent: 2em;"><label>您还是学员？</label></p>
+						<p style="text-indent: 2em;color: #060606">若您要在微信平台上预约驾驶证考试，请点击'帐号绑定'选择'绑定学员'！</p>
+					</div>
+				<br/>
+				<div><input data-role="none" class="inputBtn" type="button" value="绑定帐号" onclick="ToUrl('/html/account/addBind.html')"> </div>
+			</div>
+		
+			
+			<!-- <div class = "selecter">
+			<ul>
+			
+			     <li id="vehicle" style="color:#333;">机动车</li>
+			     <li id= "driver" style="color:#333;">驾驶人</li>
+			</ul>
+			
+			</div> -->
+			<div style="margin-top: 3.5em;">
+			
+			<div  id="driver_home">
+			
+			<div id = "driver_msg" class = "ul-li-one">
+			
+			<table align="center" data-theme="a" style="width: 100%;" >
+						<tbody>
+							
+							<tr >
+								<td class="left-text">
+										<img style="float:left; height: 33px;width: 33px;" src="/weixin/foreground/img/card.png"></img>
+										<label style="padding-left: 40px;">驾驶证</label>
+								</td>
+							</tr>
+							
+						</tbody>
+			</table>
+		
+		</div>
+			
+			
+			<div id="driver_info" style="border-style: solid;border-radius: 3px;border-width:1px;border-color: #ccc #ccc #ccc #ccc;width:96%;margin-left: 2%;margin-top:10px;">
+			<table align="center" style="width: 100%;">
+						<tbody>
+							<tr >
+								<td class="left">
+									姓名：
+								</td>
+								<td class="right" id = "txt_xm">
+									
+								</td>
+							</tr>
+							<tr >
+								<td class="left">
+									手机号码：
+								</td>
+								<td class="right" id = "txt_sjhm_driver">
+									
+								</td>
+							</tr>
+							<tr >
+								<td class="left">
+									驾驶证号：
+								</td>
+								<td class="right" id = "txt_jszh">
+									
+								</td>
+							</tr>
+							<tr >
+								<td class="left">
+									状态：
+								</td>
+								<td class="right" id = "txt_zt">
+									
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+					
+					<div class="center">
+					  <button id="unbind_driver" style="width: 40%;margin-left: 30%;"> 解绑信息</button>
+					
+					</div>
+					
+					</div>
+			
+			</div>
+			
+			
+			<div  id="student_home">
+			
+			<div id = "student_msg" class = "ul-li-one">
+			
+			<table align="center" data-theme="a" style="width: 100%;" >
+						<tbody>
+							
+							<tr >
+								<td class="left-text">
+									<img style="float:left; height: 33px;width: 33px;" src="/weixin/foreground/img/student.png"></img>
+									<label style="padding-left: 40px;">学员</label>
+								</td>
+							</tr>
+							
+						</tbody>
+			</table>
+		
+		</div>
+			
+			
+			<div id="student_info" style="border-style: solid;border-radius: 3px;border-width:1px;border-color: #ccc #ccc #ccc #ccc;width:96%;margin-left: 2%;margin-top:10px;">
+			<table align="center" style="width: 100%;">
+						<tbody>
+							
+							<tr >
+								<td class="left">
+									姓名：
+								</td>
+								<td class="right" id = "txt_student_xm">
+									
+								</td>
+							</tr>
+							<tr >
+								<td class="left">
+									手机号码：
+								</td>
+								<td class="right" id = "txt_student_sjhm">
+									
+								</td>
+							</tr>
+							<tr >
+								<td class="left">
+									身份证明号码：
+								</td>
+								<td class="right" id = "txt_student_sfzh">
+									
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+					
+					<div class="center">
+					  <button id="unbind_student" style="width: 40%;margin-left: 30%;"> 解绑信息</button>
+					
+					</div>
+					
+					</div>
+			
+			</div>
+			
+	<div  id="vehicle_home" style="margin-top: 10px;">
+			
+		<div id = "vehicle_msg" class = "ul-li-one">
+			
+			<table align="center" data-theme="a" style="width: 100%;" >
+						<tbody>
+							
+							<tr >
+								<td class="left-text">
+									<img style="float:left; height: 25px;width: 33px;" src="/weixin/foreground/img/car.png"></img>
+									<label style="padding-left: 40px;">机动车</label>
+								</td>
+							</tr>
+							
+						</tbody>
+			</table>
+		
+		</div>
+		
+			<div id="vehicles" data-theme="s"></div>
+			 <!-- <div style="border-style: solid;border-radius: 3px;border-width:1px;border-color: #ccc #ccc #ccc #ccc;width:96%;margin-left: 2%;">
+			<table align="center" data-theme="a" style="width: 100%;" >
+						<tbody>
+							
+							<tr >
+								<td class="left">
+									所有人：
+								</td>
+								<td class="right">
+									张三
+								</td>
+							</tr>
+							<tr >
+								<td class="left">
+									手机号码：
+								</td>
+								<td class="right" id = "txt_sjhm_vehicle">
+									13888888888
+								</td>
+							</tr>
+							<tr >
+								<td class="left">
+									号牌种类：
+								</td>
+								<td class="right">
+									小型汽车
+								</td>
+							</tr>
+							<tr >
+								<td class="left">
+									号牌号码：
+								</td>
+								<td class="right">
+									浙B88888
+								</td>
+							</tr>
+							<tr >
+								<td class="left">
+									车辆识别代号：
+								</td>
+								<td class="right">
+									888888
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+					
+					
+					<div class="center">
+					  <button class="center" style="width: 40%;margin-left: 30%;"> 解绑信息</button>
+					
+					</div>
+					</div> --> 
+			</div>
+				
+			</div>
+			
+			<br/>
+			<br/>
+			
+		</div>
+	</body>
+</html>

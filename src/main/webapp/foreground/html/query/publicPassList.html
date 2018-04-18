@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+		
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/check_browser.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<style type="text/css">
+			.ul-li-one {
+				background-color: #f1f1f1;
+				color: #fe0002;
+			}
+			
+			.li-one-div1 {
+				float: left;
+				font-size: 16px;
+				font-weight: bold;
+				margin-top: 10px;
+				margin-bottom: 10px;
+				margin-left: 10px;
+			}
+			
+			.li-one-div2 {
+				float: right;
+				margin-right: 3%;
+				padding-top: 10px;
+			}
+			
+			.div-p {
+				float: left;
+				margin-top: 10px;
+				font-size: 16px;
+			}
+			
+			.div-img {
+				width: 20px;
+				height: 20px;
+				margin-top: 12px;
+			}
+			.buttonStyle{
+				color:#369;
+				border: 1px #369 solid;
+				width: 60px;
+				height: 22px;
+				border-radius:3px;
+			}
+			
+			.buttonStyle:HOVER {
+				background-color: #FFFFCC;
+			}
+		</style>
+	
+		<script type="text/javascript">
+			var arrayPassno = new Array(); //通行证编号列表
+			
+			$(document).ready(function(){
+				addHead("公共通行证信息")
+				editHead();
+			
+				ProgressBar.init();
+				
+				var loginid = unescape(GetQueryString("loginid"));
+				var params = "{\"loginid\":\"" + loginid + "\"" + "}";
+				ProgressBar.show();
+				var result = WebServiceUtil.getPublicPassList(params, callback);
+			});
+			
+			function callback(msg) {
+				if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+					var count = head.rownum;
+					var message = head.message;
+					
+					if(head.code == 1) {
+						var body = jsonObject.body;
+						var listContent = document.getElementById("listContent");
+						for(var i = 0; i < count; i++) {
+							var passno = body[i].passno;
+							arrayPassno.push(passno);
+							
+							var params = "{\"passno\":\"" + passno + "\"" + "}";
+							var result = WebServiceUtil.getPassDetail(params, detailCallback);
+						}
+					} else {
+						Showbo.Msg.alert(head.message);
+					//	eval($("#tmpt").text($.Prompt(head.message)));
+					}
+				}
+			}
+			
+			function detailCallback(msg) {
+				if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+					var count = head.rownum;
+					var message = head.message;
+					if(head.code == 1) {
+						var body = jsonObject.body;
+						for(var i = 0; i < count; i++) {
+							var hpzl = decode(body[i].hpzl);
+							var hphm = body[i].hphm;
+							var qsrq = body[i].qsrq;
+							var qszz = body[i].qszz;
+							var passno = body[i].passno;
+							var xh =  body[i].xh;
+							
+							var html = "";
+							html = '<ul id="' + passno + '">'
+									+ '<li class="ul-li-one" >'
+									+ '<div class="li-one-div1" style="">'
+									+ 	'<p>通行证号：' + passno + '</p>'
+									+ '</div>'
+									+ '<div class="li-one-div2"' + 'id=' + xh + ' onclick="showUnitInfo(this)">'
+									+ 	'<img src="/weixin/foreground/img/delete.png"></img>'
+									+ '</div>'
+									+ '<div class="clear"></div>'
+									+ '<hr color="#cccccc" size="1px;">'
+									+ '</li>'
+									+ '<li style="background-color: #ffffff;">'
+									+ '<div	style="color: #000000; padding-top: 10px; padding-left: 10px; padding-bottom: 10px;">'
+									+ '<p style="margin-bottom: 2px; margin-top: 2px;">'
+									+ '号牌信息：' + hpzl + '  ' + hphm + '</p>'
+									+ '<p style="margin-bottom: 2px; margin-top: 2px;">'
+									+ '起始时间：' + qsrq + '</p>'
+									+ '<p style="margin-bottom: 2px; margin-top: 2px;">'
+									+ '终止时间：' + qszz + '</p>' + '</div>'
+									+ '<hr color="#cccccc" size="1px;">'
+									+ '</li>'
+									+ '</ul>';
+									
+							$("#listContent").append(html);
+						}
+					} else {
+						Showbo.Msg.alert(head.message);
+						//eval($("#tmpt").text($.Prompt(head.message)));
+					}
+				}
+				ProgressBar.hide();
+			}
+			
+			function addPublicPass() {
+				var loginid = unescape(GetQueryString("loginid"));
+				ToUrl('./addPublicPass.html?loginid=' + escape(loginid));
+			}
+			function ToUrl(x){
+				window.location.href=x;
+			}
+			
+			function GetQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return unescape(r[2]);
+				return null;
+			}
+			function showUnitInfo(object){
+	           var screenWidth = $(window).width();
+	           //当前窗口宽度  
+	           var screenHeight = $(window).height();
+	           //当前窗口高度             
+	           $("#yinying").css({"display":"block",
+	            					"position": "fixed",
+	            					"background": "#000",
+	            					"z-index": "1001",
+	            					"-moz-opacity": "0.5",
+	            					"opacity":".50",
+	            					"filter": "alpha(opacity=50)",
+	            					"width":screenWidth,
+	            					"height":screenHeight
+	           });   
+	           $("#dialog").css({"display":"block"});   
+	           $("#dialog").attr("name",object.id);      
+			}
+			
+			//弹框的取消效果
+			function hide(){
+				$("#yinying").css({"display":"none"});
+				$("#dialog").css({"display":"none"});
+			}
+			
+			//弹框确认删除
+			function removeNote(){
+				$("#yinying").css({"display":"none"});
+				$("#dialog").css({"display":"none"});
+				
+				var xh = $("#dialog").attr("name");
+				var params = "{\"xh\":\"" + xh + "\"" + "}";
+				ProgressBar.show();
+				var result = WebServiceUtil.deletePassMessage(params, deleteCallback);
+			}
+			
+			function deleteCallback(msg) {
+				if (msg != null) {
+					var jsonObject = eval("("+msg+")");
+					var head = jsonObject.head;
+					
+					if(head.code == 1) {
+						Showbo.Msg.alert("删除成功");
+						//eval($("#tmpt").text($.Prompt("删除成功！")));
+						setTimeout('document.location.reload()',3000);
+					} else {
+						Showbo.Msg.alert(head.message);
+						//eval($("#tmpt").text($.Prompt(head.message)));
+					}
+				}
+				ProgressBar.hide();
+			}
+		</script>
+	</head>
+
+	<body>
+	<!-- 弹窗遮罩 -->
+	 <div style=" display:none;" id="yinying"></div>
+	 <div class="clear"></div>   
+		
+		<div id="listContent" class="content" style="padding: 0 0 1.5em 0;">
+			
+		</div>
+		
+		<div id="dialog" style="border-radius:5px; display:none; width: 200px; height:150px; border:5px #87d1f7 solid; margin-top: -75px;margin-left:-100px;z-index: 1002;top:50%;left: 50%;position: fixed;" >
+	 		<ul>
+	 			<li style="background-color: #87d1f7;color: #ffffff">
+	 				<p><img src="/weixin/foreground/img/flag.png"></img>提示</p>
+	 			</li>
+	 			<li style="background-color:#ffffff; padding-top: 35px; padding-bottom:34px; text-align: center;"><p>您确定要删除该条记录吗？</p></li>
+	 			<hr size="1px;" color="#cccccc"/>
+	 			<li style="background-color:#f6f6f6; ">
+	 			<div id="_DialogButtons_0" style="padding: 8px 20px; text-align: center; background-color:#f6f6f6;">
+	 				<div style="height:22px; float: left;width: 50%;" >
+	 					<input class="buttonStyle" type="button" value="确认" onclick="removeNote()">
+	 				</div>
+	 				<div style="height:22px; float: right;width: 50%;">
+	 					<input class="buttonStyle" type="button" value="取消" onclick="hide();">
+	 				</div> 
+	 			
+	 			<div class="clear"></div>
+	 			</div>
+	 			</li>
+	 		</ul>
+	 	</div>
+		
+	</body>
+</html>
+

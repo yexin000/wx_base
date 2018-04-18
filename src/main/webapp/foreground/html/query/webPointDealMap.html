@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">
+		var check = 0;
+		var bh ;
+		var src;
+		
+		var lat;
+		var lng;
+		var dwmc = "";
+	$(document).ready(function() {
+		addHead("办理点详情"); 
+		
+		bh = unescape(GetQueryString("bh"));
+		src = unescape(GetQueryString("src"));
+		var params = "{\"id\":\""+bh+"\"}";
+		var result = WebServiceUtil.webPointDealMap(params,returnBack);
+
+	});
+	
+	function returnBack(msg){
+		var jsonObj = eval("("+msg+")");
+		var head = jsonObj.head;
+		if (head.code != 1) {
+			Showbo.Msg.alert("服务器暂未响应，请稍候再试");
+			return ;
+		}
+		var body = jsonObj.body;
+		for(var i in body){
+			lat = body[i].bd_lat;
+			lng = body[i].bd_lng;
+			dwmc = body[i].dwmc;
+			
+			$("#pic").attr("src",src);
+			$("#dwmc").text(body[i].dwmc);
+			$("#dh").html(body[i].lxdh);
+			$("#dz").html(body[i].lxdz);
+			$("#gzsj").html(body[i].gzsj);
+			$("#gjlx").html(body[i].gjxl);
+			$("#sm").html(body[i].dwms);
+			
+			var ywlx = (body[i].ywlx).split("#");
+			for (var j in ywlx){
+				ywlxmc = ywlx[j].split(",");
+				for(var k in ywlxmc){
+					if (k == 0) {
+						$("#ywfw").append("<li id=\"ywlx"+j+""+k+"\" data-ywlxdm=\""+(ywlxmc[k].split("="))[0]+"\" class=\"li-trade\" onclick=\"showywmc(this)\"><div id=\"ywkind\" class=\"li-trade1\">"
+						+(ywlxmc[k].split("="))[1]
+						+"</div><img id=\"img"+j+""+k+"\" class=\"trade-img\" src='/weixin/foreground/img/arrow3.png'></img>"
+						+"<div class=\"clear\"></div></li><hr size=\"1\" color=\"#b1c2c9\" style=\"margin: 0px;\"/>"
+						+"<div id=\"mc-ywlx"+j+""+k+"\" style=\"display:none;\"></div>");
+					}
+					if(k != 0){
+						$("#mc-ywlx"+j+"0").append( "<li id=\"ywmc"+j+""+k+"\" data-ywmcdm=\""+(ywlxmc[k].split('='))[0]+"\" class='trade-kind' onclick=\"getdm(this)\"><div class='trade-kind1'>"
+							 +(ywlxmc[k].split('='))[1]
+							 +"</div><img class='trade-img' src='/weixin/foreground/img/arrow3.png'></img>"
+							 +"<div class='clear'></div></li><hr size='1' color='#b1c2c9' style='margin: 0px;' />");
+					}
+					
+				}
+			}
+		}
+		$("div.content").css("display","block");
+	}
+	
+	var ywlxdm = "";
+	function showywmc(e){
+		var fId = e.id;
+		var imgId = $(e).find("img").attr("id");
+		ywlxdm = $("#"+fId).attr("data-ywlxdm");
+		if (check == 0) {
+			check = 1;
+			$("#mc-"+e.id).css("display","block");
+			$("#"+imgId).attr("src","/weixin/foreground/img/arrow2.png");
+		} else {
+			check = 0;
+			$("#mc-"+e.id).css("display","none");
+			$("#"+imgId).attr("src","/weixin/foreground/img/arrow3.png");
+		}
+	}
+	
+	function getdm(e){
+		var sId = e.id;
+		var ywmcdm = $("#"+sId).attr("data-ywmcdm");
+		
+		window.location.href='/html/guide/businessProcesses.html?ywlx='+escape(ywlxdm)+'&ywdm='+escape(ywmcdm)+'&dwmc='+escape(dwmc);
+		
+	}
+	
+	function showMap(){
+		var lxdh = $("#dh").text();
+		var lxdz = $("#dz").text();
+		var mc = $("#dwmc").text();
+		window.location.href='./MapDisplay.html?lat='+escape(lat)+'&lng='+escape(lng)+'&add='+escape(lxdz)+'&lxdh='+escape(lxdh)+'&cgsmc='+escape(mc);
+	}
+	
+	function GetQueryString(name) {
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+   		var r = window.location.search.substr(1).match(reg);
+   		if(r!=null)return  unescape(r[2]); return null;
+	}
+</script>
+
+<style type="text/css">
+	.title-p{
+		padding: 0px 0;
+	}
+	.title-img,.li-item1,.trade-div,.li-trade1,.trade-kind1{
+		float: left;
+	}
+	.li-item,.li-trade{
+		background-color: #ffffff;
+	}
+	.trade-kind{
+		background-color: #F5F5F5;
+	}
+	
+	.li-item{
+		padding: 18px 0; 
+	}
+	.li-item1,.trade-div{
+		width: 30%; 
+	}
+	.li-item1{
+		text-align: right;
+	}
+	
+	.li-item2{
+		margin-left: 30%;
+	}
+	.trade,.li-trade,.trade-kind{
+		padding: 18px 3%;
+	}
+	.trade-kind1{
+		padding-left: 4%;
+	}
+	.trade-img{
+		width: 20px; height: 20px; position: absolute; right: 2%;
+	}
+</style>
+
+	</head>
+
+	<body style="background-color: #e9e8e8">
+		<div class="content" style="padding: 0px; display: none;">
+
+			<ul>
+				<li onclick="showMap();" class="title">
+					<div class="title-img">
+						<img id="pic" src="/weixin/foreground/img/icon1_0.png" style="width: 80px; height: 80px; margin-top: 8px; margin-left: 12px;"></img>
+					</div>
+					<div class="title-p">
+						<p id="dwmc" style="padding: 25px 10px 0px 120px;">
+							杭州交警驻下沙东交通管理服务站
+						</p>
+						<p style="top: 128px;right:0px;position: absolute;text-align: center;">
+							<img style="height: 15px;" src="/weixin/foreground/img/an.png"></img> 
+						</p>
+					</div>
+					<div class="clear"></div>
+
+				</li>
+				<hr size="1" color="#b1c2c9" style="margin: 0px;" />
+
+
+				<li class="li-item">
+					<div class="li-item1">
+						电 话：
+					</div>
+					<div id="dh" class="li-item2">
+						0571-86744708
+					</div>
+					<div class="clear"></div>
+				</li>
+				<hr size="1" color="#b1c2c9" style="margin: 0px;" />
+
+				<li class="li-item">
+					<div class="li-item1">
+						地 址：
+					</div>
+					<div id="dz" class="li-item2">
+						三等奖阿萨德号圣诞卡圣诞节啊书法家可是电话卡斯柯达晶啊看
+					</div>
+					<div class="clear"></div>
+				</li>
+				<hr size="1" color="#b1c2c9" style="margin: 0px;" />
+
+				<li class="li-item">
+					<div class="li-item1" >
+						工作时间：
+					</div>
+					<div id="gzsj" class="li-item2" >
+						三等奖阿萨德号圣诞卡圣诞节啊书法家可是电话卡斯柯达晶啊看
+					</div>
+					<div class="clear"></div>
+				</li>
+				<hr size="1" color="#b1c2c9" style="margin: 0px;" />
+
+				<li class="li-item">
+					<div class="li-item1">
+						公交路线：
+					</div>
+					<div id="gjlx" class="li-item2">
+						三等奖阿萨德号圣诞卡圣诞节啊书法家可是电话卡斯柯达晶啊看
+					</div>
+					<div class="clear"></div>
+				</li>
+				<hr size="1" color="#b1c2c9" style="margin: 0px;" />
+
+				<li class="li-item">
+					<div class="li-item1">
+						说 明：
+					</div>
+					<div id="sm" class="li-item2"></div>
+					<div class="clear"></div>
+				</li>
+				<hr size="1" color="#b1c2c9" style="margin: 0px;" />
+
+			</ul>
+			
+			
+			
+			
+
+			<ul>
+				<li class="trade">
+					<div class="trade-div">
+						业务范围：
+					</div>
+					<div class="clear"></div>
+				</li>
+				<hr size="1" color="#b1c2c9" style="margin: 0px;" />
+			</ul>
+
+			
+			<ul id="ywfw"></ul>
+			
+		</div>
+		<div class="clear"></div>
+		<br/><br/>
+	</body>
+</html>
+

@@ -1,0 +1,441 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+	--><title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<base href=".">
+	<meta name="viewport"
+		content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+	
+	<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+	<link rel="stylesheet" href="/weixin/foreground/css/main.css">
+	<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+	<link rel="stylesheet" href="/weixin/foreground/css/progressbar.css">
+	<link rel="stylesheet" href="/weixin/foreground/css/myAlert.css">
+	<link rel="stylesheet" href="/weixin/foreground/css/mycss.css">
+	
+	<script src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+	<script src="/weixin/foreground/js/jquery.mobile-1.4.3.min.js"></script>
+	
+	<script type="text/javascript" src="/weixin/foreground/js/writedwr.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/spin.min.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/progressbar.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/check_data.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/hpzl.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/myAlert.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/md5.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/getBindInfo.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/uploadpic.js"></script>
+	<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+	<!-- 引入 jQuery (使Lightbox正常工作) -->
+	<script type="text/javascript" src="/weixin/foreground/js/jquery-1.3.2.min.js"></script>
+	<!-- 引入 Lightbox (压缩文件) -->
+	<script type="text/javascript" src="/weixin/foreground/js/jquery.lightbox.min.js"></script>
+	
+	<script type="text/javascript">
+	var code;
+	var bzxx;
+	var picCount = 0;
+	var xh = "";
+	var base1 = "";
+	var base2 = "";
+	var base3 = "";
+	$(document).ready(function() {
+		insert("补领号牌");
+	
+			ProgressBar.init();
+			ProgressBar.show();
+			token = getCookie("token");
+			$("#hidetd").hide();
+			$("#img3").hide();
+
+			var params = '{"token":"TOKEN","sfzmmc":"SFZMMC","sfzmhm":"SFZMHM"}';
+			params = params.replace("TOKEN",getQueryString("zscgToken"))
+					.replace("SFZMMC",getQueryString("SFZMMC")).replace("SFZMHM",getQueryString("SFZMHM"));
+			var info = WebServiceUtil.selectBindedCar(params,backInfo);
+
+			$("input#commit").click(
+				
+				function() {
+					var hpzl = $("#hphm").find("option:selected").attr("data-hpzl");
+					var hphm = $("#hphm").find("option:selected").attr("data-hphm");
+					var sjhm = $("#sjhm").val();//
+					var yzbm = $("#yzbm").val();//
+					var yhjg = $("#yhjg option:selected").val();
+			/**		if(base1 == "") {
+						Showbo.Msg.alert("请上传身份证正面照");
+						return;
+					}
+					if(base2 == "") {
+						Showbo.Msg.alert("请上传身份证反面照");
+						return;
+					}  */
+				/**	if (yhjg == '1外地用户') {
+						//$("#hidetd").css("diaplay","block");
+						var zzzh = $("#zzzh").val();
+						if (zzzh == "") {
+							Showbo.Msg.alert("请输入正确的暂住证号");
+							return ;
+						}
+						if(base3 == "") {
+							Showbo.Msg.alert("请上传暂住证照");
+							return;
+						}
+					} */
+					
+					if (validate_vehicle(hpzl, hphm, sjhm, yzbm) == 0)return;
+					var charge = carStyle(hpzl);
+					switch(charge){
+						case 'car':
+						$("font").html('100');
+						break;
+						case 'motor':
+						$("font").html('70');
+						break; 
+						case 'other':
+						$("font").html('50');
+						break;
+					}
+					showUnitInfo(this);
+				});
+		});
+		window.onload=function(){
+			initPhoto();
+		}
+
+		function validate_vehicle(hpzl, hphm, sjhm, yzbm ,zzzh) {
+			
+			
+			if (checkHphm(hpzl, hphm) == 0)
+				return 0;
+			if (isValidMobileNum(sjhm) == 0)
+				return 0;
+			if (isValidPostalCode(yzbm) == 0)
+				return 0;
+			//if (isValidTelNum(lxdh) == 0)
+			//	return 0;
+			return 1;
+		};
+	
+		function callback(msg) {
+			ProgressBar.hide();
+			var jsonObject = eval("(" + msg + ")");
+			if (jsonObject.head.code != 1) {
+				Showbo.Msg.alert(jsonObject.head.message);
+			//	eval($("#tmpt").text($.Prompt(jsonObject.head.message)));
+				return;
+			}
+			var tips = jsonObject.head.message.split("#");
+			Showbo.Msg.alert(tips[0]);
+			/*xh = tips[1];
+			if(xh != "") {
+				var yhjg = $("#yhjg option:selected").val();
+				//if (yhjg == '1外地用户') {
+				//	WebServiceUtil.jobSavePic(xh, base1+"&"+base2+"&"+base3, "H", saveCallback);
+				//} else {
+					WebServiceUtil.jobSavePic(xh, base1+"&"+base2, "H", saveCallback);
+			//	}
+			}*/
+		}
+/**		function saveCallback(msg) {
+			
+		}*/
+	
+		function backInfo(msg){
+			ProgressBar.hide();
+			var infoObj = eval("(" + msg + ")"); 
+			if (infoObj.head.code != 1) {
+				Showbo.Msg.alert(infoObj.head.message);
+				Showbo.todo = function(){
+					window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe1514fa969a3bc65&redirect_uri=http%3A%2F%2Fjhwxv2.test.hzcdt.com%2Fweixin%2Fforeground%2Fhtml%2Fvehicle_admin%2FWxZscgRegister.html&response_type=code&scope=snsapi_base&state=0#wechat_redirect";
+				};
+				return;
+			} else {
+				if(infoObj.head.rownum <= 0){
+					Showbo.todo = function(){
+						window.history.go(-2);
+					};	
+				}
+			}
+			var body = infoObj.body;
+			for ( var i in body) {
+				$("#hphm").append("<option value=\""+i+"\" data-hpzl=\""+body[i].hpzl+"\" data-hphm=\""+body[i].hphm+"\" data-sjhm=\""+body[i].sjhm+"\" data-yzbm=\""+body[i].yzbm1+"\" data-yjdz=\""+body[i].zsxxdz+"\">" 
+				+ decode(body[i].hpzl)
+					+ ":浙" + body[i].hphm + "</option>");
+			}
+			changeInfo();
+			document.getElementsByTagName('span')[0].innerHTML = $("#hphm").find(
+					"option:selected").text();
+		}
+		
+		function changeInfo() {
+			$("#sjhm").val($("#hphm").find("option:selected").attr("data-sjhm"));
+			$("#lxdz").text($("#hphm").find("option:selected").attr("data-yjdz"));
+			$("#yzbm").val($("#hphm").find("option:selected").attr("data-yzbm"));
+		}
+		
+     	function showInput(){
+			var yhjg = $("#yhjg option:selected").val();
+			 /**	if (yhjg == '1外地用户') {
+				$("#hidetd").show();
+				$("#img3").show();
+				$("#pic_tips").html("(请上传附本人签字身份证正反面照及暂住证照)");
+			}else {
+				$("#hidetd").hide();
+				$("#img3").hide();
+				$("#pic_tips").html("(请上传附本人签字身份证正反面照)");
+			}*/
+		}
+	
+		function ToUrl(x) {
+			location.href = x;
+		}
+		
+		function showUnitInfo(object){
+           var screenWidth = $(window).width();
+           //当前窗口宽度  
+           var screenHeight = $(window).height();
+           //当前窗口高度             
+           $("#yinying").css({"display":"block",
+            					"position": "fixed",
+            					"background": "#000",
+            					"z-index": "1001",
+            					"-moz-opacity": "0.5",
+            					"opacity":".50",
+            					"filter": "alpha(opacity=50)",
+            					"width":screenWidth,
+            					"height":screenHeight
+           });   
+           $("#dialog").css({"display":"block"});   
+           $("#dialog").attr("name",object.id);      
+		}
+		//弹框的取消效果
+		function hide(){
+			$("#yinying").css({"display":"none"});
+			$("#dialog").css({"display":"none"});
+		}
+		
+		//弹框确认
+		function comfirmDeal(){
+			$("#yinying").css({"display":"none"});
+			$("#dialog").css({"display":"none"});
+					var hpzl = $("#hphm").find("option:selected").attr("data-hpzl");
+					var hphm = $("#hphm").find("option:selected").attr("data-hphm");
+					var sqsx = "A";//
+					var sqyy = $("#sqyy").val();//
+					var sjhm = $("#sjhm").val();//
+					var yzbm = $("#yzbm").val();//
+					var lxdz = $("#lxdz").val();//
+					var sjly = "C";//
+					var sqr = getCookie("openId");
+					//var sqrip = ILData[0];//
+					var sqrip = "192.168.0.1";
+					var bz = $("#bz").val();
+					var yhjg = $("#yhjg option:selected").val();
+				//	if (yhjg == '1外地用户') {
+				//		var zzzh = $("#zzzh").val();
+				//	}else{
+						var zzzh = "";
+				//	}
+					
+					if(bz == ""){
+						if(zzzh == ""){
+							bzxx = "#"+yhjg+":";
+						}else{
+							bzxx = "#"+yhjg+":"+zzzh;
+						}
+					}else {
+						if(zzzh == ""){
+							bzxx = bz+"#"+yhjg+":"
+						}else{
+							bzxx = bz+"#"+yhjg+":"+zzzh;
+						}
+					}
+			
+			var params = "{\"token\":\"" + getQueryString("zscgToken") + "\""
+						+ ",\"hpzl\":\"" + hpzl + "\""
+						+ ",\"hphm\":\"" + hphm + "\""
+						+ ",\"lxdh\":\"" + sjhm + "\""
+						+ ",\"sqsx\":\"" + sqsx + "\""
+						+ ",\"zsxxdz\":\"" + lxdz + "\""
+						+ ",\"yzbm\":\"" + yzbm + "\""
+						+ ",\"sjly\":\"" + sjly + "\""
+						+ ",\"sqyy\":\"" + sqyy + "\""
+						+ ",\"bz\":\"" + bzxx + "\""
+						+ ",\"sqrip\":\"" + sqrip + "\""
+						+ ",\"sqr\":\"" + sqr + "\"" + "}";
+						ProgressBar.show();
+			var result = WebServiceUtil.exchangeFlapper(params, callback);
+			
+		}
+		
+		$(document).bind("mobileinit", function(){   
+    		$.mobile.page.prototype.options.keepNative = "select";   
+		});
+	</script>
+</head>
+
+<body>
+	<div style="display:none;" id="yinying"></div>
+	<div data-role="page" data-theme="s" id="page">
+		<div class="content" role="main">
+			<table  width="100%" border="0" cellspacing="0" cellpadding="0" class="TestTable">
+						<tbody>
+							<tr>
+								<td>车牌信息
+									<div class="inputOutL">
+									<select data-role="none" class="inputSelect" name="hphm" id="hphm"
+									onchange="changeInfo();">
+	
+									</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<!--<td><label> 补领原因： </label></td>
+								--><td>
+									补领原因
+									<div class="inputOutL">
+										<select data-role="none" class="inputSelect" id="sqyy" name="sqyy">
+											<option value="A2">遗失两块</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<!--<td >
+									<div>
+										<label>
+											身份证：
+										</label>
+									</div>
+								</td>
+								--><td>
+									身份证
+									<div class="inputOutL">
+										<select data-role="none" class="inputSelect" id="yhjg" onchange="showInput()">
+											<option value="0本地用户">本地</option>
+									   <!-- <option value="1外地用户">外地</option> -->
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr id="hidetd">
+								<!--<td><label> 暂住证号： </label></td>
+								--><td>暂住证号
+									<div class="inputOutL">
+										<input data-role="none" type="text" id="zzzh" placeholder="请输入暂住证号码">
+									</div>
+								</td>
+									
+							</tr>
+							
+							<tr>
+								<!--<td><label> 手机号码： </label></td>
+								--><td>
+									手机号码<div class="inputOutL">
+										<input class="inputText" data-role="none" type="text" name="sjhm" id="sjhm" readonly="readonly"
+									placeholder="请输入联系电话"></div>
+								</td>
+							</tr>
+							<tr>
+								<!--<td><label> 邮政编码： </label></td>
+								--><td>邮政编码
+									<div class="inputOutL">
+										<input class="inputText" data-role="none" type="text" name="yzbm" placeholder="请输入邮政编码"
+									id="yzbm"></div></td>
+							</tr>
+							
+							<tr>
+								<!--<td><label> 邮寄地址： </label></td>
+								--><td>
+										邮寄地址
+									<div class="inputOutL">
+										<textarea class="textarear" data-role="none" name="lxdz" id="lxdz" placeholder="请输入邮寄地址" 
+											disabled="disabled"></textarea>
+									</div>
+									<label style="color:red; font-size: 12px;">(更改联系地址和手机号码请先办理'联系方式变更'业务)</label>
+									</td>
+							</tr>
+							
+							<tr style="display: none;">
+								<td><label> 备注： </label></td>
+								<td><textarea name="bz" id="bz" onkeyup="value=value.replace(/[#,]/g,'')" placeholder="请输入备注，可不填写"></textarea>
+								</td>
+							</tr>
+							
+							<tr >
+								<!--<td width="10%">
+									<div>
+										<label>
+											上传资料:
+										</label>
+									</div>
+								</td>
+								-->
+								<!-- <td>
+									上传资料
+								<div class="inputOutL" >
+									<div id="input-file" style="float: left; width: 70%;height: 56px;">
+										
+										<input data-role="none" style="z-index:2;position: relative;opacity: 0; width:100%;" 
+											id="file" type="file" capture="camera" accept="image/*" class="input">
+										
+										<input class="inputBtn" data-role="none" type="button" value="选择图片" style="top: -44px;position: relative;">
+											
+									</div>
+									<div style="float: right;display:none;">
+										<a href="/weixin/foreground/images/bhpyw/sfzzm.png" rel="lightbox-tour" title="身份证正面照">
+											<p style="text-decoration: underline;margin-top: 18px;">样板照片</p> --> <!--<img src="/weixin/foreground/images/help.png" title="资料模版"></img>-->
+									<!-- 	</a>
+										<a href="/weixin/foreground/images/bhpyw/sfzfm.png"
+											rel="lightbox-tour" title="身份证反面照"> </a>
+										<a href="/weixin/foreground/images/bhpyw/zzz.png"
+											rel="lightbox-tour" title="暂住证照"> </a>
+									</div>
+									<div class="clear"></div>
+									
+									<label style="color:red; font-size: 12px;" id="pic_tips">(请上传附本人签字身份证正反面照)</label>
+									<img src="" style="width: 50px; height: 50px;" id="img1"></img>
+									<img src="" style="width: 50px; height: 50px;" id="img2"></img>
+									<img src="" style="width: 50px; height: 50px;" id="img3"></img>
+								
+								</div>
+									
+								</td> -->
+							</tr>
+							
+							<tr>
+								<td colspan="2"><input data-role="none" type="button" value="申请"
+									class="inputBtn" id="commit"/></td>
+							</tr>
+						</tbody>
+					</table>
+		</div>
+	</div>
+	<div id="dialog" style="display:none; width: 220px; height:180px; margin-top: -90px;margin-left:-110px;z-index: 1002;top:50%;left: 50%;position: fixed;" >
+	 		<ul>
+	 			<li style="background-color: #f8a114;color: #ffffff; padding: 8px; font-size:16px; ">
+	 				<p style="text-align: center;"></weixin/foreground/img>提  示</p>
+	 			</li>
+ 			<li style="background-color:#ffffff; padding:29px 8px;"><p>该业务办理需要工本费<font> </font>元及15元邮寄费,确认要办理吗?</p></li>
+ 			<hr size="1px;" color="#cccccc"/>
+ 			<li style="background-color:#f6f6f6; ">
+	 			<div id="_DialogButtons_0" style="text-align: center; background-color: #f8a114;">
+	 				<div style="float: left;width: 50%;background-color: #f8a114; height: 37px;" >
+	 					<input style="border: none;" type="button" value="确 认" onclick="comfirmDeal()">
+	 				</div>
+	 				<div style="float: right;width: 50%;background-color: #cccccc; height: 37px;">
+	 					<input style="border: none;" type="button" value="取 消" onclick="hide();">
+	 				</div> 
+	 			</div>
+	 			<div class="clear"></div>
+	 		</li>
+ 		</ul>
+ 	</div>
+</body>
+</html>

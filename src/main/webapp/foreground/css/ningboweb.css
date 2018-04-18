@@ -1,0 +1,308 @@
+html,body {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+body {
+	font: 0 14px/ 1.5 Arial, "Lucida Grande", Verdana, "Microsoft YaHei",
+		hei;
+	background: #fbfbfb;
+	color: #000;
+	word-wrap: break-word;
+	-webkit-text-size-adjust: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+ol,ul,p,h1,h2,h3,h4,h5,h6,input,textarea,select {
+	padding: 0;
+	margin: 0;
+}
+
+input,textarea,select {
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	border: none;
+	outline: none;
+}
+
+ol,ul,p {
+	list-style: none;
+}
+
+input,textarea {
+	-webkit-appearance: none;
+	-webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+}
+
+::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+}
+
+a {
+	color: #666;
+}
+
+.clear:after {
+	content: '';
+	clear: both;
+	overflow: hidden;
+	height: 0;
+	display: block;
+}
+
+.fb {
+	font-weight: bold;
+}
+
+.whiteBG {
+	background: #fff;
+}
+
+.blue {
+	color: #28a5e5;
+}
+
+.red {
+	color: #f00;
+}
+
+.padLR {
+	padding: 0 .75em;
+}
+
+.right {
+	text-align: right;
+}
+
+/*-------content-------*/
+.content {
+	padding: 0 0.5em 7em;
+	margin: 3.8em 0 0em;
+}
+
+.pad0 {
+	padding: 0;
+}
+
+h2 {
+	background: #28a5e5;
+	color: #fff;
+	font-size: 18px;
+	padding: 0.6em 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	font-weight: normal;
+}
+
+.editImg,.backImg {
+	position: fixed;
+	top: .35em;
+	z-index: 1;
+}
+
+.editImg img,.backImg Img {
+	width: 75%;
+	height: 75%;
+}
+
+.editImg {
+	right: .25em;
+}
+
+.backImg {
+	left: .25em;
+}
+
+/*-------Form-------*/
+.TestTable td {
+	color: #666;
+	padding: .25em 0;
+	line-height: 2em;
+}
+
+.inputOutL {
+	background: #fff;
+	border: 1px solid #a1a1a1;
+	border-radius: .25em;
+	-webkit-border-radius: 0.25em;
+	font-size: 1em;
+	padding: .25em 1em;
+}
+
+.inputOutL:hover {
+	box-shadow: 0 0 .25em #fe9900;
+}
+
+.inputText,.inputSelect {
+	width: 100%;
+	padding: .25em 0;
+}
+
+.inputLabel {
+	width: 85%;
+}
+
+.inputSelect {
+	background: url(../img/arrow5.png) no-repeat center right;
+	margin-left: -2px;
+	height: 42px;
+}
+
+.inputSelect select>option {
+	text-align: -5px;
+}
+
+.inputBtn {
+	letter-spacing: .5em;
+	background: #fe9900;
+	border-radius: .25em;
+	-webkit-border-radius: 0.25em;
+	color: #fff;
+	font-weight: normal;
+	padding: .75em 0;
+	font-size: 1.2em;
+	margin: 0.5em 0;
+	width: 100%;
+}
+
+input.inputBtn:hover {
+	box-shadow: none;
+	background: #df8e0b;
+}
+
+.textarear {
+	background-color: #fff;
+	width: 100%;
+}
+
+/*-------inforSerch-------*/
+.inforSerch {
+	color: #666;
+	padding: .25em 0;
+	line-height: 2em;
+}
+
+.inforSerch li {
+	padding: 20px 0;
+	float: left;
+	display: inline-block;
+	width: 33.33%;
+	text-align: center;
+}
+
+.inforSerch li img {
+	width: 60%;
+}
+
+.inforSerch li a {
+	font-weight: bold;
+}
+
+/*-------carInfor-------*/
+.inforTable td {
+	color: #666;
+	line-height: 1.25em;
+}
+
+td.inforBaseL {
+	white-space: nowrap;
+	padding: .75em .5em .75em 1em;
+	text-align: right;
+}
+
+td.inforBaseR {
+	padding: .75em 1em .75em .5em;
+	font-weight: bold;
+}
+
+.moreCar img {
+	height: 50%;
+	vertical-align: middle;
+}
+
+/*------floot--------*/
+.floot {
+	background: #fbfbfb;
+	border-top: 1px solid #ccc;
+	color: #ccc;
+	font-size: 0.75em;
+	line-height: 3em;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: 0 0em;
+	text-align: center;
+}
+
+.but {
+	background-color: #fe9900;
+	color: #ffffff;
+	font-size: 18px;
+	letter-spacing: 2px;
+	border-radius: 5px;
+}
+
+.but-none {
+	background-color: #cccccc;
+	color: #eeeeee;
+	font-size: 18px;
+	font-weight: bold;
+	letter-spacing: 2px;
+	border-radius: 5px;
+}
+
+.inputBut {
+	border: 1px #cccccc solid;
+	background-color: #fe9900;
+	color: #f1f1f1;
+	border-radius: 5px;
+	width: 35%;
+	float: right;
+}
+
+.inputButAfter {
+	border: 1px #cccccc solid;
+	background-color: #e1e1e1;
+	color: #3399CC;
+	border-radius: 5px;
+	width: 32%;
+	float: right;
+}
+
+.next {
+	top: 0px;
+	width: 100%;
+	height: 46px;
+	line-height: 44px;
+	background: #28A5E5;
+	position: absolute;
+	color: #fff;
+	text-align: center;
+}
+
+.foot {
+	bottom: 0px;
+	width: 100%;
+	height: 44px;
+	line-height: 44px;
+	background: #fbfbfb;
+	border-top: 1px solid #ccc;
+	position: absolute;
+	color: #ccc;
+	text-align: center;
+}
+

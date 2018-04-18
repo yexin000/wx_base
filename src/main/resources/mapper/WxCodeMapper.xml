@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.WxCodeDao">
+	<!-- Result Map -->
+	<resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.WxCode">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="code" property="code" />
+		<result column="value" property="value" />
+		<result column="parentId" property="parentId" />
+		<result column="deleted" property="deleted" />
+		<result column="createTime" property="createTime" />
+		<result column="updateTime" property="updateTime" />
+		<result column="remarks" property="remarks" />
+	</resultMap>
+
+	<!-- 扩展字段 -->
+	<resultMap id="ExtResultMap" extends="BaseResultMap" type="cn.trustway.weixin.bean.WxCode">
+		<result column="subCount" property="subCount" />
+	</resultMap>
+
+
+	<!-- wx_code table all fields -->
+	<sql id="Base_Column_List">
+		id,name,code,value,parentId,deleted,createTime,updateTime,remarks
+	</sql>
+
+
+	<!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+		where 1=1 and deleted = 0
+		<trim suffixOverrides=",">
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<if test="name != null and name != ''">
+				and name like CONCAT('%', #{name}, '%')
+			</if>
+			<if test="code != null and code != ''">
+				and code = #{code}
+			</if>
+			<if test="value != null and value != ''">
+				and value = #{value}
+			</if>
+			<if test="parentId != null">
+				and parentId = #{parentId}
+			</if>
+			<!-- 如果parentId为空,这查询顶级菜单 -->
+			<if test="parentId == null">
+				and parentId is null
+			</if>
+
+			<if test="createTime != null">
+				and createTime = #{createTime}
+			</if>
+			<if test="remarks != null">
+				and remarks = #{remarks}
+			</if>
+		</trim>
+	</sql>
+
+
+	<!-- 插入记录 -->
+	<insert id="add" parameterType="Object">
+		<selectKey resultType="int" order="BEFORE" keyProperty="id">
+	      select SEQ_WX_CODE_ID.nextval as id from dual
+	    </selectKey>
+		insert into
+		wx_code(id,name,code,value,parentId,deleted,createTime,remarks)
+		values(#{id},#{name,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR},#{value,jdbcType=VARCHAR},
+		#{parentId,jdbcType=INTEGER},#{deleted,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{remarks})
+	</insert>
+
+	<!-- 根据id，修改记录 -->
+	<update id="update" parameterType="Object">
+		update wx_code set
+		id=#{id},name=#{name,jdbcType=VARCHAR},code=#{code,jdbcType=VARCHAR},value=#{value,jdbcType=VARCHAR},parentId=#{parentId,jdbcType=INTEGER},deleted=#{deleted,jdbcType=INTEGER},updateTime
+		=#{updateTime,jdbcType=TIMESTAMP},remarks=#{remarks,jdbcType=VARCHAR} where id=#{id}
+	</update>
+
+	<!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateBySelective" parameterType="Object">
+		update wx_code set
+		<trim suffixOverrides=",">
+			<if test="id != null  ">
+				id=#{id},
+			</if>
+			<if test="name != null  and name != '' ">
+				name=#{name},
+			</if>
+			<if test="code != null  and code != '' ">
+				code=#{code},
+			</if>
+			<if test="value != null  and value != '' ">
+				value=#{value},
+			</if>
+			<if test="parentId != null  ">
+				parentId=#{parentId},
+			</if>
+			<if test="deleted != null  ">
+				deleted=#{deleted},
+			</if>
+			<if test="createTime != null  ">
+				createTime=#{createTime},
+			</if>
+			<if test="updateTime != null  ">
+				updateTime=#{updateTime},
+			</if>
+			<if test="remarks != null  ">
+				remarks=#{remarks},
+			</if>
+		</trim>
+		where id=#{id}
+	</update>
+
+	<!-- 删除记录 -->
+	<update id="delete" parameterType="Object">
+		update wx_code set deleted = 1 where id = #{id}
+	</update>
+
+	<!-- 根据id查询 参数 -->
+	<select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+		select
+		<include refid="Base_Column_List" />
+		from wx_code where id = #{id}
+	</select>
+	
+	<select id="getModelByCode" resultMap="BaseResultMap" parameterType="Object">
+		select
+		<include refid="Base_Column_List" />  from wx_code where code = #{code}
+	</select>
+
+	<!-- 参数 列表总数 -->
+	<select id="queryByCount" resultType="java.lang.Integer"
+		parameterType="Object">
+		select count(1) from wx_code
+		<include refid="Example_Where_Clause" />
+	</select>
+
+	<!-- 查询参数列表 -->
+	<select id="queryByList" resultMap="ExtResultMap" parameterType="Object">
+		select
+		<include refid="Base_Column_List" />
+		,(SELECT COUNT(*) FROM wx_code c WHERE c.parentId = m.id and deleted
+		= 0) AS subCount
+		from wx_code m
+		<include refid="Example_Where_Clause" />
+		<if test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+		<if
+			test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+			${pager.mysqlQueryCondition}
+		</if>
+	</select>
+
+
+
+	<!-- 查询所有有效参数列表 -->
+	<select id="queryByAll" resultMap="BaseResultMap" parameterType="Object">
+		select id,name,code,value,parentId,remarks from wx_code where deleted= 0
+	</select>
+
+	<!-- 获取顶级参数 -->
+	<select id="getRootCode" resultMap="BaseResultMap"
+		parameterType="Object">
+		select id,name,code,value,parentId,remarks from wx_code where deleted= 0 and
+		parentId is null
+		<if test="codeId != null">
+			and id != #{codeId}
+		</if>
+	</select>
+
+
+	<!-- 获取子参数 -->
+	<select id="getChildCode" resultMap="BaseResultMap"
+		parameterType="Object">
+		select 
+		<include refid="Base_Column_List" /> 
+		from wx_code where deleted= 0 and
+		parentId=#{parentId}
+	</select>
+
+	<select id="getCodeCountByCode" resultType="int" parameterType="Object">
+		select count(1)
+		from wx_code where code=#{code}
+	</select>
+</mapper>   

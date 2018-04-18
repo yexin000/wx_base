@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<base href=".">
+		<meta name="viewport"
+			content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+
+		<link rel="stylesheet" href="/weixin/foreground/css/jquery.mobile-1.4.3.min.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/mycss.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/main.css" />
+		<link rel="stylesheet" href="/weixin/foreground/css/ningboweb.css">
+		<script src="/weixin/foreground/js/jquery-1.9.0.min.js" type="text/javascript"></script>
+		<script src="/weixin/foreground/js/check_browser.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="/weixin/foreground/js/append.js"></script>
+		
+		<script type="text/javascript">
+		var token = "";
+		var bindRole = "";
+		var vehicleNum =0;
+		
+			function ToUrl(x){
+				window.location.href=x+'?token='+escape(token);
+			};
+			
+			$(document).ready(function(){
+				addHead("账号关联");
+				
+				token = getQueryString("token");
+				bindRole = getQueryString("bindrole");
+				vehicleNum = parseInt(getQueryString("vehicleNum"));
+				switch (bindRole) {
+				case "unBind":
+					
+					break;
+				case "studentVehicle":
+					$("#binddriver").attr({"disabled":"disabled"});
+					$("#binddriver input").attr({"disabled":"disabled"});
+					$("#binddriver input").attr({"class":"but-none"});
+					
+					$("#bindstudent").attr({"disabled":"disabled"});
+					$("#bindstudent input").attr({"disabled":"disabled"});
+					$("#bindstudent input").attr({"class":"but-none"});
+					break;
+				case "student":
+					
+					$("#binddriver").attr({"disabled":"disabled"});
+					$("#binddriver input").attr({"disabled":"disabled"});
+					$("#binddriver input").attr({"class":"but-none"});
+					
+					$("#bindstudent").attr({"disabled":"disabled"});
+					$("#bindstudent input").attr({"disabled":"disabled"});
+					$("#bindstudent input").attr({"class":"but-none"});
+					break;
+				case "driverVehicle":
+					
+					$("#binddriver").attr({"disabled":"disabled"});
+					$("#binddriver input").attr({"disabled":"disabled"});
+					$("#binddriver input").attr({"class":"but-none"});
+					
+					$("#bindstudent").attr({"disabled":"disabled"});
+					$("#bindstudent input").attr({"disabled":"disabled"});
+					$("#bindstudent input").attr({"class":"but-none"});
+					
+					break;
+				case "driver":
+					$("#binddriver").attr({"disabled":"disabled"});
+					$("#binddriver input").attr({"disabled":"disabled"});
+					$("#binddriver input").attr({"class":"but-none"});
+					
+					$("#bindstudent").attr({"disabled":"disabled"});
+					$("#bindstudent input").attr({"disabled":"disabled"});
+					$("#bindstudent input").attr({"class":"but-none"});
+					
+					break;
+				case "vehicle":
+					
+					break;
+
+				default:
+					break;
+				}
+				
+				if(vehicleNum>=3){
+					$("#bindvehicle").attr({"disabled":"disabled"});
+					$("#bindvehicle input").attr({"disabled":"disabled"});
+					$("#bindvehicle input").attr({"class":"but-none"});
+				};
+				
+			
+			});
+			
+			function getQueryString(name) {
+			    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			    var r = window.location.search.substr(1).match(reg);
+			    if (r != null) return unescape(r[2]); return null;
+			 }
+		</script>
+
+	</head>
+
+	<body>
+		<div class="content">
+			<div>
+				<p style="font-size: 18px;font-weight:700">
+					绑定须知：
+				</p>
+				<p>1.一个微信帐号只能绑定一本驾驶证或者一个学员,三辆机动车信息。</p>
+				<p>2.绑定驾驶证的用户不能绑定学员。</p>
+				<p>3.绑定的学员在获得驾驶证后需解绑学员信息后才能绑定驾驶证。</p>
+				<br/>
+			</div>
+			<hr size="2px" color="#28a5e5"/>
+			<ul style="padding: 10px 0;">
+				<li id = "bindvehicle" style="margin: 10px 0;" onclick="ToUrl('./addBindCar.html')">
+					<input class="but" type="button" value="绑定机动车">
+				</li>
+				<li id = "binddriver" style="margin: 10px 0;" onclick="ToUrl('./addBindDriver.html')">
+					<input class="but" type="button" value="绑定驾驶证">
+				</li>
+				<li id = "bindstudent" style="margin: 10px 0;" onclick="ToUrl('./addBindStudent.html')">
+					<input class="but" type="button" value="绑 定 学 员">
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>
