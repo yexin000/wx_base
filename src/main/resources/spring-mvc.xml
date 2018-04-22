@@ -36,7 +36,8 @@
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 		<bean class="cn.trustway.weixin.interceptor.AuthInterceptor">
 			<property name="uncheckUrls"> 
-				<list> 
+				<list>
+					<value>cn.trustway.weixin.controller.AuctionController</value>
 					<value>/wxCode/queryListByCode.do</value>
 				</list>
 			</property>

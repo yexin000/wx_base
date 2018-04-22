@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+    var params = {};
+    params.name = "test";
+
+    $.ajax({
+        type : "POST",
+        url : "/weixin/auction/dataList.do",
+        data : JSON.stringify(params),
+        contentType : "application/json;charset=utf-8",
+        dataType : "json",
+        success:function(data) {
+            var total = data.total;
+            for(var i = 0; i < total; i ++) {
+                alert(data.rows[i].name);
+            }
+        }
+    });
+</script>
+</html>

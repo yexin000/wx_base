@@ -28,8 +28,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
+		String clazzName = ((HandlerMethod) handler).getBean().getClass().getName();
 		String requestUrl = request.getServletPath();  
-		if (uncheckUrls.contains(requestUrl)) {
+		if (uncheckUrls.contains(requestUrl) || uncheckUrls.contains(clazzName)) {
 			return true;
 		} else {
 			HandlerMethod method = (HandlerMethod) handler;
