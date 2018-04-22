@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+  		<!--<script type="text/javascript" src="/weixin/foreground/js/wx_common.js"></script>
+		--><title></title>
+		<meta http-equiv=Content-Type content="text/html;charset=gbk">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+
+
+  </head>
+  
+  <body>
+
+  <form  id="portraitform" method="post" enctype="multipart/form-data" action="weixin/file/setHeadImg.do" style="display: none">
+	  <input type="file" name="head_img" id="edit-portrait">
+	  <input type="hidden" id="potraitID" name="USER_ID">
+	  <input type="submit">
+  </form>
+
+
+  <ul class="user-part">
+	  <li class="user-portrait">
+		  <h2>头像：</h2>
+		  <span class="allowEdit" id="editportrait">
+			  <img src="../../images/lh/portrait2.png" alt="">
+		  </span>
+	  </li>
+
+  </ul>
+
+  
+  </body>
+  <script type="text/javascript" src="/weixin/foreground/js/jquery-1.9.0.min.js"></script>
+  <script type="text/javascript">
+      //修改头像
+      $("#editportrait").click(function(){
+          $("#edit-portrait").click();
+      });
+
+
+      $("#edit-portrait").on("change",function(){
+          $("#portraitform").submit();
+
+      });
+
+      $("#portraitform").submit(function(){
+          var f=document.getElementById("edit-portrait").value;
+          if(f==""){
+              alert("请上传图片");
+          }else{
+              if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(f)){
+                  alert("图片类型错误");
+              }else{
+                  editportrait();
+              }
+          }
+          return false;
+      });
+
+      function editportrait(){
+          var url=  "/weixin/fileUpload/setHeadImg.do";
+          var formData = new FormData($("#portraitform")[0]);
+
+          $.ajax({
+              url:url,
+              type: 'POST',
+              data: formData,
+              dataType: 'json',
+              cache: false,
+              processData: false,
+              contentType: false,
+              success:function(result){
+                  //alert("result = " + JSON.stringify(result));
+                  if(result.info=="success"){
+                      alert('成功');
+                      //设置会员头像
+                      localStorage.setItem("head_img",  result.imgPath);
+                      location.href=location.href;
+                  }else if(result.info=="errorSize"){
+                      alert("图片过大");
+                  }
+              }
+          });
+          return false;
+      }
+
+
+  </script>
+</html>

@@ -2726,5 +2726,13 @@ public class DateUtil {
 
 		return weekDays[w];
 	}
-	
+
+	/**
+	 * 获取YYYYMMDD格式
+	 *
+	 * @return
+	 */
+	public static String getDays() {
+		return sdfShort.format(new Date());
+	}
 }

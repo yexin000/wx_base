@@ -1,0 +1,31 @@
+.bannerBox{
+  width: 100%;  height: 5rem;
+  overflow: hidden;
+  position: relative;
+}
+.bannerList {
+  position: absolute;
+  left: 0; height: 100%;width: 100%;
+}
+.bannerItem{
+  float: left;
+  height: 100%;
+  width: 100%;
+}
+.bannerItem img{width: 100%;}
+.bannerPrompt{
+	position: absolute;
+	width: 100%;
+	height: .5rem;
+	left: 0;
+	bottom: 0;
+	text-align: center;
+	line-height: 0;
+}
+.bannerPrompt>span{
+	display: inline-block;
+	width: .4rem;height: .4rem;
+	border-radius: 50%;
+	margin: 0;
+	margin: 0 .2rem;
+}
