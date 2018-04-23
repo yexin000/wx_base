@@ -23,7 +23,7 @@ import java.util.*;
 public class FileUploadController extends BaseController {
 
 
-    public String filepath;
+    public String filepath = "E:/imgApp/sdshop/";
 
     //文件上传
     @RequestMapping(value="/setHeadImg",method=RequestMethod.POST)

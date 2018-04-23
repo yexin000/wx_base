@@ -86,4 +86,9 @@
     <!-- ApplicationContex对象配置获取 -->
     <bean class="cn.trustway.weixin.util.AppApplicationContextUtil">
     </bean>
+
+	<!-- 设置上传文件最大值   1M=1*1024*1024(B)=1048576 bytes -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="1048576" />
+	</bean>
 </beans>
