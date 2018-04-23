@@ -1,0 +1,6 @@
+搭建项目环境时需要导入jar包到maven本地仓库，步骤如下：
+1.配置JDK和MAVEN的环境变量
+2.复制repo_local文件夹到C盘根目录
+3.在控制台中执行如下命令
+mvn install:install-file -Dfile=C:\repo_local\ojdbc14.jar -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.4 -Dpackaging=jar
+mvn install:install-file -Dfile=C:\repo_local\sun-jai_core.jar -DgroupId=javax.media -DartifactId=jai_core -Dversion=1.1.3 -Dpackaging=jar
