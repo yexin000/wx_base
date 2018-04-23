@@ -39,6 +39,7 @@
 				<list>
 					<value>cn.trustway.weixin.controller.AuctionController</value>
 					<value>/wxCode/queryListByCode.do</value>
+					<value>/file/setHeadImg.do</value>
 				</list>
 			</property>
 		</bean>
