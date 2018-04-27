@@ -43,11 +43,8 @@
 
 	<!-- 插入记录 -->
 	<insert id="add" parameterType="Object">
-		<selectKey resultType="int" order="BEFORE" keyProperty="id">
-	      select SEQ_SYS_MENU_BTN_ID.nextval as id from dual
-	    </selectKey>
 		insert into sys_menu_btn(id,menuid,btnName,btnType,actionUrls)
-		values(#{id},#{menuid,jdbcType=INTEGER},#{btnName,jdbcType=VARCHAR},#{btnType,jdbcType=VARCHAR},#{actionUrls,jdbcType=VARCHAR})
+		values(null,#{menuid,jdbcType=INTEGER},#{btnName,jdbcType=VARCHAR},#{btnType,jdbcType=VARCHAR},#{actionUrls,jdbcType=VARCHAR})
 	</insert>
 
 	<!-- 根据id，修改记录 -->

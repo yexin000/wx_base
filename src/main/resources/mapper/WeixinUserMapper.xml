@@ -36,13 +36,9 @@
 
 	<!-- 插入记录 -->
 	<insert id="add" parameterType="Object">
-		<selectKey resultType="java.lang.Integer" order="BEFORE"
-			keyProperty="xh">
-			SELECT SEQ_WEIXIN_USER_XH.NEXTVAL AS ID FROM DUAL
-		</selectKey>
 		insert into
 		weixin_user(xh,wxid,zt) 
-		values(#{xh},#{wxid},#{zt})
+		values(null,#{wxid},#{zt})
 	</insert>
 	<insert id="insertWeixinUser" parameterType="Object">
 		<selectKey resultType="java.lang.Integer" order="BEFORE"

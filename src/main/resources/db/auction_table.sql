@@ -255,6 +255,7 @@ create table "t_e_business"
    UPDATETIME           DATE                 default sysdate not null,
    TELNUM               varchar2(32),
    LOGOPATH             varchar2(128),
+   STATUS               varchar2(1) not null,
    constraint PK_T_E_BUSINESS primary key (ID)
 );
 
@@ -278,6 +279,9 @@ comment on column "t_e_business".TELNUM is
 
 comment on column "t_e_business".LOGOPATH is
 '图标地址';
+
+comment on column "t_e_business".STATUS is
+'状态：0-删除,1-正常';
 
 create sequence SEQ_WEIXIN_USER_ID
 minvalue 1

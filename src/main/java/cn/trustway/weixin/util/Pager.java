@@ -90,16 +90,16 @@ public class Pager {
 
 	public String getOrderCondition() {
 		String condition = "";
-		if (this.orderField != null && this.orderField.length() != 0) {
+		/*if (this.orderField != null && this.orderField.length() != 0) {
 			condition = " order by " + orderField
 					+ (orderDirection ? " " : " desc ");
-		}
+		}*/
 		return condition;
 	}
 
 	public String getMysqlQueryCondition() {
 		String condition = "";
-		//condition = " and rownum<= " + this.pageSize;
+		condition = " limit " + this.pageSize + " offset " + this.pageOffset;
 		return condition;
 	}
 

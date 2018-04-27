@@ -65,12 +65,9 @@
 
 	<!-- 插入记录 -->
 	<insert id="add" parameterType="Object">
-		<selectKey resultType="int" order="BEFORE" keyProperty="id">
-	      select SEQ_SYS_MENU_ID.nextval as id from dual
-	    </selectKey>
 		insert into
 		sys_menu(id,name,url,parentId,deleted,createTime,rank,actions)
-		values(#{id},#{name,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},#{parentId,jdbcType=INTEGER},#{deleted,jdbcType=INTEGER},
+		values(null,#{name,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},#{parentId,jdbcType=INTEGER},#{deleted,jdbcType=INTEGER},
 		#{createTime,jdbcType=TIMESTAMP},#{rank,jdbcType=INTEGER},#{actions,jdbcType=VARCHAR})
 	</insert>
 

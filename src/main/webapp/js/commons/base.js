@@ -160,14 +160,21 @@ var WeiXin={
 	}
 }
 
-/* 自定义密码验证*/
-$.extend($.fn.validatebox.defaults.rules, {  
+/* 自定义验证*/
+$.extend($.fn.validatebox.defaults.rules, {
+	// 自定义密码验证
     equals: {  
         validator: function(value,param){  
             return value == $(param[0]).val();  
         },  
         message: 'Field do not match.'  
-    }  
+    },
+    phoneNum: { //验证手机号
+        validator: function(value, param){
+            return /^[1][3,4,5,7,8][0-9]{9}$/.test(value);
+        },
+        message: '请输入正确的手机号码。'
+    }
 });  
 
 /*表单转成json数据*/

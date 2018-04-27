@@ -69,12 +69,9 @@
 
 	<!-- 插入记录 -->
 	<insert id="add" parameterType="Object">
-		<selectKey resultType="int" order="BEFORE" keyProperty="id">
-	      select SEQ_SYS_USER_ID.nextval as id from dual
-	    </selectKey>
 		insert into
 		sys_user(id,username,pwd,nickName,state,loginCount,loginTime,deleted,createTime,updateTime,createBy,updateBy)
-		values(#{id},#{username},#{pwd,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},
+		values(null,#{username},#{pwd,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},
 		#{loginCount,jdbcType=INTEGER},#{loginTime,jdbcType=TIMESTAMP},#{deleted},
 		#{createTime,jdbcType=TIMESTAMP},
 		#{updateTime,jdbcType=TIMESTAMP},

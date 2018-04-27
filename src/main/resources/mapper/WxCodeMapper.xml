@@ -64,12 +64,9 @@
 
 	<!-- 插入记录 -->
 	<insert id="add" parameterType="Object">
-		<selectKey resultType="int" order="BEFORE" keyProperty="id">
-	      select SEQ_WX_CODE_ID.nextval as id from dual
-	    </selectKey>
 		insert into
 		wx_code(id,name,code,value,parentId,deleted,createTime,remarks)
-		values(#{id},#{name,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR},#{value,jdbcType=VARCHAR},
+		values(null,#{name,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR},#{value,jdbcType=VARCHAR},
 		#{parentId,jdbcType=INTEGER},#{deleted,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{remarks})
 	</insert>
 

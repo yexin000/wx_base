@@ -55,12 +55,9 @@
 
 	<!-- 插入记录 -->
 	<insert id="add" parameterType="Object">
-		<selectKey resultType="int" order="BEFORE" keyProperty="id">
-	      select SEQ_SYS_ROLE_ID.nextval as id from dual
-	    </selectKey>
 		insert into
 		sys_role(id,roleName,createTime,createBy,updateTime,updateBy,state,descr)
-		values(#{id},#{roleName,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},
+		values(null,#{roleName,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},
 		#{createBy,jdbcType=INTEGER},null,#{updateBy,jdbcType=INTEGER},
 		#{state,jdbcType=INTEGER},#{descr,jdbcType=VARCHAR})
 	</insert>
