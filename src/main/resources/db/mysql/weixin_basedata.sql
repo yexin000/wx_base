@@ -115,14 +115,4 @@ INSERT INTO sys_role_rel VALUES ('1', '15', '2');
 
 INSERT INTO sys_user VALUES (null, 'admin', 'E10ADC3949BA59ABBE56E057F20F883E', '系统管理员', '0', '33', now(), '0', now(), now(), null, null, '1');
 
-insert into wx_code (id, name, code, value, parentid, deleted, createtime, updatetime, remarks)
-values (1, '公众号配置', 'WX_CONFIG', 'WX_CONFIG', null, 0, now(), null, null);
-insert into wx_code (id, name, code, value, parentid, deleted, createtime, updatetime, remarks)
-values (2, '微信APPID', 'APPID', 'wx52d9a1721ad602a4', '1', 0, now(), null, null);
-insert into wx_code (id, name, code, value, parentid, deleted, createtime, updatetime, remarks)
-values (3, '微信APPSECRET', 'APPSECRET', 'ebf523d96abf78f9e84780ce85ec2a65', '1', 0, now(), null, null);
-insert into wx_code (id, name, code, value, parentid, deleted, createtime, updatetime, remarks)
-values (null, '微信关注欢迎语', 'wxWelcomeStr', '您好，感谢您关注测试公众平台！', '1', 0, now(), null, null);
-insert into wx_code (id, name, code, value, parentid, deleted, createtime, updatetime, remarks)
-values (null, '微信自动回复语', 'wxAutoReplyStr', '您的信息已收到', '1', 0, now(), null, null);
 commit;

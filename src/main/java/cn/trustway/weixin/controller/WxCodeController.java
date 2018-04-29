@@ -39,8 +39,8 @@ public class WxCodeController extends BaseController {
 	/**
 	 * 首页
 	 * 
-	 * @param url
-	 * @param classifyId
+	 * @param model
+	 * @param request
 	 * @return
 	 */
 	@RequestMapping("/list")
@@ -57,8 +57,8 @@ public class WxCodeController extends BaseController {
 	/**
 	 * json 列表页面
 	 * 
-	 * @param url
-	 * @param classifyId
+	 * @param model
+	 * @param response
 	 * @return
 	 * @throws Exception
 	 */
@@ -101,8 +101,8 @@ public class WxCodeController extends BaseController {
 	/**
 	 * 添加或修改数据
 	 * 
-	 * @param url
-	 * @param classifyId
+	 * @param bean
+	 * @param request
 	 * @return
 	 * @throws Exception
 	 */

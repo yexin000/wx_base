@@ -1,14 +1,14 @@
-package cn.trustway.weixin.model;
+package cn.trustway.weixin.bean;
 
 import java.util.Date;
 
 /**
- * 拍卖会模型
+ * 拍卖会Bean
  *
  * @author yexin
  *
  */
-public class AuctionModel extends BaseModel {
+public class Auction extends BaseBean {
     /**
      *主键-id
      */
@@ -34,6 +34,10 @@ public class AuctionModel extends BaseModel {
      */
     Integer creator;
     /**
+     *创建人姓名
+     */
+    String creatorName;
+    /**
      *修改时间
      */
     Date modifytime;
@@ -42,9 +46,17 @@ public class AuctionModel extends BaseModel {
      */
     Integer modifier;
     /**
+     *创建人姓名
+     */
+    String modifierName;
+    /**
      *商家id
      */
     Integer businessid;
+    /**
+     *商家名称
+     */
+    String businessName;
     /**
      *描述说明
      */
@@ -164,5 +176,29 @@ public class AuctionModel extends BaseModel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public String getModifierName() {
+        return modifierName;
+    }
+
+    public void setModifierName(String modifierName) {
+        this.modifierName = modifierName;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
     }
 }

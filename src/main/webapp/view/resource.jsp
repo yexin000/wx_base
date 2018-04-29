@@ -13,3 +13,4 @@
 <script type="text/javascript" src="${msUrl}/js/commons/urls.js?v=11"></script>
 <script type="text/javascript" src="${msUrl}/js/commons/base.js?v=11"></script>
 <script type="text/javascript" src="${msUrl}/js/commons/YDataGrid.js"></script>
+<script type="text/javascript" src="${msUrl}/js/commons/easyui-lang-zh_CN.js"></script>

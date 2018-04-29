@@ -71,12 +71,12 @@ create table if not exists wx_account(
 
 create table if not exists wx_code(
   id int(11) primary key auto_increment comment '主键',
-  name varchar(50) comment '公众帐号名称',
-  code varchar(100) comment '公众帐号token',
-  value varchar(100) comment '公众号类型',
-  parentid int(11) comment '公众帐号appid',
-  deleted int(1) default 0 not null comment '公众帐号token',
-  createtime datetime comment '公众号类型',
-  updatetime datetime comment '公众帐号appid',
-  remarks varchar(100) comment '公众帐号appsecret'
+  name varchar(50) comment '代码名称',
+  code varchar(100) comment '代码',
+  value varchar(100) comment '代码值',
+  parentid int(11) comment '父id 关联wx_code.id',
+  deleted int(1) default 0 not null comment '是否删除,0=未删除，1=已删除',
+  createtime datetime comment '创建时间',
+  updatetime datetime comment '修改时间',
+  remarks varchar(100) comment '备注'
 ) charset=utf8 comment='系统代码表';

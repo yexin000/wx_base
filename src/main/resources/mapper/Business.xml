@@ -31,7 +31,7 @@
     <update id="update" parameterType="Object">
 		update t_e_business set
 		id=#{id},name=#{name},address=#{address},updateTime=sysdate,
-		telNum=#{telNum},logoPath=#{logoPath},status=#{status}
+		telNum=#{telNum},logoPath=#{logoPath},status=#{status} where id=#{id}
 	</update>
 
     <!-- 修改记录，只修改只不为空的字段 -->

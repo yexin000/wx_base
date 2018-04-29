@@ -1,19 +1,19 @@
 package cn.trustway.weixin.service;
 
+import cn.trustway.weixin.dao.AuctionDao;
 import cn.trustway.weixin.dao.BaseDao;
-import cn.trustway.weixin.dao.BusinessDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 拍卖商家服务类
+ * 拍卖会服务类
  *
  * @author yexin
  */
-@Service("businessService")
-public class BusinessService<T> extends BaseService<T> {
+@Service("auctionService")
+public class AuctionService<T> extends BaseService<T> {
     @Autowired
-    private BusinessDao<T> dao;
+    private AuctionDao<T> dao;
 
     @Override
     public BaseDao<T> getDao() {

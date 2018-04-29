@@ -10,7 +10,7 @@
     <form id="searchForm">
         <input class="hidden" id='search_parentId' name="parentId">
         <p class="ui-fields">
-            <label class="ui-label">商家名称:</label>
+            <label class="ui-label">拍卖会名称:</label>
             <input name="name" class="easyui-box ui-text" style="width:100px;">
         </p>
         <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>
@@ -28,23 +28,35 @@
         <!-- 隐藏文本框 -->
         <input class="hidden" name="id">
         <div class="ui-edit">
-            <div class="ftitle">商家信息</div>
+            <div class="ftitle">拍卖会信息</div>
             <div class="fitem">
-                <label>商家名称:</label>
+                <label>拍卖会名称:</label>
                 <input class="easyui-validatebox" type="text" name="name" data-options="required:true">
             </div>
 
             <div class="fitem">
-                <label>商家地址:</label>
-                <input type="text" name="address"></input>
+                <label>开始时间:</label>
+                <input type="text" name="starttime" editable="false" class="easyui-datetimebox" data-options="required:true">
             </div>
             <div class="fitem">
-                <label>商家电话:</label>
-                <input class="easyui-numberbox" type="text" name="telNum" data-options="required:true,validType:'phoneNum'">
+                <label>结束时间:</label>
+                <input type="text" name="endtime" editable="false" class="easyui-datetimebox" data-options="required:true">
+            </div>
+            <div class="fitem">
+                <label>所属商家:</label>
+                <select class="easyui-combobox" name="businessid" id="businessids" data-options="required:true" style="width: 156px;">
+                </select>
+            </div>
+            <div class="fitem">
+                <label>类型:</label>
+                <select class="easyui-combobox" name="type" id="types" data-options="required:true">
+                    <option value="0" selected="selected">类型0</option>
+                    <option value="1">类型1</option>
+                </select>
             </div>
         </div>
     </form>
 </div>
-<script type="text/javascript" src="${msUrl}/js/ht/auction/business.js"></script>
+<script type="text/javascript" src="${msUrl}/js/ht/auction/auction.js"></script>
 </body>
 </html>
