@@ -36,7 +36,7 @@ create table if not exists t_e_auction_item
    finalprice           double(11,3)         default 0 not null comment '成交价格',
    addprice             double(11,3)         default 0 not null comment '加价最低价格',
    depositprice         double(11,3)         default 0 not null comment '保证金',
-   rate                 double(3,3)          default 0 not null comment '手续费比率',
+   rate                 double(6,3)          default 0 not null comment '手续费比率',
    detail               varchar(1024) comment '拍品详情',
    status               varchar(2)          default '1' not null comment '状态：0-删除，1-未审核，2-审核未通过，3-正常(审核通过)',
    isshow               varchar(1)          default '0' not null comment '是否在首页显示：0-否，1-是',

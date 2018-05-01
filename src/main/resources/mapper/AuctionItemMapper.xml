@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.AuctionItemDao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.AuctionItem">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="description" property="description" />
+        <result column="starttime" property="starttime" />
+        <result column="endtime" property="endtime" />
+        <result column="startprice" property="startprice" />
+        <result column="curprice" property="curprice" />
+        <result column="finalprice" property="finalprice" />
+        <result column="addprice" property="addprice" />
+        <result column="depositprice" property="depositprice" />
+        <result column="rate" property="rate" />
+        <result column="detail" property="detail" />
+        <result column="status" property="status" />
+        <result column="isshow" property="isshow" />
+        <result column="auctionstatus" property="auctionstatus" />
+        <result column="auctionid" property="auctionid" />
+    </resultMap>
+
+    <!-- sys_menu table all fields -->
+    <sql id="Base_Column_List">
+		t.id,t.name,t.type,t.description,t.starttime,t.endtime,t.startprice,t.curprice,t.finalprice,
+		t.addprice,t.depositprice,t.rate,t.detail,t.status,t.isshow,t.auctionstatus,t.auctionid
+	</sql>
+
+    <!-- 插入记录 -->
+    <insert id="add" parameterType="Object">
+        insert into
+        t_e_auction_item(id,name,type,description,starttime,endtime,startprice,curprice,finalprice,
+		  addprice,depositprice,rate,detail,status,isshow,auctionstatus,auctionid)
+        values(null,#{name},#{type},#{description},#{starttime},#{endtime},#{startprice},
+            #{curprice},#{finalprice},#{addprice},#{depositprice},#{rate}, #{detail}, '1',
+            #{isshow},'0',#{auctionid});
+    </insert>
+
+    <!-- 根据id，修改记录 -->
+    <update id="update" parameterType="Object">
+		update t_e_auction_item set
+		name=#{name},type=#{type},description=#{description},starttime=starttime,endtime=endtime,
+        startprice=#{startprice},curprice=#{curprice},finalprice=#{finalprice},addprice=#{addprice},
+        depositprice=#{depositprice},rate=#{rate},detail=#{detail},status=#{status},isshow=#{isshow},
+        auctionstatus=#{auctionstatus},auctionid=#{auctionid},
+		where id=#{id}
+	</update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateBySelective" parameterType="Object">
+        update t_e_auction_item set
+        <trim suffixOverrides=",">
+            <if test="name != null and name != '' ">
+                name=#{name},
+            </if>
+            <if test="type != null and type != '' ">
+                type=#{type},
+            </if>
+            <if test="description != null and description != '' ">
+                description=#{description},
+            </if>
+            <if test="starttime != null and starttime != '' ">
+                starttime=#{starttime},
+            </if>
+            <if test="endtime != null and endtime != '' ">
+                endtime=#{endtime},
+            </if>
+            <if test="startprice != null and startprice != '' ">
+                startprice=#{startprice},
+            </if>
+            <if test="curprice != null and curprice != '' ">
+                curprice=#{curprice},
+            </if>
+            <if test="finalprice != null and finalprice != '' ">
+                finalprice=#{finalprice},
+            </if>
+            <if test="addprice != null and addprice != '' ">
+                addprice=#{addprice},
+            </if>
+            <if test="depositprice != null and depositprice != '' ">
+                depositprice=#{depositprice},
+            </if>
+            <if test="rate != null and rate != '' ">
+                rate=#{rate},
+            </if>
+            <if test="detail != null and detail != '' ">
+                detail=#{detail},
+            </if>
+            <if test="status != null and status != '' ">
+                status=#{status},
+            </if>
+            <if test="isshow != null and isshow != '' ">
+                isshow=#{isshow},
+            </if>
+            <if test="auctionstatus != null and auctionstatus != '' ">
+                auctionstatus=#{auctionstatus},
+            </if>
+            <if test="auctionid != null and auctionid != '' ">
+                auctionid=#{auctionid},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <update id="delete" parameterType="Object">
+		update t_e_auction_item set status = '0' where id = #{id}
+	</update>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        ,a.name as auctionname
+        from t_e_auction_item t
+        LEFT JOIN t_e_auction a on t.auctionid=a.id
+        where t.id = #{id} and t.status = '1'
+    </select>
+
+    <!-- 记录总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(1) from t_e_auction_item
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        ,a.name as auctionname
+        from t_e_auction_item t
+        LEFT JOIN t_e_auction a on t.auctionid=a.id
+        where 1=1 and t.status = '1'
+        <trim suffixOverrides=",">
+            <if test="name != null and name != ''">
+                and t.name like CONCAT('%', #{name}, '%')
+            </if>
+        </trim>
+        order by t.id desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+</mapper>
