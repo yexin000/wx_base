@@ -11,4 +11,12 @@
      
     <!-- 扫描文件（自动将servicec层注入） -->
     <context:component-scan base-package="cn.trustway.weixin.service"/>
+
+    <bean id="pref" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <array>
+                <value>classpath:pref.properties</value>
+            </array>
+        </property>
+    </bean>
 </beans>

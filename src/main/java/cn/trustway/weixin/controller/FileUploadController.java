@@ -1,17 +1,20 @@
 package cn.trustway.weixin.controller;
 
-import cn.trustway.weixin.bean.AuctionBean;
-import cn.trustway.weixin.model.AuctionModel;
 import cn.trustway.weixin.util.FileUpload;
-import cn.trustway.weixin.util.HtmlUtil;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * 拍卖功能页面控制类
@@ -22,8 +25,8 @@ import java.util.*;
 @RequestMapping("/file")
 public class FileUploadController extends BaseController {
 
-
-    public String filepath = "E:/imgApp/sdshop/";
+    @Value("#{pref.filePath}")
+    private String filepath;
 
     //文件上传
     @RequestMapping(value="/setHeadImg",method=RequestMethod.POST)

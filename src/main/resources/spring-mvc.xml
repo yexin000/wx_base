@@ -88,6 +88,14 @@
     <bean class="cn.trustway.weixin.util.AppApplicationContextUtil">
     </bean>
 
+	<bean id="pref" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<array>
+				<value>classpath:pref.properties</value>
+			</array>
+		</property>
+	</bean>
+
 	<!-- 设置上传文件最大值   1M=1*1024*1024(B)=1048576 bytes -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="1048576" />

@@ -36,9 +36,10 @@ WeiXin.business = function(){
                         }
                     },
                     {field:'opts',title:'操作',width:120,align:'center',formatter:function(value,row,index){
-                            //var html ="<a href='#' onclick='WeiXin.wxCode.toList("+row.id+")'>参数管理("+row.subCount+")</a>";
-                            return '';
-                        }}
+                            var html ="<a href='#' onclick='WeiXin.business.uploadLogo("+row.id+")'>上传封面</a>";
+                            return html;
+                        }
+                    }
                 ]],
                 toolbar:[
                 ]
@@ -47,6 +48,44 @@ WeiXin.business = function(){
         init:function(){
             _box = new YDataGrid(_this.config);
             _box.init();
+            $("#edit-portrait").on("change",function(){
+                $("#portraitform").submit();
+            });
+
+            $("#portraitform").submit(
+                function() {
+                    var f = document.getElementById("edit-portrait").value;
+                    if(f == ""){
+                        alert("请上传图片");
+                    }else{
+                        if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(f)){
+                            alert("请选择图片文件");
+                        }else{
+                            var url=  $("#portraitform").attr("action");
+                            var formData = new FormData($("#portraitform")[0]);
+
+                            $.ajax({
+                                url:url,
+                                type: 'POST',
+                                data: formData,
+                                dataType: 'json',
+                                cache: false,
+                                processData: false,
+                                contentType: false,
+                                success:function(result){
+                                    alert(result.msg);
+                                }
+                            });
+                        }
+                    }
+
+                    return false;
+                }
+            );
+        },
+        uploadLogo:function (businessid){
+            $("#businessid").val(businessid);
+            $("#edit-portrait").click();
         }
     }
     return _this;

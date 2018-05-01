@@ -3,10 +3,15 @@ package cn.trustway.weixin.controller;
 import cn.trustway.weixin.bean.Business;
 import cn.trustway.weixin.model.BusinessModel;
 import cn.trustway.weixin.service.BusinessService;
+import cn.trustway.weixin.service.FileUploadService;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +31,9 @@ public class BusinessController extends BaseController {
 
     @Autowired(required = false)
     private BusinessService<Business> businessService;
+
+    @Autowired(required = true)
+    private FileUploadService fileUploadService;
 
     /**
      * 首页
@@ -112,4 +120,36 @@ public class BusinessController extends BaseController {
         businessService.delete(id);
         sendSuccessMessage(response, "删除成功");
     }
+
+    /**
+     * 上传封面
+     *
+     * @param headImg
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/uploadLogo",method=RequestMethod.POST)
+    @ResponseBody
+    public void uploadLogo(@RequestParam(required = false)MultipartFile headImg, @RequestParam String businessid,
+                            HttpServletRequest request, HttpServletResponse response) throws Exception{
+        Map<String, Object> uploadResult = fileUploadService.uploadFile(headImg, request, response);
+        boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
+        if(uploadFlag) {
+            Business bean = businessService.queryById(businessid);
+            if (bean == null) {
+                sendFailureMessage(response, "没有找到对应的记录!");
+                return;
+            } else {
+                bean.setLogoPath(uploadResult.get(MSG).toString());
+                businessService.updateBySelective(bean);
+                sendSuccessMessage(response, "上传成功");
+            }
+        } else {
+            sendFailureMessage(response, "上传失败");
+        }
+        System.out.println("1");
+    }
+
 }

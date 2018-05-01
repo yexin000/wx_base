@@ -44,7 +44,13 @@
             </div>
         </div>
     </form>
+    <form  id="portraitform" method="post" enctype="multipart/form-data" action="uploadLogo.do" style="display: none">
+        <input type="file" accept="image/*" name="headImg" id="edit-portrait">
+        <input type="hidden" id="businessid" name="businessid">
+        <input type="submit">
+    </form>
 </div>
+
 <script type="text/javascript" src="${msUrl}/js/ht/auction/business.js"></script>
 </body>
 </html>
