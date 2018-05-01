@@ -12,6 +12,8 @@ WeiXin.auction = function(){
             event:{
                 add : function(){
                     _box.handler.add();//调用add方法
+                    $("#resForm").hide();
+                    $("#editForm").show();
                     $('#businessids').combobox('select',$('#businessids').combobox('getValue'));
                     $('#types').combobox('select',$('#types').combobox('getValue'));
                 },
@@ -41,8 +43,8 @@ WeiXin.auction = function(){
                     {field:'viewnum',title:'浏览数量',width:120,align:'center',sortable:true},
                     {field:'type',title:'类型',width:120,align:'center',sortable:true},
                     {field:'opts',title:'操作',width:120,align:'center',formatter:function(value,row,index){
-                            //var html ="<a href='#' onclick='WeiXin.wxCode.toList("+row.id+")'>参数管理("+row.subCount+")</a>";
-                            return '';
+                            var html ="<a href='#' onclick='WeiXin.auction.resManage("+row.id+")'>图片管理</a>";
+                            return html;
                         }}
                 ]],
                 toolbar:[
@@ -67,6 +69,12 @@ WeiXin.auction = function(){
                 }
             });
 
+        },
+        resManage:function (auctionId) {
+            $("#edit-win").dialog('open');
+            $("#resForm").resetForm();
+            $("#resForm").show();
+            $("#editForm").hide();
         }
     }
     return _this;

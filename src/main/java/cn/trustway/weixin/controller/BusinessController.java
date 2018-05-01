@@ -32,7 +32,7 @@ public class BusinessController extends BaseController {
     @Autowired(required = false)
     private BusinessService<Business> businessService;
 
-    @Autowired(required = true)
+    @Autowired
     private FileUploadService fileUploadService;
 
     /**
@@ -149,7 +149,6 @@ public class BusinessController extends BaseController {
         } else {
             sendFailureMessage(response, "上传失败");
         }
-        System.out.println("1");
     }
 
 }

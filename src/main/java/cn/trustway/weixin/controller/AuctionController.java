@@ -4,12 +4,17 @@ import cn.trustway.weixin.bean.Auction;
 import cn.trustway.weixin.bean.SysUser;
 import cn.trustway.weixin.model.AuctionModel;
 import cn.trustway.weixin.service.AuctionService;
+import cn.trustway.weixin.service.FileUploadService;
+import cn.trustway.weixin.service.ItemResService;
 import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +34,12 @@ public class AuctionController extends BaseController {
 
     @Autowired(required = false)
     private AuctionService<Auction> auctionService;
+
+    @Autowired
+    private FileUploadService fileUploadService;
+
+    @Autowired
+    private ItemResService itemResService;
 
     /**
      * 首页
@@ -117,5 +128,34 @@ public class AuctionController extends BaseController {
     public void delete(Integer[] id, HttpServletResponse response) throws Exception {
         auctionService.delete(id);
         sendSuccessMessage(response, "删除成功");
+    }
+
+    /**
+     * 上传封面
+     *
+     * @param headImg
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/uploadLogo",method=RequestMethod.POST)
+    @ResponseBody
+    public void uploadLogo(@RequestParam(required = false)MultipartFile headImg, @RequestParam String businessid,
+                           HttpServletRequest request, HttpServletResponse response) throws Exception{
+        Map<String, Object> uploadResult = fileUploadService.uploadFile(headImg, request, response);
+        boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
+        if(uploadFlag) {
+            Auction bean = auctionService.queryById(businessid);
+            if (bean == null) {
+                sendFailureMessage(response, "没有找到对应的记录!");
+                return;
+            } else {
+
+                sendSuccessMessage(response, "上传成功");
+            }
+        } else {
+            sendFailureMessage(response, "上传失败");
+        }
     }
 }
