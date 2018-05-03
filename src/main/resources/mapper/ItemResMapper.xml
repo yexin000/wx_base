@@ -15,14 +15,14 @@
 
     <!-- sys_menu table all fields -->
     <sql id="Base_Column_List">
-		id,conid,type,path,conType,idx
+		t.id,t.conid,t.type,t.path,t.conType,t.idx
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
         t_con_item_res(id,conid,type,path,conType,idx)
-        values(null,#{conid},#{type},#{path},#{conType},0)
+        values(null,#{conid},#{type},#{path},#{conType},#{idx})
     </insert>
 
     <!-- 根据id，修改记录 -->
@@ -64,7 +64,7 @@
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from t_con_item_res where id = #{id}
+        from t_con_item_res t where t.id = #{id}
     </select>
 
     <!-- 记录总数 -->
@@ -76,14 +76,25 @@
     <!-- 查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="Base_Column_List" />
-        from t_con_item_res
+            <include refid="Base_Column_List" />
+            <if test="conType != null and conType != ''">
+                ,a.name as conName
+            </if>
+        from t_con_item_res t
+        <if test="conType != null and conType != ''">
+            <if test="conType == 1">
+                left join t_e_auction a on t.conid=a.id
+            </if>
+            <if test="conType == 2">
+                left join t_e_auction_item a on t.conid=a.id
+            </if>
+        </if>
         where 1=1
         <trim suffixOverrides=",">
             <if test="conid != null and conid != ''">
-                and conid=#{conid}
+                and t.conid=#{conid}
             </if>
         </trim>
-        order by idx asc
+        order by t.idx asc
     </select>
 </mapper>

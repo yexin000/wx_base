@@ -56,25 +56,9 @@
             </div>
         </div>
     </form>
-    <form id="resForm" class="ui-form" method="post">
-        <div data-options="region:'center'">
-            <div id="restoolbar">
-                <a href="javascript:void(0)" id='addResBtn' class="easyui-linkbutton" iconCls="icon-add" plain="true" >添加</a>
-            </div>
-            <table id="btn-tb" style="width:100%">
-                <thead>
-                <tr>
-                    <th width="5%"></th>
-                    <th width="25%">按钮名称:</th>
-                    <th width="25%">按钮类型</th>
-                    <th width="35%">注册Action(用"|"分格)</th>
-                    <th width="10%">操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+    <form id="resForm" class="ui-form" method="post" action="/weixin/itemRes/list.do">
+        <input class="hidden" name="conid" id="conid">
+        <input class="hidden" name="conType" id="conType" value="1">
     </form>
 </div>
 <script type="text/javascript" src="${msUrl}/js/ht/auction/auction.js"></script>

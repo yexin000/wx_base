@@ -1,12 +1,11 @@
-package cn.trustway.weixin.bean;
+package cn.trustway.weixin.model;
 
 /**
- * 拍卖会/拍品-资源关联Bean
+ * 拍卖会/拍品-资源关联模型
  *
  * @author yexin
- *
  */
-public class ItemRes extends BaseBean {
+public class ItemResModel extends BaseModel {
     /**
      * 主键-id
      */

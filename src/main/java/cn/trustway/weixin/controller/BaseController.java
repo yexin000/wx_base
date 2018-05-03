@@ -86,11 +86,18 @@ public final static String SUCCESS ="success";
 	 * @param message
 	 *
 	 */
-	public void sendSuccessMessage(HttpServletResponse response,  String message) {
+	public void sendSuccessMessage(HttpServletResponse response, String message) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put(SUCCESS, true);
 		result.put(MSG, message);
 		HtmlUtil.writerJson(response, result);
+	}
+
+	public void sendSuccessMessageText(HttpServletResponse response, String message) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put(SUCCESS, true);
+		result.put(MSG, message);
+		HtmlUtil.writerJson(response, result, "text/html");
 	}
 
 	/**
@@ -105,5 +112,12 @@ public final static String SUCCESS ="success";
 		result.put(SUCCESS, false);
 		result.put(MSG, message);
 		HtmlUtil.writerJson(response, result);
+	}
+
+	public void sendFailureMessageText(HttpServletResponse response,String message) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put(SUCCESS, false);
+		result.put(MSG, message);
+		HtmlUtil.writerJson(response, result, "text/html");
 	}
 }

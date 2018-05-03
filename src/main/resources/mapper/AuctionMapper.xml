@@ -100,12 +100,13 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-            <include refid="Base_Column_List" />
-            ,su1.nickname as creatorName,su2.nickname as modifierName, b.name as businessName
+            <include refid="Base_Column_List" />,
+            su1.nickname as creatorName,su2.nickname as modifierName, b.name as businessName,
+            (select count(1) from t_con_item_res r where r.conid=t.id and r.contype='1') as picCount
         from t_e_auction t
-        LEFT JOIN sys_user su1 on t.creator=su1.id
-        LEFT JOIN sys_user su2 on t.modifier=su2.id
-        LEFT JOIN t_e_business b on t.businessid=b.id
+        left join sys_user su1 on t.creator=su1.id
+        left join sys_user su2 on t.modifier=su2.id
+        left join t_e_business b on t.businessid=b.id
         where 1=1 and t.status = '1'
         <trim suffixOverrides=",">
             <if test="name != null and name != ''">

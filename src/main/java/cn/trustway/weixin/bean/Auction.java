@@ -12,67 +12,72 @@ public class Auction extends BaseBean {
     /**
      *主键-id
      */
-    Integer id;
+    private Integer id;
     /**
      *拍卖会名称
      */
-    String name;
+    private String name;
     /**
      *开始时间
      */
-    Date starttime;
+    private Date starttime;
     /**
      *结束时间
      */
-    Date endtime;
+    private Date endtime;
     /**
      *创建时间
      */
-    Date createtime;
+    private Date createtime;
     /**
      *创建人
      */
-    Integer creator;
+    private Integer creator;
     /**
      *创建人姓名
      */
-    String creatorName;
+    private String creatorName;
     /**
      *修改时间
      */
-    Date modifytime;
+    private Date modifytime;
     /**
      *修改人
      */
-    Integer modifier;
+    private Integer modifier;
     /**
      *创建人姓名
      */
-    String modifierName;
+    private String modifierName;
     /**
      *商家id
      */
-    Integer businessid;
+    private Integer businessid;
     /**
      *商家名称
      */
-    String businessName;
+    private String businessName;
     /**
      *描述说明
      */
-    String description;
+    private String description;
     /**
      *状态：0-删除，1-正常
      */
-    String status;
+    private String status;
     /**
      *浏览数目
      */
-    Integer viewnum;
+    private Integer viewnum;
     /**
      *拍卖会类型：待定
      */
-    String type;
+    private String type;
+
+    /**
+     * 关联图片数量
+     */
+    private Integer picCount = 0;
 
     public Integer getId() {
         return id;
@@ -200,5 +205,13 @@ public class Auction extends BaseBean {
 
     public void setBusinessName(String businessName) {
         this.businessName = businessName;
+    }
+
+    public Integer getPicCount() {
+        return picCount;
+    }
+
+    public void setPicCount(Integer picCount) {
+        this.picCount = picCount;
     }
 }

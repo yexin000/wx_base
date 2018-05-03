@@ -242,6 +242,7 @@ var YDataGrid = function(config){
 				singleSelect:false,
 				checkOnSelect:false,
 				selectOnCheck:false,
+				queryParams:dataGrid.queryParams || {},
 				url: dataGrid.url,
 				method: dataGrid.method || 'post',
 				loadMsg: dataGrid.loadMsg || 'Loading in ...',

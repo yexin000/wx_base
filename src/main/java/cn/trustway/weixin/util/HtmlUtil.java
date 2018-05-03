@@ -31,6 +31,16 @@ public class HtmlUtil {
 				e.printStackTrace();
 			}
 	}
+
+	public static void writerJson(HttpServletResponse response,Object object, String contentType){
+		try {
+			response.setContentType(contentType);
+			String json = JSONUtil.toJSONString(object);
+			writer(response, json);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * 输出HTML代码
