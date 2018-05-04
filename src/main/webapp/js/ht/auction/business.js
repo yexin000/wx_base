@@ -35,8 +35,13 @@ WeiXin.business = function(){
                             }
                         }
                     },
-                    {field:'opts',title:'操作',width:120,align:'center',formatter:function(value,row,index){
+                    {field:'opts',title:'操作',width:120,align:'left',formatter:function(value,row,index){
                             var html ="<a href='#' onclick='WeiXin.business.uploadLogo("+row.id+")'>上传封面</a>";
+                            if(null != row.logoPath && "" != row.logoPath) {
+                                var viewHtml = "  <a href='#' onclick='WeiXin.business.showImage(\""+ urls.msUrl + "/"+ row.logoPath +"\")'>查看封面</a>";
+                                html += viewHtml
+                            }
+
                             return html;
                         }
                     }
@@ -63,7 +68,7 @@ WeiXin.business = function(){
                         }else{
                             var url=  $("#portraitform").attr("action");
                             var formData = new FormData($("#portraitform")[0]);
-
+                            WeiXin.progress();
                             $.ajax({
                                 url:url,
                                 type: 'POST',
@@ -73,7 +78,9 @@ WeiXin.business = function(){
                                 processData: false,
                                 contentType: false,
                                 success:function(result){
-                                    alert(result.msg);
+                                    WeiXin.closeProgress();
+                                    WeiXin.alert('提示',result.msg);
+                                    WeiXin.business.refresh();
                                 }
                             });
                         }
@@ -86,6 +93,12 @@ WeiXin.business = function(){
         uploadLogo:function (businessid){
             $("#businessid").val(businessid);
             $("#edit-portrait").click();
+        },
+        showImage : function (imgUrl) {
+            _box.showImage(imgUrl);
+        },
+        refresh : function () {
+            _box.handler.refresh();
         }
     }
     return _this;

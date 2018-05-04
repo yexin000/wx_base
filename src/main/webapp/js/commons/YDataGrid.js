@@ -331,8 +331,22 @@ var YDataGrid = function(config){
 				//Win.edit.find("#btn-close").click(Events.close);//关闭窗口
 			}
 		}
-		
-		//this 返回属性
+
+    	this.showImage = function (imgUrl){
+			$('#dlg').dialog({
+				title: '预览',
+				width: 480,
+				height:320,
+				resizable:true,
+				closed: false,
+				cache: false,
+				modal: true
+			});
+			$("#simg").attr("src",imgUrl);
+
+		}
+
+    //this 返回属性
 		this.win = Win;
 		this.form = Form;
 		this.grid = Grid;

@@ -49,6 +49,9 @@
         <input type="hidden" id="businessid" name="businessid">
         <input type="submit">
     </form>
+    <div id="dlg">
+        <img id="simg" width="460px" height="280px"/>
+    </div>
 </div>
 
 <script type="text/javascript" src="${msUrl}/js/ht/auction/business.js"></script>

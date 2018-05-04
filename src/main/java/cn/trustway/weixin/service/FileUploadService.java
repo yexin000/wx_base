@@ -48,7 +48,8 @@ public class FileUploadService {
              * 根据session中的userId修改图片
              * 先不走后台，做前端测试
              */
-            String fileUrl = FileUpload.setHead(headImg, filepath, UUID.randomUUID().toString().trim().replaceAll("-", ""));
+            String fileUrl = FileUpload.uploadFile(headImg, filepath, UUID.randomUUID().toString().trim().replaceAll("-", ""));
+            //String fileUrl = FileUpload.setHead(headImg, filepath, UUID.randomUUID().toString().trim().replaceAll("-", ""));
             //String msg = userpageService.updateUserHeadImg_300(head_img, this.getUSERID());
 
             if(StringUtils.isNotBlank(fileUrl)){
