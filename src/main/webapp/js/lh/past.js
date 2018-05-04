@@ -21,3 +21,8 @@ $(function(){
 	})
 	
 })
+
+function toIndex()
+{
+    window.href = "/foreground/html/lh/index.html";
+}

@@ -1,0 +1,77 @@
+@charset "utf-8";
+.mine-header{background-color: #ec3d2e;padding:0 0.1rem;color: #fff;}
+.user-info{padding-bottom: 0.15rem;line-height: 0.56rem;}
+.potrait{width: 0.56rem;height: 0.56rem;border-radius: 50%;background-color: rgba(255,255,255,0.6);padding:0.025rem;overflow: hidden;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;float: left;margin-right: 0.1rem}
+.potrait img{width: 100%;border-radius: 0.26rem}
+.user-info h1{font-size: 0.15rem;float: left;}
+.user-info h1 img{width: 0.34rem;margin-left: 0.05rem}
+.user-info a{color: #fff;float: right;font-size: 0.12rem;background: url(../../images/lh/ico-arrowR.png) right center no-repeat;background-size: 0.06rem;padding-right: 0.1rem}
+
+.mine-order{width: 100%;background: #fff;height: auto;overflow: hidden;margin-top: 0.1rem}
+.mine-order h2{font-size: 0.135rem;color: #333;height: 0.34rem;border-bottom: 1px solid #dcdcdc;line-height: 0.34rem}
+.mine-order h2 span{font-size: 0.135rem;color: #333;margin-left: 0.1rem}
+.mine-order h2 a{font-size: 0.09rem;background: url(../../images/lh/ico-arrowR-g.png) right center no-repeat;background-size: 0.06rem;padding-right: 0.1rem;margin-right: 0.1rem;color: #888;}
+.m-order{margin: 0.1rem 0;}
+.m-order td{height: 0.5rem;font-size: 0.12rem;color: #666;text-align: center;}
+.m-order td img{max-width: 0.27rem;max-height: 0.2rem;}
+
+.m-part , .user-part{background: #fff;width: 100%;height: auto;overflow: hidden;margin-top: 0.1rem}
+.m-part li {height: 0.42rem;line-height: 0.42rem;font-size: 0.12rem;color: #666;padding-left:0.1rem;position: relative;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+.m-part li > img{width: 0.135rem;vertical-align: sub;}
+.m-part li > span{display: inline-block;background:url(../../images/lh/ico-arrowR-g.png) right center no-repeat;background-size: 0.06rem;border-bottom: 1px solid #eee;margin-left: 0.1rem;width: calc(100% - 0.425rem);width: -webkit-calc(100% - 0.425rem);margin-right: 0.1rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+.m-part li:last-child > span , .user-part li:last-child{border-bottom: none}
+
+/*账户管理*/
+.user-part{margin-top: 0.54rem;padding-left: 0.1rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+.user-part li{border-bottom: 1px solid #eee;height: 0.42rem;line-height: 0.42rem;font-size: 0.12rem;color: #666;}
+.user-part li h2{display: inline-block;}
+.user-part li span , .user-part li select,.user-part li input{margin-right: 0.1rem;float: right;height: 100%;color: #b4b4b4}
+.user-part li span.c-66{color: #666}
+.user-part li.user-portrait{height:0.72rem;line-height: 0.72rem;}
+.user-part li.user-portrait img{width: 0.52rem;height: 0.52rem;vertical-align: middle;}
+.user-part li .allowEdit{background:url(../../images/lh/ico-arrowR-g.png) right center no-repeat;background-size: 0.06rem;padding-right: 0.16rem;}
+.user-part li select{border: none;-webkit-appearance:none;appearance:none;-moz-appearance:none;background:url(../../images/lh/ico-arrowR-g.png) right center no-repeat;background-size: 0.06rem;padding-right: 0.16rem;outline:none;font-size: 0.12rem}
+.user-part li input{outline:none;background:#fff;border:none;text-align:right;font-family:'Microsoft YaHei', 微软雅黑, 'Helvetica Neue', Helvetica, Arial, sans-serif}
+
+/*登录注册样式*/
+.login-user , .login-pass , .login-tel{height: 36px;border-bottom: 1px solid #dcdcdc;border-top: 1px solid #dcdcdc;padding:0 0.1rem;background:#fff;overflow: hidden;background-color: rgba(181, 179, 179, 0.28);margin-bottom: 0.15rem;}
+.login-user label , .login-pass label , .login-tel label{height:100% ;width: 0.2rem;display: inline-block;float: left;}
+.login-user input , .login-pass input , .login-tel input{width: calc(100% - 0.4rem);width: -webkit-calc(100% - 0.4rem);vertical-align: middle;height: 36px;border: 0;margin-left: 10px;outline: none;line-height: 36px;float: left;color: #fff;background-color: rgba(130, 128, 127, 0.06);}
+.login-user label{}
+.login-tel label{}
+.login-user {margin-top: 0.45rem;}
+.btn-login{margin-top: 0.1rem}
+.login-pass label{}
+.autoLogin{margin:0.24rem 0.1rem 0.1rem;position: relative;}
+.autoLogin input{vertical-align: middle;margin-right: 0.025rem;position: absolute;width: 0.13rem;height:100%;visibility: hidden;z-index: 10;color: #888}
+.autoLogin label{background: url(../../images/lh/check-n.png) left center no-repeat;background-size: 0.13rem;padding-left: 0.18rem;border-right: none}
+.autoLogin input:checked + label{color: #fc4747;background-image:url(../../images/lh/check-s.png);}
+.register-codes{margin-top: 0.1rem;height: 36px;border-bottom: 1px solid #dcdcdc;border-top: 1px solid #dcdcdc;background:#fff;overflow: hidden;padding-left: 0.1rem;line-height: 36px;background-color: rgba(202, 195, 195, 0.05);}
+.register-codes input{height: 20px;border: 0;outline: none;width: calc(100% - 1.2rem);background-color: rgba(179, 174, 174, 0.1);width: -webkit-calc(100% - 1.2rem);width: -moz-calc(100% - 1.2rem);}
+.register-codes #sendCodes{width:1rem;float: right;background: #32b5eb;height: 100%;color: #fff;font-size: 12px;text-align: center; }
+input::-webkit-input-placeholder {
+    color: #fff;
+}
+
+
+/*分销加盟*/
+.page-join{margin-top: 0.54rem;font-size: 0.12rem}
+.page-join p , .citychose li{margin-bottom: 0.1rem;padding:0 0.1rem;background: #fff;height: 36px;line-height: 36px;border-bottom: 1px solid #dcdcdc;border-top: 1px solid #dcdcdc;}
+.page-join p label , .citychose li label{width: 18%;display: inline-block;text-align: right;font-weight: 400;position: relative;padding-right: 3%;color: #333;margin-right: 2%}
+.page-join p label:after , .citychose li label:after{content: "";position: absolute;width: 1px;height: 20px;background: #dcdcdc;right: 0;top: 8px}
+.page-join  input{width: 70%;border:none;height: 20px;outline: none;color: #888}
+.page-join .register-codes{padding-right: 0}
+.page-join .register-codes input{width: calc(100% - 1.2rem);width: -webkit-calc(100% - 1.2rem);width: -moz-calc(100% - 1.2rem);}
+.page-join .register-codes #sendCodes{background: #f96267}
+.page-join .autoLogin label{background: url(../../images/lh/redio-n.png) left center no-repeat;background-size: 0.13rem;padding-left: 0.18rem;border-right: none}
+.page-join .autoLogin input:checked + label{color: #666;background-image:url(../../images/lh/redio-s.png);}
+
+
+.citychose select{float: right;-webkit-appearance:none;border:none;background: url(../../images/lh/ico-arrowR-g.png) right center no-repeat;padding-right: 0.1rem;background-size: 0.06rem;line-height: 36px;outline: none;width: calc(100% - 1.2rem);width: -webkit-calc(100% - 1.2rem);width: -moz-calc(100% - 1.2rem)}
+
+
+
+.hhyuan{border-radius: 0.075rem;width: 0.15rem;
+padding-left:0.04rem ;
+padding-right: 0.04rem;
+height: 0.15rem;background-color: #C53434;color: #fff;margin-left: 0.1rem;text-align: center;margin-left: 0.37rem;line-height: 0.16rem; }
