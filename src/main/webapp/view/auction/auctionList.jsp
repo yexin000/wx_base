@@ -58,6 +58,7 @@
     </form>
     <form id="resForm" class="ui-form" method="post" action="/weixin/itemRes/list.do">
         <input class="hidden" name="conid" id="conid">
+        <input class="hidden" name="conName" id="conName">
         <input class="hidden" name="conType" id="conType" value="1">
     </form>
 </div>

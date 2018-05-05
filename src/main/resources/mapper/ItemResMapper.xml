@@ -35,7 +35,7 @@
     <!-- 修改记录，只修改只不为空的字段 -->
     <update id="updateBySelective" parameterType="Object">
         update t_con_item_res set
-        <trim suffixOverrides=",">
+        <trim prefixOverrides=",">
             <if test="conid != null and conid != '' ">
                 ,conid=#{conid}
             </if>
@@ -64,7 +64,12 @@
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from t_con_item_res t where t.id = #{id}
+        ,(case
+            when t.contype='1' then (select a.name from t_e_auction a where t.conid=a.id)
+            when t.contype='2' then (select a.name from t_e_auction_item a where t.conid=a.id)
+            else '' end) as conName
+        from t_con_item_res t
+        where t.id = #{id}
     </select>
 
     <!-- 记录总数 -->

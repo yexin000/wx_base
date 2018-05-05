@@ -24,12 +24,12 @@
             <div class="ftitle">图片信息</div>
             <div class="fitem">
                 <label>对象名称:</label>
-                <input class="easyui-validatebox" type="text" name="conName" data-options="required:true">
+                <input class="easyui-validatebox" type="text" name="conName" value="${conName}" readonly="readonly" data-options="required:true">
             </div>
 
             <div class="fitem">
                 <label>对象类型:</label>
-                <select class="easyui-combobox" name="conType" id="conTypes" data-options="required:true">
+                <select class="easyui-combobox" name="conType" value="${conType}" id="conTypes" data-options="required:true">
                     <option value="1" selected="selected">拍卖会</option>
                     <option value="2">拍卖品</option>
                 </select>
@@ -48,7 +48,12 @@
     <form id="searchForm" style="display: none;">
         <input name="conid" value="${conid}">
         <input name="conType" value="${conType}">
+        <input name="conName" value="${conName}">
     </form>
+
+    <div id="dlg">
+        <img id="simg" width="460px" height="280px"/>
+    </div>
 </div>
 
 <script type="text/javascript" src="${msUrl}/js/ht/auction/itemRes.js"></script>

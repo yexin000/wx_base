@@ -41,7 +41,7 @@ WeiXin.auction = function(){
                     {field:'viewnum',title:'浏览数量',width:120,align:'center',sortable:true},
                     {field:'type',title:'类型',width:120,align:'center',sortable:true},
                     {field:'opts',title:'操作',width:120,align:'center',formatter:function(value,row,index){
-                            var html ="<a href='#' onclick='WeiXin.auction.resManage("+row.id+")'>图片管理("+row.picCount+")</a>";
+                            var html ="<a href='#' onclick='WeiXin.auction.resManage(\""+row.id + "\"," + "\"" + row.name +"\")'>图片管理("+row.picCount+")</a>";
                             return html;
                         }}
                 ]],
@@ -68,8 +68,9 @@ WeiXin.auction = function(){
             });
 
         },
-        resManage:function (auctionId) {
+        resManage:function (auctionId, auctionName) {
             $("#conid").val(auctionId);
+            $("#conName").val(auctionName);
             $("#resForm").submit();
         }
     }

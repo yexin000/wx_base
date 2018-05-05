@@ -12,10 +12,12 @@ WeiXin.business = function(){
             event:{
                 add : function(){
                     _box.handler.add();//调用add方法
+                    $("#dlg").hide();
                 },
                 edit:function(){
                     _box.handler.edit(function(result){
                     });
+                    $("#dlg").hide();
                 }
             },
             dataGrid:{
@@ -95,6 +97,7 @@ WeiXin.business = function(){
             $("#edit-portrait").click();
         },
         showImage : function (imgUrl) {
+            $("#dlg").show();
             _box.showImage(imgUrl);
         },
         refresh : function () {
