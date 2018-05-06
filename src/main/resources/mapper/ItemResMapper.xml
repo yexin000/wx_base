@@ -88,16 +88,19 @@
         from t_con_item_res t
         <if test="conType != null and conType != ''">
             <if test="conType == 1">
-                left join t_e_auction a on t.conid=a.id
+                left join t_e_auction a on t.conid=a.id and t.contype='1'
             </if>
             <if test="conType == 2">
-                left join t_e_auction_item a on t.conid=a.id
+                left join t_e_auction_item a on t.conid=a.id and t.contype='2'
             </if>
         </if>
         where 1=1
         <trim suffixOverrides=",">
             <if test="conid != null and conid != ''">
                 and t.conid=#{conid}
+            </if>
+            <if test="conType != null and conType != ''">
+                and t.conType=#{conType}
             </if>
         </trim>
         order by t.idx asc

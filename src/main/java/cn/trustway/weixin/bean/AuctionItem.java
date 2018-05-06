@@ -82,6 +82,11 @@ public class AuctionItem extends BaseBean {
      */
     private String auctionname;
 
+    /**
+     * 关联图片数量
+     */
+    private Integer picCount = 0;
+
     public Integer getId() {
         return id;
     }
@@ -224,5 +229,13 @@ public class AuctionItem extends BaseBean {
 
     public void setAuctionname(String auctionname) {
         this.auctionname = auctionname;
+    }
+
+    public Integer getPicCount() {
+        return picCount;
+    }
+
+    public void setPicCount(Integer picCount) {
+        this.picCount = picCount;
     }
 }

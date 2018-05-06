@@ -56,8 +56,8 @@ WeiXin.auctionItem = function(){
                     {field:'auctionstatus',title:'拍卖状态',width:60,align:'center',sortable:true},
                     {field:'auctionname',title:'拍卖会',width:100,align:'center',sortable:true},
                     {field:'opts',title:'操作',width:100,align:'center',formatter:function(value,row,index){
-                            //var html ="<a href='#' onclick='WeiXin.wxCode.toList("+row.id+")'>参数管理("+row.subCount+")</a>";
-                            return '';
+                            var html ="<a href='#' onclick='WeiXin.auctionItem.resManage(\""+row.id + "\"," + "\"" + row.name +"\")'>图片管理("+row.picCount+")</a>";
+                            return html;
                         }
                     }
                 ]],
@@ -83,6 +83,11 @@ WeiXin.auctionItem = function(){
                 }
             });
 
+        },
+        resManage:function (auctionItemId, auctionItemName) {
+            $("#conid").val(auctionItemId);
+            $("#conName").val(auctionItemName);
+            $("#resForm").submit();
         }
     }
     return _this;

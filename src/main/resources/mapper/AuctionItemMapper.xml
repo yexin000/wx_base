@@ -132,6 +132,7 @@
         select
         <include refid="Base_Column_List" />
         ,a.name as auctionname
+        ,(select count(1) from t_con_item_res r where r.conid=t.id and r.contype='2') as picCount
         from t_e_auction_item t
         LEFT JOIN t_e_auction a on t.auctionid=a.id
         where 1=1 and t.status = '1'

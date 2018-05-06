@@ -30,8 +30,8 @@
             <div class="fitem">
                 <label>对象类型:</label>
                 <select class="easyui-combobox" name="conType" value="${conType}" id="conTypes" data-options="required:true">
-                    <option value="1" selected="selected">拍卖会</option>
-                    <option value="2">拍卖品</option>
+                    <option value="1" <c:if test="${conType == '1'}">selected="selected"</c:if>>拍卖会</option>
+                    <option value="2" <c:if test="${conType == '2'}">selected="selected"</c:if>>拍卖品</option>
                 </select>
             </div>
             <div class="fitem">
@@ -49,6 +49,9 @@
         <input name="conid" value="${conid}">
         <input name="conType" value="${conType}">
         <input name="conName" value="${conName}">
+    </form>
+
+    <form id="orgForm" class="ui-form" method="post" action="">
     </form>
 
     <div id="dlg">

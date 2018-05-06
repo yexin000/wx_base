@@ -74,6 +74,11 @@
             </div>
         </div>
     </form>
+    <form id="resForm" class="ui-form" method="post" action="/weixin/itemRes/list.do">
+        <input class="hidden" name="conid" id="conid">
+        <input class="hidden" name="conName" id="conName">
+        <input class="hidden" name="conType" id="conType" value="2">
+    </form>
 </div>
 <script type="text/javascript" src="${msUrl}/js/ht/auction/auctionItem.js"></script>
 </body>

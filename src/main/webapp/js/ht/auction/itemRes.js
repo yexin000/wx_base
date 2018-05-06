@@ -44,6 +44,23 @@ WeiXin.itemRes = function(){
                     }
                 ]],
                 toolbar:[
+                    {id:'btnadd',text:'添加',btnType:'add'},
+                    {id:'btnedit',text:'编辑',btnType:'edit'},
+                    {id:'btndelete',text:'删除',btnType:'remove'},
+                    {
+                        id:'btnback',
+                        text:'返回',
+                        iconCls:'icon-back',
+                        handler:function(){
+                            var conType = $('#conTypes').combobox('getValue');
+                            if(conType == '1') {
+                                $("#orgForm").attr("action", urls.msUrl + "/auction/list.do");
+                            } else if(conType == '2') {
+                                $("#orgForm").attr("action", urls.msUrl + "/auctionItem/list.do");
+                            }
+                            $("#orgForm").submit();
+                        }
+                    }
                 ]
             }
         },
