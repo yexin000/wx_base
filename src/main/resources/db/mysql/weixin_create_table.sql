@@ -57,7 +57,8 @@ create table if not exists weixin_user(
   phonenum varchar(32) not null comment '手机号码',
   balance double(11,3) default 0 not null comment '余额',
   moneyextracting double(11,3) default 0 not null comment '提取中金额',
-  extractedmoney double(11,3) default 0 not null comment '已提取金额'
+  extractedmoney double(11,3) default 0 not null comment '已提取金额',
+  nickname varchar(256) DEFAULT NULL,
 ) charset=utf8 comment='微信用户表';
 
 create table if not exists wx_account(
