@@ -17,7 +17,7 @@
 
     <!-- sys_menu table all fields -->
     <sql id="Base_Column_List">
-        t.id,t.wxUserId,t.wxUserName,t.auctionItemId,t.auctionItemName,t.bidPrice,t.status,t.bidTime
+        t.id,t.wxUserId,t.auctionItemId,t.bidPrice,t.status,t.bidTime
     </sql>
 
     <!-- 插入记录 -->
