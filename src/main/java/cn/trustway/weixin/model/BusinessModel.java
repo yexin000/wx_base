@@ -42,6 +42,11 @@ public class BusinessModel extends BaseModel {
      */
     private String status;
 
+    /**
+     * 是否推荐：0-否,1-是
+     */
+    private String isShow;
+
     public Integer getId() {
         return id;
     }
@@ -104,5 +109,13 @@ public class BusinessModel extends BaseModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(String isShow) {
+        this.isShow = isShow;
     }
 }
