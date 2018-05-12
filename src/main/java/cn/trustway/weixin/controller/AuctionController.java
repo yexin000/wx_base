@@ -9,10 +9,7 @@ import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -61,6 +58,23 @@ public class AuctionController extends BaseController {
      */
     @RequestMapping(value = "/dataList", method = RequestMethod.POST)
     public void dataList(AuctionModel model, HttpServletResponse response) throws Exception {
+        queryDataList(model, response);
+    }
+
+    /**
+     * 前端数据列表查询
+     *
+     * @param model
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
+    public void ajaxDataList(@RequestBody AuctionModel model, HttpServletResponse response) throws Exception {
+        queryDataList(model, response);
+    }
+
+    private void queryDataList(AuctionModel model, HttpServletResponse response) throws Exception {
         List<Auction> dataList = auctionService.queryByList(model);
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();

@@ -1,6 +1,6 @@
 
 //图片访问路径
-var imagePath = "http://127.0.0.1:8080/";
+var imagePath = "http://127.0.toTypeAuction0.1:8080/";
 
 
 $(function(){	
@@ -22,7 +22,8 @@ $(function(){
 	
 })
 
-function toIndex()
+function toTypeAuction()
 {
-    window.href = "/foreground/html/lh/index.html";
+
+    window.location.href = "../../../foreground/html/lh/findbyType.html?type=1";
 }

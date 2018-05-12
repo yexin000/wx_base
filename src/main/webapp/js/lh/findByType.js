@@ -6,7 +6,8 @@ var imagePath = "http://127.0.0.1:8080/";
 $(function(){	
 	
 	$("#backtop").hide()
-
+    var type = getParam("type");
+	alert(type);
     loadfindData();
 	$(window).scroll(function(){
         var scrolltop=$(document).scrollTop();

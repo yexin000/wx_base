@@ -61,6 +61,11 @@ public class AuctionModel extends BaseModel {
      *拍卖会类型：待定
      */
     String type;
+    /**
+     *是否在首页显示
+     */
+    String isShow;
+
 
     public Integer getId() {
         return id;
@@ -164,5 +169,13 @@ public class AuctionModel extends BaseModel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(String isShow) {
+        this.isShow = isShow;
     }
 }

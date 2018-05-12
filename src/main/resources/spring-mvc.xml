@@ -37,7 +37,7 @@
 		<bean class="cn.trustway.weixin.interceptor.AuthInterceptor">
 			<property name="uncheckUrls"> 
 				<list>
-					<value>cn.trustway.weixin.controller.AuctionController</value>
+					<value>/auction/ajaxDataList.do</value>
 					<value>/business/dataList.do</value>
 					<value>/wxCode/queryListByCode.do</value>
 					<value>/file/setHeadImg.do</value>

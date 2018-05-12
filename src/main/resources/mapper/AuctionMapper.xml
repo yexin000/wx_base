@@ -112,7 +112,12 @@
             <if test="name != null and name != ''">
                 and t.name like CONCAT('%', #{name}, '%')
             </if>
+
+            <if test="isShow != null and isShow != ''">
+                and t.isShow like CONCAT('%', #{isShow}, '%')
+            </if>
         </trim>
+
         order by t.modifytime desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
             ${pager.orderCondition}

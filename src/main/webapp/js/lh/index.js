@@ -32,13 +32,16 @@
    
     //加载首页数据
     function loadindexbanner(){
-
-    	var url= '/weixin/auction/dataList.do';
+        var AuctionModel = {};
+        AuctionModel.isShow = '1';
+    	var url= '/weixin/auction/ajaxDataList.do';
+    	debugger;
     	$.ajax({
     		url: url,
     		type: 'post',
-    		data:{},
+    		data: JSON.stringify(AuctionModel) ,
     		dataType: 'JSON',
+            contentType : "application/json;charset=utf-8",
     		cache: false,
     		success:function(data){
     			var dataList = data.rows;
