@@ -9,44 +9,44 @@
         <result column="name" property="name" />
         <result column="type" property="type" />
         <result column="description" property="description" />
-        <result column="starttime" property="starttime" />
-        <result column="endtime" property="endtime" />
-        <result column="startprice" property="startprice" />
-        <result column="curprice" property="curprice" />
-        <result column="finalprice" property="finalprice" />
-        <result column="addprice" property="addprice" />
-        <result column="depositprice" property="depositprice" />
+        <result column="startTime" property="startTime" />
+        <result column="endTime" property="endTime" />
+        <result column="startPrice" property="startPrice" />
+        <result column="curPrice" property="curPrice" />
+        <result column="finalPrice" property="finalPrice" />
+        <result column="addPrice" property="addPrice" />
+        <result column="depositPrice" property="depositPrice" />
         <result column="rate" property="rate" />
         <result column="detail" property="detail" />
         <result column="status" property="status" />
-        <result column="isshow" property="isshow" />
-        <result column="auctionstatus" property="auctionstatus" />
-        <result column="auctionid" property="auctionid" />
+        <result column="isShow" property="isShow" />
+        <result column="auctionStatus" property="auctionStatus" />
+        <result column="auctionId" property="auctionId" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="Base_Column_List">
-		t.id,t.name,t.type,t.description,t.starttime,t.endtime,t.startprice,t.curprice,t.finalprice,
-		t.addprice,t.depositprice,t.rate,t.detail,t.status,t.isshow,t.auctionstatus,t.auctionid
+		t.id,t.name,t.type,t.description,t.startTime,t.endTime,t.startPrice,t.curPrice,t.finalPrice,
+		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_auction_item(id,name,type,description,starttime,endtime,startprice,curprice,finalprice,
-		  addprice,depositprice,rate,detail,status,isshow,auctionstatus,auctionid)
-        values(null,#{name},#{type},#{description},#{starttime},#{endtime},#{startprice},
-            #{curprice},#{finalprice},#{addprice},#{depositprice},#{rate}, #{detail}, '1',
-            #{isshow},'0',#{auctionid});
+        t_e_auction_item(id,name,type,description,startTime,endTime,startPrice,curPrice,finalPrice,
+		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId)
+        values(null,#{name},#{type},#{description},#{startTime},#{endTime},#{startPrice},
+            #{curPrice},#{finalPrice},#{addPrice},#{depositPrice},#{rate}, #{detail}, '1',
+            #{isShow},'0',#{auctionId});
     </insert>
 
     <!-- 根据id，修改记录 -->
     <update id="update" parameterType="Object">
 		update t_e_auction_item set
-		name=#{name},type=#{type},description=#{description},starttime=starttime,endtime=endtime,
-        startprice=#{startprice},curprice=#{curprice},finalprice=#{finalprice},addprice=#{addprice},
-        depositprice=#{depositprice},rate=#{rate},detail=#{detail},status=#{status},isshow=#{isshow},
-        auctionstatus=#{auctionstatus},auctionid=#{auctionid},
+		name=#{name},type=#{type},description=#{description},startTime=startTime,endTime=endTime,
+        startPrice=#{startPrice},curPrice=#{curPrice},finalPrice=#{finalPrice},addPrice=#{addPrice},
+        depositPrice=#{depositPrice},rate=#{rate},detail=#{detail},status=#{status},isShow=#{isShow},
+        auctionStatus=#{auctionStatus},auctionId=#{auctionId},
 		where id=#{id}
 	</update>
 
@@ -63,26 +63,26 @@
             <if test="description != null and description != '' ">
                 description=#{description},
             </if>
-            <if test="starttime != null and starttime != '' ">
-                starttime=#{starttime},
+            <if test="startTime != null and startTime != '' ">
+                startTime=#{startTime},
             </if>
-            <if test="endtime != null and endtime != '' ">
-                endtime=#{endtime},
+            <if test="endTime != null and endTime != '' ">
+                endTime=#{endTime},
             </if>
-            <if test="startprice != null and startprice != '' ">
-                startprice=#{startprice},
+            <if test="startPrice != null and startPrice != '' ">
+                startPrice=#{startPrice},
             </if>
-            <if test="curprice != null and curprice != '' ">
-                curprice=#{curprice},
+            <if test="curPrice != null and curPrice != '' ">
+                curPrice=#{curPrice},
             </if>
-            <if test="finalprice != null and finalprice != '' ">
-                finalprice=#{finalprice},
+            <if test="finalPrice != null and finalPrice != '' ">
+                finalPrice=#{finalPrice},
             </if>
-            <if test="addprice != null and addprice != '' ">
-                addprice=#{addprice},
+            <if test="addPrice != null and addPrice != '' ">
+                addPrice=#{addPrice},
             </if>
-            <if test="depositprice != null and depositprice != '' ">
-                depositprice=#{depositprice},
+            <if test="depositPrice != null and depositPrice != '' ">
+                depositPrice=#{depositPrice},
             </if>
             <if test="rate != null and rate != '' ">
                 rate=#{rate},
@@ -93,14 +93,14 @@
             <if test="status != null and status != '' ">
                 status=#{status},
             </if>
-            <if test="isshow != null and isshow != '' ">
-                isshow=#{isshow},
+            <if test="isShow != null and isShow != '' ">
+                isShow=#{isShow},
             </if>
-            <if test="auctionstatus != null and auctionstatus != '' ">
-                auctionstatus=#{auctionstatus},
+            <if test="auctionStatus != null and auctionStatus != '' ">
+                auctionStatus=#{auctionStatus},
             </if>
-            <if test="auctionid != null and auctionid != '' ">
-                auctionid=#{auctionid},
+            <if test="auctionId != null and auctionId != '' ">
+                auctionId=#{auctionId},
             </if>
         </trim>
         where id=#{id}
@@ -117,7 +117,7 @@
         <include refid="Base_Column_List" />
         ,a.name as auctionname
         from t_e_auction_item t
-        LEFT JOIN t_e_auction a on t.auctionid=a.id
+        LEFT JOIN t_e_auction a on t.auctionId=a.id
         where t.id = #{id} and t.status = '1'
     </select>
 
@@ -134,7 +134,7 @@
         ,a.name as auctionname
         ,(select count(1) from t_con_item_res r where r.conid=t.id and r.contype='2') as picCount
         from t_e_auction_item t
-        LEFT JOIN t_e_auction a on t.auctionid=a.id
+        LEFT JOIN t_e_auction a on t.auctionId=a.id
         where 1=1 and t.status = '1'
         <trim suffixOverrides=",">
             <if test="name != null and name != ''">

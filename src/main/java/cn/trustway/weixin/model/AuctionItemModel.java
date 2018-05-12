@@ -27,31 +27,31 @@ public class AuctionItemModel extends BaseModel {
     /**
      *开始拍卖时间
      */
-    private Date starttime;
+    private Date startTime;
     /**
      *结束拍卖时间
      */
-    private Date endtime;
+    private Date endTime;
     /**
      *起拍价格
      */
-    private Double startprice;
+    private Double startPrice;
     /**
      *当前拍卖价格
      */
-    private Double curprice;
+    private Double curPrice = 0.0d;
     /**
      *成交价格
      */
-    private Double finalprice;
+    private Double finalPrice = 0.0d;
     /**
      *加价最低价格
      */
-    private Double addprice;
+    private Double addPrice;
     /**
      *保证金
      */
-    private Double depositprice;
+    private Double depositPrice = 0.0d;
     /**
      *手续费比率
      */
@@ -67,20 +67,24 @@ public class AuctionItemModel extends BaseModel {
     /**
      *是否在首页显示：0-否，1-是
      */
-    private String isshow;
+    private String isShow;
     /**
      *拍卖状态：0-未开始拍卖，1-正在拍卖，2-拍卖成功，3-流拍
      */
-    private String auctionstatus;
+    private String auctionStatus;
     /**
      *拍卖会id
      */
-    private Integer auctionid;
-
+    private Integer auctionId;
     /**
      *拍卖会名称
      */
-    private String auctionname;
+    private String auctionName;
+
+    /**
+     * 关联图片数量
+     */
+    private Integer picCount = 0;
 
     public Integer getId() {
         return id;
@@ -114,60 +118,60 @@ public class AuctionItemModel extends BaseModel {
         this.description = description;
     }
 
-    public Date getStarttime() {
-        return starttime;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setStarttime(Date starttime) {
-        this.starttime = starttime;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getEndtime() {
-        return endtime;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setEndtime(Date endtime) {
-        this.endtime = endtime;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
-    public Double getStartprice() {
-        return startprice;
+    public Double getStartPrice() {
+        return startPrice;
     }
 
-    public void setStartprice(Double startprice) {
-        this.startprice = startprice;
+    public void setStartPrice(Double startPrice) {
+        this.startPrice = startPrice;
     }
 
-    public Double getCurprice() {
-        return curprice;
+    public Double getCurPrice() {
+        return curPrice;
     }
 
-    public void setCurprice(Double curprice) {
-        this.curprice = curprice;
+    public void setCurPrice(Double curPrice) {
+        this.curPrice = curPrice;
     }
 
-    public Double getFinalprice() {
-        return finalprice;
+    public Double getFinalPrice() {
+        return finalPrice;
     }
 
-    public void setFinalprice(Double finalprice) {
-        this.finalprice = finalprice;
+    public void setFinalPrice(Double finalPrice) {
+        this.finalPrice = finalPrice;
     }
 
-    public Double getAddprice() {
-        return addprice;
+    public Double getAddPrice() {
+        return addPrice;
     }
 
-    public void setAddprice(Double addprice) {
-        this.addprice = addprice;
+    public void setAddPrice(Double addPrice) {
+        this.addPrice = addPrice;
     }
 
-    public Double getDepositprice() {
-        return depositprice;
+    public Double getDepositPrice() {
+        return depositPrice;
     }
 
-    public void setDepositprice(Double depositprice) {
-        this.depositprice = depositprice;
+    public void setDepositPrice(Double depositPrice) {
+        this.depositPrice = depositPrice;
     }
 
     public Double getRate() {
@@ -194,35 +198,43 @@ public class AuctionItemModel extends BaseModel {
         this.status = status;
     }
 
-    public String getIsshow() {
-        return isshow;
+    public String getIsShow() {
+        return isShow;
     }
 
-    public void setIsshow(String isshow) {
-        this.isshow = isshow;
+    public void setIsShow(String isShow) {
+        this.isShow = isShow;
     }
 
-    public String getAuctionstatus() {
-        return auctionstatus;
+    public String getAuctionStatus() {
+        return auctionStatus;
     }
 
-    public void setAuctionstatus(String auctionstatus) {
-        this.auctionstatus = auctionstatus;
+    public void setAuctionStatus(String auctionStatus) {
+        this.auctionStatus = auctionStatus;
     }
 
-    public Integer getAuctionid() {
-        return auctionid;
+    public Integer getAuctionId() {
+        return auctionId;
     }
 
-    public void setAuctionid(Integer auctionid) {
-        this.auctionid = auctionid;
+    public void setAuctionId(Integer auctionId) {
+        this.auctionId = auctionId;
     }
 
-    public String getAuctionname() {
-        return auctionname;
+    public String getAuctionName() {
+        return auctionName;
     }
 
-    public void setAuctionname(String auctionname) {
-        this.auctionname = auctionname;
+    public void setAuctionName(String auctionName) {
+        this.auctionName = auctionName;
+    }
+
+    public Integer getPicCount() {
+        return picCount;
+    }
+
+    public void setPicCount(Integer picCount) {
+        this.picCount = picCount;
     }
 }

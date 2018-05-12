@@ -42,19 +42,19 @@
             </div>
             <div class="fitem">
                 <label>开始拍卖时间:</label>
-                <input type="text" name="starttime" editable="false" class="easyui-datetimebox" data-options="required:true">
+                <input type="text" name="startTime" editable="false" class="easyui-datetimebox" data-options="required:true">
             </div>
             <div class="fitem">
                 <label>结束拍卖时间:</label>
-                <input type="text" name="endtime" editable="false" class="easyui-datetimebox" data-options="required:true">
+                <input type="text" name="endTime" editable="false" class="easyui-datetimebox" data-options="required:true">
             </div>
             <div class="fitem">
                 <label>起拍价格:</label>
-                <input class="easyui-validatebox" type="text" name="startprice" data-options="required:true">
+                <input class="easyui-validatebox" type="text" name="startPrice" data-options="required:true">
             </div>
             <div class="fitem">
                 <label>最低加价:</label>
-                <input class="easyui-validatebox" type="text" name="addprice" value="0" data-options="required:true">
+                <input class="easyui-validatebox" type="text" name="addPrice" value="0" data-options="required:true">
             </div>
             <div class="fitem">
                 <label>手续费比率:</label>
@@ -62,14 +62,14 @@
             </div>
             <div class="fitem">
                 <label>首页展示:</label>
-                <select class="easyui-combobox" name="isshow" id="isshows" data-options="required:true">
+                <select class="easyui-combobox" name="isShow" id="isshows" data-options="required:true">
                     <option value="0" selected="selected">否</option>
                     <option value="1">是</option>
                 </select>
             </div>
             <div class="fitem">
                 <label>拍卖会:</label>
-                <select class="easyui-combobox" name="auctionid" id="auctionids" data-options="required:true" style="width: 156px;">
+                <select class="easyui-combobox" name="auctionId" id="auctionids" data-options="required:true" style="width: 156px;">
                 </select>
             </div>
         </div>
