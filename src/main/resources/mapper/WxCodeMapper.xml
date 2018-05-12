@@ -184,4 +184,23 @@
 		select count(1)
 		from wx_code where code=#{code}
 	</select>
+
+	<!-- 查询商品主类型列表 -->
+	<select id="getAuctionItemType" resultMap="BaseResultMap" parameterType="Object">
+		select
+		<include refid="Base_Column_List" />
+		from wx_code
+		where code like 'auctionItemType%'
+		and parentid is null order by value asc;
+	</select>
+
+	<!-- 查询商品二级类型列表 -->
+	<select id="getAuctionItemSecondType" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="Base_Column_List" />
+		from wx_code
+		where parentid = (
+			select id from wx_code where code = #{code})
+		order by value asc
+	</select>
 </mapper>   

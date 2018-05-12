@@ -32,6 +32,10 @@ public interface WxCodeDao<T> extends BaseDao<T> {
 	public List<T> getChildCode();
 	
 	public List<T> getChildCode(Integer parentId);
+
+	public List<T> getAuctionItemType();
+
+	public List<T> getAuctionItemSecondType(String code);
 	
 	/**
 	 * 查询代码，检查是否存在
@@ -41,5 +45,5 @@ public interface WxCodeDao<T> extends BaseDao<T> {
 	public int getCodeCountByCode(String code);
 	
 	public T getModelByCode(String code);
-	
+
 }

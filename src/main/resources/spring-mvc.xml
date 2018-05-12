@@ -41,6 +41,8 @@
 					<value>/business/dataList.do</value>
 					<value>/wxCode/queryListByCode.do</value>
 					<value>/file/setHeadImg.do</value>
+					<value>/wxCode/getAuctionItemType.do</value>
+					<value>/wxCode/getAuctionItemSecondType.do</value>
 				</list>
 			</property>
 		</bean>

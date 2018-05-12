@@ -1,25 +1,23 @@
 package cn.trustway.weixin.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import cn.trustway.weixin.bean.BaseBean.DELETED;
+import cn.trustway.weixin.bean.WxCode;
+import cn.trustway.weixin.exception.ServiceException;
+import cn.trustway.weixin.model.WxCodeModel;
+import cn.trustway.weixin.service.WxCodeService;
+import cn.trustway.weixin.util.DateUtil;
+import cn.trustway.weixin.util.HtmlUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.trustway.weixin.bean.BaseBean.DELETED;
-import cn.trustway.weixin.bean.WxCode;
-import cn.trustway.weixin.model.WxCodeModel;
-import cn.trustway.weixin.exception.ServiceException;
-import cn.trustway.weixin.service.WxCodeService;
-import cn.trustway.weixin.util.DateUtil;
-import cn.trustway.weixin.util.HtmlUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 微信参数控制类
@@ -44,8 +42,7 @@ public class WxCodeController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public ModelAndView menu(WxCodeModel model, HttpServletRequest request)
-			throws Exception {
+	public ModelAndView menu(WxCodeModel model, HttpServletRequest request) throws Exception {
 		Map<String, Object> context = getRootMap();
 		model.setDeleted(DELETED.NO.key);
 		List<WxCode> dataList = wxCodeService.queryByList(model);
@@ -63,8 +60,7 @@ public class WxCodeController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/dataList")
-	public void dataList(WxCodeModel model, HttpServletResponse response)
-			throws Exception {
+	public void dataList(WxCodeModel model, HttpServletResponse response) throws Exception {
 		List<WxCode> dataList = wxCodeService.queryByList(model);
 		// 设置页面数据
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
@@ -74,8 +70,7 @@ public class WxCodeController extends BaseController {
 	}
 	
 	@RequestMapping("/queryList")
-	public void queryList(WxCodeModel model, HttpServletResponse response)
-			throws Exception {
+	public void queryList(WxCodeModel model, HttpServletResponse response) throws Exception {
 		List<WxCode> dataList = wxCodeService.queryByAll();
 		// 设置页面数据
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
@@ -85,8 +80,7 @@ public class WxCodeController extends BaseController {
 	}
 	
 	@RequestMapping("/queryListByCode")
-	public void queryListByCode(String code, HttpServletResponse response)
-			throws Exception {
+	public void queryListByCode(String code, HttpServletResponse response) throws Exception {
 		WxCode wxCode = wxCodeService.getBeanByCode(code);
 		if(wxCode!=null){
 			List<WxCode> dataList = wxCodeService.getChildCode(wxCode.getId());
@@ -107,8 +101,7 @@ public class WxCodeController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/save")
-	public void save(WxCode bean, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public void save(WxCode bean, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int count = wxCodeService.getCodeCountByCode(bean.getCode());
 		if (bean.getId() == null) {
 			if (count > 0) {
@@ -124,8 +117,7 @@ public class WxCodeController extends BaseController {
 	}
 
 	@RequestMapping("/getId")
-	public void getId(Integer id, HttpServletResponse response)
-			throws Exception {
+	public void getId(Integer id, HttpServletResponse response) throws Exception {
 		Map<String, Object> context = new HashMap<String, Object>();
 		WxCode bean = wxCodeService.queryById(id);
 		if (bean == null) {
@@ -138,8 +130,7 @@ public class WxCodeController extends BaseController {
 	}
 
 	@RequestMapping("/delete")
-	public void delete(Integer[] id, HttpServletResponse response)
-			throws Exception {
+	public void delete(Integer[] id, HttpServletResponse response) throws Exception {
 		if (id != null && id.length > 0) {
 			wxCodeService.delete(id);
 			sendSuccessMessage(response, "删除成功");
@@ -148,4 +139,34 @@ public class WxCodeController extends BaseController {
 		}
 	}
 
+	/**
+	 * 查询商品主类型列表
+	 *
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/getAuctionItemType")
+	public void getAuctionItemType(HttpServletResponse response) {
+		List<WxCode> dataList = wxCodeService.getAuctionItemType();
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("total", dataList.size());
+		jsonMap.put("rows", dataList);
+		HtmlUtil.writerJson(response, jsonMap);
+	}
+
+
+	/**
+	 * 查询商品二级类型列表
+	 *
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/getAuctionItemSecondType")
+	public void getAuctionItemSecondType(String code, HttpServletResponse response) {
+		List<WxCode> dataList = wxCodeService.getAuctionItemSecondType(code);
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("total", dataList.size());
+		jsonMap.put("rows", dataList);
+		HtmlUtil.writerJson(response, jsonMap);
+	}
 }
