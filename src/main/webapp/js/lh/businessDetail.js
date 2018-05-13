@@ -8,6 +8,7 @@ $(function(){
 	$("#backtop").hide()
     var id = getParam("id");
     loadfindData(id);
+    loadBusinessAuctionItem(id);
 	$(window).scroll(function(){
         var scrolltop=$(document).scrollTop();
         var Vheight=$(window).height();
@@ -41,6 +42,44 @@ function loadfindData(id){
             $("#shoppingCount").html( dataObj.itemCount);
 
             $("#dataDiv").append(dataObj);
+        }
+    })
+}
+
+
+//加载商家拍品数据
+function loadBusinessAuctionItem(id){
+    var AuctionItemModel = {};
+    AuctionItemModel.businessId = id;
+    var url= '/weixin/auctionItem/ajaxDataList.do';
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: JSON.stringify(AuctionItemModel) ,
+        dataType: 'JSON',
+        contentType : "application/json;charset=utf-8",
+        cache: false,
+        success:function(data){
+            var dataList = data.rows;
+            if(dataList.length> 0)
+            {
+                var str = '';
+                $.each(dataList,function(i,obj){
+
+                    str+='<tr>';
+                    str+='  <td class="pro-item-M"><img src="../../../images/lh/wshop_indexbanner1.jpg"  alt=""></td>';
+                    str+='  <td class="pro-item-H">';
+                    str+='      <h2>'+obj.name+'</h2>';
+                    str+='      <p><span>商品介绍: </span><span style="overflow:hidden; display:inline-block; width:10px;  "> '+obj.description+'<span></p>';
+                    str+='      <p><span>商品价格: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
+                    str+='      <p><span>商品销量: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
+                    str+='  </td>';
+                    str+='</tr>';
+
+                });
+            }
+            $(".pro-item").append(str);
+
         }
     })
 }

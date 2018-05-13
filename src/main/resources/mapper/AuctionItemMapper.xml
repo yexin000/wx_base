@@ -143,6 +143,9 @@
             <if test="isShow != null and isShow != ''">
                 and t.isshow = #{isShow}
             </if>
+            <if test="businessId != null and businessId != ''">
+                and t.businessId = #{businessId}
+            </if>
         </trim>
         order by t.id desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">

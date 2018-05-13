@@ -86,6 +86,11 @@ public class AuctionItemModel extends BaseModel {
      */
     private Integer picCount = 0;
 
+    /**
+     * 商家id
+     */
+    private String businessId ;
+
     public Integer getId() {
         return id;
     }
@@ -236,5 +241,13 @@ public class AuctionItemModel extends BaseModel {
 
     public void setPicCount(Integer picCount) {
         this.picCount = picCount;
+    }
+
+    public String getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId;
     }
 }

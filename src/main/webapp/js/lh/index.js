@@ -30,7 +30,7 @@
         });
    })
    
-    //加载展览会数据
+    //加载首页数据
     function loadindexAuction(){
         var AuctionModel = {};
         AuctionModel.isShow = '1';
@@ -52,7 +52,7 @@
 
                         str+='<div class="posr">';
                         str+='	<div class="left" >';
-                        str+=' 		<img src= "'+hostPath + obj.logoPath + '" alt="">';
+                        str+=' 		<img src="../../../images/lh/wshop_indexbanner1.jpg" alt="">';
                         str+='	</div>';
                         str+='<p style="padding-top: 1.4rem;padding-left: -1rem ;font-size:18px;font-weight:bold;">'+obj.name+'</p>';
                         str+='<p style=" padding-left: -1rem ; "> '+obj.createtime+'开始，大家敬请期待</p>';
@@ -65,7 +65,7 @@
     	})
     }
 
-    //加载首页拍品数据
+    //加载首页数据
     function loadindexAuctionItem(){
         var AuctionItemModel = {};
         AuctionItemModel.isShow = '1';
