@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -59,6 +59,23 @@ public class BusinessController extends BaseController {
     @RequestMapping("/dataList")
     public void dataList(BusinessModel model, HttpServletResponse response)
             throws Exception {
+        queryDataList(model, response);
+    }
+
+    /**
+     * 前端数据列表查询
+     *
+     * @param model
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
+    public void ajaxDataList(@RequestBody BusinessModel model, HttpServletResponse response) throws Exception {
+        queryDataList(model, response);
+    }
+
+    private void queryDataList(BusinessModel model, HttpServletResponse response) throws Exception {
         List<Business> dataList = businessService.queryByList(model);
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
@@ -66,7 +83,6 @@ public class BusinessController extends BaseController {
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
     }
-
     /**
      * 根据ID查找记录
      *
@@ -77,8 +93,40 @@ public class BusinessController extends BaseController {
      */
     @RequestMapping("/getId")
     public void getId(Integer id, HttpServletResponse response) throws Exception {
+        BusinessModel model = new BusinessModel();
+        model.setId(id);
+        queryById(model,response);
+    }
+
+
+    /**
+     * ajax根据ID查找记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxGetId")
+    public void ajaxGetId(@RequestBody Integer id, HttpServletResponse response) throws Exception {
+        BusinessModel model = new BusinessModel();
+        model.setId(id);
+        model.setIsSelectItemCount("1");
         Map<String, Object> context = getRootMap();
-        Business bean = businessService.queryById(id);
+        Business bean = businessService.queryCountById(model);
+        if (bean == null) {
+            sendFailureMessage(response, "没有找到对应的记录!");
+            return;
+        }
+        context.put(SUCCESS, true);
+        context.put("data", bean);
+        HtmlUtil.writerJson(response, context);
+    }
+
+
+    private void queryById(BusinessModel businessModel, HttpServletResponse response) throws Exception {
+        Map<String, Object> context = getRootMap();
+        Business bean = businessService.queryById(businessModel);
         if (bean == null) {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
@@ -137,7 +185,9 @@ public class BusinessController extends BaseController {
         Map<String, Object> uploadResult = fileUploadService.uploadFile(headImg, request, response);
         boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
         if(uploadFlag) {
-            Business bean = businessService.queryById(businessid);
+            BusinessModel model = new BusinessModel();
+            model.setId(Integer.parseInt(businessid));
+            Business bean = businessService.queryById(model);
             if (bean == null) {
                 sendFailureMessage(response, "没有找到对应的记录!");
                 return;

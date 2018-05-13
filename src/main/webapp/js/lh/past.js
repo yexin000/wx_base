@@ -25,5 +25,5 @@ $(function(){
 function toTypeAuction()
 {
 
-    window.location.href = "../../../foreground/html/lh/findbyType.html?type=1";
+    window.location.href = "../../foreground/html/lh/businessDetail.html";
 }

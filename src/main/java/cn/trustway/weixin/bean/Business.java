@@ -47,6 +47,11 @@ public class Business extends BaseBean {
      */
     private String isShow;
 
+    /**
+     * 拍品数量
+     */
+    private Integer itemCount;
+
     public Integer getId() {
         return id;
     }
@@ -117,5 +122,13 @@ public class Business extends BaseBean {
 
     public void setIsShow(String isShow) {
         this.isShow = isShow;
+    }
+
+    public Integer getItemCount() {
+        return itemCount;
+    }
+
+    public void setItemCount(Integer itemCount) {
+        this.itemCount = itemCount;
     }
 }

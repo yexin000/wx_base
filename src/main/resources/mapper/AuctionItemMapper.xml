@@ -140,6 +140,9 @@
             <if test="name != null and name != ''">
                 and t.name like CONCAT('%', #{name}, '%')
             </if>
+            <if test="isShow != null and isShow != ''">
+                and t.isshow = #{isShow}
+            </if>
         </trim>
         order by t.id desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">

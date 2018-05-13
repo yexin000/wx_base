@@ -47,6 +47,12 @@ public class BusinessModel extends BaseModel {
      */
     private String isShow;
 
+    /**
+     * 是否查询商品数量：null-不查
+     */
+    private String isSelectItemCount;
+
+
     public Integer getId() {
         return id;
     }
@@ -117,5 +123,13 @@ public class BusinessModel extends BaseModel {
 
     public void setIsShow(String isShow) {
         this.isShow = isShow;
+    }
+
+    public String getIsSelectItemCount() {
+        return isSelectItemCount;
+    }
+
+    public void setIsSelectItemCount(String isSelectItemCount) {
+        this.isSelectItemCount = isSelectItemCount;
     }
 }

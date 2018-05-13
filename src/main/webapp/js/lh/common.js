@@ -1,12 +1,11 @@
 
-//图片访问路径
-var imagePath = "http://127.0.0.1:8080/";
 
+var imagePath = "https://120.26.163.30/";
+
+var hostPath = "https://120.26.163.30/weixin/";
 
 $(function(){	
-	
 	$("#backtop").hide()
-
 	$(window).scroll(function(){
         var scrolltop=$(document).scrollTop();
         var Vheight=$(window).height();
@@ -19,7 +18,6 @@ $(function(){
 	$("#backtop").click(function(){
 		$("html,body").animate({scrollTop:0},"fast");
 	})
-	
 })
 
 
@@ -37,4 +35,9 @@ function getParam(paramName) {
         while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
     }
     return paramValue == "" && (paramValue = null), paramValue
+}
+
+function toBusinessDetail(id)
+{
+    window.location.href = '../../html/lh/businessDetail.html?id='+id;
 }

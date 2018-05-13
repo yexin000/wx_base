@@ -14,6 +14,7 @@
         <result column="logoPath" property="logoPath" />
         <result column="status" property="status" />
         <result column="isShow" property="isShow" />
+        <result column="itemCount" property="itemCount" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
@@ -71,6 +72,16 @@
         from t_e_business where id = #{id}
     </select>
 
+    <!-- 根据id查询统计和记录 -->
+    <select id="queryCountById" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        <if test="isSelectItemCount != null and isSelectItemCount != '' ">
+            ,(select count(0) from t_e_auction_item tea where tea.businessId = #{id}) as itemCount
+        </if>
+        from t_e_business where id = #{id}
+    </select>
+
     <!-- 记录总数 -->
     <select id="queryByCount" resultType="java.lang.Integer"
             parameterType="Object">
@@ -86,6 +97,9 @@
         <trim suffixOverrides=",">
             <if test="name != null and name != ''">
                 and name like CONCAT('%', #{name}, '%')
+            </if>
+            <if test="isShow != null and isShow != ''">
+                and isshow = #{isShow}
             </if>
         </trim>
         order by updatetime desc

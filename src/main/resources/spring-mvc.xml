@@ -39,6 +39,9 @@
 				<list>
 					<value>/auction/ajaxDataList.do</value>
 					<value>/business/dataList.do</value>
+					<value>/business/ajaxDataList.do</value>
+					<value>/business/ajaxGetId.do</value>
+					<value>/auctionItem/ajaxDataList.do</value>
 					<value>/wxCode/queryListByCode.do</value>
 					<value>/file/setHeadImg.do</value>
 					<value>/wxCode/getAuctionItemType.do</value>

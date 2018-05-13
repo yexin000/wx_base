@@ -3,8 +3,8 @@
 
         $("#backtop").hide();
 
-        loadindexbanner();
-
+        loadindexAuction();
+        loadindexAuctionItem();
 
 
         var p=0,t=0;
@@ -30,12 +30,12 @@
         });
    })
    
-    //加载首页数据
-    function loadindexbanner(){
+    //加载展览会数据
+    function loadindexAuction(){
         var AuctionModel = {};
         AuctionModel.isShow = '1';
     	var url= '/weixin/auction/ajaxDataList.do';
-    	debugger;
+
     	$.ajax({
     		url: url,
     		type: 'post',
@@ -52,7 +52,7 @@
 
                         str+='<div class="posr">';
                         str+='	<div class="left" >';
-                        str+=' 		<img src="../../../images/lh/wshop_indexbanner1.jpg" alt="">';
+                        str+=' 		<img src= "'+hostPath + obj.logoPath + '" alt="">';
                         str+='	</div>';
                         str+='<p style="padding-top: 1.4rem;padding-left: -1rem ;font-size:18px;font-weight:bold;">'+obj.name+'</p>';
                         str+='<p style=" padding-left: -1rem ; "> '+obj.createtime+'开始，大家敬请期待</p>';
@@ -65,5 +65,37 @@
     	})
     }
 
+    //加载首页拍品数据
+    function loadindexAuctionItem(){
+        var AuctionItemModel = {};
+        AuctionItemModel.isShow = '1';
+        var url= '/weixin/auctionItem/ajaxDataList.do';
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: JSON.stringify(AuctionItemModel) ,
+            dataType: 'JSON',
+            contentType : "application/json;charset=utf-8",
+            cache: false,
+            success:function(data){
+                var dataList = data.rows;
+                if(dataList.length> 0)
+                {
+                    var str = '';
+                    $.each(dataList,function(i,obj){
+
+                        str+='<div class="posr-item">';
+                        str+='	<div class="left" >';
+                        str+=' 		<img src="../../../images/lh/wshop_indexbanner1.jpg" alt="">';
+                        str+='	</div>';
+
+                        str+='</div>';
+                    });
+                }
+                $("#dataDivItem").append(str);
+
+            }
+        })
+    }
    
    

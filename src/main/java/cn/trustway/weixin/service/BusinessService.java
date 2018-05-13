@@ -1,7 +1,9 @@
 package cn.trustway.weixin.service;
 
+import cn.trustway.weixin.bean.Business;
 import cn.trustway.weixin.dao.BaseDao;
 import cn.trustway.weixin.dao.BusinessDao;
+import cn.trustway.weixin.model.BusinessModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +21,10 @@ public class BusinessService<T> extends BaseService<T> {
     public BaseDao<T> getDao() {
         return dao;
     }
+
+
+    public T queryCountById (BusinessModel business){
+       return dao.queryCountById(business);
+    }
+
 }

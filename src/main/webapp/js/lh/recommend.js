@@ -7,7 +7,7 @@ $(function(){
 	
 	$("#backtop").hide()
 
-    loadfindData();
+    loadbusinessData();
 	$(window).scroll(function(){
         var scrolltop=$(document).scrollTop();
         var Vheight=$(window).height();
@@ -23,14 +23,16 @@ $(function(){
 	
 })
 
-//加载首页数据
-function loadfindData(){
-
-    var url= '/weixin/auction/dataList.do';
+//加载商户数据
+function loadbusinessData(){
+    var bisinessModel = {};
+    bisinessModel.isShow = '1';
+    var url= '/weixin/business/ajaxDataList.do';
     $.ajax({
         url: url,
         type: 'post',
-        data:{},
+        data:JSON.stringify(bisinessModel) ,
+        contentType : "application/json;charset=utf-8",
         dataType: 'JSON',
         cache: false,
         success:function(data){
@@ -39,18 +41,14 @@ function loadfindData(){
             {
                 var str = '';
                 $.each(dataList,function(i,obj){
-
-                    str+='<div class="posr">';
-                    str+='	<div class="left" >';
-                    str+=' 		<img src="../../../images/lh/wshop_indexbanner1.jpg" alt="">';
+                    str+='<div class="posr-item">';
+                    str+='	<div class="left" onclick="toBusinessDetail('+obj.id+')">';
+                    str+=' 		<img src= "'+hostPath + obj.logoPath + '" alt="">';
                     str+='	</div>';
-                    str+='<p style="padding-top: 1.4rem;padding-left: -1rem ;font-size:18px;font-weight:bold;">'+obj.name+'</p>';
-                    str+='<p style=" padding-left: -1rem ; "> '+obj.createtime+'开始，大家敬请期待</p>';
                     str+='</div>';
                 });
             }
             $("#dataDiv").append(str);
-
         }
     })
 }
