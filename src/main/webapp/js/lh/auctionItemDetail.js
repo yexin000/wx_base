@@ -7,7 +7,7 @@ $(function(){
 	
 	$("#backtop").hide()
     var id = getParam("id");
-    loadfindData(id);
+    loadItemData(id);
     loadBusinessAuctionItem(id);
 	$(window).scroll(function(){
         var scrolltop=$(document).scrollTop();
@@ -24,10 +24,10 @@ $(function(){
 	
 })
 
-//加载商家数据
-function loadfindData(id){
+//加载商品数据
+function loadItemData(id){
 
-    var url= '/weixin/business/ajaxGetId.do';
+    var url= '/weixin/auctionItem/ajaxGetId.do';
     $.ajax({
         url: url,
         type: 'post',
@@ -66,7 +66,7 @@ function loadBusinessAuctionItem(id){
                 var str = '';
                 $.each(dataList,function(i,obj){
 
-                    str+='<tr onclick="toAuctionItemDetail('+obj.id+')">';
+                    str+='<tr>';
                     str+='  <td class="pro-item-M"><img src="../../../images/lh/wshop_indexbanner1.jpg"  alt=""></td>';
                     str+='  <td class="pro-item-H">';
                     str+='      <h2>'+obj.name+'</h2>';
