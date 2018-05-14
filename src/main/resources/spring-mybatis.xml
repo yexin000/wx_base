@@ -58,6 +58,7 @@
         <property name="locations">
             <list>
                 <value>classpath*:dbconfig.properties</value>
+                <value>classpath*:redis.properties</value>
             </list>
         </property>
     </bean>

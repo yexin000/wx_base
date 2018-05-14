@@ -19,9 +19,8 @@ public class InitServlet extends HttpServlet {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(this.getServletContext());
 		wxCodeService = (WxCodeService) ctx.getBean("wxCodeService");
-		TokenThread.appid = wxCodeService.getBeanByCode("APPID").getValue();
-		TokenThread.appsecret = wxCodeService.getBeanByCode("APPSECRET")
-				.getValue();
+		//TokenThread.appid = wxCodeService.getBeanByCode("APPID").getValue();
+		//TokenThread.appsecret = wxCodeService.getBeanByCode("APPSECRET").getValue();
 
 		System.out.println("weixin api appid:" + TokenThread.appid);
 		System.out.println("weixin api appsecret:" + TokenThread.appsecret);

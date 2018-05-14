@@ -7,10 +7,12 @@
         http://www.springframework.org/schema/context/spring-context-3.2.xsd">
  
     <!-- 引入jdbc配置文件 -->
-    <context:property-placeholder location="classpath:dbconfig.properties"/>
+    <context:property-placeholder location="classpath:dbconfig.properties" ignore-unresolvable="true"/>
      
     <!-- 扫描文件（自动将servicec层注入） -->
     <context:component-scan base-package="cn.trustway.weixin.service"/>
+    <context:component-scan base-package="cn.trustway.weixin.redis"/>
+    <context:component-scan base-package="org.springframework.data.redis.core"/>
 
     <bean id="pref" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">

@@ -91,7 +91,7 @@ public class WebServiceUtil {
 		}
 		String result = null;
 		Map resultMap = getInstance().queryOutService(
-				AppInitConstants.outServiceUrl, AppInitConstants.outServiceXlh,
+				"", "",
 				jkid, paramMap);
 		try {
 			result = JSONSerializer.toJSON(resultMap).toString();
@@ -389,7 +389,7 @@ public class WebServiceUtil {
 		}
 		String result = null;
 		Map resultMap = getInstance().queryOutService(
-				AppInitConstants.outServiceUrl, AppInitConstants.outServiceXlh,
+				"", "",
 				jkid, paramMap);
 
 		String intro;
@@ -424,7 +424,7 @@ public class WebServiceUtil {
 		}
 		String result = null;
 		Map resultMap = getInstance().queryOutService(
-				AppInitConstants.outServiceUrl, AppInitConstants.outServiceXlh,
+				"", "",
 				jkid, paramMap);
 
 		/*try {
@@ -473,7 +473,7 @@ public class WebServiceUtil {
 			paramMap.put(key, value);
 		}
 		Map resultMap = getInstance().writeOutService(
-				AppInitConstants.outServiceUrl, AppInitConstants.outServiceXlh,
+				"", "",
 				jkid, "WriteCondition", paramMap);
 
 		result = JSONSerializer.toJSON(resultMap).toString();

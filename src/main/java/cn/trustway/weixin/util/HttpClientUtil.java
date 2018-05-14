@@ -7,6 +7,8 @@
  */
 package cn.trustway.weixin.util;
 
+import cn.trustway.weixin.pojo.WxSession;
+import net.sf.json.JSONObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -35,7 +37,7 @@ public class HttpClientUtil {
 	 * @author yexin
 	 * @date 2016-6-1
 	 */
-	public String doPost(String url, String jsonString, String charset) {
+	public static String doPost(String url, String jsonString, String charset) {
 		HttpClient httpClient = null;
 		HttpPost httpPost = null;
 		String result = null;
@@ -62,11 +64,13 @@ public class HttpClientUtil {
 	}
 	
 	public static void main(String[] args) {
-		String url = "https://api.weixin.qq.com/datacube/getarticlesummary?access_token=44n2wstXdqq2i97UVx1o1ovja-q3vwG0CS9OYS5MlNNDt68xVhoShIU2wygKV2Bk5fzM5aEfTf9OAFyPV5vmyXyulau1KOq72BDQ6ubiSSpLYBHNaTWKgrVUrsPfiCGJDQQhABAQDD";  
+		String url = "https://api.weixin.qq.com/sns/jscode2session?appid=wx42296a47e670ec4d&secret=ba97620f5dd7054926f8a4b9621bca3c&grant_type=authorization_code&js_code=0713OVMJ1lEpE40Fu9KJ1s0WMJ13OVMZ";
 	    String charset = "UTF-8";  
 	    HttpClientUtil httpClientUtil = new HttpClientUtil(); 
-	    String jsonString = "{\"begin_date\":\"2016-06-02\",\"end_date\":\"2016-06-02\"}";
-		String httpOrgCreateTestRtn = httpClientUtil.doPost(url, jsonString, charset);  
+	    String jsonString = "{}";
+		String httpOrgCreateTestRtn = httpClientUtil.doPost(url, jsonString, charset);
+		JSONObject obj = new JSONObject().fromObject(httpOrgCreateTestRtn);
+		WxSession wxSession = (WxSession)JSONObject.toBean(obj,WxSession.class);
         System.out.println("result:"+httpOrgCreateTestRtn);  
 	}
 }
