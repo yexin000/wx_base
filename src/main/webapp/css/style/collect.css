@@ -8,7 +8,7 @@
 .pro-item .pro-item-M{overflow: hidden;width: 0.88rem;text-align: center;padding:0 0.1rem}
 .pro-item .pro-item-M img{width: 0.78rem;height: 0.78rem;border:1px solid #eee}
 .pro-item .pro-item-H{padding-right: 0.1rem;border-top: 1px solid #eee;position: relative;height: 0.96rem;overflow: hidden;}
-.pro-item .pro-item-H h2{margin-top: -0.4rem;font-size: 0.14rem;color: #333;line-height: 0.18rem;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;margin-bottom: 0.1rem;}
+.pro-item .pro-item-H h2{ font-size: 0.12rem;color: #333;line-height: 0.18rem;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical; }
 .pro-item .pro-item-H b{color: #fc4747;font-size: 0.15rem;font-weight: normal;}
 .pro-item .chose-item{padding-left: 0.1rem;width: 0.13rem;overflow: hidden;display: none;}
 .pro-item .chose-item span{background: url(../images/check-n.png) center center no-repeat;background-size: 0.13rem;display: block;height: 0.13rem;}
@@ -33,3 +33,8 @@
 .cur{border: 1px solid red;}
 .cur1{border: 1px solid red;}
 .tijiao{border: 1px solid red;width: 1.5rem;height: 0.3rem;line-height: 2;text-align: center;font-size: 0.14rem;margin: 0.55rem 0.75rem;}
+
+.ppp{width:2rem;height: 0.3rem; position:relative}
+.ppp span{  display: inline-block}
+.ppp span:nth-child(1){width:0.5rem;height: 0.15rem;position:absolute;top:0;left:0;}
+.ppp span:nth-child(2){width:1.5rem;height: 0.3rem;position:absolute;top:0;right:0;overflow:hidden;}

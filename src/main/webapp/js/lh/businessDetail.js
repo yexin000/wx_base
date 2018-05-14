@@ -70,7 +70,7 @@ function loadBusinessAuctionItem(id){
                     str+='  <td class="pro-item-M"><img src="../../../images/lh/wshop_indexbanner1.jpg"  alt=""></td>';
                     str+='  <td class="pro-item-H">';
                     str+='      <h2>'+obj.name+'</h2>';
-                    str+='      <p><span>商品介绍: </span><span style="overflow:hidden; display:inline-block; width:10px;  "> '+obj.description+'<span></p>';
+                    str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
                     str+='      <p><span>商品价格: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
                     str+='      <p><span>商品销量: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
                     str+='  </td>';
