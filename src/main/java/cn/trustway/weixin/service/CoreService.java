@@ -62,7 +62,7 @@ public class CoreService {
 			// 图文回复性功能超时处理
 			// 获取用户最后一次操作时间
 			WeixinUser weixinUser = weixinUserService.queryWeixinUser(msg.getFromUserName());
-			String lastTimeStr = weixinUser.getYlzd1();
+			/*String lastTimeStr = weixinUser.getYlzd1();
 			if(!StringUtil.isEmpty(lastTimeStr)) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				// 用户最后一次操作时间
@@ -78,7 +78,7 @@ public class CoreService {
 					user.setZt("00");
 					weixinUserService.updateBySelective(user);
 				}
-			}
+			}*/
 			// 更新操作时间
 			weixinUserService.updateUserOperTime(msg.getFromUserName());
 		} catch (Exception e) {
@@ -120,7 +120,7 @@ public class CoreService {
 				String eventKey = eventMsg.getEventKey();
 				WeixinUser user = new WeixinUser();
 				user.setWxid(msg.getFromUserName());
-				user.setZt(eventKey);
+				//user.setZt(eventKey);
 				weixinUserService.updateBySelective(user);
 				respEventMsg = processPublicMsg(msg);
 			} catch (Exception e) {
@@ -167,7 +167,7 @@ public class CoreService {
 	private void addUser(String wxid) {
 		WeixinUser weixinUser = new WeixinUser();
 		weixinUser.setWxid(wxid);
-		weixinUser.setZt("0");
+		//weixinUser.setZt("0");
 		weixinUserService.insertWeixinUser(weixinUser);
 	}
 }

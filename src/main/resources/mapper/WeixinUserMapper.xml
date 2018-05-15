@@ -5,15 +5,19 @@
 <mapper namespace="cn.trustway.weixin.dao.WeixinUserDao">
 	<!-- Result Map -->
 	<resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.WeixinUser">
-		<result column="xh" property="xh" jdbcType="INTEGER"/>
-		<result column="wxid" property="wxid" jdbcType="VARCHAR"/>
-		<result column="zt" property="zt" jdbcType="VARCHAR"/>
-		<result column="ylzd1" property="ylzd1" jdbcType="VARCHAR"/>
+		<result column="id" property="id"/>
+		<result column="wxid" property="wxid"/>
+		<result column="phonenum" property="phoneNum"/>
+		<result column="balance" property="balance"/>
+		<result column="moneyextracting" property="moneyExtracting"/>
+		<result column="extractedmoney" property="extractedMoney"/>
+		<result column="nickname" property="nickName"/>
+		<result column="avatarUrl" property="avatarUrl"/>
 	</resultMap>
 
 	<!-- sys_user table all fields -->
 	<sql id="Base_Column_List">
-		xh,wxid,zt,ylzd1
+		id,wxid,phonenum,balance,moneyextracting,extractedmoney,nickname,avatarUrl
 	</sql>
 
 
@@ -21,14 +25,14 @@
 	<sql id="Example_Where_Clause">
 		where 1=1
 		<trim suffixOverrides=",">
-			<if test="xh != null">
-				and xh = #{xh}
+			<if test="id != null">
+				and id = #{id}
 			</if>
 			<if test="wxid != null and wxid != ''">
 				and wxid = #{wxid}
 			</if>
-			<if test="zt != null and zt != ''">
-				and zt = #{zt}
+			<if test="nickName != null and nickName != ''">
+				and nickname = like CONCAT('%', #{nickName}, '%')
 			</if>
 		</trim>
 	</sql>
@@ -37,8 +41,8 @@
 	<!-- 插入记录 -->
 	<insert id="add" parameterType="Object">
 		insert into
-		weixin_user(xh,wxid,zt) 
-		values(null,#{wxid},#{zt})
+		weixin_user(id,wxid,phonenum,nickname,avatarUrl)
+		values(null,#{wxid},#{phoneNum},#{nickName},#{avatarUrl})
 	</insert>
 	<insert id="insertWeixinUser" parameterType="Object">
 		<selectKey resultType="java.lang.Integer" order="BEFORE"
@@ -46,14 +50,14 @@
 			SELECT SEQ_WEIXIN_USER_XH.NEXTVAL AS ID FROM DUAL
 		</selectKey>
 		insert into
-		weixin_user(xh,wxid,zt) 
+		weixin_user(xh,wxid,zt)
 		values(#{xh},#{wxid},#{zt})
 	</insert>
 
 	<!-- 根据id，修改记录 -->
 	<update id="update" parameterType="Object">
 		update weixin_user set
-		xh=#{xh},wxid=#{wxid},zt=#{zt} 
+		wxid=#{wxid},nickname=#{nickName}
 		where id=#{id}
 	</update>
 
@@ -61,14 +65,23 @@
 	<update id="updateBySelective" parameterType="Object">
 		update weixin_user set
 		<trim suffixOverrides=",">
-			<if test="wxid != null  and wxid != '' ">
-				wxid=#{wxid},
+			<if test="phoneNum != null  and phoneNum != '' ">
+				phonenum=#{phoneNum},
 			</if>
-			<if test="zt != null  and zt != '' ">
-				zt=#{zt},
+			<if test="balance != null  and balance != '' ">
+				balance=#{balance},
 			</if>
-			<if test="ylzd1 != null  and ylzd1 != '' ">
-				ylzd1=#{ylzd1},
+			<if test="moneyExtracting != null  and moneyExtracting != '' ">
+				moneyextracting=#{moneyExtracting},
+			</if>
+			<if test="extractedMoney != null  and extractedMoney != '' ">
+				extractedmoney=#{extractedMoney},
+			</if>
+			<if test="nickName != null  and nickName != '' ">
+				nickname=#{nickName},
+			</if>
+			<if test="avatarUrl != null  and avatarUrl != '' ">
+				avatarUrl=#{avatarUrl},
 			</if>
 		</trim>
 		where wxid=#{wxid}
@@ -81,14 +94,14 @@
 
 	<!-- 删除记录 -->
 	<delete id="delete" parameterType="Object">
-		delete from weixin_user where xh = #{xh}
+		delete from weixin_user where id = #{id}
 	</delete>
 
 	<!-- 根据id查询 系统用户 -->
 	<select id="queryById" resultMap="BaseResultMap" parameterType="Object">
 		select
 		<include refid="Base_Column_List" />
-		from weixin_user where xh = #{xh}
+		from weixin_user where id = #{id}
 	</select>
 
 	<!-- 系统用户 列表总数 -->
