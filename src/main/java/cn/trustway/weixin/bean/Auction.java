@@ -79,6 +79,11 @@ public class Auction extends BaseBean {
      */
     private Integer picCount = 0;
 
+    /**
+     *是否在首页显示
+     */
+    private String isShow;
+
     public Integer getId() {
         return id;
     }
@@ -213,5 +218,13 @@ public class Auction extends BaseBean {
 
     public void setPicCount(Integer picCount) {
         this.picCount = picCount;
+    }
+
+    public String getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(String isShow) {
+        this.isShow = isShow;
     }
 }

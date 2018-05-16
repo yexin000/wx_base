@@ -91,6 +91,11 @@ public class AuctionItemModel extends BaseModel {
      */
     private String businessId ;
 
+    /**
+     * 是否轮播
+     */
+    private String isShowBanner;
+
     public Integer getId() {
         return id;
     }
@@ -249,5 +254,13 @@ public class AuctionItemModel extends BaseModel {
 
     public void setBusinessId(String businessId) {
         this.businessId = businessId;
+    }
+
+    public String getIsShowBanner() {
+        return isShowBanner;
+    }
+
+    public void setIsShowBanner(String isShowBanner) {
+        this.isShowBanner = isShowBanner;
     }
 }
