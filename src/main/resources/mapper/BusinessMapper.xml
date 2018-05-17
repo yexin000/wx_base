@@ -25,8 +25,8 @@
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_business(id,name,address,createTime,updateTime,telNum,logoPath,status)
-        values(null,#{name},#{address},now(),now(),#{telNum},#{logoPath}, '1')
+        t_e_business(id,name,address,createTime,updateTime,telNum,logoPath,status,isShow)
+        values(null,#{name},#{address},now(),now(),#{telNum},#{logoPath}, '1',#{isShow})
     </insert>
 
     <!-- 根据id，修改记录 -->

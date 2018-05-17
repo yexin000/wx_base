@@ -68,6 +68,13 @@
                 </select>
             </div>
             <div class="fitem">
+                <label>是否轮播:</label>
+                <select class="easyui-combobox" name="isShowBanner" id="isShowBanners" data-options="required:true">
+                    <option value="0" selected="selected">否</option>
+                    <option value="1">是</option>
+                </select>
+            </div>
+            <div class="fitem">
                 <label>拍卖会:</label>
                 <select class="easyui-combobox" name="auctionId" id="auctionids" data-options="required:true" style="width: 156px;">
                 </select>

@@ -15,6 +15,7 @@ WeiXin.auctionItem = function(){
                     $('#auctionids').combobox('select',$('#auctionids').combobox('getValue'));
                     $('#types').combobox('select',$('#types').combobox('getValue'));
                     $('#isshows').combobox('select',$('#isshows').combobox('getValue'));
+                    $('#isShowBanners').combobox('select',$('#isShowBanners').combobox('getValue'));
                 },
                 edit:function(){
                     _box.handler.edit(function(result){
@@ -37,6 +38,15 @@ WeiXin.auctionItem = function(){
                     {field:'finalPrice',title:'成交价格',width:60,align:'center',sortable:true},
                     {field:'rate',title:'手续费比率',width:70,align:'center',sortable:true},
                     {field:'detail',title:'拍品详情',width:120,align:'center',sortable:true},
+                    {field:'isShowBanner',title:'是否轮播',width:60,align:'center',sortable:true,
+                        formatter:function(value,row,index){
+                            if(value == 1){
+                                return "是";
+                            } else {
+                                return "否";
+                            }
+                        }
+                    },
                     {field:'isShow',title:'首页显示',width:60,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){

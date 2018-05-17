@@ -18,21 +18,22 @@
         <result column="status" property="status" />
         <result column="viewnum" property="viewnum" />
         <result column="type" property="type" />
+        <result column="isShow" property="isShow" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="Base_Column_List">
 		t.id,t.name,t.starttime,t.endtime,t.createtime,t.creator,t.modifytime,t.modifier,t.businessid,
-		t.description,t.status,t.viewnum,t.type
+		t.description,t.status,t.viewnum,t.type,t.isShow
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
         t_e_auction(id,name,starttime,endtime,createtime,creator,modifytime,
-            modifier,businessid,description,status,viewnum,type)
+            modifier,businessid,description,status,viewnum,type, isShow)
         values(null,#{name},#{starttime},#{endtime},now(),#{creator},now(),
-            #{modifier},#{businessid},#{description},'1', 0, '0');
+            #{modifier},#{businessid},#{description},'1', 0, '0', #{isShow});
     </insert>
 
     <!-- 根据id，修改记录 -->
@@ -40,7 +41,7 @@
 		update t_e_auction set
 		name=#{name},starttime=#{starttime},endtime=#{endtime},modifytime=now(),
         modifier=#{modifier},businessid=#{businessid},description=#{description},
-        status=#{status}, type=#{type}
+        status=#{status}, type=#{type}, isShow=#{isShow}
 		where id=#{id}
 	</update>
 
@@ -70,6 +71,9 @@
         </if>
         <if test="type != null and type != '' ">
             ,type=#{type}
+        </if>
+        <if test="isShow != null and isShow != '' ">
+            ,isShow=#{isShow}
         </if>
         where id=#{id}
     </update>

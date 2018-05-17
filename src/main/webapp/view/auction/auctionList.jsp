@@ -23,7 +23,7 @@
 </div>
 
 <!-- Edit Win&From -->
-<div id="edit-win" class="easyui-dialog" title="编辑菜单" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:280px;">
+<div id="edit-win" class="easyui-dialog" title="编辑菜单" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:320px;">
     <form id="editForm" class="ui-form" method="post">
         <!-- 隐藏文本框 -->
         <input class="hidden" name="id">
@@ -52,6 +52,13 @@
                 <select class="easyui-combobox" name="type" id="types" data-options="required:true">
                     <option value="0" selected="selected">类型0</option>
                     <option value="1">类型1</option>
+                </select>
+            </div>
+            <div class="fitem">
+                <label>首页显示:</label>
+                <select class="easyui-combobox" name="isShow" id="isShows" data-options="required:true">
+                    <option value="1">是</option>
+                    <option value="0" selected="selected">否</option>
                 </select>
             </div>
         </div>

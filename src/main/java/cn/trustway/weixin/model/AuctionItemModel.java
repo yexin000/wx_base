@@ -92,9 +92,9 @@ public class AuctionItemModel extends BaseModel {
     private String businessId ;
 
     /**
-     * 是否在首页的轮播图显示
+     * 是否轮播
      */
-    private String isShowBanner ;
+    private String isShowBanner;
 
     public Integer getId() {
         return id;

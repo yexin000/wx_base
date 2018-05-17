@@ -13,11 +13,13 @@ WeiXin.business = function(){
                 add : function(){
                     _box.handler.add();//调用add方法
                     $("#dlg").hide();
+                    $('#isShows').combobox('select',$('#isShows').combobox('getValue'));
                 },
                 edit:function(){
                     _box.handler.edit(function(result){
                     });
                     $("#dlg").hide();
+                    $('#isShows').combobox('select',$('#isShows').combobox('getValue'));
                 }
             },
             dataGrid:{
@@ -30,6 +32,15 @@ WeiXin.business = function(){
                     {field:'createTime',title:'创建时间',width:150,align:'center',sortable:true},
                     {field:'updateTime',title:'修改时间',width:150,align:'center',sortable:true},
                     {field:'telNum',title:'商家电话',width:120,align:'center',sortable:true},
+                    {field:'isShow',title:'是否推荐',width:80,align:'center',sortable:true,
+                        formatter:function(value,row,index){
+                            if(value == 1){
+                                return "是";
+                            } else {
+                                return "否";
+                            }
+                        }
+                    },
                     {field:'status',title:'状态',width:80,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){

@@ -14,10 +14,12 @@ WeiXin.auction = function(){
                     _box.handler.add();//调用add方法
                     $('#businessids').combobox('select',$('#businessids').combobox('getValue'));
                     $('#types').combobox('select',$('#types').combobox('getValue'));
+                    $('#isShows').combobox('select',$('#isShows').combobox('getValue'));
                 },
                 edit:function(){
                     _box.handler.edit(function(result){
                     });
+                    $('#isShows').combobox('select',$('#isShows').combobox('getValue'));
                 }
             },
             dataGrid:{
@@ -31,6 +33,15 @@ WeiXin.auction = function(){
                     {field:'modifytime',title:'修改时间',width:150,align:'center',sortable:true},
                     {field:'modifierName',title:'修改人',width:120,align:'center',sortable:true},
                     {field:'businessName',title:'所属商家',width:120,align:'center',sortable:true},
+                    {field:'isShow',title:'首页显示',width:80,align:'center',sortable:true,
+                        formatter:function(value,row,index){
+                            if(value == 1){
+                                return "是";
+                            } else {
+                                return "否";
+                            }
+                        }
+                    },
                     {field:'status',title:'状态',width:80,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){
@@ -38,8 +49,8 @@ WeiXin.auction = function(){
                             }
                         }
                     },
-                    {field:'viewnum',title:'浏览数量',width:120,align:'center',sortable:true},
-                    {field:'type',title:'类型',width:120,align:'center',sortable:true},
+                    {field:'viewnum',title:'浏览数量',width:80,align:'center',sortable:true},
+                    {field:'type',title:'类型',width:80,align:'center',sortable:true},
                     {field:'opts',title:'操作',width:120,align:'center',formatter:function(value,row,index){
                             var html ="<a href='#' onclick='WeiXin.auction.resManage(\""+row.id + "\"," + "\"" + row.name +"\")'>图片管理("+row.picCount+")</a>";
                             return html;
