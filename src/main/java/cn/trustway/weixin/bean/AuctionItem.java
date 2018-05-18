@@ -1,7 +1,7 @@
 package cn.trustway.weixin.bean;
 
 import java.util.Date;
-
+import java.util.List;
 /**
  * 拍品Bean
  *
@@ -91,6 +91,32 @@ public class AuctionItem extends BaseBean {
      * 是否轮播
      */
     private String isShowBanner;
+
+    /**
+     * 商家id
+     */
+    private String businessId ;
+
+    /**
+     * 图片列表
+     */
+    private List<ItemRes> resList;
+
+    public String getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId;
+    }
+
+    public List<ItemRes> getResList() {
+        return resList;
+    }
+
+    public void setResList(List<ItemRes> resList) {
+        this.resList = resList;
+    }
 
     public Integer getId() {
         return id;

@@ -12,32 +12,113 @@
     <link href="../../../css/style/index.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/collect.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/like.css" rel="stylesheet" type="text/css">
-    <title>商家店铺</title>
+    <link href="../../../css/style/banner.css" rel="stylesheet" type="text/css">
+    <title>商品详情</title>
 </head>
 <body>
 <header class="header-hs ">
-    <a href="mine.html" class="header-back"></a>
-    <h1>商家店铺</h1>
+    <a href="javaScript:history.go(-1)" class="header-back"></a>
+    <h1>商品详情</h1>
 </header>
+    <!-- 商品图片轮播开始 -->
     <div id="dataDiv">
-        <div class="posr-businessDetail">
-         <div class="left" >
-             <img src= "" id="businessImg" alt="">
+        <div  id="banner1" class="bannerBox">
+            <ul class="bannerList">
+
+            </ul>
+            <div  class="bannerPrompt none"></div>
+        </div>
+    </div>
+    <!-- 商品图片轮播结束 -->
+
+    <!-- 商品开拍提醒开始 -->
+    <div style="background-color: #0f8c69;width: 100%; height: 0.36rem; ">
+         <p style="color: #FFFFFF;height: 0.2rem; padding-top: 0.12rem; padding-left: 0.3rem;">即将开始 2018-5-11   19:00</p>
+    </div>
+    <!-- 商品开拍提醒结束 -->
+
+    <!-- 商品详情开始 -->
+    <div style=" width: 100%; height: 0.6rem; margin-top: 0.06rem">
+         <p style=" height: 0.2rem; padding-left: 0.1rem;font-size: 16px;" id="itemName"></p>
+        <div style="width: 100%;height: 0.38rem;margin-top: 0.06rem;">
+            <div style="width: 14%;height: 0.38rem;display: inline-block;padding-left: 0.12rem;" >
+                <span >RMB</span> <br>
+                <span style="color: #0f8c69;">起拍价</span>
+            </div>
+            <div style="width: 20%;height: 0.38rem;display: inline-block" >
+                <span style="height: 0.38rem;font-size: 30px;color: #0f8c69;" id="startprice">
+                    500
+                </span>
+            </div>
+            <div style="width: 38%;height: 0.38rem;display: inline-block" >
+                <span>
+                    (0.05万元)
+                </span>
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%; border-bottom:1px solid #808080;">  </div>
+    <div style="width: 100%; border-bottom:1px solid #808080;margin-top: 0.12rem;">  </div>
+
+    <div style="height: 0.7rem;width: 100%">
+        <div style="height: 0.16rem;width: 100%;padding-top: 0.13rem; ">
+            <p style="display: inline-block;width: 40%;padding-left: 0.2rem"> 当前价<span id="curprice">500</span> </p>    <p style="display: inline-block;width: 20%;">  加价幅度<span id="addprice">100</span></p>
+        </div>
+        <div style="height: 0.22rem;width: 100%;padding-top: 0.13rem; ">
+            <p style="display: inline-block;width: 40%;padding-left: 0.2rem"> 手续费<span id="rate">5</span>% </p>    <p style="display: inline-block;width: 20%;">  保证金<span id="depositprice">0</span> </p>
+        </div>
+    </div>
+    <div style="width: 100%; border-bottom:1px solid #808080;">  </div>
+    <div style="width: 100%; border-bottom:1px solid #808080;margin-top: 0.12rem;">  </div>
+
+    <div style="height: 2rem;width: 100%;border-bottom:1px solid #808080;">
+         <p style="padding: 0.1rem;">出价记录</p>
+         <div>
+             <div style="height: 0.32rem; ">
+                 <div style="height: 0.3rem;width: 35%;display: inline-block">
+                     <img src="../../../images/lh/wshop_indexbanner1.jpg" style="width: 25px; height: 25px;border-radius:70%;margin-top: 5px;margin-left: 0.15rem">
+                     <span style="margin-top: 10px;float: right;overflow: hidden;width: 0.72rem;height: 0.2rem;">佳哥最帅没毛病</span>
+                 </div>
+                 <div style="height: 0.2rem;width: 59%;display: inline-block;float:right; padding-top: 7px;">
+                    <span>领先</span> <span style="margin-left: 0.1rem;">05.07</span> <span>23.28.50</span> <span style="margin-left: 0.1rem;">500</span>
+                 </div>
+             </div>
+
          </div>
-         <p style="padding-top: 1.4rem;padding-left: -1rem ;font-size:18px;" id="businessName">111</p>
-            <p style=" padding-left: 2.3rem;" >共 <span id="shoppingCount"> </span >件拍品</p>
+    </div>
+
+    <div style="height: 1rem;width: 94%;  margin-left: 3%;margin-top: 0.2rem;">
+        <p style="font-size: 15px;">拍品描述</p>
+        <div style="width: 100%; border-bottom:1px solid #808080;margin-top: 0.06rem">  </div>
+        <div style="margin-top: 0.06rem;width: 100%;">
+            <p style="font-size: 15px;display: inline-block;width: 30%;">拍品规格</p>   <p style="display: inline-block;width: 68%;font-size: 15px;"> 直径7.9cm 高3cm </p>
+        </div>
+        <div style="margin-top: 0.06rem;width: 100%;margin-top: 0.1rem">
+            <p style="font-size: 15px;display: inline-block;width: 30%;">拍品年代</p>   <p style="display: inline-block;width: 68%;font-size: 15px;"> 民国  </p>
+        </div>
+        <div style="width: 100%; border-bottom:1px solid #808080;">  </div>
+        <div style="margin-top: 0.06rem;width: 100%; ">
+            <p style="font-size: 15px;display: inline-block;width: 30%;">拍品等级</p>   <p style="display: inline-block;width: 68%;font-size: 15px;"> 全品 </p>
         </div>
     </div>
 
-    <div  style="margin-top: 0.5rem;">
-        <table class="pro-item">
+    <div style="width: 100%; border-bottom:1px solid #808080;margin-top: 0.12rem;">  </div>
 
-        </table>
+    <div style="width: 100%; min-height:2rem; height:auto!important; height:2rem; ">
+        <p style="font-size: 24px;width: 100%;text-align: center;">陇海在线拍卖细则</p>
+        陇海在线拍卖细则陇海在线拍卖细则陇海在线拍卖细则
     </div>
+    <!-- 商品详情结束 -->
+    <footer style="position: fixed;  bottom: 0; left: 0;  background: #fff; width: 100%;  height: 0.4rem; z-index: 1004;zoom: 1;border-top: 1px solid #808080;">
+        <a href="#" style="color: #000;    font-size: 0.1rem;  float: left;  width: 0.73rem;  text-align: center;  line-height: 0.4rem;">+收藏</a>
+        <a href="#" style="color: #fff;   background: #c1272d; font-size: 0.135rem;  float: right;  width: 2.445rem;  text-align: center;  line-height: 0.4rem;">出价</a>
+    </footer>
+
 
 <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>
+<script type="text/javascript" src="../../../js/lh/banner.js"></script>
 <script type="text/javascript" src="../../../js/lh/auctionItemDetail.js"></script>
 <script type="text/javascript">
 

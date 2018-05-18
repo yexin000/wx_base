@@ -23,6 +23,8 @@
         <result column="auctionStatus" property="auctionStatus" />
         <result column="auctionId" property="auctionId" />
         <result column="isShowBanner" property="isShowBanner" />
+        <result column="businessId" property="businessId" />
+        <result column="isShowBanner" property="isShowBanner" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
@@ -128,7 +130,22 @@
     <!-- 记录总数 -->
     <select id="queryByCount" resultType="java.lang.Integer"
             parameterType="Object">
-        select count(1) from t_e_auction_item
+        select count(1) from t_e_auction_item t
+        where   t.status = '1'
+        <trim suffixOverrides=",">
+            <if test="name != null and name != ''">
+                and t.name like CONCAT('%', #{name}, '%')
+            </if>
+            <if test="isShow != null and isShow != ''">
+                and t.isshow = #{isShow}
+            </if>
+            <if test="businessId != null and businessId != ''">
+                and t.businessId = #{businessId}
+            </if>
+            <if test="isShowBanner != null and isShowBanner != ''">
+                and t.isshowBanner = #{isShowBanner}
+            </if>
+        </trim>
     </select>
 
     <!-- 分页查询记录列表 -->
@@ -149,6 +166,9 @@
             </if>
             <if test="businessId != null and businessId != ''">
                 and t.businessId = #{businessId}
+            </if>
+            <if test="isShowBanner != null and isShowBanner != ''">
+                and t.isshowBanner = #{isShowBanner}
             </if>
         </trim>
         order by t.id desc

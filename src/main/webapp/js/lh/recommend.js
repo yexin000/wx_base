@@ -41,7 +41,7 @@ function loadbusinessData(){
             {
                 var str = '';
                 $.each(dataList,function(i,obj){
-                    str+='<div class="posr-item">';
+                    str+='<div class="posr-item" style="overflow:hidden">';
                     str+='	<div class="left" onclick="toBusinessDetail('+obj.id+')">';
                     str+=' 		<img src= "'+hostPath + obj.logoPath + '" alt="">';
                     str+='	</div>';

@@ -148,9 +148,14 @@ public class WxCodeController extends BaseController {
 	@RequestMapping("/getAuctionItemType")
 	public void getAuctionItemType(HttpServletResponse response) {
 		List<WxCode> dataList = wxCodeService.getAuctionItemType();
+		List<WxCode> dataList2 = wxCodeService.getAuctionItemSecondType(dataList.get(0).getCode());
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		jsonMap.put("total", dataList.size());
 		jsonMap.put("rows", dataList);
+
+		jsonMap.put("total2", dataList2.size());
+		jsonMap.put("rows2", dataList2);
+
 		HtmlUtil.writerJson(response, jsonMap);
 	}
 
