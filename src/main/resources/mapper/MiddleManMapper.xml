@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.MiddleManDao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.MiddleMan">
+        <result column="id" property="id" />
+        <result column="grade" property="grade" />
+        <result column="wxAcount" property="wxAcount" />
+        <result column="phoneNum" property="phoneNum" />
+        <result column="description" property="description" />
+        <result column="avatarUrl" property="avatarUrl" />
+    </resultMap>
+
+    <!-- sys_menu table all fields -->
+    <sql id="Base_Column_List">
+		t.id, t.grade, t.wxacount, t.phonenum, t.description, t.avatarUrl
+	</sql>
+
+    <!-- 插入记录 -->
+    <insert id="add" parameterType="Object">
+        insert into
+        t_e_middleman(id, grade, wxacount, phonenum, description, avatarUrl)
+        values(null,#{grade},#{wxAcount},#{phoneNum},#{description},#{avatarUrl});
+    </insert>
+
+    <!-- 根据id，修改记录 -->
+    <update id="update" parameterType="Object">
+		update t_e_middleman set
+		grade=#{grade},wxAcount=#{wxAcount},phoneNum=#{phoneNum},
+		description=#{description},avatarUrl=#{avatarUrl}
+		where id=#{id}
+	</update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateBySelective" parameterType="Object">
+        update t_e_middleman set id=#{id}
+        <if test="grade != null and grade != '' ">
+            ,grade=#{grade}
+        </if>
+        <if test="wxAcount != null and wxAcount != '' ">
+            ,wxAcount=#{wxAcount}
+        </if>
+        <if test="phoneNum != null and phoneNum != '' ">
+            ,phoneNum=#{phoneNum}
+        </if>
+        <if test="description != null and description != '' ">
+            ,description=#{description}
+        </if>
+        <if test="avatarUrl != null and avatarUrl != '' ">
+            ,avatarUrl=#{avatarUrl}
+        </if>
+        where id=#{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <update id="delete" parameterType="Object">
+		delete from t_e_middleman where id = #{id}
+	</update>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from t_e_middleman t
+        where t.id = #{id}
+    </select>
+
+    <!-- 记录总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(1) from t_e_middleman
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from t_e_middleman t
+        where 1=1
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+</mapper>

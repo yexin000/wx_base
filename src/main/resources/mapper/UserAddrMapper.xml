@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.UserAddrDao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.UserAddr">
+        <result column="id" property="id" />
+        <result column="wxid" property="wxid" />
+        <result column="address" property="address" />
+        <result column="receiver" property="receiver" />
+        <result column="phonenum" property="phoneNum" />
+        <result column="isdefault" property="isDefault" />
+    </resultMap>
+
+    <!-- sys_menu table all fields -->
+    <sql id="Base_Column_List">
+        t.id, t.wxid, t.address, t.receiver, t.phonenum, t.isdefault
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="add" parameterType="Object">
+        insert into
+        t_e_user_addr(id, wxid, address, receiver, phonenum, isdefault)
+        values(null,#{wxid},#{address},#{receiver},#{phoneNum},#{isDefault})
+    </insert>
+
+    <!-- 根据id，修改记录 -->
+    <update id="update" parameterType="Object">
+        update t_e_user_addr set
+        wxid=#{wxid},address=#{address},receiver=#{receiver},
+        phonenum=#{phoneNum},isdefault=#{isDefault} where id=#{id}
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateBySelective" parameterType="Object">
+        update t_e_user_addr set id=#{id}
+        <if test="wxid != null and wxid != '' ">
+            ,wxid=#{wxid}
+        </if>
+        <if test="address != null and address != '' ">
+            ,address=#{address}
+        </if>
+        <if test="receiver != null and receiver != '' ">
+            ,receiver=#{receiver}
+        </if>
+        <if test="phoneNum != null and phoneNum != '' ">
+            ,phonenum=#{phoneNum}
+        </if>
+        <if test="isDefault != null and isDefault != '' ">
+            ,isdefault=#{isDefault}
+        </if>
+        where id=#{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <update id="delete" parameterType="Object">
+        delete from t_e_user_addr where id = #{id}
+    </update>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from t_e_user_addr t where t.id = #{id}
+    </select>
+
+    <!-- 记录总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(1) from t_e_user_addr
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from t_e_user_addr t
+        where 1=1
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+</mapper>
