@@ -6,7 +6,7 @@
     <!-- Result Map -->
     <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.BidBean">
         <result column="id" property="id" />
-        <result column="wxUserId" property="wxUserId" />
+        <result column="wxid" property="wxid" />
         <result column="wxUserName" property="wxUserName" />
         <result column="auctionItemId" property="auctionItemId" />
         <result column="auctionItemName" property="auctionItemName" />
@@ -17,27 +17,32 @@
 
     <!-- sys_menu table all fields -->
     <sql id="Base_Column_List">
-        t.id,t.wxUserId,t.auctionItemId,t.bidPrice,t.status,t.bidTime
+        t.id,t.wxid,t.auctionItemId,t.bidPrice,t.status,t.bidTime,t.status
     </sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_bid(id,wxUserId,wxUserName,auctionItemId,auctionItemName,bidPrice,status,bidTime)
-        values(null,#{wxUserId},#{wxUserName},#{auctionItemId},#{auctionItemName},#{bidPrice},#{status}, now())
+        t_e_bid(id,wxid,auctionItemId,bidPrice,status,bidTime)
+        values(null,#{wxid},#{auctionItemId},#{bidPrice},#{status},now())
     </insert>
 
     <!-- 根据id，修改记录 -->
     <update id="update" parameterType="Object">
         update t_e_bid set
-        wxUserId=#{wxUserId},wxUserName=#{wxUserName},auctionItemId=#{auctionItemId},
-        auctionItemName=#{auctionItemName},bidPrice=#{bidPrice},status=#{status} where id=#{id}
+        wxid=#{wxid},auctionItemId=#{auctionItemId},bidPrice=#{bidPrice},
+        status=#{status},bidTime=now() where id=#{id}
     </update>
 
     <!-- 修改记录，只修改只不为空的字段 -->
     <update id="updateBySelective" parameterType="Object">
         update t_e_bid set id=#{id}
         where id=#{id}
+    </update>
+
+    <update id="updateBidOutByAuctionItemId" parameterType="Object">
+        update t_e_bid set status='0'
+        where auctionitemid=#{auctionitemid}
     </update>
 
     <!-- 删除记录 -->
@@ -62,9 +67,9 @@
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        ,w.wxid,w.nickname as wxUserName,a.name as auctionItemName
+        ,w.nickname as wxUserName,a.name as auctionItemName
         from t_e_bid t
-        LEFT JOIN weixin_user w on t.wxuserid=w.id
+        LEFT JOIN weixin_user w on t.wxid=w.id
         LEFT JOIN t_e_auction_item a on t.auctionitemid=a.id
         where 1=1
         <trim suffixOverrides=",">
@@ -72,7 +77,7 @@
                 and auctionItemId = #{auctionItemId}
             </if>
         </trim>
-        order by status asc bidtime desc
+        order by t.status asc, t.bidtime desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
             ${pager.orderCondition}
         </if>

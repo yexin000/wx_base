@@ -19,4 +19,13 @@ public class BidService<T> extends BaseService<T> {
     public BaseDao<T> getDao() {
         return dao;
     }
+
+    /**
+     * 设置商品所有出价记录为出局
+     * @param auctionItemId
+     * @return
+     */
+    public void updateBidOutByAuctionItemId(Integer auctionItemId) {
+        this.dao.updateBidOutByAuctionItemId(auctionItemId);
+    }
 }
