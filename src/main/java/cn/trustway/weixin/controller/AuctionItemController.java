@@ -1,8 +1,11 @@
 package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.AuctionItem;
+import cn.trustway.weixin.bean.ItemRes;
 import cn.trustway.weixin.model.AuctionItemModel;
+import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.AuctionItemService;
+import cn.trustway.weixin.service.ItemResService;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,8 @@ public class AuctionItemController extends BaseController {
     @Autowired(required = false)
     private AuctionItemService<AuctionItem> auctionItemService;
 
+    @Autowired(required = false)
+    private ItemResService<ItemRes> itemResService;
     /**
      * 首页
      *
@@ -65,7 +70,24 @@ public class AuctionItemController extends BaseController {
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
     public void ajaxDataList(@RequestBody AuctionItemModel model, HttpServletResponse response) throws Exception {
-        queryDataList(model, response);
+        //主数据
+        List<AuctionItem> dataList = auctionItemService.queryByList(model);
+
+        for(AuctionItem ai : dataList){
+            //图片数据
+            ItemResModel resModel  = new ItemResModel();
+            resModel.setConid(ai.getId());
+            resModel.setConType("2");
+            List<ItemRes> resDataList = itemResService.queryByList(resModel);
+            ai.setResList(resDataList);
+        }
+
+        // 设置页面数据
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("total", model.getPager().getRowCount());
+        jsonMap.put("rows", dataList);
+
+        HtmlUtil.writerJson(response, jsonMap);
     }
 
     private void queryDataList(AuctionItemModel model, HttpServletResponse response) throws Exception {

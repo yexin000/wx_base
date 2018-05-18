@@ -2,7 +2,7 @@
  $(function(){
 
         $("#backtop").hide();
-
+        loadindexBanner();
         loadindexAuction();
         loadindexAuctionItem();
 
@@ -29,8 +29,47 @@
             setTimeout(function(){t = p;},0);
         });
    })
-   
-    //加载首页数据
+
+
+    //加载首页轮播图数据
+    function loadindexBanner(){
+        var AuctionItemModel = {};
+        AuctionItemModel.isShowBanner = '1';
+        var url= '/weixin/auctionItem/ajaxDataList.do';
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: JSON.stringify(AuctionItemModel) ,
+            dataType: 'JSON',
+            contentType : "application/json;charset=utf-8",
+            cache: false,
+            success:function(data){
+                var dataList = data.rows;
+                if(dataList.length> 0)
+                {
+                    var str = '';
+                    $.each(dataList,function(i,obj){
+                        var coverimg = '';
+                        str+='<li onclick="toAuctionItemDetail('+obj.id+')" class="bannerItem">';
+                        str+='	<a href="#">';
+                        $.each(obj.resList,function(i,resObj){
+                            if(resObj.idx == 1)
+                            {
+                                coverimg = resObj.path;
+                            }
+                        });
+                        str+=' <img src="'+hostPath + coverimg + '" alt="">';
+                        str+=' </a></li>';
+                    });
+
+                    $(".bannerList").append(str);
+                    bannerDW("banner1",3000,true,"red");
+                }
+            }
+        })
+    }
+
+    //加载首页会展数据
     function loadindexAuction(){
         var AuctionModel = {};
         AuctionModel.isShow = '1';
@@ -50,7 +89,7 @@
                 	 var str = '';
                     $.each(dataList,function(i,obj){
 
-                        str+='<div class="posr">';
+                        str+='<div class="posr" onclick="toBusinessDetail('+obj.id+')">';
                         str+='	<div class="left" >';
                         str+=' 		<img src="../../../images/lh/wshop_indexbanner1.jpg" alt="">';
                         str+='	</div>';
@@ -65,7 +104,7 @@
     	})
     }
 
-    //加载首页数据
+    //加载首页会展项数据
     function loadindexAuctionItem(){
         var AuctionItemModel = {};
         AuctionItemModel.isShow = '1';
