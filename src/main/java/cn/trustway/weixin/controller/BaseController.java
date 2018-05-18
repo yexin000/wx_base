@@ -23,7 +23,9 @@ import cn.trustway.weixin.util.WxEditor;
  *
  */
 public class BaseController {
-public final static String SUCCESS ="success";  
+	public final static String CODE ="code";
+
+	public final static String SUCCESS ="success";
 	
 	public final static String MSG ="msg";  
 	
@@ -110,6 +112,34 @@ public final static String SUCCESS ="success";
 	public void sendFailureMessage(HttpServletResponse response,String message) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put(SUCCESS, false);
+		result.put(MSG, message);
+		HtmlUtil.writerJson(response, result);
+	}
+
+	/**
+	 *
+	 * 调用失败返回
+	 *
+	 * @param message
+	 *
+	 */
+	public void sendFailure(HttpServletResponse response,String code, String message) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put(CODE, code);
+		result.put(MSG, message);
+		HtmlUtil.writerJson(response, result);
+	}
+
+	/**
+	 *
+	 * 调用成功返回
+	 *
+	 * @param message
+	 *
+	 */
+	public void sendSuccess(HttpServletResponse response,String code, String message) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put(CODE, code);
 		result.put(MSG, message);
 		HtmlUtil.writerJson(response, result);
 	}

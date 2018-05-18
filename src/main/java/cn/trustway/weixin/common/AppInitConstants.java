@@ -42,6 +42,22 @@ public class AppInitConstants {
 
 	@SuppressWarnings("unchecked")
 	private static WxCodeService wxCodeService = null;
+
+	public class HttpCode {
+		// 请求成功
+		public static final String HTTP_SUCCESS = "0";
+		// 用户信息有误
+		public static final String HTTP_URSER_ERROR = "10000";
+		// 商品信息有误
+		public static final String HTTP_ITEM_ERROR = "10001";
+		// 不在有效时间范围
+		public static final String HTTP_ITEM_TIME_ERROR = "10002";
+		// 加价金额低于起拍价
+		public static final String HTTP_PRICE_SRTART_ERROR = "10003";
+		// 加价金额低于最低加价金额
+		public static final String HTTP_PRICE_MIN_ERROR = "10004";
+	}
+
 	/**
 	 * 由InitServlet调用
 	 */

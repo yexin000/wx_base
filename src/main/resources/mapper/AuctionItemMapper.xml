@@ -22,6 +22,7 @@
         <result column="isShow" property="isShow" />
         <result column="auctionStatus" property="auctionStatus" />
         <result column="auctionId" property="auctionId" />
+        <result column="businessId" property="businessId" />
         <result column="isShowBanner" property="isShowBanner" />
         <result column="businessId" property="businessId" />
         <result column="isShowBanner" property="isShowBanner" />
@@ -30,17 +31,17 @@
     <!-- sys_menu table all fields -->
     <sql id="Base_Column_List">
 		t.id,t.name,t.type,t.description,t.startTime,t.endTime,t.startPrice,t.curPrice,t.finalPrice,
-		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId,t.isShowBanner
+		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
         t_e_auction_item(id,name,type,description,startTime,endTime,startPrice,curPrice,finalPrice,
-		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId, isShowBanner)
+		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId)
         values(null,#{name},#{type},#{description},#{startTime},#{endTime},#{startPrice},
             #{curPrice},#{finalPrice},#{addPrice},#{depositPrice},#{rate}, #{detail}, '1',
-            #{isShow},'0',#{auctionId}, #{isShowBanner});
+            #{isShow},'0',#{auctionId});
     </insert>
 
     <!-- 根据id，修改记录 -->
@@ -49,7 +50,7 @@
 		name=#{name},type=#{type},description=#{description},startTime=startTime,endTime=endTime,
         startPrice=#{startPrice},curPrice=#{curPrice},finalPrice=#{finalPrice},addPrice=#{addPrice},
         depositPrice=#{depositPrice},rate=#{rate},detail=#{detail},status=#{status},isShow=#{isShow},
-        auctionStatus=#{auctionStatus},auctionId=#{auctionId},isShowBanner=#{isShowBanner}
+        auctionStatus=#{auctionStatus},auctionId=#{auctionId},
 		where id=#{id}
 	</update>
 
@@ -105,9 +106,6 @@
             <if test="auctionId != null and auctionId != '' ">
                 auctionId=#{auctionId},
             </if>
-            <if test="isShowBanner != null and isShowBanner != '' ">
-                isShowBanner=#{isShowBanner},
-            </if>
         </trim>
         where id=#{id}
     </update>
@@ -156,7 +154,7 @@
         ,(select count(1) from t_con_item_res r where r.conid=t.id and r.contype='2') as picCount
         from t_e_auction_item t
         LEFT JOIN t_e_auction a on t.auctionId=a.id
-        where 1=1 and t.status = '1'
+        where   t.status = '1'
         <trim suffixOverrides=",">
             <if test="name != null and name != ''">
                 and t.name like CONCAT('%', #{name}, '%')

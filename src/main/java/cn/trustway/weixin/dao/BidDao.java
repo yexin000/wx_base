@@ -7,4 +7,5 @@ package cn.trustway.weixin.dao;
  * @param <T>
  */
 public interface BidDao<T> extends BaseDao<T>  {
+    void updateBidOutByAuctionItemId(Integer auctionItemId);
 }

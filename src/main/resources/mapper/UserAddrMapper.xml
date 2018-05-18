@@ -2,82 +2,81 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.trustway.weixin.dao.BidDao">
+<mapper namespace="cn.trustway.weixin.dao.UserAddrDao">
     <!-- Result Map -->
-    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.BidBean">
+    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.UserAddr">
         <result column="id" property="id" />
         <result column="wxid" property="wxid" />
-        <result column="wxUserName" property="wxUserName" />
-        <result column="auctionItemId" property="auctionItemId" />
-        <result column="auctionItemName" property="auctionItemName" />
-        <result column="bidPrice" property="bidPrice" />
-        <result column="status" property="status" />
-        <result column="bidTime" property="bidTime" />
+        <result column="address" property="address" />
+        <result column="receiver" property="receiver" />
+        <result column="phonenum" property="phoneNum" />
+        <result column="isdefault" property="isDefault" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="Base_Column_List">
-        t.id,t.wxid,t.auctionItemId,t.bidPrice,t.status,t.bidTime,t.status
+        t.id, t.wxid, t.address, t.receiver, t.phonenum, t.isdefault
     </sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_bid(id,wxid,auctionItemId,bidPrice,status,bidTime)
-        values(null,#{wxid},#{auctionItemId},#{bidPrice},#{status},now())
+        t_e_user_addr(id, wxid, address, receiver, phonenum, isdefault)
+        values(null,#{wxid},#{address},#{receiver},#{phoneNum},#{isDefault})
     </insert>
 
     <!-- 根据id，修改记录 -->
     <update id="update" parameterType="Object">
-        update t_e_bid set
-        wxid=#{wxid},auctionItemId=#{auctionItemId},bidPrice=#{bidPrice},
-        status=#{status},bidTime=now() where id=#{id}
+        update t_e_user_addr set
+        wxid=#{wxid},address=#{address},receiver=#{receiver},
+        phonenum=#{phoneNum},isdefault=#{isDefault} where id=#{id}
     </update>
 
     <!-- 修改记录，只修改只不为空的字段 -->
     <update id="updateBySelective" parameterType="Object">
-        update t_e_bid set id=#{id}
+        update t_e_user_addr set id=#{id}
+        <if test="wxid != null and wxid != '' ">
+            ,wxid=#{wxid}
+        </if>
+        <if test="address != null and address != '' ">
+            ,address=#{address}
+        </if>
+        <if test="receiver != null and receiver != '' ">
+            ,receiver=#{receiver}
+        </if>
+        <if test="phoneNum != null and phoneNum != '' ">
+            ,phonenum=#{phoneNum}
+        </if>
+        <if test="isDefault != null and isDefault != '' ">
+            ,isdefault=#{isDefault}
+        </if>
         where id=#{id}
-    </update>
-
-    <update id="updateBidOutByAuctionItemId" parameterType="Object">
-        update t_e_bid set status='0'
-        where auctionitemid=#{auctionitemid}
     </update>
 
     <!-- 删除记录 -->
     <update id="delete" parameterType="Object">
-        delete from t_e_bid where id = #{id}
+        delete from t_e_user_addr where id = #{id}
     </update>
 
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from t_e_bid t where t.id = #{id}
+        from t_e_user_addr t where t.id = #{id}
     </select>
 
     <!-- 记录总数 -->
     <select id="queryByCount" resultType="java.lang.Integer"
             parameterType="Object">
-        select count(1) from t_e_bid
+        select count(1) from t_e_user_addr
     </select>
 
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        ,w.nickname as wxUserName,a.name as auctionItemName
-        from t_e_bid t
-        LEFT JOIN weixin_user w on t.wxid=w.id
-        LEFT JOIN t_e_auction_item a on t.auctionitemid=a.id
+        from t_e_user_addr t
         where 1=1
-        <trim suffixOverrides=",">
-            <if test="auctionItemId != null and auctionItemId != ''">
-                and auctionItemId = #{auctionItemId}
-            </if>
-        </trim>
-        order by t.status asc, t.bidtime desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
             ${pager.orderCondition}
         </if>

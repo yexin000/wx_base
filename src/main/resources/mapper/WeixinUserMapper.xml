@@ -97,7 +97,7 @@
 		delete from weixin_user where id = #{id}
 	</delete>
 
-	<!-- 根据id查询 系统用户 -->
+	<!-- 根据id查询微信用户 -->
 	<select id="queryById" resultMap="BaseResultMap" parameterType="Object">
 		select
 		<include refid="Base_Column_List" />
