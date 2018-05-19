@@ -100,6 +100,25 @@ public class AuctionItem extends BaseBean {
 
     private List<ItemRes> resList;
 
+
+
+
+    public String getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId;
+    }
+
+    public List<ItemRes> getResList() {
+        return resList;
+    }
+
+    public void setResList(List<ItemRes> resList) {
+        this.resList = resList;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -252,27 +271,5 @@ public class AuctionItem extends BaseBean {
         this.picCount = picCount;
     }
 
-    public String getBusinessId() {
-        return businessId;
-    }
 
-    public void setBusinessId(String businessId) {
-        this.businessId = businessId;
-    }
-
-    public String getIsShowBanner() {
-        return isShowBanner;
-    }
-
-    public void setIsShowBanner(String isShowBanner) {
-        this.isShowBanner = isShowBanner;
-    }
-
-    public List<ItemRes> getResList() {
-        return resList;
-    }
-
-    public void setResList(List<ItemRes> resList) {
-        this.resList = resList;
-    }
 }

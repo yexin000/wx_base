@@ -17,6 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -65,7 +66,7 @@ public class BidController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxAddBid", method = RequestMethod.POST)
-    public void ajaxAddBid(BidBean bean, HttpServletResponse response) throws Exception {
+    public void ajaxAddBid(@RequestBody BidBean bean, HttpServletResponse response) throws Exception {
         String wxid = bean.getWxid();
         if(StringUtils.isBlank(wxid) || null == weixinUserService.queryWeixinUser(wxid)) {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "出价失败，用户信息有误");

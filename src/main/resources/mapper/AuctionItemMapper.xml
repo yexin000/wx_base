@@ -24,6 +24,8 @@
         <result column="auctionId" property="auctionId" />
         <result column="businessId" property="businessId" />
         <result column="isShowBanner" property="isShowBanner" />
+        <result column="businessId" property="businessId" />
+        <result column="isShowBanner" property="isShowBanner" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
@@ -165,6 +167,9 @@
             </if>
             <if test="isShowBanner != null and isShowBanner != ''">
                 and t.isshowBanner = #{isShowBanner}
+            </if>
+            <if test="type != null and type != ''">
+                and t.type = #{type}
             </if>
         </trim>
         order by t.id desc

@@ -1,10 +1,12 @@
 package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.AuctionItem;
+import cn.trustway.weixin.bean.BidBean;
 import cn.trustway.weixin.bean.ItemRes;
 import cn.trustway.weixin.model.AuctionItemModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.AuctionItemService;
+import cn.trustway.weixin.service.BidService;
 import cn.trustway.weixin.service.ItemResService;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +37,9 @@ public class AuctionItemController extends BaseController {
 
     @Autowired(required = false)
     private ItemResService<ItemRes> itemResService;
+
+    @Autowired(required = false)
+    private BidService<BidBean> bidservice;
     /**
      * 首页
      *
@@ -66,6 +72,7 @@ public class AuctionItemController extends BaseController {
      * @param model
      * @param response
      * @return
+     * @search auctionItem/ajaxDataList  方便前端检索
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
@@ -138,6 +145,35 @@ public class AuctionItemController extends BaseController {
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);
     }
+
+
+    /**
+     * 根据ID查找记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * search  auctionItem/ajaxGetId
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxGetId")
+    public void ajaxGetId(@RequestBody Integer id, HttpServletResponse response) throws Exception {
+        Map<String, Object> context = getRootMap();
+        AuctionItem bean = auctionItemService.queryById(id);
+        if (bean == null) {
+            sendFailureMessage(response, "没有找到对应的记录!");
+            return;
+        }
+        ItemResModel resModel  = new ItemResModel();
+        resModel.setConid(bean.getId());
+        resModel.setConType("2");
+        List<ItemRes> resDataList = itemResService.queryByList(resModel);
+        bean.setResList(resDataList);
+        context.put(SUCCESS, true);
+        context.put("data", bean);
+        HtmlUtil.writerJson(response, context);
+    }
+
 
     /**
      * 根据ID删除记录
