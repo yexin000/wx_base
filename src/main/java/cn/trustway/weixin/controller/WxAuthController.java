@@ -1,8 +1,11 @@
 package cn.trustway.weixin.controller;
 
+import cn.trustway.weixin.bean.MiddleMan;
 import cn.trustway.weixin.bean.WeixinUser;
+import cn.trustway.weixin.bean.WxidMiddleman;
 import cn.trustway.weixin.pojo.WxSession;
 import cn.trustway.weixin.redis.RedisUtil;
+import cn.trustway.weixin.service.MiddleManService;
 import cn.trustway.weixin.service.WeixinUserService;
 import cn.trustway.weixin.service.WxAuthService;
 import cn.trustway.weixin.util.AES;
@@ -34,10 +37,13 @@ public class WxAuthController extends BaseController {
     private RedisUtil redisUtil;
 
     @Autowired
-    WxAuthService wxAuthService;
+    private WxAuthService wxAuthService;
 
     @Autowired
-    WeixinUserService weixinUserService;
+    private MiddleManService<MiddleMan> middleManService;
+
+    @Autowired
+    private WeixinUserService<WeixinUser> weixinUserService;
 
     /**
      * 小程序授权登陆后解析用户数据，将用户数据写入数据库，并返回首页地址
@@ -109,6 +115,20 @@ public class WxAuthController extends BaseController {
                             weixinUserService.updateBySelective(weixinUser);
                         } else {
                             weixinUserService.add(weixinUser);
+                        }
+
+                        // 查询微信用户是否有经纪人
+                        MiddleMan middleMan = middleManService.getMiddleManByWxid(wxid);
+                        // 没有经纪人随机分配一个
+                        if(null == middleMan) {
+                            // 随机得到一个经纪人
+                            MiddleMan randomMiddleMan = middleManService.getMiddleManByRandom();
+                            if(null != randomMiddleMan) {
+                                WxidMiddleman wxidMiddleman = new WxidMiddleman();
+                                wxidMiddleman.setWxid(wxid);
+                                wxidMiddleman.setMiddlemanId(randomMiddleMan.getId());
+                                middleManService.addMiddleManToWxid(wxidMiddleman);
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

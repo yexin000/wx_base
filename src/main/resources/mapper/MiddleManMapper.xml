@@ -7,14 +7,14 @@
     <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.MiddleMan">
         <result column="id" property="id" />
         <result column="grade" property="grade" />
-        <result column="wxAcount" property="wxAcount" />
-        <result column="phoneNum" property="phoneNum" />
+        <result column="wxacount" property="wxAcount" />
+        <result column="phonenum" property="phoneNum" />
         <result column="description" property="description" />
         <result column="avatarUrl" property="avatarUrl" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
-    <sql id="Base_Column_List">
+    <sql id="MiddleMan_Base_Column_List">
 		t.id, t.grade, t.wxacount, t.phonenum, t.description, t.avatarUrl
 	</sql>
 
@@ -62,7 +62,7 @@
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="Base_Column_List" />
+        <include refid="MiddleMan_Base_Column_List" />
         from t_e_middleman t
         where t.id = #{id}
     </select>
@@ -76,7 +76,7 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="Base_Column_List" />
+        <include refid="MiddleMan_Base_Column_List" />
         from t_e_middleman t
         where 1=1
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
@@ -86,4 +86,29 @@
             ${pager.mysqlQueryCondition}
         </if>
     </select>
+
+    <!-- 根据wxid查询经纪人 -->
+    <select id="getMiddleManByWxid" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="MiddleMan_Base_Column_List" />
+        from t_e_middleman t,t_con_user_middleman m,weixin_user w
+        where w.wxid=m.wxid and t.id=m.middlemanid and w.wxid=#{wxid}
+    </select>
+
+    <!-- 随机获得一个经纪人 -->
+    <select id="getMiddleManByRandom" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="MiddleMan_Base_Column_List" />
+        from t_e_middleman t
+        join (select round(rand() * ((select max(id) from t_e_middleman)-(select min(id) from t_e_middleman))+(select min(id) from t_e_middleman)) as id) as t2
+          where t.id >= t2.id
+          order by t.id limit 1;
+    </select>
+
+    <!-- 新增wxid与经纪人关联记录 -->
+    <insert id="addMiddleManToWxid" parameterType="Object">
+        insert into
+        t_con_user_middleman(wxid, middlemanid)
+        values(#{wxid},#{middlemanId});
+    </insert>
 </mapper>

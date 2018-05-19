@@ -154,4 +154,6 @@ public class MiddleManController extends BaseController {
         middleManService.delete(id);
         sendSuccessMessage(response, "删除成功");
     }
+
+
 }

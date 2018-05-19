@@ -6,7 +6,7 @@ package cn.trustway.weixin.bean;
  * @author yexin
  *
  */
-public class MiddleMan {
+public class MiddleMan extends BaseBean {
     /**
      * 主键-id
      */
