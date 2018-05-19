@@ -50,6 +50,7 @@
 					<value>/wxCode/getAuctionItemSecondType.do</value>
 					<value>/bid/ajaxAddBid.do</value>
 					<value>/bid/ajaxDataList.do</value>
+					<value>/middleMan/ajaxGetMiddleMan.do</value>
 				</list>
 			</property>
 		</bean>

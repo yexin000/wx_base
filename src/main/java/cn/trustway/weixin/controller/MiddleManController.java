@@ -155,5 +155,24 @@ public class MiddleManController extends BaseController {
         sendSuccessMessage(response, "删除成功");
     }
 
-
+    /**
+     * 前端用户查询我的经纪人
+     *
+     * @param wxid
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxGetMiddleMan")
+    public void ajaxGetMiddleMan(String wxid, HttpServletResponse response) {
+        Map<String, Object> context = getRootMap();
+        MiddleMan bean = middleManService.getMiddleManByWxid(wxid);
+        if (bean == null) {
+            sendFailureMessage(response, "没有找到对应的记录!");
+            return;
+        }
+        context.put(SUCCESS, true);
+        context.put("data", bean);
+        HtmlUtil.writerJson(response, context);
+    }
 }
