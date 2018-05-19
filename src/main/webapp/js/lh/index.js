@@ -5,7 +5,7 @@
         loadindexBanner();
         loadindexAuction();
         loadindexAuctionItem();
-
+        //TODO 记得从小程序回调请求里面获取wxid，存到sessionstorage
 
         var p=0,t=0;
         $(window).scroll(function(){
