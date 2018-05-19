@@ -1,8 +1,4 @@
-
-
-var imagePath = "https://120.26.163.30/";
-
-var hostPath = "https://120.26.163.30/weixin/";
+var hostPath = "https://mlhdkj.com/weixin/";
 
 $(function(){	
 	$("#backtop").hide()
