@@ -46,18 +46,29 @@ function loadItemData(id){
 }
 
 //出价
-function toBid(id){
-    var url= '/weixin/auctionItem/ajaxToBid.do';
+function toBid(){
+    var id = getParam("id");
+    var BidBean = {};
+    BidBean.wxid = 'oNVx35HXrCsOVp-fXPhdCJUlWLeI';
+    BidBean.wxUserName = '帅气的佳哥';
+    BidBean.auctionItemId = id;
+    BidBean.auctionItemName = 'dasdasd';
+    BidBean.bidPrice = 600;
+    var url= '/weixin/bid/ajaxAddBid.do';
     $.ajax({
         url: url,
         type: 'post',
-        data:JSON.stringify(id),
+        data:JSON.stringify(BidBean),
         contentType : "application/json;charset=utf-8",
         dataType: 'JSON',
         cache: false,
         success:function(data){
-            var dataObj = data.data;
-
+            var code = data.code;
+            if(code == 0){
+                alert("竞拍成功");
+            }else{
+                alert("竞拍失败");
+            }
         }
     })
 }

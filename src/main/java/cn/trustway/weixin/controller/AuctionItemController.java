@@ -174,49 +174,6 @@ public class AuctionItemController extends BaseController {
         HtmlUtil.writerJson(response, context);
     }
 
-    /**
-     * 根据ID出价
-     *
-     * @param id
-     * @param response
-     * @return
-     * search  auctionItem/ajaxGetId
-     * @throws Exception
-     */
-    @RequestMapping("/ajaxToBid")
-    public void ajaxToBid(@RequestBody Integer id, @RequestBody String wxId,HttpServletResponse response) throws Exception {
-        Map<String, Object> context = getRootMap();
-        AuctionItem bean = auctionItemService.queryById(id);
-        if (bean == null) {
-            sendFailureMessage(response, "没有找到对应的记录!");
-            return;
-        }
-        //先判断是出价时间是否到了
-        int timeOut = bean.getEndTime().compareTo(new Date());
-        if(timeOut > 0)
-        {
-            context.put(SUCCESS, false);
-            context.put("data", "timeout");
-            HtmlUtil.writerJson(response, context);
-            return;
-        }
-        //出价流程
-        BidBean bidbean = new BidBean();
-        bidbean.setWxid(wxId);
-        bidbean.setAuctionItemId(bean.getId());
-        bidbean.setAuctionItemName(bean.getAuctionName());
-        bidbean.setStatus("1");
-        bidbean.setBidTime(new Date());
-        bidservice.add(bidbean);
-        ItemResModel resModel  = new ItemResModel();
-        List<ItemRes> resDataList = itemResService.queryByList(resModel);
-        bean.setResList(resDataList);
-        context.put(SUCCESS, true);
-        context.put("data", bean);
-        HtmlUtil.writerJson(response, context);
-    }
-
-
 
     /**
      * 根据ID删除记录

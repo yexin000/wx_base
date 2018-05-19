@@ -10,6 +10,7 @@ import cn.trustway.weixin.util.HtmlUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -151,7 +152,7 @@ public class WxCodeController extends BaseController {
 		List<WxCode> dataList2 = wxCodeService.getAuctionItemSecondType(dataList.get(0).getCode());
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		jsonMap.put("total", dataList.size());
-		jsonMap.put("rows", dataList);
+		jsonMap.put("rows1", dataList);
 
 		jsonMap.put("total2", dataList2.size());
 		jsonMap.put("rows2", dataList2);
