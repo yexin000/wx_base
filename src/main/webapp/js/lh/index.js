@@ -48,19 +48,18 @@
                 if(dataList.length> 0)
                 {
                     var str = '';
-                    $.each(dataList,function(i,obj){
+                    for(var i = 0; i < dataList.length; i ++) {
+                        var obj = dataList[i];
                         var coverimg = '';
-                        str+='<li onclick="toAuctionItemDetail('+obj.id+')" class="bannerItem">';
-                        str+='	<a href="#">';
-                        $.each(obj.resList,function(i,resObj){
+                        for(var j = 0; j < obj.resList.length; j ++) {
+                            var resObj = obj.resList[j];
                             if(resObj.idx == 1)
                             {
                                 coverimg = resObj.path;
                             }
-                        });
-                        str+=' <img src="'+hostPath + coverimg + '" alt="">';
-                        str+=' </a></li>';
-                    });
+                        }
+                        str+='<li onclick="toAuctionItemDetail('+obj.id+')" class="bannerItem" style="background-image: url(' + hostPath + coverimg + '); no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;"/>';
+                    }
 
                     $(".bannerList").append(str);
                     bannerDW("banner1",3000,true,"red");
