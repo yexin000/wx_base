@@ -22,7 +22,7 @@
     </resultMap>
 
     <!-- sys_menu table all fields -->
-    <sql id="Base_Column_List">
+    <sql id="Auction_Base_Column_List">
 		t.id,t.name,t.starttime,t.endtime,t.createtime,t.creator,t.modifytime,t.modifier,t.businessid,
 		t.description,t.status,t.viewnum,t.type,t.isShow
 	</sql>
@@ -44,6 +44,18 @@
         status=#{status}, type=#{type}, isShow=#{isShow}
 		where id=#{id}
 	</update>
+
+    <!-- 设置开始时间超出当前时间的正常的拍卖会为已开始 -->
+    <update id="updateAuctionStart" parameterType="Object">
+		update t_e_auction set status='2'
+		where status='1' and starttime &lt; now()
+ 	</update>
+
+    <!-- 设置结束时间超出当前时间的正在拍卖的拍卖会为已结束 -->
+    <update id="updateAuctionEnd" parameterType="Object">
+		update t_e_auction set status='3'
+		where status='2' and endtime &lt; now()
+ 	</update>
 
     <!-- 修改记录，只修改只不为空的字段 -->
     <update id="updateBySelective" parameterType="Object">
@@ -86,13 +98,13 @@
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
-          <include refid="Base_Column_List" />
+          <include refid="Auction_Base_Column_List" />
           ,su1.nickname as creatorName,su2.nickname as modifierName, b.name as businessName
         from t_e_auction t
         LEFT JOIN sys_user su1 on t.creator=su1.id
         LEFT JOIN sys_user su2 on t.modifier=su2.id
         LEFT JOIN t_e_business b on t.businessid=b.id
-        where t.id = #{id}
+        where t.id = #{id} and t.status != '0'
     </select>
 
     <!-- 记录总数 -->
@@ -104,14 +116,14 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-            <include refid="Base_Column_List" />,
+            <include refid="Auction_Base_Column_List" />,
             su1.nickname as creatorName,su2.nickname as modifierName, b.name as businessName,
             (select count(1) from t_con_item_res r where r.conid=t.id and r.contype='1') as picCount
         from t_e_auction t
         left join sys_user su1 on t.creator=su1.id
         left join sys_user su2 on t.modifier=su2.id
         left join t_e_business b on t.businessid=b.id
-        where 1=1 and t.status = '1'
+        where 1=1 and t.status != '0'
         <trim suffixOverrides=",">
             <if test="name != null and name != ''">
                 and t.name like CONCAT('%', #{name}, '%')

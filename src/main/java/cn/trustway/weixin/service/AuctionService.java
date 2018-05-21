@@ -16,7 +16,23 @@ public class AuctionService<T> extends BaseService<T> {
     private AuctionDao<T> dao;
 
     @Override
-    public BaseDao<T> getDao() {
+    public AuctionDao<T> getDao() {
         return dao;
+    }
+
+    /**
+     * 设置开始时间超出当前时间的正常的拍卖会为已开始
+     * @return
+     */
+    public void updateAuctionStart() {
+        getDao().updateAuctionStart();
+    }
+
+    /**
+     * 设置结束时间超出当前时间的正在拍卖的拍卖会为已结束
+     * @return
+     */
+    public void updateAuctionEnd() {
+        getDao().updateAuctionEnd();
     }
 }

@@ -29,7 +29,7 @@
     </resultMap>
 
     <!-- sys_menu table all fields -->
-    <sql id="Base_Column_List">
+    <sql id="AuctionItem_Base_Column_List">
 		t.id,t.name,t.type,t.description,t.startTime,t.endTime,t.startPrice,t.curPrice,t.finalPrice,
 		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId
 	</sql>
@@ -53,6 +53,12 @@
         auctionStatus=#{auctionStatus},auctionId=#{auctionId},
 		where id=#{id}
 	</update>
+
+    <!-- 设置开始时间超出当前时间的未开始拍卖的拍卖会为已开始 -->
+    <update id="updateAuctionItemStart" parameterType="Object">
+		update t_e_auction_item set auctionstatus='1'
+		where auctionstatus='0' and status='3' and starttime &lt; now()
+ 	</update>
 
     <!-- 修改记录，只修改只不为空的字段 -->
     <update id="updateBySelective" parameterType="Object">
@@ -118,11 +124,11 @@
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="Base_Column_List" />
+        <include refid="AuctionItem_Base_Column_List" />
         ,a.name as auctionname
         from t_e_auction_item t
         LEFT JOIN t_e_auction a on t.auctionId=a.id
-        where t.id = #{id} and t.status = '1'
+        where t.id = #{id} and t.status != '0'
     </select>
 
     <!-- 记录总数 -->
@@ -149,12 +155,12 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="Base_Column_List" />
+        <include refid="AuctionItem_Base_Column_List" />
         ,a.name as auctionname
         ,(select count(1) from t_con_item_res r where r.conid=t.id and r.contype='2') as picCount
         from t_e_auction_item t
         LEFT JOIN t_e_auction a on t.auctionId=a.id
-        where   t.status = '1'
+        where t.status != '0'
         <trim suffixOverrides=",">
             <if test="name != null and name != ''">
                 and t.name like CONCAT('%', #{name}, '%')

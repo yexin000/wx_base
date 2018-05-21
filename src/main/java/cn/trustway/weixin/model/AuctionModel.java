@@ -50,7 +50,7 @@ public class AuctionModel extends BaseModel {
      */
     String description;
     /**
-     *状态：0-删除，1-正常
+     *状态：0-删除，1-正常, 2-已开始, 3-已结束
      */
     String status;
     /**

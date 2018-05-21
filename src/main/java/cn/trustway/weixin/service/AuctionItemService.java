@@ -16,7 +16,11 @@ public class AuctionItemService<T> extends BaseService<T> {
     private AuctionItemDao<T> dao;
 
     @Override
-    public BaseDao<T> getDao() {
+    public AuctionItemDao<T> getDao() {
         return dao;
+    }
+
+    public void updateAuctionItemStart() {
+        getDao().updateAuctionItemStart();
     }
 }
