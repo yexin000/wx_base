@@ -6,7 +6,7 @@ import java.util.Date;
  * 订单bean
  * @author yexin
  */
-public class Order {
+public class Order extends BaseBean {
     /**
      * 主键-id
      */
@@ -32,7 +32,7 @@ public class Order {
      */
     private Date invalidTime;
     /**
-     * 订单状态:0-失效,1-待支付,2-已支付
+     * 订单状态:0-删除,1-失效,2-待支付,3-已支付
      */
     private String status;
     /**

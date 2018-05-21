@@ -1,5 +1,7 @@
 package cn.trustway.weixin.dao;
 
+import java.util.List;
+
 /**
  * 拍品dao
  * @author yexin
@@ -12,4 +14,10 @@ public interface AuctionItemDao<T> extends BaseDao<T> {
      * @return
      */
     void updateAuctionItemStart();
+
+    /**
+     * 查询结束时间超出当前时间的正在拍卖的拍卖品
+     * @return
+     */
+    List<T> queryInAuctionByList();
 }
