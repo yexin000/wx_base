@@ -186,4 +186,16 @@
             ${pager.mysqlQueryCondition}
         </if>
     </select>
+
+    <!-- 查询结束时间超出当前时间的正在拍卖的拍卖品 -->
+    <select id="queryInAuctionByList" resultMap="BaseResultMap" parameterType="Object">
+        SELECT
+        <include refid="AuctionItem_Base_Column_List" />
+        FROM
+        t_e_auction_item t
+        WHERE
+        t.STATUS = '3'
+        AND t.auctionstatus = '1'
+        AND t.endtime &lt; now()
+    </select>
 </mapper>

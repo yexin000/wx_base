@@ -1,5 +1,6 @@
 package cn.trustway.weixin.service;
 
+import cn.trustway.weixin.bean.BidBean;
 import cn.trustway.weixin.dao.BaseDao;
 import cn.trustway.weixin.dao.BidDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class BidService<T> extends BaseService<T> {
     private BidDao<T> dao;
 
     @Override
-    public BaseDao<T> getDao() {
+    public BidDao<T> getDao() {
         return dao;
     }
 
@@ -27,5 +28,14 @@ public class BidService<T> extends BaseService<T> {
      */
     public void updateBidOutByAuctionItemId(Integer auctionItemId) {
         this.dao.updateBidOutByAuctionItemId(auctionItemId);
+    }
+
+    /**
+     * 根据拍卖品id查询最高出价记录(领先记录)
+     * @param auctionItemId
+     * @return
+     */
+    public BidBean queryBidByItemId(Integer auctionItemId) {
+        return getDao().queryBidByItemId(auctionItemId);
     }
 }
