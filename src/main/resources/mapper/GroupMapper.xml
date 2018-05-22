@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.GroupDao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.GroupBean">
+        <result column="id" property="id" />
+        <result column="groupname" property="groupName" />
+        <result column="codeurl" property="codeUrl" />
+        <result column="logourl" property="logoUrl" />
+        <result column="status" property="status" />
+        <result column="createtime" property="createTime" />
+    </resultMap>
+
+    <!-- sys_menu table all fields -->
+    <sql id="Group_Base_Column_List">
+		t.id, t.groupname, t.codeurl, t.logourl, t.status, t.createtime
+	</sql>
+
+    <!-- 插入记录 -->
+    <insert id="add" parameterType="Object">
+        insert into
+        t_e_group(id, groupname, codeurl, logourl, status, createtime)
+        values(null,#{groupName},#{codeUrl},#{logoUrl},'1',now());
+    </insert>
+
+    <!-- 根据id，修改记录 -->
+    <update id="update" parameterType="Object">
+		update t_e_group set
+		groupname=#{groupName},codeurl=#{codeUrl},logourl=#{logoUrl},
+		status=#{status} where id=#{id}
+	</update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateBySelective" parameterType="Object">
+        update t_e_group set id=#{id}
+        <if test="groupName != null and groupName != '' ">
+            ,groupname=#{groupName}
+        </if>
+        <if test="codeUrl != null and codeUrl != '' ">
+            ,codeurl=#{codeUrl}
+        </if>
+        <if test="logoUrl != null and logoUrl != '' ">
+            ,logourl=#{logoUrl}
+        </if>
+        <if test="status != null and status != '' ">
+            ,status=#{status}
+        </if>
+        where id=#{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <update id="delete" parameterType="Object">
+		update t_e_group set status='0' where id = #{id}
+	</update>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Group_Base_Column_List" />
+        from t_e_group t
+        where t.id = #{id}
+    </select>
+
+    <!-- 记录总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(1) from t_e_group where status='1'
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Group_Base_Column_List" />
+        from t_e_group t
+        where 1=1 and t.status='1'
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+</mapper>
