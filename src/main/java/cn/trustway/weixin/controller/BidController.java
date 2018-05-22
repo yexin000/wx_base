@@ -8,6 +8,7 @@ import cn.trustway.weixin.model.BidModel;
 import cn.trustway.weixin.service.AuctionItemService;
 import cn.trustway.weixin.service.BidService;
 import cn.trustway.weixin.service.WeixinUserService;
+import cn.trustway.weixin.util.DateUtil;
 import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.SessionUtil;
 import com.sun.org.apache.regexp.internal.RE;
@@ -133,7 +134,19 @@ public class BidController extends BaseController {
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
     public void ajaxDataList(BidModel model, HttpServletResponse response) throws Exception {
-        queryDataList(model, response);
+        List<BidBean> dataList = bidService.queryByList(model);
+        // 设置页面数据
+        for(BidBean bb :dataList){
+            String mo = DateUtil.convertDateToMonth(bb.getBidTime());
+            String da = DateUtil.convertDateToDay(bb.getBidTime());
+            String hh = DateUtil.convertDateToHour(bb.getBidTime());
+            String dd = DateUtil.convertDateToMinute(bb.getBidTime());
+            bb.setStrDate(mo+"."+da+" "+hh+"."+dd);
+        }
+        Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("total", model.getPager().getRowCount());
+        jsonMap.put("rows", dataList);
+        HtmlUtil.writerJson(response, jsonMap);
     }
 
     /**
@@ -157,4 +170,6 @@ public class BidController extends BaseController {
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
     }
+
+
 }

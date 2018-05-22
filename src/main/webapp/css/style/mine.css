@@ -16,9 +16,9 @@
 .m-order td img{max-width: 0.27rem;max-height: 0.2rem;}
 
 .m-part , .user-part{background: #fff;width: 100%;height: auto;overflow: hidden;margin-top: 0.1rem}
-.m-part li {height: 0.42rem;line-height: 0.42rem;font-size: 0.12rem;color: #666;padding-left:0.1rem;position: relative;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+.m-part li {height: 0.42rem;line-height: 0.42rem;font-size: 0.12rem;color: #666;padding-left:0.1rem;position: relative;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border-bottom: 1px solid #eee;}
 .m-part li > img{width: 0.135rem;vertical-align: sub;}
-.m-part li > span{display: inline-block;background:url(../../images/lh/ico-arrowR-g.png) right center no-repeat;background-size: 0.06rem;border-bottom: 1px solid #eee;margin-left: 0.1rem;width: calc(100% - 0.425rem);width: -webkit-calc(100% - 0.425rem);margin-right: 0.1rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+.m-part li > span{display: inline-block;background:url(../../images/lh/ico-arrowR-g.png) right center no-repeat;background-size: 0.06rem;margin-left: 0.1rem;width: calc(100% - 0.425rem);width: -webkit-calc(100% - 0.425rem);margin-right: 0.1rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 .m-part li:last-child > span , .user-part li:last-child{border-bottom: none}
 
 /*账户管理*/

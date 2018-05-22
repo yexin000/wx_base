@@ -92,6 +92,10 @@ public class AuctionItem extends BaseBean {
      */
     private String businessId ;
 
+    /**
+     * 万分比
+     */
+    private String wanfenbi ;
 
     /**
      * 是否首页轮播图显示
@@ -99,8 +103,6 @@ public class AuctionItem extends BaseBean {
     private String isShowBanner ;
 
     private List<ItemRes> resList;
-
-
 
 
     public String getBusinessId() {
@@ -271,5 +273,11 @@ public class AuctionItem extends BaseBean {
         this.picCount = picCount;
     }
 
+    public String getWanfenbi() {
+        return wanfenbi;
+    }
 
+    public void setWanfenbi(String wanfenbi) {
+        this.wanfenbi = wanfenbi;
+    }
 }

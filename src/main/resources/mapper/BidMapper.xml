@@ -13,6 +13,7 @@
         <result column="bidPrice" property="bidPrice" />
         <result column="status" property="status" />
         <result column="bidTime" property="bidTime" />
+        <result column="avatarUrl" property="avatarUrl" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
@@ -68,9 +69,9 @@
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
         <include refid="Bid_Base_Column_List" />
-        ,w.nickname as wxUserName,a.name as auctionItemName
+        ,w.nickname as wxUserName,w.avatarUrl  ,a.name as auctionItemName
         from t_e_bid t
-        LEFT JOIN weixin_user w on t.wxid=w.id
+        LEFT JOIN weixin_user w on t.wxid=w.wxid
         LEFT JOIN t_e_auction_item a on t.auctionitemid=a.id
         where 1=1
         <trim suffixOverrides=",">

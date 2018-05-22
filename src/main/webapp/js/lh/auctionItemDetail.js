@@ -6,6 +6,7 @@ var imagePath = "http://127.0.0.1:8080/";
 $(function(){	
     var id = getParam("id");
     loadItemData(id);
+    loadAuctionItemBid(id);
 })
 
 //加载商品数据
@@ -44,6 +45,47 @@ function loadItemData(id){
         }
     })
 }
+
+
+//加载出价列表数据
+function loadAuctionItemBid(id){
+    var model = {};
+    model.auctionItemId = id;
+    var url= '/weixin/bid/ajaxDataList.do';
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: JSON.stringify(model) ,
+        dataType: 'JSON',
+        contentType : "application/json;charset=utf-8",
+        cache: false,
+        success:function(data){
+            var dataList = data.rows;
+            if(dataList.length> 0)
+            {
+                var str = '';
+                $.each(dataList,function(i,obj){
+                    str+='<div class="bid">';
+                    str+='	<div class="biddiv1">';
+                    str+=' 		<img src="'  + obj.avatarUrl + '" class="bidimg">';
+                    str+='	      <span class="biddiv1span">'+ obj.wxUserName+'</span>';
+                    str+='  </div>';
+                    str+='  <div  class="biddiv2">';
+                    var isFirst = '';
+                    if(i == 0){
+                        isFirst = 'bidFirst';
+                    }
+                    str+='  <span class="'+isFirst+'">领先</span> <span class="biddiv2span">' +obj.strDate+'</span> <span class="biddiv2span">'+ obj.bidPrice +'</span>';
+                    str+='  </div>';
+                    str+='</div>';
+                });
+            }
+            $("#bidDataDiv").append(str);
+        }
+    })
+}
+
+
 
 //出价
 function toBid(){

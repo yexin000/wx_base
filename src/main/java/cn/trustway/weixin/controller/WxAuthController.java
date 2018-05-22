@@ -1,8 +1,7 @@
 package cn.trustway.weixin.controller;
 
-import cn.trustway.weixin.bean.MiddleMan;
-import cn.trustway.weixin.bean.WeixinUser;
-import cn.trustway.weixin.bean.WxidMiddleman;
+import cn.trustway.weixin.bean.*;
+import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.pojo.WxSession;
 import cn.trustway.weixin.redis.RedisUtil;
 import cn.trustway.weixin.service.MiddleManService;
@@ -15,6 +14,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -143,5 +144,29 @@ public class WxAuthController extends BaseController {
             e.printStackTrace();
         }
         sendFailureMessage(response, "用户信息解析失败");
+    }
+
+
+
+    /**
+     * 根据ID查找记录
+     *
+     * @param wxid
+     * @param response
+     * @return
+     * search  auctionItem/ajaxGetId
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxGetId")
+    public void ajaxGetId(String wxid, HttpServletResponse response) throws Exception {
+        Map<String, Object> context = getRootMap();
+        WeixinUser bean = weixinUserService.queryWeixinUser(wxid);
+        if (bean == null) {
+            sendFailureMessage(response, "没有找到对应的记录!");
+            return;
+        }
+        context.put(SUCCESS, true);
+        context.put("data", bean);
+        HtmlUtil.writerJson(response, context);
     }
 }

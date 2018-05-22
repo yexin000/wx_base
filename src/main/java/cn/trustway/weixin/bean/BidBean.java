@@ -39,6 +39,16 @@ public class BidBean extends BaseBean {
      */
     private Date bidTime;
 
+    /**
+     * 微信头像
+     */
+    private String avatarUrl;
+
+    /**
+     * 前端拼接时间字段
+     */
+    private String strDate;
+
     public Integer getId() {
         return id;
     }
@@ -101,5 +111,21 @@ public class BidBean extends BaseBean {
 
     public void setBidTime(Date bidTime) {
         this.bidTime = bidTime;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getStrDate() {
+        return strDate;
+    }
+
+    public void setStrDate(String strDate) {
+        this.strDate = strDate;
     }
 }

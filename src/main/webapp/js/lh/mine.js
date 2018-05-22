@@ -6,7 +6,7 @@ var imagePath = "http://127.0.0.1:8080/";
 $(function(){	
 	
 	$("#backtop").hide()
-
+    loadUser();
 	$(window).scroll(function(){
         var scrolltop=$(document).scrollTop();
         var Vheight=$(window).height();
@@ -22,39 +22,21 @@ $(function(){
 	
 })
 
-    //加载首页轮播图数据
+    //加载个人信息数据
     function loadUser(){
-        var AuctionItemModel = {};
-        AuctionItemModel.isShowBanner = '1';
-        var url= '/weixin/auctionItem/ajaxDataList.do';
+        var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ sessionStorage.getItem("openId");
         $.ajax({
             url: url,
             type: 'post',
-            data: JSON.stringify(AuctionItemModel) ,
+            data: {} ,
             dataType: 'JSON',
             contentType : "application/json;charset=utf-8",
             cache: false,
             success:function(data){
-                var dataList = data.rows;
-                if(dataList.length> 0)
-                {
-                    var str = '';
-                    for(var i = 0; i < dataList.length; i ++) {
-                        var obj = dataList[i];
-                        var coverimg = '';
-                        for(var j = 0; j < obj.resList.length; j ++) {
-                            var resObj = obj.resList[j];
-                            if(resObj.idx == 1)
-                            {
-                                coverimg = resObj.path;
-                            }
-                        }
-                        str+='<li onclick="toAuctionItemDetail('+obj.id+')" class="bannerItem" style="background-image: url(' + hostPath + coverimg + '); no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;"/>';
-                    }
-
-                    $(".bannerList").append(str);
-                    bannerDW("banner1",3000,true,"red");
-                }
+                var data = data.data;
+                $("#user").html(data.nickName);
+                $("#headImg").attr("src",   data.avatarUrl);
+                $("#balance").html(data.balance);
             }
         })
     }

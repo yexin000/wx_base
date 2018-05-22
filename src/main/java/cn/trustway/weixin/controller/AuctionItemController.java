@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -164,6 +165,11 @@ public class AuctionItemController extends BaseController {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
         }
+
+        //做金钱运算
+        BigDecimal startPrice = new BigDecimal(bean.getStartPrice());
+        String wanyuan = startPrice.divide(new BigDecimal("10000")).setScale(2,BigDecimal.ROUND_HALF_UP).toString();
+        bean.setWanfenbi(wanyuan);
         ItemResModel resModel  = new ItemResModel();
         resModel.setConid(bean.getId());
         resModel.setConType("2");

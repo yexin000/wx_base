@@ -26,3 +26,11 @@
 .scrollItem{display: inline-block;width:0.4rem;height:0.255rem; padding-top:0.11rem; }
 .scrollItem2{display: inline-block;width:0.4rem;height:0.355rem;float: left; padding :0.11rem 0.11rem 0rem 0.11rem; text-align: center;   }
 
+.bid{height: 0.32rem;}
+.biddiv1{height: 0.3rem;width: 35%;display: inline-block}
+.biddiv1span{margin-top: 10px;float: right;overflow: hidden;width: 0.72rem;height: 0.2rem;}
+.biddiv2{height: 0.2rem;width: 59%;display: inline-block;float:right; padding-top: 7px;}
+.biddiv2span{margin-left: 0.1rem;}
+.bidimg{width: 25px; height: 25px;border-radius:70%;margin-top: 5px;margin-left: 0.15rem}
+
+.bidFirst{color: red;}

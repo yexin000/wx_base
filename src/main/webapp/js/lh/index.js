@@ -6,8 +6,8 @@
         loadindexAuction();
         loadindexAuctionItem();
         //TODO 记得从小程序回调请求里面获取wxid，存到sessionstorage
-
-        var p=0,t=0;
+        sessionStorage.setItem('openId',getParam("openId"));
+     var p=0,t=0;
         $(window).scroll(function(){
             var p=$(document).scrollTop();
             //console.log($(document).height());
