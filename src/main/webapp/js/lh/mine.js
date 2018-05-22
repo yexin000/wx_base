@@ -22,7 +22,39 @@ $(function(){
 	
 })
 
-function toIndex()
-{
-    window.href = "/foreground/html/lh/index.html";
-}
+    //加载首页轮播图数据
+    function loadUser(){
+        var AuctionItemModel = {};
+        AuctionItemModel.isShowBanner = '1';
+        var url= '/weixin/auctionItem/ajaxDataList.do';
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: JSON.stringify(AuctionItemModel) ,
+            dataType: 'JSON',
+            contentType : "application/json;charset=utf-8",
+            cache: false,
+            success:function(data){
+                var dataList = data.rows;
+                if(dataList.length> 0)
+                {
+                    var str = '';
+                    for(var i = 0; i < dataList.length; i ++) {
+                        var obj = dataList[i];
+                        var coverimg = '';
+                        for(var j = 0; j < obj.resList.length; j ++) {
+                            var resObj = obj.resList[j];
+                            if(resObj.idx == 1)
+                            {
+                                coverimg = resObj.path;
+                            }
+                        }
+                        str+='<li onclick="toAuctionItemDetail('+obj.id+')" class="bannerItem" style="background-image: url(' + hostPath + coverimg + '); no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;"/>';
+                    }
+
+                    $(".bannerList").append(str);
+                    bannerDW("banner1",3000,true,"red");
+                }
+            }
+        })
+    }
