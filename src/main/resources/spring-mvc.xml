@@ -58,6 +58,7 @@
 					<value>/middleMan/ajaxGetMiddleMan.do</value>
 					<value>/group/ajaxGetGroupList.do</value>
 					<value>/order/ajaxDataList.do</value>
+					<value>cn.trustway.weixin.controller.FavoriteController</value>
 				</list>
 			</property>
 		</bean>
