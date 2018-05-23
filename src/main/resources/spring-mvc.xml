@@ -57,6 +57,7 @@
 					<value>/bid/ajaxDataList.do</value>
 					<value>/middleMan/ajaxGetMiddleMan.do</value>
 					<value>/group/ajaxGetGroupList.do</value>
+					<value>/order/ajaxDataList.do</value>
 				</list>
 			</property>
 		</bean>

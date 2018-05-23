@@ -1,12 +1,12 @@
-package cn.trustway.weixin.bean;
+package cn.trustway.weixin.model;
 
 import java.util.Date;
 
 /**
- * 订单bean
+ * 订单model
  * @author yexin
  */
-public class Order extends BaseBean {
+public class OrderModel extends BaseModel {
     /**
      * 主键-id
      */
@@ -40,17 +40,9 @@ public class Order extends BaseBean {
      */
     private String wxid;
     /**
-     * 用户昵称
-     */
-    private String wxName;
-    /**
      * 订单地址id
      */
     private String addressId;
-    /**
-     * 订单地址
-     */
-    private String addressName;
     /**
      * 商品id
      */
@@ -150,22 +142,6 @@ public class Order extends BaseBean {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public String getWxName() {
-        return wxName;
-    }
-
-    public void setWxName(String wxName) {
-        this.wxName = wxName;
-    }
-
-    public String getAddressName() {
-        return addressName;
-    }
-
-    public void setAddressName(String addressName) {
-        this.addressName = addressName;
     }
 
     public String getItemName() {
