@@ -69,6 +69,10 @@ public class Order extends BaseBean {
      * 更新时间
      */
     private Date updateTime;
+    /**
+     * 商户名称
+     */
+    private String businessName;
 
     public Integer getId() {
         return id;
@@ -188,5 +192,13 @@ public class Order extends BaseBean {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
     }
 }

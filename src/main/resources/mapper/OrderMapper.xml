@@ -84,9 +84,10 @@
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
         <include refid="Order_Base_Column_List" />
-        ,item.name as itemName, item.description ,wu.nickname as wxName,ua.address as addressName
+        ,item.name as itemName, item.description ,wu.nickname as wxName,ua.address as addressName ,teb.name as businessName
         from (t_e_order t,t_e_auction_item item,weixin_user wu)
         left join t_e_user_addr ua on t.addressid=ua.id
+        left join t_e_business teb on item.businessId=teb.id
         where 1=1 and t.status!='0'
         and t.itemid=item.id and t.wxid=wu.wxid
         <trim suffixOverrides=",">
