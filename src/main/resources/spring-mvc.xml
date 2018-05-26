@@ -60,6 +60,7 @@
 					<value>/order/ajaxDataList.do</value>
 					<value>/favorite/ajaxDataList.do</value>
 					<value>cn.trustway.weixin.controller.FavoriteController</value>
+					<value>cn.trustway.weixin.controller.UserAddrController</value>
 				</list>
 			</property>
 		</bean>

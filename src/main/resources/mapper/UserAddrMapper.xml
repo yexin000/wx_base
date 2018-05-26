@@ -14,7 +14,7 @@
     </resultMap>
 
     <!-- sys_menu table all fields -->
-    <sql id="Base_Column_List">
+    <sql id="UserAddr_Base_Column_List">
         t.id, t.wxid, t.address, t.receiver, t.phonenum, t.isdefault
     </sql>
 
@@ -30,6 +30,10 @@
         update t_e_user_addr set
         wxid=#{wxid},address=#{address},receiver=#{receiver},
         phonenum=#{phoneNum},isdefault=#{isDefault} where id=#{id}
+    </update>
+
+    <update id="setDefaultAddr" parameterType="Object">
+        update t_e_user_addr set isdefault='1' where id = #{id}
     </update>
 
     <!-- 修改记录，只修改只不为空的字段 -->
@@ -61,8 +65,15 @@
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="Base_Column_List" />
+        <include refid="UserAddr_Base_Column_List" />
         from t_e_user_addr t where t.id = #{id}
+    </select>
+
+    <!-- 根据wxid查询用户默认收货地址 -->
+    <select id="getDefaultAddrByWxid" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="UserAddr_Base_Column_List" />
+        from t_e_user_addr t where t.wxid = #{wxid} and isdefault='1'
     </select>
 
     <!-- 记录总数 -->
@@ -74,7 +85,7 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="Base_Column_List" />
+        <include refid="UserAddr_Base_Column_List" />
         from t_e_user_addr t
         where 1=1
         <if test="pager.orderCondition != null and pager.orderCondition != ''">

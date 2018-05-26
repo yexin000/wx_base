@@ -12,8 +12,7 @@ public interface SysUserDao<T> extends BaseDao<T> {
 
 	/**
 	 * 检查登录
-	 * @param username
-	 * @param pwd
+	 * @param model
 	 * @return
 	 */
 	public T queryLogin(SysUserModel model);
