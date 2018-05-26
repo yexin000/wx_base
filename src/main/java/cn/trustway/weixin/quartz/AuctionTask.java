@@ -3,6 +3,7 @@ package cn.trustway.weixin.quartz;
 
 import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.service.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -93,5 +94,28 @@ public class AuctionTask {
         }
 
         System.out.println("定时设置拍卖品状态结束");
+    }
+
+    /**
+     * 拍卖品状态监控定时任务
+     * @throws Exception
+     */
+    @Scheduled(cron = "0/30 * * * * ? ")
+    public void orderStatusTask() throws Exception {
+        // 查询所有待支付且超过失效时间的订单
+        List<Order> invalidOrders = orderService.queryInvalidOrderList();
+        if(CollectionUtils.isNotEmpty(invalidOrders)) {
+            for(Order order : invalidOrders) {
+                // 更新订单状态为1-失效
+                order.setStatus("1");
+                orderService.updateBySelective(order);
+
+                // 写入订单日志
+                OrderLog orderLog = new OrderLog();
+                BeanUtils.copyProperties(order, orderLog);
+                orderLog.setOrderId(order.getId());
+                orderLogService.add(orderLog);
+            }
+        }
     }
 }

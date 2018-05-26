@@ -80,6 +80,13 @@
         select count(1) from t_e_order
     </select>
 
+    <select id="queryInvalidOrderList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Order_Base_Column_List" />
+        from t_e_order t
+        where status='2' and invalidtime &lt; now()
+    </select>
+
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select

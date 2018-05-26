@@ -4,6 +4,8 @@ import cn.trustway.weixin.dao.OrderDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 订单服务类
  *
@@ -17,5 +19,13 @@ public class OrderService<T> extends BaseService<T> {
     @Override
     public OrderDao<T> getDao() {
         return dao;
+    }
+
+    /**
+     * 查询所有待支付且超过失效时间的订单
+     * @return
+     */
+    public List<T> queryInvalidOrderList() {
+        return getDao().queryInvalidOrderList();
     }
 }

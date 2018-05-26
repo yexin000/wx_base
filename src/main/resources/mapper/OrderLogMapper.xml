@@ -30,8 +30,8 @@
         insert into
         t_e_order_log(id, orderid, ordertype, ordermoney, createtime, paytime, invalidtime,
           status, wxid, addressid, itemid, updatetime)
-        values(null,#{orderId},#{orderType},#{orderMoney},now(),null,date_add(now(), interval 1 hour),
-          '2',#{wxid},#{addressId},#{itemId},now())
+        values(null,#{orderId},#{orderType},#{orderMoney},#{createTime},#{payTime},#{invalidTime},
+          #{status},#{wxid},#{addressId},#{itemId},#{updateTime})
     </insert>
 
     <!-- 根据id，修改记录 -->
