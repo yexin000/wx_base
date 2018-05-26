@@ -59,6 +59,12 @@ public class Order extends BaseBean {
      * 商品名称
      */
     private String itemName;
+
+    /**
+     * 商品描述
+     */
+    private String description;
+
     /**
      * 更新时间
      */
@@ -174,5 +180,13 @@ public class Order extends BaseBean {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

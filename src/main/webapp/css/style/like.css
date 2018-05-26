@@ -23,8 +23,8 @@
 	content: " ";		
 	clear: both;
 }
-.scrollItem{display: inline-block;width:0.4rem;height:0.255rem; padding-top:0.11rem; }
-.scrollItem2{display: inline-block;width:0.4rem;height:0.355rem;float: left; padding :0.11rem 0.11rem 0rem 0.11rem; text-align: center;   }
+.scrollItem{display: inline-block;width:0.4rem;height:0.24rem; padding-top:0.11rem; }
+.scrollItem2{display: inline-block;width:0.4rem;height:0.24rem;float: left; padding :0.11rem 0.11rem 0rem 0.11rem; text-align: center;   }
 
 .bid{height: 0.32rem;}
 .biddiv1{height: 0.3rem;width: 35%;display: inline-block}

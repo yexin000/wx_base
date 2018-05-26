@@ -33,6 +33,15 @@ public class Favorite extends BaseBean {
      * 创建/收藏时间
      */
     private Date createTime;
+    /**
+     * 商品描述
+     */
+    private String description;
+
+    /**
+     * 商品库存
+     */
+    private String stock;
 
     public Integer getId() {
         return id;
@@ -80,5 +89,21 @@ public class Favorite extends BaseBean {
 
     public void setFavName(String favName) {
         this.favName = favName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
     }
 }

@@ -42,6 +42,9 @@ function loadItemData(id){
             $("#addprice").html(dataObj.addPrice); //加价最低价格
             $("#rate").html(dataObj.rate); //手续费比率
             $("#depositprice").html(dataObj.depositPrice); //保证金
+            $("#wanfenbi").html('('+dataObj.wanfenbi+"万元)"); //保证金
+
+
         }
     })
 }
@@ -91,10 +94,8 @@ function loadAuctionItemBid(id){
 function toBid(){
     var id = getParam("id");
     var BidBean = {};
-    BidBean.wxid = 'oNVx35HXrCsOVp-fXPhdCJUlWLeI';
-    BidBean.wxUserName = '帅气的佳哥';
+    BidBean.wxid = sessionStorage.getItem('openId');
     BidBean.auctionItemId = id;
-    BidBean.auctionItemName = 'dasdasd';
     BidBean.bidPrice = 600;
     var url= '/weixin/bid/ajaxAddBid.do';
     $.ajax({

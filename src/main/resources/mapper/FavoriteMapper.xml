@@ -65,7 +65,7 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="Favorite_Base_Column_List" />,item.name as favName
+        <include refid="Favorite_Base_Column_List" />,item.name as favName , item.description , item.stock
         from t_e_favorite t
         left join t_e_auction_item item on t.favid=item.id
         where 1=1

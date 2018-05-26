@@ -65,7 +65,7 @@ public class OrderController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
-    public void ajaxDataList(OrderModel model, HttpServletResponse response) throws Exception {
+    public void ajaxDataList(@RequestBody OrderModel model, HttpServletResponse response) throws Exception {
         queryDataList(model, response);
     }
 

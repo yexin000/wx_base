@@ -36,14 +36,14 @@ function loadData()
             {
                 var str2 = '';
                 $.each(dataList2,function(i,obj){
-                    str2+='<p class="scrollItem2">' + '<span>'+obj.name+'</span>';
+                    str2+='<p class="scrollItem2"  onclick="loadAuctionItem(\''+obj.code+'\')" >' + '<span>'+obj.name+'</span>';
                     str2+='</p>';
                 });
                 $("#dataList2").append(str2);
             }
             if(dataList2[0].id)
             {
-                loadAuctionItem(dataList2[0].id);
+                loadAuctionItem(dataList2[0].code);
             }
 
         }
@@ -66,11 +66,16 @@ function loadData()
                 {
                     var str2 = '';
                     $.each(dataList2,function(i,obj){
-                        str2+='<p class="scrollItem2">' + '<span>'+obj.name+'</span>';
+                        str2+='<p class="scrollItem2" onclick="loadAuctionItem(\''+obj.code+'\')">' + '<span>'+obj.name+'</span>';
                         str2+='</p>';
                     });
                     $("#dataList2").empty();
                     $("#dataList2").append(str2);
+
+                    if(dataList2[0].id)
+                    {
+                        loadAuctionItem(dataList2[0].code);
+                    }
                 }
             }
         })

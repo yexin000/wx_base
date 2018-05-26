@@ -69,11 +69,12 @@ public class BidController extends BaseController {
     @RequestMapping(value = "/ajaxAddBid", method = RequestMethod.POST)
     public void ajaxAddBid(@RequestBody BidBean bean, HttpServletResponse response) throws Exception {
         String wxid = bean.getWxid();
-        if(StringUtils.isBlank(wxid) || null == weixinUserService.queryWeixinUser(wxid)) {
+        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
+        if(StringUtils.isBlank(wxid) || null == user) {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "出价失败，用户信息有误");
             return;
         }
-
+        bean.setWxUserName(user.getNickName());
         if(null == bean.getAuctionItemId() || bean.getAuctionItemId() <= 0) {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_ERROR, "出价失败，商品信息有误");
             return;
@@ -85,6 +86,7 @@ public class BidController extends BaseController {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_ERROR, "出价失败，商品信息有误");
             return;
         }
+        bean.setAuctionItemName(auctionItem.getAuctionName());
         //判断当前是否在拍卖时间中
         Date now = new Date();
         if(now.compareTo(auctionItem.getStartTime()) < 0 || now.compareTo(auctionItem.getEndTime()) > 0) {

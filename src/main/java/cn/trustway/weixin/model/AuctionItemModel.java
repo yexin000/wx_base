@@ -96,6 +96,11 @@ public class AuctionItemModel extends BaseModel {
      */
     private String isShowBanner ;
 
+    /**
+     * 库存
+     */
+    private String stock ;
+
     public Integer getId() {
         return id;
     }
@@ -262,5 +267,13 @@ public class AuctionItemModel extends BaseModel {
 
     public void setIsShowBanner(String isShowBanner) {
         this.isShowBanner = isShowBanner;
+    }
+
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
     }
 }

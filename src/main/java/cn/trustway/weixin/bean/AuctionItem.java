@@ -102,8 +102,15 @@ public class AuctionItem extends BaseBean {
      */
     private String isShowBanner ;
 
+    /**
+     * 资源列表
+     */
     private List<ItemRes> resList;
 
+    /**
+     * 库存
+     */
+    private String stock ;
 
     public String getBusinessId() {
         return businessId;
@@ -279,5 +286,21 @@ public class AuctionItem extends BaseBean {
 
     public void setWanfenbi(String wanfenbi) {
         this.wanfenbi = wanfenbi;
+    }
+
+    public String getIsShowBanner() {
+        return isShowBanner;
+    }
+
+    public void setIsShowBanner(String isShowBanner) {
+        this.isShowBanner = isShowBanner;
+    }
+
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
     }
 }

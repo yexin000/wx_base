@@ -122,7 +122,7 @@
                     var str = '';
                     $.each(dataList,function(i,obj){
 
-                        str+='<div class="posr-item">';
+                        str+='<div onclick="toAuctionItemDetail('+obj.id+')" class="posr-item">';
                         str+='	<div class="left" >';
                         str+=' 		<img src="../../../images/lh/wshop_indexbanner1.jpg" alt="">';
                         str+='	</div>';
@@ -131,9 +131,6 @@
                     });
                 }
                 $("#dataDivItem").append(str);
-
             }
         })
     }
-   
-   
