@@ -25,14 +25,15 @@ function loadData()
             if(dataList1.length> 0)
             {
                 var str1 = '';
+                str1+='<p class="scrollItem scrollItemChecked firstType" onclick="loadType2Date(\'\',this);">' + '全部' +'</p>';
                 $.each(dataList1,function(i,obj){
-                    str1+='<p class="scrollItem" id="'+obj.id+'" onclick="loadType2Date(\''+obj.code+'\')">' + obj.name;
+                    str1+='<p class="scrollItem firstType" id="'+obj.id+'" onclick="loadType2Date(\''+obj.code+'\', this)">' + obj.name;
                     str1+='</p>';
                 });
                 $("#dataList1").append(str1);
             }
 
-            if(dataList2.length> 0)
+            /*if(dataList2.length> 0)
             {
                 var str2 = '';
                 $.each(dataList2,function(i,obj){
@@ -40,18 +41,23 @@ function loadData()
                     str2+='</p>';
                 });
                 $("#dataList2").append(str2);
-            }
-            if(dataList2[0].id)
-            {
-                loadAuctionItem(dataList2[0].code);
-            }
+            }*/
+            loadAuctionItem();
 
         }
     })
 }
 
-    function loadType2Date(code)
+    function loadType2Date(code, obj)
     {
+        $(".firstType").removeClass("scrollItemChecked");
+        $(obj).addClass("scrollItemChecked");
+        if(!code) {
+            $("#dataList2").empty();
+            loadAuctionItem();
+            return;
+        }
+
         var url= '/weixin/wxCode/getAuctionItemSecondType.do?code='+code;
         $.ajax({
             url: url,
@@ -66,7 +72,7 @@ function loadData()
                 {
                     var str2 = '';
                     $.each(dataList2,function(i,obj){
-                        str2+='<p class="scrollItem2" onclick="loadAuctionItem(\''+obj.code+'\')">' + '<span>'+obj.name+'</span>';
+                        str2+='<p class="scrollItem2 secondType" onclick="loadAuctionItem(\''+obj.code+'\', this)">' + '<span>'+obj.name+'</span>';
                         str2+='</p>';
                     });
                     $("#dataList2").empty();
@@ -74,7 +80,7 @@ function loadData()
 
                     if(dataList2[0].id)
                     {
-                        loadAuctionItem(dataList2[0].code);
+                        loadAuctionItem(dataList2[0].code, $(".scrollItem2").get(0));
                     }
                 }
             }
@@ -83,7 +89,9 @@ function loadData()
 
 
     //根据类型加载拍品数据
-    function loadAuctionItem(type){
+    function loadAuctionItem(type, obj){
+        $(".secondType").removeClass("scrollItemChecked");
+        $(obj).addClass("scrollItemChecked");
         var AuctionItemModel = {};
         AuctionItemModel.type = type;
         var url= '/weixin/auctionItem/ajaxDataList.do';
