@@ -4,7 +4,7 @@ var imagePath = "http://127.0.0.1:8080/";
 
 
 $(function(){
-    loadAddress();
+    loadMyUpload();
     $(window).scroll(function(){
         var scrolltop=$(document).scrollTop();
         var Vheight=$(window).height();
@@ -20,8 +20,10 @@ $(function(){
 
 })
 
-//加载收货地址
-function loadAddress(){
+//加载我的上传
+function loadMyUpload(){
+    var model = {};
+    model.isShow = '1';
     var url= '/weixin/userAddr/dataList.do?wxid='+ sessionStorage.getItem("openId");
     $.ajax({
         url: url,
