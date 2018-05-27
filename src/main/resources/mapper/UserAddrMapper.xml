@@ -88,6 +88,11 @@
         <include refid="UserAddr_Base_Column_List" />
         from t_e_user_addr t
         where 1=1
+        <trim suffixOverrides=",">
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
+        </trim>
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
             ${pager.orderCondition}
         </if>

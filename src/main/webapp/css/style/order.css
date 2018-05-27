@@ -92,7 +92,7 @@
 .pro-lists .pro-item:first-child .pro-item-H{border-top: none}
 .pro-item .pro-item-M{overflow: hidden;width: 0.88rem;text-align: center;padding:0 0.1rem}
 .pro-item .pro-item-M img{width: 0.78rem;height: 0.78rem;border:1px solid #eee}
-.pro-item .pro-item-H{padding-right: 0.1rem;border-top: 1px solid #eee;position: relative;height: 0.96rem;overflow: hidden;}
+.pro-item .pro-item-H{padding-right: 0.1rem; position: relative;height: 0.96rem;overflow: hidden;}
 .pro-item .pro-item-H h2{ font-size: 0.12rem;color: #333;line-height: 0.18rem;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical; }
 .pro-item .pro-item-H b{color: #fc4747;font-size: 0.15rem;font-weight: normal;}
 .pro-item .chose-item{padding-left: 0.1rem;width: 0.13rem;overflow: hidden;display: none;}
