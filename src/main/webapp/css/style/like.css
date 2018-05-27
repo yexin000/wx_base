@@ -24,7 +24,7 @@
 	clear: both;
 }
 .scrollItem{display: inline-block;width:0.4rem;height:0.24rem; padding-top:0.11rem; }
-.scrollItemChecked{background-color: #2E73D6;}
+.scrollItemChecked{ border-bottom:2px solid #2E73D6;}
 .scrollItem2{display: inline-block;width:0.4rem;height:0.24rem;float: left; padding :0.11rem 0.11rem 0rem 0.11rem; text-align: center;   }
 
 .bid{height: 0.32rem;}
