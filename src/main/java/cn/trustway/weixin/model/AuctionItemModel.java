@@ -101,6 +101,11 @@ public class AuctionItemModel extends BaseModel {
      */
     private String stock ;
 
+    /**
+     * 上传人wxid
+     */
+    private String uploadWxid;
+
     public Integer getId() {
         return id;
     }
@@ -275,5 +280,13 @@ public class AuctionItemModel extends BaseModel {
 
     public void setStock(String stock) {
         this.stock = stock;
+    }
+
+    public String getUploadWxid() {
+        return uploadWxid;
+    }
+
+    public void setUploadWxid(String uploadWxid) {
+        this.uploadWxid = uploadWxid;
     }
 }
