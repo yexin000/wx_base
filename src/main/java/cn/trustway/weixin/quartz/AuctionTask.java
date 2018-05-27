@@ -41,13 +41,11 @@ public class AuctionTask {
      */
     @Scheduled(cron = "0/30 * * * * ? ")
     public void auctionStatusTask() throws Exception {
-        System.out.println("定时设置拍卖会状态开始");
         // 设置开始时间超出当前时间的正常的拍卖会为已开始
         auctionService.updateAuctionStart();
 
         // 设置结束时间超出当前时间的正在拍卖的拍卖会为已结束
         auctionService.updateAuctionEnd();
-        System.out.println("定时设置拍卖会、拍卖品状态结束");
     }
 
     /**
@@ -56,7 +54,6 @@ public class AuctionTask {
      */
     @Scheduled(cron = "0/30 * * * * ? ")
     public void auctionItemStatusTask() throws Exception {
-        System.out.println("定时设置拍卖品状态开始");
         // 设置开始时间超出当前时间的正常的拍卖品为正在拍卖
         auctionItemService.updateAuctionItemStart();
 
@@ -93,7 +90,6 @@ public class AuctionTask {
             }
         }
 
-        System.out.println("定时设置拍卖品状态结束");
     }
 
     /**

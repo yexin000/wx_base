@@ -152,6 +152,12 @@
             <if test="isShowBanner != null and isShowBanner != ''">
                 and t.isshowBanner = #{isShowBanner}
             </if>
+            <if test="type != null and type != ''">
+                and t.type = #{type}
+            </if>
+            <if test="uploadWxid != null and uploadWxid != ''">
+                and t.uploadWxid = #{uploadWxid}
+            </if>
         </trim>
     </select>
 

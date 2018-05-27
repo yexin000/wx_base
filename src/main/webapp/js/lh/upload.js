@@ -22,13 +22,13 @@ $(function(){
 
 //加载我的上传
 function loadMyUpload(){
-    var model = {};
-    model.isShow = '1';
-    var url= '/weixin/userAddr/dataList.do?wxid='+ sessionStorage.getItem("openId");
+    var AuctionItemModel = {};
+    AuctionItemModel.uploadWxid = sessionStorage.getItem("openId");
+    var url= '/weixin/auctionItem/ajaxDataList.do';
     $.ajax({
         url: url,
         type: 'post',
-        data: {} ,
+        data: JSON.stringify(AuctionItemModel) ,
         dataType: 'JSON',
         contentType : "application/json;charset=utf-8",
         cache: false,
@@ -38,27 +38,17 @@ function loadMyUpload(){
             {
                 var str = '';
                 $.each(dataList,function(i,obj){
-                    str+='<div style="padding-top: 0.2rem;">';
-                    str+='   <p style="  padding: 0 0.16rem 0.06rem 0.12rem;">';
-                    str+='    <span style="font-size: 16px;">'+obj.receiver+'</span>';
-                    str+='    <span style="font-size: 16px;float:right;">'+obj.phoneNum+'</span>';
-                    str+='   </p>';
-                    str+='   <p style="padding: 0 0.12rem 0 0.12rem;">'+obj.address+'</p>';
-                    str+='   <p style=" padding: 0.06rem 0.16rem 0 0.12rem;">';
-                    str+='    <span>';
-                    if(obj.isDefault == '1'){
-                        str+=' <img src="../../../images/lh/redio-s.png" style="height: 15px;width: 15px;"> ';
-                    }else{
-                        str+=' <img src="../../../images/lh/redio-n.png" style="height: 15px;width: 15px;"> ';
-                    }
-                    str+=' &nbsp;默认地址</span>';
-                    str+='    <span style="float: right">修改&nbsp;</span>';
-                    str+='    <span style="float: right">删除</span>';
-                    str+='   </p>';
-                    str+='</div>';
+                    str+='<tr onclick="toAuctionItemDetail('+obj.id+')" style="border-bottom: 1px solid #808080;">';
+                    str+='  <td class="pro-item-M"><img src="../../../images/lh/wshop_indexbanner1.jpg"  alt=""></td>';
+                    str+='  <td class="pro-item-H">';
+                    str+='      <h2>'+obj.name+'</h2>';
+                    str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
+                    str+='      <p><span>商品价格: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span> <span    style="float: right; padding: 0.03rem;border-radius:6px; ">审核通过</span></p>';
+                    str+='  </td>';
+                    str+='</tr>';
                 });
             }
-            $("#dataDiv").append(str);
+            $(".pro-item").append(str);
         }
     })
 }
