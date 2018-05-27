@@ -23,15 +23,15 @@
         <result column="auctionStatus" property="auctionStatus" />
         <result column="auctionId" property="auctionId" />
         <result column="businessId" property="businessId" />
-        <result column="isShowBanner" property="isShowBanner" />
-        <result column="businessId" property="businessId" />
-        <result column="isShowBanner" property="isShowBanner" />
+        <result column="isshowbanner" property="isShowBanner" />
+        <result column="stock" property="stock" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="AuctionItem_Base_Column_List">
 		t.id,t.name,t.type,t.description,t.startTime,t.endTime,t.startPrice,t.curPrice,t.finalPrice,
-		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId
+		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId,
+		t.isshowbanner,t.stock
 	</sql>
 
     <!-- 插入记录 -->
@@ -111,6 +111,9 @@
             </if>
             <if test="auctionId != null and auctionId != '' ">
                 auctionId=#{auctionId},
+            </if>
+            <if test="isShowBanner != null and isShowBanner != '' ">
+                isshowbanner=#{isShowBanner},
             </if>
         </trim>
         where id=#{id}

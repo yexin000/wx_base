@@ -77,7 +77,7 @@
         select
         <include refid="Base_Column_List" />
         <if test="isSelectItemCount != null and isSelectItemCount != '' ">
-            ,(select count(0) from t_e_auction_item tea where tea.businessId = #{id}) as itemCount
+            ,(select count(1) from t_e_auction_item tea where tea.auctionid in (select id from t_e_auction where businessId=#{id})) as itemCount
         </if>
         from t_e_business where id = #{id}
     </select>

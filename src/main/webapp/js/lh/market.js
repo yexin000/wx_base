@@ -100,14 +100,18 @@ function loadData()
                 {
                     var str = '';
                     $.each(dataList,function(i,obj){
+                        var coverimg = '';
 
+                        if(obj.resList && obj.resList.length > 0) {
+                            coverimg = obj.resList[0].path;
+                        }
                         str+='<tr onclick="toAuctionItemDetail('+obj.id+')">';
-                        str+='  <td class="pro-item-M"><img src="../../../images/lh/wshop_indexbanner1.jpg"  alt=""></td>';
+                        str+='  <td class="pro-item-M"><img src="' + hostPath + coverimg +  '"  alt=""></td>';
                         str+='  <td class="pro-item-H">';
                         str+='      <h2>'+obj.name+'</h2>';
                         str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
                         str+='      <p><span>商品价格: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
-                        str+='      <p><span>商品销量: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
+                        str+='      <p><span>商品销量: </span><span style="overflow:hidden;  "> '+obj.stock +'<span></p>';
                         str+='  </td>';
                         str+='</tr>';
 

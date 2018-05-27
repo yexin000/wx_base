@@ -27,15 +27,17 @@ function loadItemData(id){
             {
                 var str = '';
                 $.each(dataList,function(i,obj){
+                    var coverimg = obj.path;
                     str+='<li class="bannerItem">';
                     str+='	<a href="javaScipt:void(0)">';
-                    str+=' <img src="../../../images/lh/wshop_indexbanner1.jpg" alt="">';
+                    str+=' <img src="' + hostPath + coverimg +  '" alt="">';
                     str+=' </a></li>';
                 });
                 $(".bannerList").append(str);
                 bannerDW("banner1",3000,true,"red");
             }
             //处理商品基本信息
+            $("#timeLabel").html();
             $("#itemName").html(dataObj.name); //拍品名字
             $("#startprice").html(dataObj.startPrice); //起拍价格
             $("#curprice").html(dataObj.curPrice); //当前价格

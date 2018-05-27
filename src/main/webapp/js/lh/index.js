@@ -35,6 +35,7 @@
     function loadindexBanner(){
         var AuctionItemModel = {};
         AuctionItemModel.isShowBanner = '1';
+        AuctionItemModel.status = '3';
         var url= '/weixin/auctionItem/ajaxDataList.do';
         $.ajax({
             url: url,
@@ -51,12 +52,9 @@
                     for(var i = 0; i < dataList.length; i ++) {
                         var obj = dataList[i];
                         var coverimg = '';
-                        for(var j = 0; j < obj.resList.length; j ++) {
-                            var resObj = obj.resList[j];
-                            if(resObj.idx == 1)
-                            {
-                                coverimg = resObj.path;
-                            }
+
+                        if(obj.resList && obj.resList.length > 0) {
+                            coverimg = obj.resList[0].path;
                         }
                         str+='<li onclick="toAuctionItemDetail('+obj.id+')" class="bannerItem" style="background-image: url(' + hostPath + coverimg + '); no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;"/>';
                     }
@@ -90,10 +88,10 @@
 
                         str+='<div class="posr" onclick="toBusinessDetail('+obj.id+')">';
                         str+='	<div class="left" >';
-                        str+=' 		<img src="../../../images/lh/wshop_indexbanner1.jpg" alt="">';
+                        str+=' 		<img src="' + hostPath + obj.logoPath +  '" alt="">';
                         str+='	</div>';
                         str+='<p style="padding-top: 1.4rem;padding-left: -1rem ;font-size:18px;font-weight:bold;">'+obj.name+'</p>';
-                        str+='<p style=" padding-left: -1rem ; "> '+obj.createtime+'开始，大家敬请期待</p>';
+                        str+='<p style=" padding-left: -1rem ; "> '+obj.starttime+'开始，大家敬请期待</p>';
                         str+='</div>';
                     });
                 }
@@ -107,6 +105,7 @@
     function loadindexAuctionItem(){
         var AuctionItemModel = {};
         AuctionItemModel.isShow = '1';
+        AuctionItemModel.status = '3';
         var url= '/weixin/auctionItem/ajaxDataList.do';
         $.ajax({
             url: url,
@@ -121,10 +120,14 @@
                 {
                     var str = '';
                     $.each(dataList,function(i,obj){
+                        var coverimg = '';
 
+                        if(obj.resList && obj.resList.length > 0) {
+                            coverimg = obj.resList[0].path;
+                        }
                         str+='<div onclick="toAuctionItemDetail('+obj.id+')" class="posr-item">';
                         str+='	<div class="left" >';
-                        str+=' 		<img src="../../../images/lh/wshop_indexbanner1.jpg" alt="">';
+                        str+=' 		<img src="' + hostPath + coverimg +  '" alt="">';
                         str+='	</div>';
 
                         str+='</div>';

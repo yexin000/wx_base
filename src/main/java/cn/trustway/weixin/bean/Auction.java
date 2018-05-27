@@ -84,6 +84,11 @@ public class Auction extends BaseBean {
      */
     private String isShow;
 
+    /**
+     * 拍卖会logo(第一张图片)
+     */
+    private String logoPath;
+
     public Integer getId() {
         return id;
     }
@@ -226,5 +231,13 @@ public class Auction extends BaseBean {
 
     public void setIsShow(String isShow) {
         this.isShow = isShow;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
     }
 }
