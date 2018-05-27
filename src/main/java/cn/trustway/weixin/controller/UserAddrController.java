@@ -3,8 +3,10 @@ package cn.trustway.weixin.controller;
 import cn.trustway.weixin.bean.UserAddr;
 import cn.trustway.weixin.bean.WeixinUser;
 import cn.trustway.weixin.common.AppInitConstants;
+import cn.trustway.weixin.model.UserAddrModel;
 import cn.trustway.weixin.service.UserAddrService;
 import cn.trustway.weixin.service.WeixinUserService;
+import cn.trustway.weixin.util.HtmlUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 出价记录控制类
@@ -137,4 +142,27 @@ public class UserAddrController extends BaseController {
         userAddrService.setDefaultAddr(id);
         sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "操作成功~");
     }
+
+    /**
+     * json 列表页面
+     *
+     * @param model
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/dataList", method = RequestMethod.POST)
+    public void dataList(UserAddrModel model, HttpServletResponse response) throws Exception {
+        queryDataList(model, response);
+    }
+
+    private void queryDataList(UserAddrModel model, HttpServletResponse response) throws Exception {
+        List<UserAddr> dataList = userAddrService.queryByList(model);
+        // 设置页面数据
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("total", model.getPager().getRowCount());
+        jsonMap.put("rows", dataList);
+        HtmlUtil.writerJson(response, jsonMap);
+    }
+
 }
