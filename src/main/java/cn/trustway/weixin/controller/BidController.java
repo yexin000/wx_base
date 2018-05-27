@@ -135,7 +135,7 @@ public class BidController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
-    public void ajaxDataList(BidModel model, HttpServletResponse response) throws Exception {
+    public void ajaxDataList(@RequestBody BidModel model, HttpServletResponse response) throws Exception {
         List<BidBean> dataList = bidService.queryByList(model);
         // 设置页面数据
         for(BidBean bb :dataList){

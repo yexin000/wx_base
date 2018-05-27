@@ -37,7 +37,12 @@ function loadItemData(id){
                 bannerDW("banner1",3000,true,"red");
             }
             //处理商品基本信息
-            $("#timeLabel").html();
+            if(dataObj.auctionStatus == '1') {
+                $("#timeLabel").html("正在竞拍:  " + dataObj.startTime + "至" + dataObj.endTime);
+            } else {
+                $("#timeLabel").html("即将开始 " + dataObj.startTime);
+            }
+
             $("#itemName").html(dataObj.name); //拍品名字
             $("#startprice").html(dataObj.startPrice); //起拍价格
             $("#curprice").html(dataObj.curPrice); //当前价格
