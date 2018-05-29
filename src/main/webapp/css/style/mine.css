@@ -1,5 +1,5 @@
 @charset "utf-8";
-.mine-header{background-color: #ec3d2e;padding:0 0.1rem;color: #fff;}
+.mine-header{background-color: #808080;padding:0 0.1rem;color: #fff;}
 .user-info{padding-bottom: 0.15rem;line-height: 0.56rem;}
 .potrait{width: 0.56rem;height: 0.56rem;border-radius: 50%;background-color: rgba(255,255,255,0.6);padding:0.025rem;overflow: hidden;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;float: left;margin-right: 0.1rem}
 .potrait img{width: 100%;border-radius: 0.26rem}

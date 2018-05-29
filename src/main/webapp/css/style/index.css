@@ -24,7 +24,7 @@ body{padding-bottom: 0.58rem}
 .header-room{float: left;width:0.24rem;display: inline-block;margin-top: 0.05rem;height: 100%;overflow: hidden;font-size: 0.06rem;line-height: 1.2;color: #fff;vertical-align: middle;line-height: 0.32rem}
 .header-room img{width: 100%}
 .header-location{float: left;width:0.24rem;display: inline-block;font-size: 0.08rem;color: #fff;vline-height: 0.32rem;background:url(../images/location.png) left center no-repeat;background-size: 0.2rem}
-.header-msg{float: right;height: 0.3rem;width:0.24rem;background-image: url(../images/msg_n.png);background-position:  right center;background-repeat:  no-repeat;display: inline-block;background-size: contain;margin-top: 0.05rem}
+.header-msg{float: right;height: 0.3rem;width:0.24rem;  background-position:  right center;background-repeat:  no-repeat;display: inline-block;background-size: contain;margin-top: 0.05rem}
 .header-search{margin:0.07rem auto;background: rgba(255, 255, 255, 0.72);width: 90%;border-radius: 0.1rem;height: 0.3rem;line-height: 0.3rem;padding:0 0.05rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 .header-search a{display: inline-block;background: url(../images/indfier.png);margin-left: 0.1rem;margin-right: 0.05rem;width: 0.15rem;height: 0.15rem;background-size: cover;vertical-align: sub;}
 .header-search input{border:none;background: none;font-size: 0.12rem;width:80%;outline: none;color: #fff;}

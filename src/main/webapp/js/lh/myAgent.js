@@ -51,6 +51,7 @@
                 $("#phone").html(data.phoneNum);
                 $("#wxNum").html(data.wxAcount);
                 $("#description").html(data.description);
+                $("#telMe").attr("href","tel:"+data.phoneNum);
             }
         })
     }
