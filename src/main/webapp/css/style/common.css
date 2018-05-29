@@ -3,11 +3,7 @@
 /*web-mall font*/
 @font-face {
       font-family: 'webmall';
-      src: url('../fonts/webmall/webmall.eot?32610021');
-      src: url('../fonts/webmall/webmall.eot?32610021#iefix') format('embedded-opentype'),
-           url('../fonts/webmall/webmall.woff?32610021') format('woff'),
-           url('../fonts/webmall/webmall.ttf?32610021') format('truetype'),
-           url('../fonts/webmall/webmall.svg?32610021#webmall') format('svg');
+
       font-weight: normal;
       font-style: normal;
     }
@@ -15,44 +11,28 @@
 
 @font-face {
     font-family: 'FontomasEmtypo';
-    src: url('../fonts/entypo/fontomas-webfont.eot');
-    src: url('../fonts/entypo/fontomas-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/entypo/fontomas-webfont.woff') format('woff'),
-         url('../fonts/entypo/fontomas-webfont.ttf') format('truetype'),
-         url('../fonts/entypo/fontomas-webfont.svg#FontomasCustomRegular') format('svg');
+
     font-weight: normal;
     font-style: normal;
 }
 /*IconicFill font*/
 @font-face {
     font-family: 'FontomasIconicFill';
-    src: url('.../fonts/iconicfill/fontomas-webfont.eot');
-    src: url('../fonts/iconicfill/fontomas-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/iconicfill/fontomas-webfont.woff') format('woff'),
-         url('../fonts/iconicfill/fontomas-webfont.ttf') format('truetype'),
-         url('../fonts/iconicfill/fontomas-webfont.svg#FontomasCustomRegular') format('svg');
+
     font-weight: normal;
     font-style: normal;
 }
 /*IconicStroke Font*/
 @font-face {
     font-family: 'FontomasIconicStroke';
-    src: url('../fonts/iconicstroke/fontomas-webfont.eot');
-    src: url('../fonts/iconicstroke/fontomas-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/iconicstroke/fontomas-webfont.woff') format('woff'),
-         url('../fonts/iconicstroke/fontomas-webfont.ttf') format('truetype'),
-         url('../fonts/iconicstroke/fontomas-webfont.svg#FontomasCustomRegular') format('svg');
+
     font-weight: normal;
     font-style: normal;
 }
 /*WebSymbolsRegular Font*/
 @font-face {
     font-family: 'FontomasWebSymbolsRegular';
-    src: url('../fonts/websymbolsregular/fontomas-webfont.eot');
-    src: url('../fonts/websymbolsregular/fontomas-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/websymbolsregular/fontomas-webfont.woff') format('woff'),
-         url('../fonts/websymbolsregular/fontomas-webfont.ttf') format('truetype'),
-         url('../fonts/websymbolsregular/fontomas-webfont.svg#FontomasCustomRegular') format('svg');
+
     font-weight: normal;
     font-style: normal;
 
@@ -71,7 +51,7 @@ a{color:#888;}
 .header-back{float: left;height: 0.3rem;width:0.2rem;background: url(../../images/lh/Left_Arrow.png) left center no-repeat;display: inline-block;margin-top: 0.05rem;background-size: 0.12rem}
 .header-msg{float: right;height: 0.3rem;width:0.24rem;  background-repeat:no-repeat;background-position:right center;display: inline-block;background-size: contain;margin-top: 0.05rem;}
 .header-search{margin:0.07rem 0.1rem;background: #eff1f3;border-radius: 0.05rem;height: 0.3rem;line-height: 0.3rem;padding:0 0.05rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
-.header-search a{display: inline-block;background: url(../images/magnifier_line.png);margin-left: 0.1rem;margin-right: 0.05rem;width: 0.15rem;height: 0.15rem;background-size: cover; vertical-align: sub;}
+.header-search a{display: inline-block; margin-left: 0.1rem;margin-right: 0.05rem;width: 0.15rem;height: 0.15rem;background-size: cover; vertical-align: sub;}
 .header-search input{border:none;background: none;font-size: 0.12rem;width:1.8rem;outline: none;color: #888}
 /**/
 .header-hs>ul{
@@ -170,8 +150,8 @@ a{color:#888;}
 
 /*左右带横线标题样式*/
 .line-header{text-align: center;margin-bottom: 0.1rem;font-size: 0.135rem;color: #212121;position: relative;display: inline}
-.line-header:after{content: url(../images/header-line.png);display: inline-block;position: absolute;left: 110%;bottom:20%;}
-.line-header:before{content: url(../images/header-line.png);display: inline-block;position: absolute;right: 110%;bottom:-30%;transform:rotate(180deg);}
+.line-header:after{  display: inline-block;position: absolute;left: 110%;bottom:20%;}
+.line-header:before{ display: inline-block;position: absolute;right: 110%;bottom:-30%;transform:rotate(180deg);}
 
 /*两列商品列表*/
 .lists-col-2{background: transparent;width: 100%;height: auto;overflow: hidden;margin-top: 0.1rem}
@@ -180,7 +160,7 @@ a{color:#888;}
 .lists-col-2 a{display: block;width: 100%;background: #fff;font-size: 0.1rem;color: #666;}
 .lists-col-2 hgroup{margin: 0.05rem}
 .lists-col-2 h3{font-size: 0.12rem;color: #b52323}
-.lists-col-2 h4{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;font-size: 0.1rem};
+.lists-col-2 h4{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;font-size: 0.1rem}
 
 
 #backtop , .back{position: fixed;width: 0.3rem;height: 0.3rem;display: block;background-size: cover;opacity: 0.6;background: #000;border-radius: 50%;text-align: center;;line-height: 0.3rem;z-index: 1000;}
@@ -204,7 +184,7 @@ a{color:#888;}
 .btn-gl{border:1px solid #b4b4b4;color: #666;}
 .btn-login{background-color: #e94947;color: #fff;font-size: 0.15rem;display: block;margin: 0.25rem 0.2rem;height: 0.4rem;border-radius: 0.05rem;text-align: center;line-height: 0.4rem}
 .btn-submit{background-color: #f96267;color: #fff;font-size: 0.15rem;display: block;margin: 0.25rem 0.2rem;height: 0.36rem;border-radius: 0.05rem;text-align: center;line-height: 0.36rem}
-.addCar-img{background: url(../images/add_shoppingcar.png) center center no-repeat;display: inline-block;width: 0.2rem;height: 0.2rem;background-size: contain;-webkit-background-size: contain;}
+.addCar-img{ display: inline-block;width: 0.2rem;height: 0.2rem;background-size: contain;-webkit-background-size: contain;}
 
 
 /****弹窗3*********/
@@ -262,10 +242,10 @@ a{color:#888;}
     line-height: 0.18rem;
 }
 .Alert-dialog .Alert-dialogCentent .Alert-dialogButton{
-    display: box;
+
         display: -webkit-box;
         display: -moz-box;
-        display: -o-box;
+
     border-top: 1px solid #eee;
     height: 0.48rem;
     line-height: 0.48rem
@@ -284,7 +264,7 @@ a{color:#888;}
 /****分页 end*********/
 
 /**进度条的菜单**/
-.header-menu {float: right;height: 0.3rem;width:0.24rem;background-image: url(../images/toplog.png);background-repeat:no-repeat;background-position:right center;display: inline-block;background-size: contain;margin-top: 0.05rem;}
+.header-menu {float: right;height: 0.3rem;width:0.24rem; background-repeat:no-repeat;background-position:right center;display: inline-block;background-size: contain;margin-top: 0.05rem;}
 
 .cst {width: 1rem;height: 0.9rem;position: fixed;right: 0rem;top: 0.4rem;text-align: center;font-size: 0.14rem;background: #776e6e;border-radius: 5px;color: #fff;line-height: 0.3rem;/* margin-right: 0.0rem; */}
 .cst li {height: 0.3rem;}
