@@ -86,7 +86,7 @@
                 	 var str = '';
                     $.each(dataList,function(i,obj){
 
-                        str+='<div class="posr" onclick="toBusinessDetail('+obj.id+')">';
+                        str+='<div class="posr" onclick="toAuctionDetail('+obj.id+')">';
                         str+='	<div class="left" >';
                         str+=' 		<img src="' + hostPath + obj.logoPath +  '" alt="">';
                         str+='	</div>';

@@ -1,10 +1,13 @@
 package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.Auction;
+import cn.trustway.weixin.bean.ItemRes;
 import cn.trustway.weixin.bean.SysUser;
 import cn.trustway.weixin.model.AuctionModel;
+import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.AuctionService;
 import cn.trustway.weixin.service.FileUploadService;
+import cn.trustway.weixin.service.ItemResService;
 import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,9 @@ public class AuctionController extends BaseController {
     @Autowired
     private FileUploadService fileUploadService;
 
+
+    @Autowired(required = false)
+    private ItemResService<ItemRes> itemResService;
 
     /**
      * 首页
@@ -99,6 +105,12 @@ public class AuctionController extends BaseController {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
         }
+
+        ItemResModel resModel  = new ItemResModel();
+        resModel.setConid(bean.getId());
+        resModel.setConType("1");
+        List<ItemRes> resDataList = itemResService.queryByList(resModel);
+        bean.setResList(resDataList);
         context.put(SUCCESS, true);
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);

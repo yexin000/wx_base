@@ -7,48 +7,47 @@ $(function(){
 	
 	$("#backtop").hide()
     var id = getParam("id");
-    loadfindData(id);
-    loadBusinessAuctionItem(id);
-	$(window).scroll(function(){
-        var scrolltop=$(document).scrollTop();
-        var Vheight=$(window).height();
-        if(scrolltop > 0){
-            $("#backtop").show(); 
-            }else{
-                 $("#backtop").hide();
-                }      
-    });
-	$("#backtop").click(function(){
-		$("html,body").animate({scrollTop:0},"fast");
-	})
-	
+    loadAuctionData(id);
+    loadAuctionItem(id);
 })
 
-//加载商家数据
-function loadfindData(id){
-
-    var url= '/weixin/business/ajaxGetId.do';
+//加载会展数据
+function loadAuctionData(id){
+    var url= '/weixin/auction/getId.do?id='+id;
     $.ajax({
         url: url,
         type: 'post',
-        data:JSON.stringify(id),
+        data:{},
         contentType : "application/json;charset=utf-8",
         dataType: 'JSON',
         cache: false,
         success:function(data){
             var dataObj = data.data;
-            $("#businessImg").attr("src", hostPath + dataObj.logoPath);
             $("#businessName").html( dataObj.name);
-            $("#dataDiv").append(dataObj);
+            //先处理商品轮播
+            var dataList = dataObj.resList;
+            if(dataList.length> 0)
+            {
+                var str = '';
+                $.each(dataList,function(i,obj){
+                    var coverimg = obj.path;
+                    str+='<li class="bannerItem">';
+                    str+='	<a href="javaScipt:void(0)">';
+                    str+=' <img src="' + hostPath + coverimg +  '" alt="">';
+                    str+=' </a></li>';
+                });
+                $(".bannerList").append(str);
+                bannerDW("banner1",3000,true,"red");
+            }
         }
     })
 }
 
 
-//加载商家拍品数据
-function loadBusinessAuctionItem(id){
+//加载会展拍品数据
+function loadAuctionItem(id){
     var AuctionItemModel = {};
-    AuctionItemModel.businessId = id;
+    AuctionItemModel.auctionId = id;
     var url= '/weixin/auctionItem/ajaxDataList.do';
     $.ajax({
         url: url,
@@ -64,6 +63,7 @@ function loadBusinessAuctionItem(id){
                 $("#shoppingCount").html(dataList.length);
                 var str = '';
                 $.each(dataList,function(i,obj){
+
                     str+='<tr onclick="toAuctionItemDetail('+obj.id+')">';
                     str+='  <td class="pro-item-M"><img src="../../../images/lh/wshop_indexbanner1.jpg"  alt=""></td>';
                     str+='  <td class="pro-item-H">';
@@ -73,6 +73,7 @@ function loadBusinessAuctionItem(id){
                     str+='      <p><span>商品销量: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
                     str+='  </td>';
                     str+='</tr>';
+
                 });
             }
             $(".pro-item").append(str);

@@ -14,7 +14,6 @@
         <result column="logoPath" property="logoPath" />
         <result column="status" property="status" />
         <result column="isShow" property="isShow" />
-        <result column="itemCount" property="itemCount" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
@@ -76,9 +75,6 @@
     <select id="queryCountById" resultMap="BaseResultMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        <if test="isSelectItemCount != null and isSelectItemCount != '' ">
-            ,(select count(1) from t_e_auction_item tea where tea.auctionid in (select id from t_e_auction where businessId=#{id})) as itemCount
-        </if>
         from t_e_business where id = #{id}
     </select>
 

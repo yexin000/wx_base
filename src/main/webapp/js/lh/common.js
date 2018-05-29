@@ -37,7 +37,10 @@ function toBusinessDetail(id)
 {
     window.location.href = '../../html/lh/businessDetail.html?id='+id;
 }
-
+function toAuctionDetail(id)
+{
+    window.location.href = '../../html/lh/auctionDetail.html?id='+id;
+}
 function toAuctionItemDetail(id)
 {
     window.location.href = '../../html/lh/auctionItemDetail.html?id='+id;

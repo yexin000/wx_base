@@ -1,6 +1,7 @@
 package cn.trustway.weixin.bean;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 拍卖会Bean
@@ -88,6 +89,11 @@ public class Auction extends BaseBean {
      * 拍卖会logo(第一张图片)
      */
     private String logoPath;
+
+    /**
+     * 资源列表
+     */
+    private List<ItemRes> resList;
 
     public Integer getId() {
         return id;
@@ -239,5 +245,13 @@ public class Auction extends BaseBean {
 
     public void setLogoPath(String logoPath) {
         this.logoPath = logoPath;
+    }
+
+    public List<ItemRes> getResList() {
+        return resList;
+    }
+
+    public void setResList(List<ItemRes> resList) {
+        this.resList = resList;
     }
 }

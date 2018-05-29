@@ -100,7 +100,8 @@
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
           <include refid="Auction_Base_Column_List" />
-          ,su1.nickname as creatorName,su2.nickname as modifierName, b.name as businessName
+          ,su1.nickname as creatorName,su2.nickname as modifierName, b.name as businessName,
+        (select count(1) from t_con_item_res r where r.conid=t.id and r.contype='1') as picCount
         from t_e_auction t
         LEFT JOIN sys_user su1 on t.creator=su1.id
         LEFT JOIN sys_user su2 on t.modifier=su2.id
