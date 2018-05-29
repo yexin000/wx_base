@@ -43,7 +43,7 @@ var imagePath = "http://127.0.0.1:8080/";
     //加载个人收藏数据
     function loadCollection(){
         $(".pro-item").empty();
-        var url= '/weixin/favorite/ajaxDataList.do?wxid='+sessionStorage.getItem("openId");
+        var url= '/weixin/favorite/ajaxDataList.do?wxid='+localStorage.getItem("openId");
         $.ajax({
             url: url,
             type: 'post',

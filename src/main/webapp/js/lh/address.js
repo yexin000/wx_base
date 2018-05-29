@@ -22,7 +22,7 @@ $(function(){
 
 //加载收货地址
 function loadAddress(){
-    var url= '/weixin/userAddr/dataList.do?wxid='+ sessionStorage.getItem("openId");
+    var url= '/weixin/userAddr/dataList.do?wxid='+ localStorage.getItem("openId");
     $.ajax({
         url: url,
         type: 'post',

@@ -23,7 +23,7 @@ $(function(){
 //加载我的上传
 function loadMyUpload(){
     var AuctionItemModel = {};
-    AuctionItemModel.uploadWxid = sessionStorage.getItem("openId");
+    AuctionItemModel.uploadWxid = localStorage.getItem("openId");
     var url= '/weixin/auctionItem/ajaxDataList.do';
     $.ajax({
         url: url,

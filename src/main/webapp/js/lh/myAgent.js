@@ -27,7 +27,7 @@
 
     //加载经纪人数据
     function loadAgent(){
-        var url= '/weixin/middleMan/ajaxGetMiddleMan.do?wxid='+ sessionStorage.getItem("openId");
+        var url= '/weixin/middleMan/ajaxGetMiddleMan.do?wxid='+ localStorage.getItem("openId");
         $.ajax({
             url: url,
             type: 'post',

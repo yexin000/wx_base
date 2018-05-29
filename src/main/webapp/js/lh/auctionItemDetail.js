@@ -101,7 +101,7 @@ function loadAuctionItemBid(id){
 function toBid(){
     var id = getParam("id");
     var BidBean = {};
-    BidBean.wxid = sessionStorage.getItem('openId');
+    BidBean.wxid = localStorage.getItem('openId');
     BidBean.auctionItemId = id;
     BidBean.bidPrice = 600;
     var url= '/weixin/bid/ajaxAddBid.do';

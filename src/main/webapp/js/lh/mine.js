@@ -24,7 +24,7 @@ $(function(){
 
     //加载个人信息数据
     function loadUser(){
-        var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ sessionStorage.getItem("openId");
+        var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ localStorage.getItem("openId");
         $.ajax({
             url: url,
             type: 'post',

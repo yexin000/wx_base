@@ -29,7 +29,7 @@ $(function(){
         $(".pro-item").empty();
         var OrderModel = {};
         OrderModel.status = status;
-        OrderModel.wxid = sessionStorage.getItem("openId");
+        OrderModel.wxid = localStorage.getItem("openId");
         var url= '/weixin/order/ajaxDataList.do';
         $.ajax({
             url: url,
