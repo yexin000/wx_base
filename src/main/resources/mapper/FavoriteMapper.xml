@@ -45,7 +45,7 @@
 
     <!-- 删除记录 -->
     <update id="delete" parameterType="Object">
-		delete from t_e_favorite where id = #{id}
+		delete from t_e_favorite where wxid = #{wxid} and favid = #{favId}
 	</update>
 
     <!-- 根据id查询记录 -->
@@ -54,6 +54,14 @@
         <include refid="Favorite_Base_Column_List" />
         from t_e_favorite t
         where t.id = #{id}
+    </select>
+
+    <!-- 根据wxid、favid查询记录 -->
+    <select id="queryByWxidAndFavId" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Favorite_Base_Column_List" />
+        from t_e_favorite t
+        where t.wxid = #{wxid} and favid = #{favId}
     </select>
 
     <!-- 记录总数 -->
@@ -66,6 +74,7 @@
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
         <include refid="Favorite_Base_Column_List" />,item.name as favName , item.description , item.stock
+        ,(select path from t_con_item_res where item.id=conid and contype='2' order by idx asc limit 1) as logoPath
         from t_e_favorite t
         left join t_e_auction_item item on t.favid=item.id
         where 1=1

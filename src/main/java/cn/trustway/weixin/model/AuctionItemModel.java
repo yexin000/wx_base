@@ -17,7 +17,7 @@ public class AuctionItemModel extends BaseModel {
      */
     private String name;
     /**
-     *拍品类型：待定
+     *拍品类型：wx_code.code
      */
     private String type;
     /**

@@ -43,6 +43,11 @@ public class Favorite extends BaseBean {
      */
     private String stock;
 
+    /**
+     * 收藏项图片
+     */
+    private String logoPath;
+
     public Integer getId() {
         return id;
     }
@@ -105,5 +110,13 @@ public class Favorite extends BaseBean {
 
     public void setStock(String stock) {
         this.stock = stock;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
     }
 }

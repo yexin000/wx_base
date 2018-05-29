@@ -18,7 +18,7 @@ public class AuctionItem extends BaseBean {
      */
     private String name;
     /**
-     *拍品类型：待定
+     *拍品类型：wx_code.code
      */
     private String type;
     /**
@@ -111,6 +111,11 @@ public class AuctionItem extends BaseBean {
      * 库存
      */
     private String stock ;
+
+    /**
+     * 是否收藏:0-否,1-是
+     */
+    private String isFavorite;
 
     public String getBusinessId() {
         return businessId;
@@ -302,5 +307,13 @@ public class AuctionItem extends BaseBean {
 
     public void setStock(String stock) {
         this.stock = stock;
+    }
+
+    public String getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(String isFavorite) {
+        this.isFavorite = isFavorite;
     }
 }

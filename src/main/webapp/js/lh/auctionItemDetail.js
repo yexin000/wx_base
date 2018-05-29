@@ -7,15 +7,42 @@ $(function(){
     var id = getParam("id");
     loadItemData(id);
     loadAuctionItemBid(id);
+    $("#favBtn").click(function () {
+        var favStatus = $("#favStatus").val();
+        if(favStatus == "0") {
+            var params={}
+            params.wxid=localStorage.getItem("openId");
+            params.favType="1";
+            params.favId=getParam("id");
+            $.post("/weixin/favorite/ajaxAddFavorite.do",params,function(data){
+                alert(data.msg);
+                $("#favBtn").html("取消收藏");
+                $("#favStatus").val("1");
+            });
+        } else {
+            // 取消收藏
+            var params={};
+            params.favId=getParam("id");
+            params.wxid=localStorage.getItem("openId");
+            $.post("/weixin/favorite/ajaxDelFavorite.do",params,function(data){
+                alert(data.msg);
+                $("#favBtn").html("+收藏");
+                $("#favStatus").val("0");
+            });
+        }
+
+    });
 })
 
 //加载商品数据
 function loadItemData(id){
-    var url= '/weixin/auctionItem/ajaxGetId.do';
+    var params = {};
+    params.id = id;
+    var url= '/weixin/auctionItem/ajaxGetId.do?id='+id+"&wxid="+localStorage.getItem("openId");
     $.ajax({
         url: url,
         type: 'post',
-        data:JSON.stringify(id),
+        data:"",
         contentType : "application/json;charset=utf-8",
         dataType: 'JSON',
         cache: false,
@@ -50,8 +77,12 @@ function loadItemData(id){
             $("#rate").html(dataObj.rate); //手续费比率
             $("#depositprice").html(dataObj.depositPrice); //保证金
             $("#wanfenbi").html('('+dataObj.wanfenbi+"万元)"); //保证金
-
-
+            if(dataObj.isFavorite == "1") {
+                $("#favBtn").html("取消收藏");
+            } else {
+                $("#favBtn").html("+收藏");
+            }
+            $("#favStatus").val(dataObj.isFavorite);
         }
     })
 }

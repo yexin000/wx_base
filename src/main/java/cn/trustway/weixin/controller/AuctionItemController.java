@@ -2,13 +2,16 @@ package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.AuctionItem;
 import cn.trustway.weixin.bean.BidBean;
+import cn.trustway.weixin.bean.Favorite;
 import cn.trustway.weixin.bean.ItemRes;
 import cn.trustway.weixin.model.AuctionItemModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.AuctionItemService;
 import cn.trustway.weixin.service.BidService;
+import cn.trustway.weixin.service.FavoriteService;
 import cn.trustway.weixin.service.ItemResService;
 import cn.trustway.weixin.util.HtmlUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +44,9 @@ public class AuctionItemController extends BaseController {
 
     @Autowired(required = false)
     private BidService<BidBean> bidservice;
+
+    @Autowired
+    private FavoriteService<Favorite> favoriteService;
     /**
      * 首页
      *
@@ -158,7 +164,7 @@ public class AuctionItemController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/ajaxGetId")
-    public void ajaxGetId(@RequestBody Integer id, HttpServletResponse response) throws Exception {
+    public void ajaxGetId(Integer id, String wxid, HttpServletResponse response) throws Exception {
         Map<String, Object> context = getRootMap();
         AuctionItem bean = auctionItemService.queryById(id);
         if (bean == null) {
@@ -175,6 +181,22 @@ public class AuctionItemController extends BaseController {
         resModel.setConType("2");
         List<ItemRes> resDataList = itemResService.queryByList(resModel);
         bean.setResList(resDataList);
+
+        // 查询是否收藏
+        if(StringUtils.isNotBlank(wxid)) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("wxid", wxid);
+            params.put("favId", id);
+            Favorite favorite = favoriteService.queryByWxidAndFavId(params);
+            if(null != favorite) {
+                bean.setIsFavorite("1");
+            } else {
+                bean.setIsFavorite("0");
+            }
+        } else {
+            bean.setIsFavorite("0");
+        }
+
         context.put(SUCCESS, true);
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);
