@@ -3,44 +3,43 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"  />
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="format-detection" content="telephone=no">
-    <meta http-equiv="x-dns-prefetch-control" content="on" />
-    <link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
-    <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
-    <link href="../../../css/style/order.css" rel="stylesheet" type="text/css">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="x-dns-prefetch-control" content="on" />
+	<link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
+	<link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
+	<link href="../../../css/style/order.css" rel="stylesheet" type="text/css">
 
 	<title></title>
 
 </head>
 <body>
-	<header class="header-hs ">
-		<a href="mine.html" class="header-back"></a>
-		<h1>我的订单</h1>
-	</header>
+<header class="header-hs ">
+	<a href="mine.html" class="header-back"></a>
+	<h1>我的订单</h1>
+</header>
 
-	<ul id="order-tit">
-		<li status="0" class="cur">全部</li>
-		<li status="2">待付款</li>
-		<li status="3">待发货</li>
-		<li status="4">待收货</li>
+<ul id="order-tit">
+	<li class="cur">全部</li>
+	<li status="2">待付款</li>
+	<li status="3">待发货</li>
+	<li status="4">待收货</li>
+</ul>
+<table class="pro-item" style="border-collapse:separate; border-spacing:8px;">
 
-	</ul>
-	<table class="pro-item">
-
-	</table>
-
-	<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="../../../js/lh/layout.js"></script>
-	<script type="text/javascript" src="../../../js/lh/order.js"></script>
-	<script>
-		$(function(){
-			$("#order-tit li").click(function(){
-				$(this).addClass("cur").siblings().removeClass("cur");
-				$(".order-panels").find(".order-panel:eq("+$(this).index()+")").show().siblings().hide();
-			})
-		});
-	</script>
+</table>
+<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../../../js/lh/layout.js"></script>
+<script type="text/javascript" src="../../../js/lh/common.js"></script>
+<script type="text/javascript" src="../../../js/lh/order.js"></script>
+<script>
+    $(function(){
+        $("#order-tit li").click(function(){
+            $(this).addClass("cur").siblings().removeClass("cur");
+            $(".order-panels").find(".order-panel:eq("+$(this).index()+")").show().siblings().hide();
+        })
+    });
+</script>
 </body>
 </html>

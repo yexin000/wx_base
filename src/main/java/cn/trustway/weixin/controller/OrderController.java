@@ -1,8 +1,11 @@
 package cn.trustway.weixin.controller;
 
 
+import cn.trustway.weixin.bean.ItemRes;
 import cn.trustway.weixin.bean.Order;
+import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.model.OrderModel;
+import cn.trustway.weixin.service.ItemResService;
 import cn.trustway.weixin.service.OrderService;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,8 @@ public class OrderController extends BaseController {
     @Autowired
     OrderService<Order> orderService;
 
+    @Autowired(required = false)
+    private ItemResService<ItemRes> itemResService;
     /**
      * 首页
      *
@@ -71,6 +76,19 @@ public class OrderController extends BaseController {
 
     private void queryDataList(OrderModel model, HttpServletResponse response) throws Exception {
         List<Order> dataList = orderService.queryByList(model);
+
+        for(Order order : dataList)
+        {
+            ItemResModel resModel  = new ItemResModel();
+            resModel.setConid(order.getItemId());
+            resModel.setConType("2");
+            List<ItemRes> resDataList = itemResService.queryByList(resModel);
+            if(null != resDataList && resDataList.size() > 0)
+            {
+                order.setOrderCoverImg(resDataList.get(0).getPath());
+            }
+        }
+
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         jsonMap.put("total", model.getPager().getRowCount());

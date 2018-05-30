@@ -74,6 +74,11 @@ public class Order extends BaseBean {
      */
     private String businessName;
 
+    /**
+     * 订单封面图
+     */
+    private String orderCoverImg;
+
     public Integer getId() {
         return id;
     }
@@ -200,5 +205,13 @@ public class Order extends BaseBean {
 
     public void setBusinessName(String businessName) {
         this.businessName = businessName;
+    }
+
+    public String getOrderCoverImg() {
+        return orderCoverImg;
+    }
+
+    public void setOrderCoverImg(String orderCoverImg) {
+        this.orderCoverImg = orderCoverImg;
     }
 }

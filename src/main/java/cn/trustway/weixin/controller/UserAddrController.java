@@ -51,7 +51,11 @@ public class UserAddrController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxAddAddr", method = RequestMethod.POST)
-    public void ajaxAddAddr(UserAddr bean, HttpServletResponse response) throws Exception {
+    public void ajaxAddAddr(@RequestBody UserAddr bean, HttpServletResponse response) throws Exception {
+        saveAddress(bean,response);
+    }
+
+    private void  saveAddress(UserAddr bean, HttpServletResponse response)throws Exception {
         String wxid = bean.getWxid();
         if(StringUtils.isBlank(wxid)) {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "操作失败，用户信息有误");
@@ -77,7 +81,6 @@ public class UserAddrController extends BaseController {
         userAddrService.add(bean);
         sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "创建成功~");
     }
-
     /**
      * 前端用户编辑收货地址
      *

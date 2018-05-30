@@ -4,19 +4,7 @@ var imagePath = "http://127.0.0.1:8080/";
 
 
 $(function(){
-    loadAddress();
-    $(window).scroll(function(){
-        var scrolltop=$(document).scrollTop();
-        var Vheight=$(window).height();
-        if(scrolltop > 0){
-            $("#backtop").show();
-        }else{
-            $("#backtop").hide();
-        }
-    });
-    $("#backtop").click(function(){
-        $("html,body").animate({scrollTop:0},"fast");
-    })
+
 
 })
 
@@ -61,25 +49,26 @@ function loadAddress(){
     })
 }
 
-//删除地址
-function deleteAddress(id){
-    var url= '/weixin/userAddr/ajaxDeleteAddr.do?id='+id;
+//新增地址
+function addAddress(){
+    var userAddr = {};
+    userAddr.wxid = localStorage.getItem("openId");
+    userAddr.address = $("#address").val();
+    userAddr.phoneNum = $("#telNum").val();
+    userAddr.receiver = $("#name").val();
+    userAddr.isDefault = "1";
+    var url= '/weixin/userAddr/ajaxAddAddr.do';
     $.ajax({
         url: url,
         type: 'post',
-        data: {} ,
+        data: JSON.stringify(userAddr) ,
         dataType: 'JSON',
         contentType : "application/json;charset=utf-8",
         cache: false,
         success:function(data){
-            loadAddress();
-            var dataList = data.rows;
+            if(data.code == '0'){
+                window.location.href='../../html/lh/address.html';
+            }
         }
     })
 }
-//新增/修改地址
-function updateAddress(){
-    window.location.href = '../../html/lh/addressDetail.html';
-}
-
-
