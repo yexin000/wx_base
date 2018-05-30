@@ -22,6 +22,7 @@ $(function(){
 
 //加载收货地址
 function loadAddress(){
+    $('#loadingToast').show();
     var url= '/weixin/userAddr/dataList.do?wxid='+ localStorage.getItem("openId");
     $.ajax({
         url: url,
@@ -31,6 +32,7 @@ function loadAddress(){
         contentType : "application/json;charset=utf-8",
         cache: false,
         success:function(data){
+            $('#loadingToast').hide();
             var dataList = data.rows;
             if(dataList.length> 0)
             {

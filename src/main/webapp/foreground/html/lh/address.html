@@ -10,6 +10,8 @@
 	<link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
 	<link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
 	<link href="../../../css/style/order.css" rel="stylesheet" type="text/css">
+	<link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+	<link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
 	<title></title>
 </head>
 <body>
@@ -18,6 +20,13 @@
 	<h1>收货地址</h1>
 </header>
 <div style="margin-top: 0.43rem;padding-bottom: 0.4rem;" id="dataDiv">
+</div>
+<div id="loadingToast" style="opacity: 1; display: none;">
+	<div class="weui-mask_transparent"></div>
+	<div class="weui-toast">
+		<i class="weui-loading weui-icon_toast"></i>
+		<p class="weui-toast__content">数据加载中</p>
+	</div>
 </div>
 <footer style="position: fixed;  bottom: 0; left: 0;  background: #fff; width: 100%;  height: 0.4rem; z-index: 1004;zoom: 1;border-top: 1px solid #808080;">
 	<a href="javaScript:void(0)" style="color: #fff; float: left;  width: 100%; text-align: center; line-height: 0.4rem;background-color: red"  onclick="updateAddress()">新增收货地址</a>
