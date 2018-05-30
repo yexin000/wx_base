@@ -36,10 +36,11 @@ function loadGroup(){
             {
                 var str = '';
                 $.each(dataList,function(i,obj){
-                    str+='<tr onclick="toAuctionItemDetail('+obj.id+')" style="border-bottom: 1px solid #808080;">';
+                    var codeUri = encodeURIComponent(obj.codeUrl);
+                    str+='<tr onclick="toGroupDetail(\''+codeUri+'\')" style="border-bottom: 1px solid #808080;">';
                     str+='  <td style="padding: 0 0.1rem;"> ';
-                    str+='    <img src="../../../images/lh/wshop_indexbanner1.jpg" style="width: 0.3rem;height: 0.3rem;">' ;
-                    str+='  <span style="padding-left: 0.3rem;"> '+obj.groupName+' </span>';
+                    str+='    <img src="' + hostPath + obj.logoUrl +  '" style="width: 0.4rem;height: 0.4rem;">' ;
+                    str+='  <span style="padding-left: 0.3rem;font-size: 20px;"> '+obj.groupName+' </span>';
                     str+='  </td>';
                     str+='</tr>';
                 });
@@ -47,6 +48,10 @@ function loadGroup(){
             $(".pro-item").append(str);
         }
     })
+}
+
+function toGroupDetail(codeUri) {
+    window.location.href = '../../html/lh/groupDetail.html?codeUri='+codeUri;
 }
 
 
