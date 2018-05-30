@@ -13,6 +13,8 @@
     <link href="../../../css/style/collect.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/like.css?v=1" rel="stylesheet" type="text/css">
     <link href="../../../css/style/banner.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
     <title></title>
 </head>
 <body>
@@ -30,7 +32,13 @@
         </div>
     </div>
     <!-- 商品图片轮播结束 -->
-
+    <div id="loadingToast" style="opacity: 1; display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">数据加载中</p>
+        </div>
+    </div>
     <!-- 商品开拍提醒开始 -->
     <div style="background-color: #0f8c69;width: 100%; height: 0.36rem; ">
          <p style="color: #FFFFFF;height: 0.2rem; padding-top: 0.12rem; padding-left: 0.3rem;" id="timeLabel"></p>

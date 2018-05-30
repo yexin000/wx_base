@@ -1,6 +1,5 @@
 //var userID=localStorage.getItem("userId");
  $(function(){
-
         $("#backtop").hide();
         loadindexBanner();
         loadindexAuction();
@@ -36,6 +35,7 @@
 
     //加载首页轮播图数据
     function loadindexBanner(){
+        $('#loadingToast').show();
         var AuctionItemModel = {};
         AuctionItemModel.isShowBanner = '1';
         AuctionItemModel.status = '3';
@@ -48,6 +48,7 @@
             contentType : "application/json;charset=utf-8",
             cache: false,
             success:function(data){
+                $('#loadingToast').hide();
                 var dataList = data.rows;
                 if(dataList.length> 0)
                 {

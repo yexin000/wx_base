@@ -13,6 +13,7 @@ $(function(){
 
 //加载会展数据
 function loadAuctionData(id){
+    $('#loadingToast').show();
     var url= '/weixin/auction/getId.do?id='+id;
     $.ajax({
         url: url,
@@ -57,6 +58,7 @@ function loadAuctionItem(id){
         contentType : "application/json;charset=utf-8",
         cache: false,
         success:function(data){
+            $('#loadingToast').hide();
             var dataList = data.rows;
             if(dataList.length> 0)
             {

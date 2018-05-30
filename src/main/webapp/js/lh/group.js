@@ -22,6 +22,7 @@ $(function(){
 
 //加载微拍群
 function loadGroup(){
+    $('#loadingToast').show();
     var url= '/weixin/group/ajaxGetGroupList.do';
     $.ajax({
         url: url,
@@ -31,6 +32,7 @@ function loadGroup(){
         contentType : "application/json;charset=utf-8",
         cache: false,
         success:function(data){
+            $('#loadingToast').hide();
             var dataList = data.rows;
             if(dataList.length> 0)
             {

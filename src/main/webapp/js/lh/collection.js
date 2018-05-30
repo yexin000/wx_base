@@ -33,6 +33,7 @@ var imagePath = "http://127.0.0.1:8080/";
 
     //加载个人收藏数据
     function loadCollection(){
+        $('#loadingToast').show();
         $(".pro-item").empty();
         var url= '/weixin/favorite/ajaxDataList.do?wxid='+localStorage.getItem("openId");
         $.ajax({
@@ -43,6 +44,7 @@ var imagePath = "http://127.0.0.1:8080/";
             contentType : "application/json;charset=utf-8",
             cache: false,
             success:function(data){
+                $('#loadingToast').hide();
                 var dataList = data.rows;
                 if(dataList.length> 0)
                 {

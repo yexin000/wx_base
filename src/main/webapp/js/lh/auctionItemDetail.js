@@ -36,6 +36,7 @@ $(function(){
 
 //加载商品数据
 function loadItemData(id){
+    $('#loadingToast').show();
     var params = {};
     params.id = id;
     var url= '/weixin/auctionItem/ajaxGetId.do?id='+id+"&wxid="+localStorage.getItem("openId");
@@ -47,6 +48,7 @@ function loadItemData(id){
         dataType: 'JSON',
         cache: false,
         success:function(data){
+            $('#loadingToast').hide();
             var dataObj = data.data;
             //先处理商品轮播
             var dataList = dataObj.resList;

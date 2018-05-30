@@ -25,6 +25,7 @@ $(function(){
 
 //加载商户数据
 function loadbusinessData(){
+    $('#loadingToast').show();
     var bisinessModel = {};
     bisinessModel.isShow = '1';
     var url= '/weixin/business/ajaxDataList.do';
@@ -36,6 +37,7 @@ function loadbusinessData(){
         dataType: 'JSON',
         cache: false,
         success:function(data){
+            $('#loadingToast').hide();
             var dataList = data.rows;
             if(dataList.length> 0)
             {

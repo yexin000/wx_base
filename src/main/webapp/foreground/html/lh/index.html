@@ -11,13 +11,13 @@
     <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/index.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/banner.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/like.css" rel="stylesheet" type="text/css">
     <title></title>
 </head>
 <body>
-	
 	<header class="header-index">
-
         <div  id="banner1" class="bannerBox">
             <ul class="bannerList">
 
@@ -25,15 +25,19 @@
            	<div  class="bannerPrompt none"></div>
        </div>
     </header>
-
+    <div id="loadingToast" style="opacity: 1; display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">数据加载中</p>
+        </div>
+    </div>
     <div id="dataDiv">
 
     </div>
-
     <div id="dataDivItem">
 
     </div>
-
     <div id="dataApply">
          <div class="posr">
              <div class="left" >
@@ -61,6 +65,7 @@
 <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>
+<script type="text/javascript" src="../../../js/lh/zepto.min.js"></script>
 <script type="text/javascript" src="../../../js/lh/banner.js"></script>
 <script type="text/javascript" src="../../../js/lh/index.js?v=1.5"></script>
 </body>

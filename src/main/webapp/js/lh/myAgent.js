@@ -27,6 +27,7 @@
 
     //加载经纪人数据
     function loadAgent(){
+        $('#loadingToast').show();
         var url= '/weixin/middleMan/ajaxGetMiddleMan.do?wxid='+ localStorage.getItem("openId");
         $.ajax({
             url: url,
@@ -36,6 +37,7 @@
             contentType : "application/json;charset=utf-8",
             cache: false,
             success:function(data){
+                $('#loadingToast').hide();
                 var data = data.data;
                 $("#agentImg").attr("src",hostPath + data.avatarUrl);
                 var gradeStr = '';

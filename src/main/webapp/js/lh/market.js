@@ -90,6 +90,7 @@ function loadData()
 
     //根据类型加载拍品数据
     function loadAuctionItem(type, obj){
+        $('#loadingToast').show();
         $(".secondType").removeClass("scrollItemChecked");
         $(obj).addClass("scrollItemChecked");
         var AuctionItemModel = {};
@@ -103,6 +104,7 @@ function loadData()
             contentType : "application/json;charset=utf-8",
             cache: false,
             success:function(data){
+                $('#loadingToast').hide();
                 var dataList = data.rows;
                 if(dataList.length> 0)
                 {

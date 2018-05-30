@@ -14,6 +14,8 @@
     <link href="../../../css/style/like.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/banner.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
+    <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
     <title></title>
 </head>
 <body>
@@ -21,16 +23,22 @@
     <a href="javascript:history.back(-1);" class="header-back"  ></a>
     <h1>拍卖专场</h1>
 </header>
-        <div class="posr-businessDetail">
-            <div  id="banner1" class="bannerBox"  >
-                <ul class="bannerList">
-                </ul>
-                <div  class="bannerPrompt none"></div>
-            </div>
-         <p style=" padding-left: -1rem ;font-size:18px;" id="businessName"></p>
-         <p style=" padding-left: 2.3rem;" >共 <span id="shoppingCount"> </span >件拍品</p>
+    <div class="posr-businessDetail">
+        <div  id="banner1" class="bannerBox"  >
+            <ul class="bannerList">
+            </ul>
+            <div  class="bannerPrompt none"></div>
         </div>
-
+     <p style=" padding-left: -1rem ;font-size:18px;" id="businessName"></p>
+     <p style=" padding-left: 2.3rem;" >共 <span id="shoppingCount"> </span >件拍品</p>
+    </div>
+    <div id="loadingToast" style="opacity: 1; display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">数据加载中</p>
+        </div>
+    </div>
     <div  style="margin-top: 0.4rem;">
         <table class="pro-item">
 
