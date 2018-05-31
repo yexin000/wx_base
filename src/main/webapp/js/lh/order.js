@@ -26,6 +26,7 @@ $(function(){
 
 //加载个人订单数据
 function loadOrder(status){
+    $('#loadingToast').show();
     $(".pro-item").empty();
     var OrderModel = {};
     OrderModel.status = status;
@@ -39,6 +40,7 @@ function loadOrder(status){
         contentType : "application/json;charset=utf-8",
         cache: false,
         success:function(data){
+            $('#loadingToast').hide();
             var dataList = data.rows;
             if(dataList.length> 0)
             {
@@ -66,7 +68,7 @@ function loadOrder(status){
                     str+='  <td class="pro-item-H">';
                     str+='      <h2>'+obj.itemName+'</h2>';
                     str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
-                    str+='      <p><span>订单价格: </span><span style="overflow:hidden;  "> '+obj.orderMoney +'<span> <span  onclick="goDetail(\'+obj.id+\')" style="float: right;border: 1px solid #808080;padding: 0.03rem;border-radius:6px; ">查看详情</span></p>';
+                    str+='      <p><span>订单价格: </span><span style="overflow:hidden;  "> '+obj.orderMoney +'<span> <span  onclick="goDetail(\''+obj.id+'\')" style="float: right;border: 1px solid #808080;padding: 0.03rem;border-radius:6px; ">查看详情</span></p>';
                     str+='  </td>';
                     str+='</tr>';
                 });
@@ -74,4 +76,9 @@ function loadOrder(status){
             $(".pro-item").append(str);
         }
     })
+}
+
+function goDetail(orderId) {
+    var url = '../../html/lh/orderDetail.html?id='+orderId;
+    window.location.href = url;
 }
