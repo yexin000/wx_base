@@ -94,8 +94,8 @@
                         str+='	<div class="left" >';
                         str+=' 		<img src="' + hostPath + obj.logoPath +  '" alt="">';
                         str+='	</div>';
-                        str+='<p style="padding-top: 1.4rem;padding-left: -1rem ;font-size:18px;font-weight:bold;">'+obj.name+'</p>';
-                        str+='<p style=" padding-left: -1rem ; "> '+obj.starttime+'开始，大家敬请期待</p>';
+                        str+='<p style="padding-top: 1.4rem; font-size:18px;font-weight:bold; margin-left: 0.04rem;">'+obj.name+'</p>';
+                        str+='<p style="margin-left: 0.04rem;"> '+obj.starttime+'开始，大家敬请期待</p>';
                         str+='</div>';
                     });
                 }

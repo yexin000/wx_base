@@ -59,6 +59,7 @@
 					<value>/middleMan/ajaxGetMiddleMan.do</value>
 					<value>/group/ajaxGetGroupList.do</value>
 					<value>/order/ajaxDataList.do</value>
+					<value>/order/ajaxGetId.do</value>
 					<value>/favorite/ajaxDataList.do</value>
 					<value>/userAddr/ajaxAddAddr.do</value>
 					<value>cn.trustway.weixin.controller.FavoriteController</value>

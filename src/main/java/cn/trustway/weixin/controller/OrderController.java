@@ -1,13 +1,12 @@
 package cn.trustway.weixin.controller;
 
 
-import cn.trustway.weixin.bean.ItemRes;
-import cn.trustway.weixin.bean.Order;
+import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.model.OrderModel;
-import cn.trustway.weixin.service.ItemResService;
-import cn.trustway.weixin.service.OrderService;
+import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +33,16 @@ public class OrderController extends BaseController {
 
     @Autowired(required = false)
     private ItemResService<ItemRes> itemResService;
+
+    @Autowired
+    UserAddrService<UserAddr> userAddrService;
+
+    @Autowired(required = false)
+    private AuctionItemService<AuctionItem> auctionItemService;
+
+    @Autowired(required = false)
+    private BusinessService<Business> businessService;
+
     /**
      * 首页
      *
@@ -94,5 +103,52 @@ public class OrderController extends BaseController {
         jsonMap.put("total", model.getPager().getRowCount());
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
+    }
+
+
+    /**
+     * 根据ID查找记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * search  auctionItem/ajaxGetId
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxGetId")
+    public void ajaxGetId(Integer id,  HttpServletResponse response) throws Exception {
+        // 设置页面数据
+        Map<String, Object> context = getRootMap();
+        Order bean= orderService.queryById(id);
+        if (bean == null) {
+            sendFailureMessage(response, "没有找到对应的记录!");
+            return;
+        }
+
+        if(StringUtils.isNotEmpty(bean.getAddressId())){
+            //带出地址信息
+            UserAddr useraddr = userAddrService.queryById(bean.getAddressId());
+            if(null != useraddr){
+                context.put("useraddr", useraddr);
+            }
+        }
+        if(null != bean.getItemId()){
+            AuctionItem auctionItem = auctionItemService.queryById(bean.getItemId());
+            ItemResModel resModel  = new ItemResModel();
+            resModel.setConid(auctionItem.getId());
+            resModel.setConType("2");
+            List<ItemRes> resDataList = itemResService.queryByList(resModel);
+            auctionItem.setResList(resDataList);
+            if(null != auctionItem){
+                context.put("auctionItem", auctionItem);
+            }
+            Business business = businessService.queryById(auctionItem.getBusinessId());
+            if(null != business){
+                bean.setBusinessName(business.getName());
+            }
+        }
+        context.put(SUCCESS, true);
+        context.put("data", bean);
+        HtmlUtil.writerJson(response, context);
     }
 }

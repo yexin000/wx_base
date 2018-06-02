@@ -62,7 +62,6 @@ function loadOrder(status){
                         statuName = '订单已删除';
                     }
                     str+=' <td ><span style="float:right;padding-right: 0.2rem;color: #ff7936">'+statuName+'</span>  </td> </tr>';
-                    str+='</tr>';
                     str+='<tr  >';
                     str+='  <td class="pro-item-M"><img src="' + hostPath + obj.orderCoverImg +  '"  alt=""></td>';
                     str+='  <td class="pro-item-H">';

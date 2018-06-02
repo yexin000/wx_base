@@ -29,7 +29,7 @@
 
     <!-- sys_menu table all fields -->
     <sql id="AuctionItem_Base_Column_List">
-		t.id,t.name,t.type,t.description,t.startTime,t.endTime,t.startPrice,t.curPrice,t.finalPrice,
+		t.id,t.name,t.type,t.description,t.startTime,t.endTime,t.startPrice,t.curPrice,t.finalPrice,t.businessId,
 		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId,
 		t.isshowbanner,t.stock
 	</sql>
