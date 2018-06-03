@@ -17,30 +17,25 @@
 <body>
 <header class="header-hs ">
     <a href="javaScript:history.go(-1)" class="header-back"></a>
-    <h1>我的余额</h1>
+    <h1>充值</h1>
 </header>
 
 <div style="width: 100%;margin-top: 0.42rem;text-align: center;">
-     <div style="margin-top: 1.56rem;">
-         我的余额
+     <div style="margin-top: 0.66rem;width: 100%">
+        <p style="line-height: 0.4rem;">
+            <span style="font-size: 20px;margin-left: 0.1rem;float: left">充值金额:</span>
+            <input type="number" id="rechargeMoney" placeholder="请输入充值金额" style="padding-left: 1rem;width: 1rem;">
+        </p>
      </div>
-     <div style="line-height: 0.46rem;font-size: 26px;">
-         ￥<label id="myMoney" style="font-size: 26px;"></label>
-     </div>
-    <div style="margin-top: 0.52rem;line-height: 0.44rem;border-radius: 4%;width: 80%;margin-left: 10%; font-size: 24px;background-color: #2bae10;color: #FFFFFF" onclick="toRecharge()">
-        充值
+    <div style="margin-top: 0.22rem;line-height: 0.44rem;border-radius: 4%;width: 80%;margin-left: 10%; font-size: 24px;background-color: #2bae10;color: #FFFFFF" onclick="submitRecharge()">
+        立即充值
     </div>
-    <div style="margin-top: 0.12rem;border:1px solid black;line-height: 0.44rem;border-radius: 4%;width: 80%;margin-left: 10%;font-size: 24px;">
-        提现
-    </div>
-    <div style="margin-top: 0.12rem;">
-        前往我的交易记录>
-    </div>
+
 </div>
 
 <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>
-<script type="text/javascript" src="../../../js/lh/myMoney.js"></script>
+<script type="text/javascript" src="../../../js/lh/recharge.js"></script>
 </body>
 </html>
