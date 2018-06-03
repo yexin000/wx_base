@@ -32,6 +32,10 @@ public class Order extends BaseBean {
      */
     private Date invalidTime;
     /**
+     * 	微信支付订单号
+     */
+    private String transactionId;
+    /**
      * 微信支付预支付交易会话标识
      */
     private String prepayId;
@@ -225,5 +229,13 @@ public class Order extends BaseBean {
 
     public void setPrepayId(String prepayId) {
         this.prepayId = prepayId;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 }

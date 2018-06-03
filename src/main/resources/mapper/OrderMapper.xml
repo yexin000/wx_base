@@ -11,6 +11,7 @@
         <result column="createtime" property="createTime" />
         <result column="paytime" property="payTime" />
         <result column="invalidtime" property="invalidTime" />
+        <result column="transactionid" property="transactionId" />
         <result column="prepayid" property="prepayId" />
         <result column="status" property="status" />
         <result column="wxid" property="wxid" />
@@ -22,7 +23,7 @@
     <!-- sys_menu table all fields -->
     <sql id="Order_Base_Column_List">
         t.id, t.ordertype, t.ordermoney, t.createtime, t.paytime, t.invalidtime,
-        t.prepayId, t.status, t.wxid, t.addressid, t.itemid, t.updatetime
+        t.transactionid, t.prepayId, t.status, t.wxid, t.addressid, t.itemid, t.updatetime
     </sql>
 
     <!-- 插入记录 -->
@@ -38,7 +39,7 @@
     <update id="update" parameterType="Object">
         update t_e_order set
         ordertype=#{orderType},ordermoney=#{orderMoney},paytime=#{payTime},prepayid=#{prepayId},
-        status=#{status},addressid=#{addressId},itemid=#{itemId},updatetime=now()
+        transactionid=#{transactionId},status=#{status},addressid=#{addressId},itemid=#{itemId},updatetime=now()
         where id=#{id}
     </update>
 
@@ -62,6 +63,9 @@
         </if>
         <if test="prepayId != null and prepayId != '' ">
             ,prepayid=#{prepayId}
+        </if>
+        <if test="transactionId != null and transactionId != '' ">
+            ,transactionid=#{transactionId}
         </if>
         where id=#{id}
     </update>

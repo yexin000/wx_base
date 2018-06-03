@@ -55,6 +55,11 @@ public class AppInitConstants {
 	 */
 	public static final String XCX_AUTH_TYPE = "authorization_code";
 
+	/**
+	 * 订单号前缀
+	 */
+	public static final String XCX_ORDER_PRE = "LONGHAI_ORDER_";
+
 	@SuppressWarnings("unchecked")
 	private static WxCodeService wxCodeService = null;
 

@@ -77,15 +77,26 @@ function loadOrderDetail(id){
 
             var statuName = '';
             if(order.status == '1'){
+                $("#payBtn").text("已失效");
+                $("#payBtn").css("background", "#d5d5d6");
+                $("#payBtn").unbind()
                 statuName = '订单已失效';
             }else if(order.status == '2'){
                 statuName = '订单待支付';
             }else if(order.status == '3'){
+                $("#payBtn").text("已支付");
+                $("#payBtn").css("background", "#d5d5d6");
+                $("#payBtn").unbind()
                 statuName = '订单已支付';
             }else if(order.status == '4'){
+                $("#payBtn").text("已支付");
+                $("#payBtn").css("background", "#d5d5d6");
+                $("#payBtn").unbind()
                 statuName = '订单已发货';
             }else{
-                //0
+                $("#payBtn").text("已删除");
+                $("#payBtn").css("background", "#d5d5d6");
+                $("#payBtn").unbind()
                 statuName = '订单已删除';
             }
             $("#orderStatus").html(statuName);
