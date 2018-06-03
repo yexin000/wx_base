@@ -23,3 +23,8 @@ function toRecharge()
 {
     window.location.href = '../../html/lh/recharge.html';
 }
+
+function toPutForward()
+{
+    window.location.href = '../../html/lh/putForward.html';
+}

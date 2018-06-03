@@ -62,6 +62,8 @@
 					<value>/order/ajaxGetId.do</value>
 					<value>/favorite/ajaxDataList.do</value>
 					<value>/userAddr/ajaxAddAddr.do</value>
+					<value>/moneyStream/save.do</value>
+					<value>/moneyStream/ajaxGetMoneyStreamList.do</value>
 					<value>cn.trustway.weixin.controller.FavoriteController</value>
 					<value>cn.trustway.weixin.controller.UserAddrController</value>
 					<value>cn.trustway.weixin.controller.WxPayController</value>

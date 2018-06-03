@@ -1,32 +1,23 @@
-package cn.trustway.weixin.bean;
+package cn.trustway.weixin.model;
 
-import java.util.Date;
 
-/**
- * 金额流水Bean
- * @author yexin
- */
-public class MoneyStream {
+public class MoneyStreamModel extends BaseModel {
     /**
      * 主键-id
      */
     private Integer id;
     /**
-     * 用户wxid
+     * 用户wxid，关联weixin_user表
      */
     private String wxid;
     /**
-     * 流水类型：1-保证金,2-支付,3-提现,4-退款,5-充值
+     * 流水类型：1-保证金,2-支付,3-提现,4-退款
      */
     private String streamtype;
     /**
-     * 流水金额
+     * 操作金额
      */
-    private Double streammoney;
-    /**
-     * 创建时间
-     */
-    private Date createtime;
+    private String streammoney;
 
     public Integer getId() {
         return id;
@@ -52,19 +43,11 @@ public class MoneyStream {
         this.streamtype = streamtype;
     }
 
-    public Double getStreammoney() {
+    public String getStreammoney() {
         return streammoney;
     }
 
-    public void setStreammoney(Double streammoney) {
+    public void setStreammoney(String streammoney) {
         this.streammoney = streammoney;
-    }
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
     }
 }

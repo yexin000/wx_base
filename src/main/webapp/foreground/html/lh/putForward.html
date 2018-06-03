@@ -17,18 +17,31 @@
 <body>
 <header class="header-hs ">
     <a href="javaScript:history.go(-1)" class="header-back"></a>
-    <h1>充值</h1>
+    <h1>提现</h1>
 </header>
 
 <div style="width: 100%;margin-top: 0.42rem;text-align: center;">
      <div style="margin-top: 0.66rem;width: 100%">
         <p style="line-height: 0.4rem;">
-            <span style="font-size: 20px;margin-left: 0.1rem;float: left">充值金额:</span>
-            <input type="number" id="rechargeMoney" placeholder="请输入充值金额" style=" width: 2rem; height: 0.22rem;">
+            <span style="font-size: 20px;margin-left: 0.1rem;float: left;">提现金额:</span>
+            <input type="number" id="rechargeMoney" placeholder="请输入充值金额" style="width: 2rem; height: 0.22rem;">
         </p>
      </div>
-    <div style="margin-top: 0.22rem;line-height: 0.44rem;border-radius: 4%;width: 80%;margin-left: 10%; font-size: 24px;background-color: #2bae10;color: #FFFFFF" onclick="submitRecharge()">
-        立即充值
+    <div style="margin-top: 0.16rem;width: 100%">
+        <p style="line-height: 0.4rem;">
+            <span style="font-size: 20px;margin-left: 0.1rem;float: left">银行名称:</span>
+            <input type="text" id="rechargeMoney1" placeholder="请输入提现银行名称" style=" width: 2rem; height: 0.22rem;">
+        </p>
+    </div>
+    <div style="margin-top: 0.16rem;width: 100%">
+        <p style="line-height: 0.4rem;">
+            <span style="font-size: 20px;margin-left: 0.1rem;float: left">银行卡号:</span>
+            <input type="text" id="rechargeMoney2" placeholder="请输入银行卡卡号" style=" width: 2rem; height: 0.22rem;">
+        </p>
+    </div>
+
+    <div style="margin-top: 0.22rem;line-height: 0.44rem;border-radius: 4%;width: 80%;margin-left: 10%; font-size: 24px;background-color: #c1272d;color: #FFFFFF" onclick="submitRecharge()">
+        立即提现
     </div>
 
 </div>
@@ -36,6 +49,6 @@
 <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>
-<script type="text/javascript" src="../../../js/lh/recharge.js"></script>
+<script type="text/javascript" src="../../../js/lh/putForward.js"></script>
 </body>
 </html>
