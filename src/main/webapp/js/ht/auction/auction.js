@@ -46,6 +46,10 @@ WeiXin.auction = function(){
                         formatter:function(value,row,index){
                             if(value == 1){
                                 return "正常";
+                            } else if(value == 2){
+                                return "进行中";
+                            } else if(value == 3) {
+                                return "已结束";
                             }
                         }
                     },

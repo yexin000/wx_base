@@ -189,6 +189,9 @@
             <if test="uploadWxid != null and uploadWxid != ''">
                 and t.uploadWxid = #{uploadWxid}
             </if>
+            <if test="auctionId != null and auctionId != ''">
+                and t.auctionid = #{auctionId}
+            </if>
         </trim>
         order by t.id desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">

@@ -89,13 +89,21 @@
                 {
                 	 var str = '';
                     $.each(dataList,function(i,obj){
-
+                        var status = obj.status;
+                        var label = "";
+                        if(status == "1") {
+                            label = obj.starttime + "开始，敬请期待";
+                        } else if(status == "2") {
+                            label = obj.starttime + "开始，火热进行中";
+                        } else if(status == "3") {
+                            label = obj.endtime + "已结束";
+                        }
                         str+='<div class="posr" onclick="toAuctionDetail('+obj.id+')">';
                         str+='	<div class="left" >';
                         str+=' 		<img src="' + hostPath + obj.logoPath +  '" alt="">';
                         str+='	</div>';
                         str+='<p style="padding-top: 1.4rem; font-size:18px;font-weight:bold; margin-left: 0.04rem;">'+obj.name+'</p>';
-                        str+='<p style="margin-left: 0.04rem;"> '+obj.starttime+'开始，大家敬请期待</p>';
+                        str+='<p style="margin-left: 0.04rem;"> '+label+'</p>';
                         str+='</div>';
                     });
                 }

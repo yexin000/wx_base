@@ -1,9 +1,4 @@
-
-//图片访问路径
-var imagePath = "http://127.0.0.1:8080/";
-
-
-$(function(){	
+$(function(){
     var id = getParam("id");
     loadItemData(id);
     loadAuctionItemBid(id);
@@ -66,10 +61,12 @@ function loadItemData(id){
                 bannerDW("banner1",3000,true,"red");
             }
             //处理商品基本信息
-            if(dataObj.auctionStatus == '1') {
+            if(dataObj.auctionStatus == '0') {
+                $("#timeLabel").html("即将开始 " + dataObj.startTime);
+            } else if(dataObj.auctionStatus == '1') {
                 $("#timeLabel").html("正在竞拍:  " + dataObj.startTime + "至" + dataObj.endTime);
             } else {
-                $("#timeLabel").html("即将开始 " + dataObj.startTime);
+                $("#timeLabel").html("竞拍已结束");
             }
 
             $("#itemName").html(dataObj.name); //拍品名字

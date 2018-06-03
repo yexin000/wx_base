@@ -59,11 +59,27 @@ WeiXin.auctionItem = function(){
                     {field:'status',title:'状态',width:50,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){
+                                return "未审核";
+                            } else if(value == 2){
+                                return "审核未通过";
+                            } else if(value == 3){
                                 return "正常";
                             }
                         }
                     },
-                    {field:'auctionStatus',title:'拍卖状态',width:60,align:'center',sortable:true},
+                    {field:'auctionStatus',title:'拍卖状态',width:60,align:'center',sortable:true,
+                        formatter:function(value,row,index){
+                            if(value == 0){
+                                return "未开拍";
+                            } else if(value == 1){
+                                return "正在拍卖";
+                            } else if(value == 2){
+                                return "拍卖成功";
+                            } else if(value == 3){
+                                return "流拍";
+                            }
+                        }
+                    },
                     {field:'auctionName',title:'拍卖会',width:100,align:'center',sortable:true},
                     {field:'opts',title:'操作',width:100,align:'center',formatter:function(value,row,index){
                             var html ="<a href='#' onclick='WeiXin.auctionItem.resManage(\""+row.id + "\"," + "\"" + row.name +"\")'>图片管理("+row.picCount+")</a>";
