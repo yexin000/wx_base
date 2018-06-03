@@ -2,6 +2,7 @@ package cn.trustway.weixin.controller;
 
 
 import cn.trustway.weixin.bean.*;
+import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.model.OrderModel;
 import cn.trustway.weixin.service.*;
@@ -119,7 +120,7 @@ public class OrderController extends BaseController {
     public void ajaxGetId(Integer id,  HttpServletResponse response) throws Exception {
         // 设置页面数据
         Map<String, Object> context = getRootMap();
-        Order bean= orderService.queryById(id);
+        Order bean = orderService.queryById(id);
         if (bean == null) {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
@@ -134,14 +135,17 @@ public class OrderController extends BaseController {
         }
         if(null != bean.getItemId()){
             AuctionItem auctionItem = auctionItemService.queryById(bean.getItemId());
+            if(null != auctionItem){
+                context.put("auctionItem", auctionItem);
+            } else {
+                sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_NOT_EXIST, "商品不存在");
+            }
             ItemResModel resModel  = new ItemResModel();
             resModel.setConid(auctionItem.getId());
             resModel.setConType("2");
             List<ItemRes> resDataList = itemResService.queryByList(resModel);
             auctionItem.setResList(resDataList);
-            if(null != auctionItem){
-                context.put("auctionItem", auctionItem);
-            }
+
             Business business = businessService.queryById(auctionItem.getBusinessId());
             if(null != business){
                 bean.setBusinessName(business.getName());

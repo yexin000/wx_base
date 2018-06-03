@@ -45,3 +45,20 @@ function toAuctionItemDetail(id)
 {
     window.location.href = '../../html/lh/auctionItemDetail.html?id='+id;
 }
+
+function showToast(msg, callback) {
+    var toast = $('<div id="toast" style="opacity: 1; ">' +
+                    '<div class="weui-mask_transparent"></div>' +
+                    '<div class="weui-toast">' +
+                        '<i class="weui-icon-success-no-circle weui-icon_toast"></i>' +
+                        '<p class="weui-toast__content">' + msg + '</p>' +
+                    '</div>' +
+                   '</div>');
+    $("body").append(toast);
+
+    setTimeout(function () {
+        $("#toast").remove();
+        callback();
+    }, 1000);
+
+}

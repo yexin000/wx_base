@@ -12,9 +12,17 @@ import net.sf.json.JSONObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Title:HttpClientUtil
@@ -48,8 +56,8 @@ public class HttpClientUtil {
 			StringEntity entity = new StringEntity(jsonString,"UTF-8");
 			entity.setContentEncoding("UTF-8");
 			entity.setContentType("application/json");
-			httpPost.setEntity(entity); 
-			
+			httpPost.setEntity(entity);
+
 			HttpResponse response = httpClient.execute(httpPost);
 			if (response != null) {
 				HttpEntity resEntity = response.getEntity();
@@ -59,6 +67,36 @@ public class HttpClientUtil {
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
+	 *
+	 * @param url
+	 * @param xmlString
+	 * @param charset
+	 * @return
+	 */
+	public static String doPostXml(String url, String xmlString, String charset) throws Exception {
+		String result = "";
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		StringEntity myEntity = new StringEntity(xmlString, "UTF-8");
+		httpPost.addHeader("Content-Type", "text/xml; charset=UTF-8");
+		httpPost.setEntity(myEntity);
+		HttpResponse response = httpclient.execute(httpPost);
+		HttpEntity resEntity = response.getEntity();
+		if (resEntity != null) {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(resEntity
+					.getContent(), "UTF-8"));
+			StringBuffer sb = new StringBuffer();
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line);
+				sb.append("\r\n");
+			}
+			result = sb.toString();
 		}
 		return result;
 	}

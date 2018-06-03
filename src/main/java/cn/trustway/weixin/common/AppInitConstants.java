@@ -31,6 +31,21 @@ public class AppInitConstants {
 	public static String XCX_APP_SECRET;
 
 	/**
+	 * 小程序MCHID
+	 */
+	public static String XCX_MCHID;
+
+	/**
+	 * 项目服务器地址
+	 */
+	public static String XCX_SERVICE_URL;
+
+	/**
+	 * 商户平台密钥key
+	 */
+	public static String XCX_MCHKEY;
+
+	/**
 	 * 小程序授权地址
 	 */
 	public static final String XCX_AUTH_URL = "https://api.weixin.qq.com/sns/jscode2session";
@@ -56,6 +71,12 @@ public class AppInitConstants {
 		public static final String HTTP_PRICE_SRTART_ERROR = "10003";
 		// 加价金额低于最低加价金额
 		public static final String HTTP_PRICE_MIN_ERROR = "10004";
+		// 商品不存在
+		public static final String HTTP_ITEM_NOT_EXIST = "10005";
+		// 订单有误
+		public static final String HTTP_ORDER_ERROR = "10006";
+		// 调用微信支付失败
+		public static final String HTTP_WXPAY_FAIL = "10007";
 	}
 
 	/**
@@ -85,6 +106,9 @@ public class AppInitConstants {
 			prop.load(in);
 			XCX_APP_ID = prop.getProperty("wx.appId");
 			XCX_APP_SECRET = prop.getProperty("wx.appSecret");
+			XCX_MCHID = prop.getProperty("wx.mchId");
+			XCX_SERVICE_URL = prop.getProperty("wx.serviceUrl");
+			XCX_MCHKEY = prop.getProperty("wx.key");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

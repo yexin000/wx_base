@@ -4,6 +4,7 @@ package cn.trustway.weixin.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -194,5 +195,42 @@ public class MD5 {
 		{
 			return byteArrayToHexString(this.md.digest());
 		}
+
+	/**
+	 *
+	 * @param plainText
+	 *            明文
+	 * @return 32位密文
+	 */
+	public static String md532(String plainText) {
+		String re_md5 = new String();
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			try {
+				md.update(plainText.getBytes("utf-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			byte b[] = md.digest();
+
+			int i;
+
+			StringBuffer buf = new StringBuffer("");
+			for (int offset = 0; offset < b.length; offset++) {
+				i = b[offset];
+				if (i < 0)
+					i += 256;
+				if (i < 16)
+					buf.append("0");
+				buf.append(Integer.toHexString(i));
+			}
+
+			re_md5 = buf.toString();
+
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return re_md5;
+	}
 }
 

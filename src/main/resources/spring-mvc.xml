@@ -64,6 +64,7 @@
 					<value>/userAddr/ajaxAddAddr.do</value>
 					<value>cn.trustway.weixin.controller.FavoriteController</value>
 					<value>cn.trustway.weixin.controller.UserAddrController</value>
+					<value>cn.trustway.weixin.controller.WxPayController</value>
 				</list>
 			</property>
 		</bean>

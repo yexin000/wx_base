@@ -42,7 +42,7 @@ import cn.trustway.weixin.util.Constant.SuperAdmin;
 @Controller
 public class MainController extends BaseController{
 
-private final static Logger log= Logger.getLogger(MainController.class);
+	private final static Logger log= Logger.getLogger(MainController.class);
 	
 	// Servrice start
 	@Autowired(required=false) 
