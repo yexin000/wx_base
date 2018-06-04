@@ -28,7 +28,7 @@ WeiXin.auctionItem = function(){
                 columns:[[
                     {field:'id',checkbox:true},
                     {field:'name',title:'拍品名称',width:120,align:'center',sortable:true},
-                    {field:'type',title:'类型',width:40,align:'center',sortable:true},
+                    {field:'typeName',title:'类型',width:60,align:'center',sortable:true},
                     {field:'description',title:'介绍描述',width:120,align:'center',sortable:true},
                     {field:'startTime',title:'开始拍卖时间',width:115,align:'center',sortable:true},
                     {field:'endTime',title:'结束拍卖时间',width:115,align:'center',sortable:true},
@@ -108,6 +108,19 @@ WeiXin.auctionItem = function(){
                     });
                 }
             });
+
+            $.post("/weixin/wxCode/getAllAuctionItemSecondType.do",{rows:100},function(data){
+                if(data.total > 0) {
+                    data.rows[0].selected = "true";
+                    $('#types').combobox({
+                        data : data.rows,
+                        valueField : 'code',
+                        textField : 'name',
+                        editable:false
+                    });
+                }
+            });
+
 
         },
         resManage:function (auctionItemId, auctionItemName) {

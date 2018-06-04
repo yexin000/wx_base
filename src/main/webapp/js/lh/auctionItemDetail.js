@@ -2,7 +2,12 @@ $(function(){
     var id = getParam("id");
     loadItemData(id);
     loadAuctionItemBid(id);
+    $("#bidBtn").click(function () {
+        toBid();
+    });
+
     $("#favBtn").click(function () {
+        $('#loadingToast').show();
         var favStatus = $("#favStatus").val();
         if(favStatus == "0") {
             var params={}
@@ -10,7 +15,9 @@ $(function(){
             params.favType="1";
             params.favId=getParam("id");
             $.post("/weixin/favorite/ajaxAddFavorite.do",params,function(data){
-                alert(data.msg);
+                $('#loadingToast').hide();
+                showToast(data.msg, function () {
+                });
                 $("#favBtn").html("取消收藏");
                 $("#favStatus").val("1");
             });
@@ -20,7 +27,9 @@ $(function(){
             params.favId=getParam("id");
             params.wxid=localStorage.getItem("openId");
             $.post("/weixin/favorite/ajaxDelFavorite.do",params,function(data){
-                alert(data.msg);
+                $('#loadingToast').hide();
+                showToast(data.msg, function () {
+                });
                 $("#favBtn").html("+收藏");
                 $("#favStatus").val("0");
             });
@@ -47,8 +56,7 @@ function loadItemData(id){
             var dataObj = data.data;
             //先处理商品轮播
             var dataList = dataObj.resList;
-            if(dataList.length> 0)
-            {
+            if(dataList.length> 0) {
                 var str = '';
                 $.each(dataList,function(i,obj){
                     var coverimg = obj.path;
@@ -63,13 +71,18 @@ function loadItemData(id){
             //处理商品基本信息
             if(dataObj.auctionStatus == '0') {
                 $("#timeLabel").html("即将开始 " + dataObj.startTime);
+                $("#bidBtn").css("background", "#d5d5d6");
+                $("#bidBtn").unbind();
             } else if(dataObj.auctionStatus == '1') {
                 $("#timeLabel").html("正在竞拍:  " + dataObj.startTime + "至" + dataObj.endTime);
             } else {
                 $("#timeLabel").html("竞拍已结束");
+                $("#bidBtn").css("background", "#d5d5d6");
+                $("#bidBtn").unbind();
             }
 
             $("#itemName").html(dataObj.name); //拍品名字
+            $("#itemDescription").html(dataObj.description); //拍品详情
             $("#startprice").html(dataObj.startPrice); //起拍价格
             $("#curprice").html(dataObj.curPrice); //当前价格
             $("#addprice").html(dataObj.addPrice); //加价最低价格
@@ -129,6 +142,7 @@ function loadAuctionItemBid(id){
 
 //出价
 function toBid(){
+    $('#loadingToast').show();
     var id = getParam("id");
     var BidBean = {};
     BidBean.wxid = localStorage.getItem('openId');
@@ -143,11 +157,14 @@ function toBid(){
         dataType: 'JSON',
         cache: false,
         success:function(data){
+            $('#loadingToast').hide();
             var code = data.code;
             if(code == 0){
-                alert("竞拍成功");
+                showToast("竞拍成功", function () {
+                });
             }else{
-                alert("竞拍失败");
+                showToast("竞拍失败", function () {
+                });
             }
         }
     })

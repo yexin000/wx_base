@@ -80,6 +80,11 @@ public class WxCodeService<T> extends BaseService<T> {
         return dao.getAuctionItemSecondType(code);
     }
 
+    @Cacheable(value = "serviceCache")
+    public List<T> getAllAuctionItemSecondType() {
+        return dao.getAllAuctionItemSecondType();
+    }
+
     @Autowired
     private WxCodeDao<T> dao;
 

@@ -36,6 +36,8 @@ public interface WxCodeDao<T> extends BaseDao<T> {
 	public List<T> getAuctionItemType();
 
 	public List<T> getAuctionItemSecondType(String code);
+
+	List<T> getAllAuctionItemSecondType();
 	
 	/**
 	 * 查询代码，检查是否存在

@@ -54,6 +54,7 @@
 					<value>/file/setHeadImg.do</value>
 					<value>/wxCode/getAuctionItemType.do</value>
 					<value>/wxCode/getAuctionItemSecondType.do</value>
+					<value>/wxCode/getAllAuctionItemSecondType.do</value>
 					<value>/bid/ajaxAddBid.do</value>
 					<value>/bid/ajaxDataList.do</value>
 					<value>/middleMan/ajaxGetMiddleMan.do</value>

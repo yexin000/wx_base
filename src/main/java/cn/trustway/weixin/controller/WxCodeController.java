@@ -175,4 +175,19 @@ public class WxCodeController extends BaseController {
 		jsonMap.put("rows", dataList);
 		HtmlUtil.writerJson(response, jsonMap);
 	}
+
+	/**
+	 * 查询商品二级类型列表
+	 *
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/getAllAuctionItemSecondType")
+	public void getAllAuctionItemSecondType(HttpServletResponse response) {
+		List<WxCode> dataList = wxCodeService.getAllAuctionItemSecondType();
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("total", dataList.size());
+		jsonMap.put("rows", dataList);
+		HtmlUtil.writerJson(response, jsonMap);
+	}
 }

@@ -37,7 +37,7 @@ public class FavoriteController extends BaseController {
     @RequestMapping(value = "/ajaxAddFavorite", method = RequestMethod.POST)
     public void ajaxAddFavorite(Favorite bean, HttpServletResponse response) throws Exception {
         favoriteService.add(bean);
-        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "收藏成功~");
+        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "收藏成功");
     }
 
     /**
@@ -51,7 +51,7 @@ public class FavoriteController extends BaseController {
     @RequestMapping(value = "/ajaxDelFavorite", method = RequestMethod.POST)
     public void ajaxDelFavorite(Favorite bean, HttpServletResponse response) throws Exception {
         favoriteService.delete(bean);
-        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "取消收藏成功~");
+        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "取消收藏成功");
     }
 
     /**

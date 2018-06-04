@@ -1,15 +1,9 @@
 package cn.trustway.weixin.controller;
 
-import cn.trustway.weixin.bean.AuctionItem;
-import cn.trustway.weixin.bean.BidBean;
-import cn.trustway.weixin.bean.Favorite;
-import cn.trustway.weixin.bean.ItemRes;
+import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.model.AuctionItemModel;
 import cn.trustway.weixin.model.ItemResModel;
-import cn.trustway.weixin.service.AuctionItemService;
-import cn.trustway.weixin.service.BidService;
-import cn.trustway.weixin.service.FavoriteService;
-import cn.trustway.weixin.service.ItemResService;
+import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

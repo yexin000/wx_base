@@ -203,4 +203,17 @@
 			select id from wx_code where code = #{code})
 		order by value asc
 	</select>
+
+	<!-- 查询商品所有二级类型列表 -->
+	<select id="getAllAuctionItemSecondType" resultMap="BaseResultMap" parameterType="Object">
+		select
+		<include refid="Base_Column_List" />
+		from wx_code
+		where
+			parentid IS NOT NULL
+			AND parentid IN (
+				SELECT id FROM wx_code WHERE CODE LIKE 'auctionItemType%' AND parentid IS NULL
+			)
+		order by value asc
+	</select>
 </mapper>   

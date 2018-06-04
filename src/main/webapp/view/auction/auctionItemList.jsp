@@ -35,9 +35,7 @@
             </div>
             <div class="fitem">
                 <label>类型:</label>
-                <select class="easyui-combobox" name="type" id="types" data-options="required:true">
-                    <option value="0" selected="selected">类型0</option>
-                    <option value="1">类型1</option>
+                <select class="easyui-combobox" name="type" id="types" data-options="required:true" style="width: 156px;">
                 </select>
             </div>
             <div class="fitem">

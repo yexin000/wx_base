@@ -66,7 +66,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				if (!SessionUtil.isAdmin(request)) {
 					String menuUrl = StringUtils.remove(
 							request.getRequestURI(), request.getContextPath());
-					;
 					if (!SessionUtil.isAccessUrl(request,
 							StringUtils.trim(menuUrl))) {
 						// 日志记录
