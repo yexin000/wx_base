@@ -28,3 +28,8 @@ function toPutForward()
 {
     window.location.href = '../../html/lh/putForward.html';
 }
+
+function toTradingCenter()
+{
+    window.location.href = '../../html/lh/tradingCenter.html';
+}

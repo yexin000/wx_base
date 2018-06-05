@@ -23,6 +23,17 @@ public class MoneyStream {
      * 流水金额
      */
     private Double streammoney;
+
+    /**
+     * 流水编号
+     */
+    private String flownumber;
+
+    /**
+     * 状态
+     */
+    private Integer status;
+
     /**
      * 创建时间
      */
@@ -66,5 +77,21 @@ public class MoneyStream {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    public String getFlownumber() {
+        return flownumber;
+    }
+
+    public void setFlownumber(String flownumber) {
+        this.flownumber = flownumber;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

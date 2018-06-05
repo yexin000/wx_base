@@ -10,24 +10,26 @@
         <result column="streamtype" property="streamtype" />
         <result column="streammoney" property="streammoney" />
         <result column="createtime" property="createtime" />
+        <result column="flownumber" property="flownumber" />
+        <result column="status" property="status" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="MoneyStream_Base_Column_List">
-		t.id,t.wxid,t.streamtype,t.streammoney,t.createtime
+		t.id,t.wxid,t.streamtype,t.streammoney,t.createtime,t.flownumber,t.status
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_money_stream(id,wxid,streamtype,streammoney,createtime )
-        values(null,#{wxid},#{streamtype},#{streammoney},#{createtime});
+        t_e_money_stream(id,wxid,streamtype,streammoney,createtime,flownumber )
+        values(null,#{wxid},#{streamtype},#{streammoney},#{createtime},#{flownumber});
     </insert>
 
     <!-- 根据id，修改记录 -->
     <update id="update" parameterType="Object">
 		update t_e_money_stream set
-		wxid=#{wxid},streamtype=#{streamtype},streammoney=#{streammoney},createtime=createtime
+		wxid=#{wxid},streamtype=#{streamtype},streammoney=#{streammoney},status=#{status},createtime=createtime
 		where id=#{id}
 	</update>
 
@@ -44,8 +46,8 @@
             <if test="streammoney != null and streammoney != '' ">
                 streammoney=#{streammoney},
             </if>
-            <if test="createtime != null and createtime != '' ">
-                createtime=#{createtime},
+            <if test="status != null and status != '' ">
+                status=#{status},
             </if>
         </trim>
         where id=#{id}

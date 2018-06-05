@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,19 @@ public class MoneyStreamController extends BaseController {
         queryDataList(model, response);
     }
 
+    /**
+     * 前端数据列表查询
+     *
+     * @param model
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
+    public void ajaxDataList(@RequestBody MoneyStreamModel model, HttpServletResponse response) throws Exception {
+        queryDataList(model, response);
+    }
+
     private void queryDataList(MoneyStreamModel model, HttpServletResponse response) throws Exception {
         List<MoneyStream> dataList = moneyStreamService.queryByList(model);
         // 设置页面数据
@@ -64,9 +78,24 @@ public class MoneyStreamController extends BaseController {
             moneyStreamService.updateBySelective(bean);
         } else {
             bean.setCreatetime(new Date());
+            bean.setFlownumber(createCode());
             moneyStreamService.add(bean);
         }
         sendSuccessMessage(response, "保存成功~");
+    }
+
+    private String createCode (){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        return  "No"+sdf.format(new Date())+getIDCode4();
+    }
+
+    /**
+     * 生成4位数的随机数
+     * @return
+     */
+    protected static String getIDCode4() {
+        int idCode = (int) (Math.random()*9000+1000);
+        return idCode+"";
     }
 
     /**
@@ -104,23 +133,4 @@ public class MoneyStreamController extends BaseController {
         sendSuccessMessage(response, "删除成功");
     }
 
-
-
-    /**
-     * 前端用户查询微拍群
-     *
-     * @param response
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping("/ajaxGetMoneyStreamList")
-    public void ajaxGetMoneyStreamList(HttpServletResponse response) throws Exception {
-        GroupModel model = new GroupModel();
-        model.setRows(100);
-        List<MoneyStream> dataList = moneyStreamService.queryByList(model);
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("total", model.getPager().getRowCount());
-        jsonMap.put("rows", dataList);
-        HtmlUtil.writerJson(response, jsonMap);
-    }
 }
