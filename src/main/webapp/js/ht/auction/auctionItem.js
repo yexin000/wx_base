@@ -38,6 +38,9 @@ WeiXin.auctionItem = function(){
                     {field:'finalPrice',title:'成交价格',width:60,align:'center',sortable:true},
                     {field:'rate',title:'手续费比率',width:70,align:'center',sortable:true},
                     {field:'detail',title:'拍品详情',width:120,align:'center',sortable:true},
+                    {field:'standard',title:'拍品规格',width:60,align:'center',sortable:true},
+                    {field:'age',title:'拍品年代',width:60,align:'center',sortable:true},
+                    {field:'degree',title:'拍品等级',width:60,align:'center',sortable:true},
                     {field:'isShowBanner',title:'是否轮播',width:60,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){

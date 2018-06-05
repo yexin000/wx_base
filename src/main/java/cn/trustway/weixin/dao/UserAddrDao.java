@@ -1,5 +1,7 @@
 package cn.trustway.weixin.dao;
 
+import java.util.Map;
+
 /**
  * 用户地址dao
  * @author yexin
@@ -14,8 +16,8 @@ public interface UserAddrDao<T> extends BaseDao<T> {
 
     /**
      * 设置默认收货地址
-     * @param id
+     * @param params
      * @return
      */
-    void setDefaultAddr(Integer id);
+    void setDefaultAddr(Map<String, Object> params);
 }

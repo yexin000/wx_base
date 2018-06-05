@@ -4,6 +4,8 @@ import cn.trustway.weixin.dao.UserAddrDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * 出价服务类
  *
@@ -23,7 +25,7 @@ public class UserAddrService<T> extends BaseService<T> {
         return getDao().getDefaultAddrByWxid(wxid);
     }
 
-    public void setDefaultAddr(Integer id) {
-        getDao().setDefaultAddr(id);
+    public void setDefaultAddr(Map<String, Object> params) {
+        getDao().setDefaultAddr(params);
     }
 }

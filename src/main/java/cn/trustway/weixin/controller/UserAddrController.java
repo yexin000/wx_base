@@ -78,7 +78,11 @@ public class UserAddrController extends BaseController {
             }
         }
 
-        userAddrService.add(bean);
+        if(null != bean.getId() && bean.getId() > 0) {
+            userAddrService.updateBySelective(bean);
+        } else {
+            userAddrService.add(bean);
+        }
         sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "创建成功~");
     }
     /**
@@ -141,9 +145,15 @@ public class UserAddrController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxSetDefaultAddr", method = RequestMethod.POST)
-    public void ajaxSetDefaultAddr(Integer id, HttpServletResponse response) {
-        userAddrService.setDefaultAddr(id);
-        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "操作成功~");
+    public void ajaxSetDefaultAddr(Integer id, String wxid, HttpServletResponse response) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("wxid", wxid);
+        params.put("isSetDefault", "0");
+        userAddrService.setDefaultAddr(params);
+        params.put("isSetDefault", "1");
+        userAddrService.setDefaultAddr(params);
+        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "操作成功");
     }
 
     /**
@@ -166,6 +176,27 @@ public class UserAddrController extends BaseController {
         jsonMap.put("total", model.getPager().getRowCount());
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
+    }
+
+    /**
+     * 根据ID查找记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/getAddrById")
+    public void getAddrById(Integer addrId, HttpServletResponse response) throws Exception {
+        Map<String, Object> context = getRootMap();
+        UserAddr bean = userAddrService.queryById(addrId);
+        if (bean == null) {
+            sendFailureMessage(response, "没有找到对应的记录!");
+            return;
+        }
+        context.put(SUCCESS, true);
+        context.put("data", bean);
+        HtmlUtil.writerJson(response, context);
     }
 
 }

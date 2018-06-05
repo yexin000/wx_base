@@ -59,6 +59,18 @@
                 <input class="easyui-validatebox" type="text" name="rate" data-options="required:true">
             </div>
             <div class="fitem">
+                <label>拍品规格:</label>
+                <input class="easyui-validatebox" type="text" name="standard" data-options="required:true">
+            </div>
+            <div class="fitem">
+                <label>拍品年代:</label>
+                <input class="easyui-validatebox" type="text" name="age" data-options="required:true">
+            </div>
+            <div class="fitem">
+                <label>拍品等级:</label>
+                <input class="easyui-validatebox" type="text" name="degree" data-options="required:true">
+            </div>
+            <div class="fitem">
                 <label>首页展示:</label>
                 <select class="easyui-combobox" name="isShow" id="isshows" data-options="required:true">
                     <option value="0" selected="selected">否</option>
@@ -76,6 +88,14 @@
                 <label>拍卖会:</label>
                 <select class="easyui-combobox" name="auctionId" id="auctionids" data-options="required:true" style="width: 156px;">
                 </select>
+            </div>
+            <div class="fitem">
+                <label>介绍描述:</label>
+                <input class="easyui-validatebox" type="text" name="description" data-options="required:true">
+            </div>
+            <div class="fitem">
+                <label>拍品详情:</label>
+                <textarea rows="3" name="detail" class="easyui-validatebox" data-options="required:true" style="width: 157px;"></textarea>
             </div>
         </div>
     </form>

@@ -1,8 +1,3 @@
-
-//图片访问路径
-var imagePath = "http://127.0.0.1:8080/";
-
-
 $(function(){
     loadAddress();
     $(window).scroll(function(){
@@ -32,6 +27,7 @@ function loadAddress(){
         contentType : "application/json;charset=utf-8",
         cache: false,
         success:function(data){
+            $("#dataDiv").empty();
             $('#loadingToast').hide();
             var dataList = data.rows;
             if(dataList.length> 0)
@@ -49,10 +45,10 @@ function loadAddress(){
                     if(obj.isDefault == '1'){
                         str+=' <img src="../../../images/lh/redio-s.png" style="height: 15px;width: 15px;"> ';
                     }else{
-                        str+=' <img src="../../../images/lh/redio-n.png" style="height: 15px;width: 15px;"> ';
+                        str+=' <img onclick="setDefaultAddr(\'' + obj.id + '\', \'' + localStorage.getItem("openId") + '\')" src="../../../images/lh/redio-n.png" style="height: 15px;width: 15px;"> ';
                     }
                     str+=' &nbsp;默认地址</span>';
-                    str+='    <span style="float: right"  > <img src="../../../images/lh/update-lh.png" style="width: 14px;height: 14px;"> 修改&nbsp;</span>';
+                    str+='    <span style="float: right" onclick="editAddr(\'' + obj.id + '\');"> <img src="../../../images/lh/update-lh.png" style="width: 14px;height: 14px;"> 修改&nbsp;</span>';
                     str+='    <span style="float: right;padding-right: 0.12rem;" onclick="deleteAddress('+obj.id+')"> <img src="../../../images/lh/delete-lh.png" style="width: 14px;height: 14px;"> 删除</span>';
                     str+='   </p>';
                     str+='</div>';
@@ -61,6 +57,22 @@ function loadAddress(){
             $("#dataDiv").append(str);
         }
     })
+}
+
+function editAddr(addrId) {
+    window.location.href = '../../html/lh/addressDetail.html?addrId='+addrId;
+}
+
+// 设置默认地址
+function setDefaultAddr(id, wxid) {
+    $('#loadingToast').show();
+    // 设置默认
+    $.post("/weixin/userAddr/ajaxSetDefaultAddr.do?id="+id+"&wxid="+wxid,{},function(data){
+        $('#loadingToast').hide();
+        showToast(data.msg, function () {
+        });
+        loadAddress();
+    });
 }
 
 //删除地址
@@ -79,9 +91,11 @@ function deleteAddress(id){
         }
     })
 }
-//新增/修改地址
+
+//新增地址
 function updateAddress(){
     window.location.href = '../../html/lh/addressDetail.html';
 }
+
 
 

@@ -33,7 +33,12 @@
     </update>
 
     <update id="setDefaultAddr" parameterType="Object">
-        update t_e_user_addr set isdefault='1' where id = #{id}
+        <if test="isSetDefault == 1">
+            update t_e_user_addr set isdefault='1' where id = #{id} and wxid = #{wxid}
+        </if>
+        <if test="isSetDefault != 1">
+            update t_e_user_addr set isdefault='0' where id != #{id} and wxid = #{wxid}
+        </if>
     </update>
 
     <!-- 修改记录，只修改只不为空的字段 -->

@@ -89,6 +89,16 @@ function loadItemData(id){
             $("#rate").html(dataObj.rate); //手续费比率
             $("#depositprice").html(dataObj.depositPrice); //保证金
             $("#wanfenbi").html('('+dataObj.wanfenbi+"万元)"); //保证金
+            $("#standardLabel").html(dataObj.standard); //规格
+            $("#ageLabel").html(dataObj.age); //年代
+            $("#degreeLabel").html(dataObj.degree); //等级
+            var details = dataObj.detail.split("\n");
+            var detail = "";
+            for(var i = 0; i < details.length; i ++) {
+                detail = detail + details[i] + "<br/>";
+            }
+            $("#detailLabel").html(detail); //详情
+
             if(dataObj.isFavorite == "1") {
                 $("#favBtn").html("取消收藏");
             } else {

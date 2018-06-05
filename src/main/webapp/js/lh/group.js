@@ -39,15 +39,18 @@ function loadGroup(){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     var codeUri = encodeURIComponent(obj.codeUrl);
-                    str+='<tr onclick="toGroupDetail(\''+codeUri+'\')" style="border-bottom: 1px solid #808080;">';
-                    str+='  <td style="padding: 0 0.1rem;"> ';
-                    str+='    <img src="' + hostPath + obj.logoUrl +  '" style="width: 0.4rem;height: 0.4rem;">' ;
-                    str+='  <span style="padding-left: 0.3rem;font-size: 20px;"> '+obj.groupName+' </span>';
-                    str+='  </td>';
-                    str+='</tr>';
+
+                    str+='<div class="weui-cell" onclick="toGroupDetail(\''+codeUri+'\')">';
+                    str+='  <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">';
+                    str+='      <img src="' + hostPath + obj.logoUrl +  '" style="width: 50px;display: block">';
+                    str+='  </div>';
+                    str+='  <div class="weui-cell__hd" style="margin-left: 0.1rem;">';
+                    str+='      <p>'+obj.groupName+'</p>';
+                    str+='  </div>';
+                    str+='</div>';
                 });
             }
-            $(".pro-item").append(str);
+            $("#groupList").append(str);
         }
     })
 }

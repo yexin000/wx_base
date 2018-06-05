@@ -122,6 +122,21 @@ public class AuctionItem extends BaseBean {
      */
     private String typeName;
 
+    /**
+     * 规格
+     */
+    private String standard;
+
+    /**
+     * 年代
+     */
+    private String age;
+
+    /**
+     * 等级
+     */
+    private String degree;
+
     public String getBusinessId() {
         return businessId;
     }
@@ -328,5 +343,29 @@ public class AuctionItem extends BaseBean {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public String getStandard() {
+        return standard;
+    }
+
+    public void setStandard(String standard) {
+        this.standard = standard;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getDegree() {
+        return degree;
+    }
+
+    public void setDegree(String degree) {
+        this.degree = degree;
     }
 }

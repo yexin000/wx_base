@@ -26,23 +26,26 @@
         <result column="isshowbanner" property="isShowBanner" />
         <result column="stock" property="stock" />
         <result column="typename" property="typeName" />
+        <result column="standard" property="standard" />
+        <result column="age" property="age" />
+        <result column="degree" property="degree" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="AuctionItem_Base_Column_List">
 		t.id,t.name,t.type,t.description,t.startTime,t.endTime,t.startPrice,t.curPrice,t.finalPrice,t.businessId,
 		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId,
-		t.isshowbanner,t.stock
+		t.isshowbanner,t.stock,t.standard,t.age,t.degree
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
         t_e_auction_item(id,name,type,description,startTime,endTime,startPrice,curPrice,finalPrice,
-		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId)
+		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId,standard,age,degree)
         values(null,#{name},#{type},#{description},#{startTime},#{endTime},#{startPrice},
             #{curPrice},#{finalPrice},#{addPrice},#{depositPrice},#{rate}, #{detail}, '1',
-            #{isShow},'0',#{auctionId});
+            #{isShow},'0',#{auctionId},#{standard},#{age},#{degree});
     </insert>
 
     <!-- 根据id，修改记录 -->
@@ -51,7 +54,7 @@
 		name=#{name},type=#{type},description=#{description},startTime=startTime,endTime=endTime,
         startPrice=#{startPrice},curPrice=#{curPrice},finalPrice=#{finalPrice},addPrice=#{addPrice},
         depositPrice=#{depositPrice},rate=#{rate},detail=#{detail},status=#{status},isShow=#{isShow},
-        auctionStatus=#{auctionStatus},auctionId=#{auctionId},
+        auctionStatus=#{auctionStatus},auctionId=#{auctionId}
 		where id=#{id}
 	</update>
 
@@ -115,6 +118,15 @@
             </if>
             <if test="isShowBanner != null and isShowBanner != '' ">
                 isshowbanner=#{isShowBanner},
+            </if>
+            <if test="standard != null and standard != '' ">
+                standard=#{standard},
+            </if>
+            <if test="age != null and age != '' ">
+                age=#{age},
+            </if>
+            <if test="degree != null and degree != '' ">
+                degree=#{degree},
             </if>
         </trim>
         where id=#{id}

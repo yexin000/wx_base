@@ -121,7 +121,7 @@ function loadData()
                         str+='      <h2>'+obj.name+'</h2>';
                         str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
                         str+='      <p><span>商品价格: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
-                        str+='      <p><span>商品销量: </span><span style="overflow:hidden;  "> '+obj.stock +'<span></p>';
+                        str+='      <p><span>商品库存: </span><span style="overflow:hidden;  "> '+obj.stock +'<span></p>';
                         str+='  </td>';
                         str+='</tr>';
 
