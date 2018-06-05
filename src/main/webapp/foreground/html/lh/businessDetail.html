@@ -12,6 +12,8 @@
     <link href="../../../css/style/index.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/collect.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/like.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
     <title></title>
 </head>
@@ -25,8 +27,8 @@
          <div class="left" style="overflow:hidden;height:1.5rem;" >
              <img src= "" id="businessImg" alt="">
          </div>
-         <p style="padding-top: 1.4rem;padding-left: -1rem ;font-size:18px;" id="businessName"></p>
-            <p style=" padding-left: 2.3rem;" >共 <span id="shoppingCount"> </span >件拍品</p>
+         <p style="padding-left: 0.1rem;padding-top: 0.1rem;font-size: 18px;display: inline;float: left;" id="businessName"></p>
+         <p style="padding-left: 1.6rem;padding-top: 0.15rem;display: inline;float: left;" >共 <span id="shoppingCount"> </span >件拍品</p>
         </div>
     </div>
 
@@ -35,7 +37,13 @@
 
         </table>
     </div>
-
+    <div id="loadingToast" style="opacity: 1; display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">数据加载中</p>
+        </div>
+    </div>
 
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>

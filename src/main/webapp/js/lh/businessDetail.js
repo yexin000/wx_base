@@ -47,6 +47,7 @@ function loadfindData(id){
 
 //加载商家拍品数据
 function loadBusinessAuctionItem(id){
+    $('#loadingToast').show();
     var AuctionItemModel = {};
     AuctionItemModel.businessId = id;
     var url= '/weixin/auctionItem/ajaxDataList.do';
@@ -58,6 +59,7 @@ function loadBusinessAuctionItem(id){
         contentType : "application/json;charset=utf-8",
         cache: false,
         success:function(data){
+            $('#loadingToast').hide();
             var dataList = data.rows;
             if(dataList.length> 0)
             {
@@ -75,7 +77,7 @@ function loadBusinessAuctionItem(id){
                     str+='      <h2>'+obj.name+'</h2>';
                     str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
                     str+='      <p><span>商品价格: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
-                    str+='      <p><span>商品销量: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
+                    str+='      <p><span>商品库存: </span><span style="overflow:hidden;  "> '+obj.stock +'<span></p>';
                     str+='  </td>';
                     str+='</tr>';
                 });
