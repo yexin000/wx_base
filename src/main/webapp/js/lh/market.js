@@ -33,15 +33,7 @@ function loadData()
                 $("#dataList1").append(str1);
             }
 
-            /*if(dataList2.length> 0)
-            {
-                var str2 = '';
-                $.each(dataList2,function(i,obj){
-                    str2+='<p class="scrollItem2"  onclick="loadAuctionItem(\''+obj.code+'\')" >' + '<span>'+obj.name+'</span>';
-                    str2+='</p>';
-                });
-                $("#dataList2").append(str2);
-            }*/
+
             loadAuctionItem();
 
         }
@@ -88,6 +80,7 @@ function loadData()
     }
 
 
+
     //根据类型加载拍品数据
     function loadAuctionItem(type, obj){
         $('#loadingToast').show();
@@ -95,6 +88,7 @@ function loadData()
         $(obj).addClass("scrollItemChecked");
         var AuctionItemModel = {};
         AuctionItemModel.type = type;
+        AuctionItemModel.name =  $("#shoppingName").val();
         var url= '/weixin/auctionItem/ajaxDataList.do';
         $.ajax({
             url: url,

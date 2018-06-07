@@ -29,11 +29,31 @@
     </div>
 </div>
 
+<!--BEGIN dialog1-->
+<div class="js_dialog" id="iosDialog1" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__hd"><strong class="weui-dialog__title">系统提示</strong></div>
+        <div class="weui-dialog__bd">您当前还没有可用的收货地址，马上创建？</div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:cancelAddAddress();" class="weui-dialog__btn weui-dialog__btn_default">放弃</a>
+            <a href="javascript:addAddress();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+        </div>
+    </div>
+</div>
+<!--END dialog1-->
 
-<section class="order-address">
-    <h2>收货人：<label id="receiver">丁佳</label><span class="fr">18659925741</span></h2>
-    <p id="addressDetail">湖南省长沙市天心区劳动西路嘉盛国际广场2326</p>
+
+
+<section class="order-address" id="notHasAddress">
+    <h2>暂无地址信息</h2>
 </section>
+
+<section class="order-address" id="hasAddress" style="display: none">
+    <h2>收货人：<label id="receiver"></label><span class="fr"></span></h2>
+    <p id="addressDetail"></p>
+</section>
+
 <div class="order-item">
     <table class="order-i-pro">
         <tr>
@@ -56,14 +76,14 @@
             </tr>
     </table>
 </div>
-
+<input type="hidden" id="orderId">
 <footer class="footer-sum">
     <div style="position:absolute;bottom: 0.05rem;left: 0rem;"></div>
     <p class="btn-sum" id="payBtn">付款</p>
 
     <hgroup>
         <p>共<span>1<span>件商品</p>
-        <b>应付款：<span><small>￥</small> <label id="orderMoneys">1239.00</label></span></b>
+        <b>应付款：<span><small>￥</small> <label id="orderMoneys">0.00</label></span></b>
     </hgroup>
 </footer>
 

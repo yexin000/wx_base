@@ -110,28 +110,31 @@ public class OrderController extends BaseController {
     /**
      * 根据ID查找记录
      *
-     * @param id
+     * @param orderModel
      * @param response
      * @return
      * search  auctionItem/ajaxGetId
      * @throws Exception
      */
     @RequestMapping("/ajaxGetId")
-    public void ajaxGetId(Integer id,  HttpServletResponse response) throws Exception {
+    public void ajaxGetId(@RequestBody OrderModel orderModel,  HttpServletResponse response) throws Exception {
         // 设置页面数据
         Map<String, Object> context = getRootMap();
-        Order bean = orderService.queryById(id);
+        Order bean = orderService.queryById(orderModel.getId());
         if (bean == null) {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
         }
-
+        UserAddr useraddr = null;
         if(StringUtils.isNotEmpty(bean.getAddressId())){
             //带出地址信息
-            UserAddr useraddr = userAddrService.queryById(bean.getAddressId());
-            if(null != useraddr){
-                context.put("useraddr", useraddr);
-            }
+            useraddr = userAddrService.queryById(bean.getAddressId());
+        }else{
+            //启用用户的默认地址
+            useraddr = userAddrService.getDefaultAddrByWxid(orderModel.getWxid());
+        }
+        if(null != useraddr){
+            context.put("useraddr", useraddr);
         }
         if(null != bean.getItemId()){
             AuctionItem auctionItem = auctionItemService.queryById(bean.getItemId());

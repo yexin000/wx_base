@@ -45,7 +45,14 @@ function addAddress(){
         cache: false,
         success:function(data){
             if(data.code == '0'){
-                window.location.href='../../html/lh/address.html';
+                var orderId = getParam("orderId");
+                //如果是订单跳转过来的，记得回到订单详情界面
+                if(orderId){
+                    window.location.href='../../html/lh/orderDetail.html?id='+orderId;
+                }else{
+                    window.location.href='../../html/lh/address.html';
+                }
+
             }
         }
     })

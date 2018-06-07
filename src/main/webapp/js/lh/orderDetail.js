@@ -2,7 +2,14 @@ $(function(){
 
     var id = getParam("id");
     loadOrderDetail(id);
+    $("#orderId").val(id);
     $("#payBtn").click(function(){
+        if($("#hasAddress").is(":hidden"))
+        {
+            //没有收货地址
+            $("#iosDialog1").show();
+            return;
+        }
         var params = {};
         params.wxid = localStorage.getItem("openId");
         params.orderId = id;
@@ -44,11 +51,12 @@ function loadOrderDetail(id){
     $('#loadingToast').show();
     var params = {};
     params.id = id;
-    var url= '/weixin/order/ajaxGetId.do?id='+id;
+    params.wxid = localStorage.getItem("openId");
+    var url= '/weixin/order/ajaxGetId.do';
     $.ajax({
         url: url,
         type: 'post',
-        data:"",
+        data: JSON.stringify(params) ,
         contentType : "application/json;charset=utf-8",
         dataType: 'JSON',
         cache: false,
@@ -61,10 +69,16 @@ function loadOrderDetail(id){
             }
             $('#loadingToast').hide();
             var addr = data.useraddr;
-            $("#receiver").val(addr.receiver);
-            $(".fr").html(addr.phoneNum);
-            $("#addressDetail").val(addr.address);
-
+            if(addr){
+                $("#notHasAddress").hide();
+                $("#hasAddress").show();
+                $("#receiver").html(addr.receiver);
+                $(".fr").html(addr.phoneNum);
+                $("#addressDetail").html(addr.address);
+            }else{
+                $("#hasAddress").hide();
+                $("#notHasAddress").show();
+            }
             var auction = data.auctionItem;
             $("#itemName").val(auction.auctionName);
             $("#itemImg").attr("src" , hostPath + auction.resList[0].path);
@@ -103,4 +117,14 @@ function loadOrderDetail(id){
         }
     })
 
+}
+
+//新增地址
+function addAddress(){
+    alert($("#orderId").val())
+    window.location.href = '../../html/lh/addressDetail.html?orderId='+$("#orderId").val();
+}
+
+function cancelAddAddress(){
+    $("#iosDialog1").hide();
 }
