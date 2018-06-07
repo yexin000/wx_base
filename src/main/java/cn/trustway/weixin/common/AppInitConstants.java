@@ -82,6 +82,8 @@ public class AppInitConstants {
 		public static final String HTTP_ORDER_ERROR = "10006";
 		// 调用微信支付失败
 		public static final String HTTP_WXPAY_FAIL = "10007";
+		// 已是当前最高出价
+		public static final String HTTP_PRICE_SAME_ERROR = "10008";
 	}
 
 	/**

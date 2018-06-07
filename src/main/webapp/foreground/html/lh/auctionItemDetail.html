@@ -55,12 +55,12 @@
             </div>
             <div style="width: 20%;height: 0.38rem;display: inline-block" >
                 <span style="height: 0.38rem;font-size: 30px;color: #0f8c69;" id="startprice">
-                    500
+                    0
                 </span>
             </div>
             <div style="width: 38%;height: 0.38rem;display: inline-block" >
                 <span id="wanfenbi">
-                    (0.05万元)
+                    (0.00万元)
                 </span>
             </div>
         </div>
@@ -75,7 +75,28 @@
         </div>
     </div>
     <div style="width: 100%; border-bottom:1px solid #808080;"></div>
-
+    <div class="js_dialog" id="bidDialog" style="opacity: 1;display: none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title"></strong></div>
+            <div class="weui-dialog__bd">
+                输入金额：<input id="bidMoney" style="width: 60%;" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入竞拍金额">
+            </div>
+            <div class="weui-dialog__ft">
+                <a class="weui-dialog__btn weui-dialog__btn_default" onclick="$('#bidDialog').hide();">取消</a>
+                <a class="weui-dialog__btn weui-dialog__btn_primary" onclick="toBid();">确定</a>
+            </div>
+        </div>
+    </div>
+<div class="js_dialog" id="msgDialog" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__bd" id="msgLabel"></div>
+        <div class="weui-dialog__ft">
+            <a onclick="$('#msgDialog').hide();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+        </div>
+    </div>
+</div>
     <div style="height: auto;width: 100%;border-bottom:1px solid #808080;">
          <p style="padding: 0.1rem;" >出价记录</p>
          <div id="bidDataDiv">
@@ -101,7 +122,7 @@
             <p style="font-size: 15px;display: inline-block;width: 30%;">拍品等级</p><p id="degreeLabel" style="display: inline-block;width: 68%;font-size: 15px;"></p>
         </div>
         <div style="margin-top: 0.06rem;margin-bottom: 0.06rem;width: 100%;">
-            <p style="font-size: 15px;display: inline-block;width: 30%;">拍品详情</p><br/><p id="detailLabel" style="display: inline-block;width: 68%;font-size: 15px;"></p>
+            <p style="font-size: 15px;display: inline-block;width: 30%;">拍品详情</p><br/><p id="detailLabel" style="display: inline-block;width: 100%;font-size: 15px;"></p>
         </div>
     </div>
 

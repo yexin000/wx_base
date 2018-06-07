@@ -112,6 +112,12 @@ public class BidController extends BaseController {
             BidBean lastBid = dataList.get(0);
 
             // 当前出价小于最后出价加最低加价，出价失败
+            if(lastBid.getWxid().equals(bean.getWxid())) {
+                sendFailure(response, AppInitConstants.HttpCode.HTTP_PRICE_SAME_ERROR, "出价失败，您已是当前最高出价了");
+                return;
+            }
+
+            // 当前出价小于最后出价加最低加价，出价失败
             if(bean.getBidPrice() < (lastBid.getBidPrice() + auctionItem.getAddPrice())) {
                 sendFailure(response, AppInitConstants.HttpCode.HTTP_PRICE_MIN_ERROR, "出价失败，加价金额低于最低加价金额");
                 return;
@@ -123,6 +129,9 @@ public class BidController extends BaseController {
         //插入出价数据
         bean.setStatus("1");
         bidService.add(bean);
+        // 更新商品价格
+        auctionItem.setCurPrice(bean.getBidPrice());
+        auctionItemService.updateBySelective(auctionItem);
         sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "保存成功~");
     }
 

@@ -40,6 +40,9 @@ public class AuctionItemController extends BaseController {
 
     @Autowired
     private FavoriteService<Favorite> favoriteService;
+
+    @Autowired
+    private AuctionService<Auction> auctionService;
     /**
      * 首页
      *
@@ -117,6 +120,9 @@ public class AuctionItemController extends BaseController {
     @RequestMapping("/save")
     public void save(AuctionItem bean, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer id = bean.getId();
+        Integer auctionId = bean.getAuctionId();
+        Auction auction = auctionService.queryById(auctionId);
+        bean.setBusinessId(auction.getBusinessid());
         if(id != null && id > 0) {
             auctionItemService.updateBySelective(bean);
         } else {

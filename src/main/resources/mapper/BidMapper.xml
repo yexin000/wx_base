@@ -79,7 +79,7 @@
                 and auctionItemId = #{auctionItemId}
             </if>
         </trim>
-        order by t.status asc, t.bidtime desc
+        order by t.status desc, t.bidtime desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
             ${pager.orderCondition}
         </if>

@@ -90,7 +90,7 @@ public class AuctionItem extends BaseBean {
     /**
      * 商家id
      */
-    private String businessId ;
+    private Integer businessId ;
 
     /**
      * 万分比
@@ -137,11 +137,11 @@ public class AuctionItem extends BaseBean {
      */
     private String degree;
 
-    public String getBusinessId() {
+    public Integer getBusinessId() {
         return businessId;
     }
 
-    public void setBusinessId(String businessId) {
+    public void setBusinessId(Integer businessId) {
         this.businessId = businessId;
     }
 

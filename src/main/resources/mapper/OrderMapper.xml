@@ -31,7 +31,7 @@
         insert into
         t_e_order(id, ordertype, ordermoney, createtime, paytime, invalidtime,
           status, wxid, addressid, itemid, updatetime)
-        values(null,#{orderType},#{orderMoney},now(),null,date_add(now(), interval 1 hour),
+        values(null,#{orderType},#{orderMoney},#{createTime},null,date_add(now(), interval 72 hour),
           '2',#{wxid},#{addressId},#{itemId},now())
     </insert>
 

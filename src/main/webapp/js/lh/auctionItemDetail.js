@@ -3,7 +3,7 @@ $(function(){
     loadItemData(id);
     loadAuctionItemBid(id);
     $("#bidBtn").click(function () {
-        toBid();
+        $('#bidDialog').show();
     });
 
     $("#favBtn").click(function () {
@@ -36,6 +36,11 @@ $(function(){
         }
 
     });
+
+    // 每45秒加载一次出价
+    setInterval(function () {
+        loadAuctionItemBid(id);
+    }, 45000);
 })
 
 //加载商品数据
@@ -123,6 +128,7 @@ function loadAuctionItemBid(id){
         contentType : "application/json;charset=utf-8",
         cache: false,
         success:function(data){
+            $("#bidDataDiv").empty();
             var dataList = data.rows;
             if(dataList.length> 0)
             {
@@ -135,10 +141,13 @@ function loadAuctionItemBid(id){
                     str+='  </div>';
                     str+='  <div  class="biddiv2">';
                     var isFirst = '';
+                    var label = '出局';
                     if(i == 0){
+                        $("#curprice").html(obj.bidPrice);
+                        label = '领先';
                         isFirst = 'bidFirst';
                     }
-                    str+='  <span class="'+isFirst+'">领先</span> <span class="biddiv2span">' +obj.strDate+'</span> <span class="biddiv2span">'+ obj.bidPrice +'</span>';
+                    str+='  <span class="'+isFirst+'">' + label + '</span> <span class="biddiv2span">' +obj.strDate+'</span> <span class="biddiv2span">'+ obj.bidPrice +'</span>';
                     str+='  </div>';
                     str+='</div>';
                 });
@@ -152,12 +161,24 @@ function loadAuctionItemBid(id){
 
 //出价
 function toBid(){
+    var bidMoney = $("#bidMoney").val();
+    if(bidMoney == null) {
+        showToast("请输入竞拍金额", function () {
+        });
+        return;
+    }
+    if(bidMoney <= 0) {
+        showToast("请输入正确的金额", function () {
+        });
+        return;
+    }
+    $('#bidDialog').hide();
     $('#loadingToast').show();
     var id = getParam("id");
     var BidBean = {};
     BidBean.wxid = localStorage.getItem('openId');
     BidBean.auctionItemId = id;
-    BidBean.bidPrice = 600;
+    BidBean.bidPrice = bidMoney;
     var url= '/weixin/bid/ajaxAddBid.do';
     $.ajax({
         url: url,
@@ -171,10 +192,11 @@ function toBid(){
             var code = data.code;
             if(code == 0){
                 showToast("竞拍成功", function () {
+                    loadAuctionItemBid(id);
                 });
             }else{
-                showToast("竞拍失败", function () {
-                });
+                $("#msgLabel").html(data.msg);
+                $("#msgDialog").show();
             }
         }
     })

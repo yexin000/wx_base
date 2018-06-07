@@ -42,10 +42,10 @@
     <insert id="add" parameterType="Object">
         insert into
         t_e_auction_item(id,name,type,description,startTime,endTime,startPrice,curPrice,finalPrice,
-		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId,standard,age,degree)
+		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId,standard,age,degree,businessId)
         values(null,#{name},#{type},#{description},#{startTime},#{endTime},#{startPrice},
             #{curPrice},#{finalPrice},#{addPrice},#{depositPrice},#{rate}, #{detail}, '1',
-            #{isShow},'0',#{auctionId},#{standard},#{age},#{degree});
+            #{isShow},'0',#{auctionId},#{standard},#{age},#{degree},#{businessId});
     </insert>
 
     <!-- 根据id，修改记录 -->
@@ -128,6 +128,10 @@
             <if test="degree != null and degree != '' ">
                 degree=#{degree},
             </if>
+            <if test="businessId != null and businessId != '' ">
+                businessid=#{businessId},
+            </if>
+
         </trim>
         where id=#{id}
     </update>

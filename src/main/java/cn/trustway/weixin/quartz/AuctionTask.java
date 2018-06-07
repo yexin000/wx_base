@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,6 +42,7 @@ public class AuctionTask {
      * @throws Exception
      */
     @Scheduled(cron = "0/30 * * * * ? ")
+    @Transactional
     public void auctionStatusTask() throws Exception {
         // 设置开始时间超出当前时间的正常的拍卖会为已开始
         auctionService.updateAuctionStart();
@@ -53,6 +56,7 @@ public class AuctionTask {
      * @throws Exception
      */
     @Scheduled(cron = "0/30 * * * * ? ")
+    @Transactional
     public void auctionItemStatusTask() throws Exception {
         // 设置开始时间超出当前时间的正常的拍卖品为正在拍卖
         auctionItemService.updateAuctionItemStart();
@@ -66,21 +70,27 @@ public class AuctionTask {
             if(null != bidBean) {
                 // 有人出价
                 // 生成订单
+                Date currentTime = new Date();
                 Order order = new Order();
                 order.setOrderType("1");
                 order.setOrderMoney(bidBean.getBidPrice());
                 order.setWxid(bidBean.getWxid());
                 order.setItemId(bidBean.getAuctionItemId());
+                order.setCreateTime(currentTime);
                 orderService.add(order);
 
                 // 写入订单日志
+                Order newOrder = orderService.queryById(order.getId());
                 OrderLog orderLog = new OrderLog();
-                BeanUtils.copyProperties(order, orderLog);
-                orderLog.setOrderId(order.getId());
+                BeanUtils.copyProperties(newOrder, orderLog);
+                orderLog.setOrderId(newOrder.getId());
+                orderLog.setCreateTime(newOrder.getCreateTime());
+                orderLog.setStatus(newOrder.getStatus());
                 orderLogService.add(orderLog);
 
-                // 设置拍卖品为拍卖成功
+                // 设置拍卖品为拍卖成功并设置成交价格
                 auctionItem.setAuctionStatus("2");
+                auctionItem.setFinalPrice(bidBean.getBidPrice());
                 auctionItemService.updateBySelective(auctionItem);
             } else {
                 // 无人出价
@@ -97,6 +107,7 @@ public class AuctionTask {
      * @throws Exception
      */
     @Scheduled(cron = "0/30 * * * * ? ")
+    @Transactional
     public void orderStatusTask() throws Exception {
         // 查询所有待支付且超过失效时间的订单
         List<Order> invalidOrders = orderService.queryInvalidOrderList();

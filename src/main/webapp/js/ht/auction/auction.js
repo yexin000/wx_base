@@ -54,7 +54,7 @@ WeiXin.auction = function(){
                         }
                     },
                     {field:'viewnum',title:'浏览数量',width:80,align:'center',sortable:true},
-                    {field:'type',title:'类型',width:80,align:'center',sortable:true},
+                    {field:'typeName',title:'类型',width:80,align:'center',sortable:true},
                     {field:'opts',title:'操作',width:120,align:'center',formatter:function(value,row,index){
                             var html ="<a href='#' onclick='WeiXin.auction.resManage(\""+row.id + "\"," + "\"" + row.name +"\")'>图片管理("+row.picCount+")</a>";
                             return html;
@@ -76,6 +76,18 @@ WeiXin.auction = function(){
                     $('#businessids').combobox({
                         data : data.rows,
                         valueField : 'id',
+                        textField : 'name',
+                        editable:false
+                    });
+                }
+            });
+
+            $.post("/weixin/wxCode/getAuctionItemType.do",{rows:100},function(data){
+                if(data.total > 0) {
+                    data.rows1[0].selected = "true";
+                    $('#types').combobox({
+                        data : data.rows1,
+                        valueField : 'code',
                         textField : 'name',
                         editable:false
                     });
