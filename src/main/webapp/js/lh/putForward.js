@@ -4,11 +4,25 @@ $(function(){
 
 //立即提现
 function submitRecharge() {
-    $('#loadingToast').show();
+
     var bean = {};
     bean.streamtype = 5;
     bean.streammoney = $("#rechargeMoney").val();
+    bean.whereabouts = $("#whereabouts").val();
     bean.wxid = localStorage.getItem("openId");
+
+    if(!$("#rechargeMoney").val() || !$("#whereabouts").val()){
+        $("#iosDialog3").show();
+        return;
+    }
+    var money = parseInt($("#rechargeMoney").val());
+    if(money <100){
+        //充值下限低于100
+        $("#iosDialog2").show();
+        return;
+    }
+
+    $('#loadingToast').show();
     var url = '/weixin/moneyStream/save.do';
     $.ajax({
         url: url,
@@ -27,4 +41,9 @@ function submitRecharge() {
             }
         }
     })
+}
+
+function closeTip(){
+    $("#iosDialog2").hide();
+    $("#iosDialog3").hide();
 }

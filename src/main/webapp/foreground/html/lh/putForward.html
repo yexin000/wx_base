@@ -29,26 +29,44 @@
         <p class="weui-toast__content">数据加载中</p>
     </div>
 </div>
+<!--BEGIN dialog2-->
+<div class="js_dialog" id="iosDialog2" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__bd">提现金额不能低于100</div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:closeTip();" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+        </div>
+    </div>
+</div>
+<!--END dialog2-->
+
+<div class="js_dialog" id="iosDialog3" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__bd">缺少提现信息</div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:closeTip();" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+        </div>
+    </div>
+</div>
+<!--END dialog2-->
+
 
 <div style="width: 100%;margin-top: 0.42rem;text-align: center;">
-     <div style="margin-top: 0.66rem;width: 100%">
+     <div style="margin-top: 0.68rem;width: 100%">
         <p style="line-height: 0.4rem;">
             <span style="font-size: 20px;margin-left: 0.1rem;float: left;">提现金额:</span>
-            <input type="number" id="rechargeMoney" placeholder="请输入充值金额" style="width: 2rem; height: 0.22rem;">
+            <input type="number" id="rechargeMoney" placeholder="请输入提现金额" style="width: 2rem; height: 0.22rem;">
         </p>
      </div>
-    <div style="margin-top: 0.16rem;width: 100%">
+    <div style="margin-top: 0.18rem;width: 100%">
         <p style="line-height: 0.4rem;">
-            <span style="font-size: 20px;margin-left: 0.1rem;float: left">银行名称:</span>
-            <input type="text" id="rechargeMoney1" placeholder="请输入提现银行名称" style=" width: 2rem; height: 0.22rem;">
+            <span style="font-size: 20px;margin-left: 0.1rem;float: left">收款微信:</span>
+            <input type="text" id="whereabouts" placeholder="请输入提现微信号" style=" width: 2rem; height: 0.22rem;">
         </p>
     </div>
-    <div style="margin-top: 0.16rem;width: 100%">
-        <p style="line-height: 0.4rem;">
-            <span style="font-size: 20px;margin-left: 0.1rem;float: left">银行卡号:</span>
-            <input type="text" id="rechargeMoney2" placeholder="请输入银行卡卡号" style=" width: 2rem; height: 0.22rem;">
-        </p>
-    </div>
+
 
     <div style="margin-top: 0.22rem;line-height: 0.44rem;border-radius: 4%;width: 80%;margin-left: 10%; font-size: 24px;background-color: #c1272d;color: #FFFFFF" onclick="submitRecharge()">
         立即提现

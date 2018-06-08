@@ -1,5 +1,3 @@
-$(function(){
-})
 //充值
 function submitRecharge(){
     //充值金额
@@ -12,20 +10,61 @@ function submitRecharge(){
            return;
        }
    }
-   //调用后台统一下单调起支付
-        var url= '/weixin/order/ajaxGetId.do?wxid='+ localStorage.getItem("openId");
-        $.ajax({
-            url: url,
-            type: 'post',
-            data: JSON.stringify(rechargeMoney) ,
-            dataType: 'JSON',
-            contentType : "application/json;charset=utf-8",
-            cache: false,
-            success:function(data){
-            }
-        })
+   //后台需要创建订单并返回订单id
+    var params = {};
+    params.wxid = localStorage.getItem("openId");
+    params.orderMoney = rechargeMoney;
+    var url = "/weixin/order/rechargeOrder.do";
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: JSON.stringify(params) ,
+        contentType: "application/json;charset=utf-8",
+        dataType: 'JSON',
+        cache: false,
+        success: function (result) {
+            var orderId = result.data.id;
+            zhifu(orderId);
+        }
+    });
 }
 
+function zhifu(orderId){
+    var params = {};
+    params.wxid = localStorage.getItem("openId");
+    params.orderId = orderId;
+    var url = "/weixin/wxPay/createUnifiedOrder.do?wxid="+params.wxid+"&orderId="+params.orderId;
+    // 发起统一下单请求
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: "",
+        contentType: "application/json;charset=utf-8",
+        dataType: 'JSON',
+        cache: false,
+        success: function (result) {
+            if(result.code == "0") {
+                var data = result.data;
+                var timeStamp = data.timeStamp;
+                var nonceStr = data.nonceStr;
+                var package = data.package;
+                var prepay_id = data.prepay_id;
+                var paySign = data.paySign;
+                var orderId = data.orderId;
+                var params = "?timeStamp=" +timeStamp+ "&nonceStr=" + nonceStr
+                    + "&prepay_id="+prepay_id+"&paySign=" + paySign
+                    + "&orderId=" + orderId;
+                var path = '/pages/wxpay/wxpay' + params;
+                wx.miniProgram.navigateTo({ url: path });
+            } else {
+                showToast("调用微信支付失败", function () {
+                    history.back(-1);
+                });
+                return;
+            }
+        }
+    });
+}
 function closeTip(){
     $("#iosDialog2").hide();
 }

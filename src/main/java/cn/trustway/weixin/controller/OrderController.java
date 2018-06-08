@@ -8,6 +8,7 @@ import cn.trustway.weixin.model.OrderModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +45,9 @@ public class OrderController extends BaseController {
 
     @Autowired(required = false)
     private BusinessService<Business> businessService;
+
+    @Autowired
+    OrderLogService<OrderLog> orderLogService;
 
     /**
      * 首页
@@ -156,6 +161,42 @@ public class OrderController extends BaseController {
         }
         context.put(SUCCESS, true);
         context.put("data", bean);
+        HtmlUtil.writerJson(response, context);
+    }
+
+    /**
+     * 创建充值订单
+     *
+     * @param
+     * @param
+     * @return
+     * search  order/rechargeOrder
+     * @throws Exception
+     */
+    @RequestMapping("/rechargeOrder")
+    public void createOrder (@RequestBody OrderModel orderModel,  HttpServletResponse response) throws Exception{
+        // 设置页面数据
+        Map<String, Object> context = getRootMap();
+        Date currentTime = new Date();
+        Order order = new Order();
+        order.setOrderType("3");//充值订单
+        order.setOrderMoney(orderModel.getOrderMoney());
+        order.setWxid(orderModel.getWxid());
+        order.setItemId(0);
+        order.setCreateTime(currentTime);
+        orderService.add(order);
+
+        // 写入订单日志
+        Order newOrder = orderService.queryById(order.getId());
+        OrderLog orderLog = new OrderLog();
+        BeanUtils.copyProperties(newOrder, orderLog);
+        orderLog.setOrderId(newOrder.getId());
+        orderLog.setCreateTime(newOrder.getCreateTime());
+        orderLog.setStatus(newOrder.getStatus());
+        orderLogService.add(orderLog);
+
+        context.put(SUCCESS, true);
+        context.put("data", order);
         HtmlUtil.writerJson(response, context);
     }
 }
