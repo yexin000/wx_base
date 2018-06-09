@@ -10,16 +10,160 @@
     <link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/order.css" rel="stylesheet" type="text/css">
+	<link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+	<link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
 	<title></title>
 </head>
 <body>
 	<header class="header-hs ">
 		<a href="mine.html" class="header-back"></a>
-		<h1>我的上传</h1>
+		<h1>商品上传</h1>
 	</header>
-	<table class="pro-item" style="margin-top: 0.43rem;">
+	<div class="container" id="container" style="margin-top: 0.45rem;">
+		<div class="page input js_show">
+			<div class="page__bd">
+				<div class="weui-cells weui-cells_form">
+					<div class="weui-cell">
+						<div class="weui-cell__hd"><label class="weui-label">商家名称</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" type="text" placeholder="请输入商家名称">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label">商家电话</label>
+						</div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入商家电话">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label">微信号</label>
+						</div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" type="text" placeholder="请输入微信号">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd"><label class="weui-label">商家地址</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" type="text" placeholder="请输入商家地址">
+						</div>
+					</div>
+					<div class="weui-cells" style="margin-top: 0;">
+						<div class="weui-cell weui-cell_select weui-cell_select-after">
+							<div class="weui-cell__hd">
+								<label class="weui-label">商品性质</label>
+							</div>
+							<div class="weui-cell__bd">
+								<select class="weui-select" name="select2">
+									<option value="1">拍卖</option>
+									<option value="2">买卖</option>
+								</select>
+							</div>
+						</div>
+						<div class="weui-cell weui-cell_select weui-cell_select-after">
+							<div class="weui-cell__hd">
+								<label class="weui-label">商品分类</label>
+							</div>
+							<div class="weui-cell__bd">
+								<select class="weui-select" name="select2">
+									<option value="1">现代瓷器</option>
+									<option value="2">现代书画</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd"><label class="weui-label">商品介绍</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" type="text" placeholder="请输入商品介绍">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label">起拍价</label>
+						</div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入起拍价">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label">加价幅度</label>
+						</div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入加价幅度">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd"><label class="weui-label">商品规格</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" type="text" placeholder="请输入商品规格">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd"><label class="weui-label">商品年代</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" type="text" placeholder="请输入商品年代">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd"><label class="weui-label">商品等级</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" type="text" placeholder="请输入商品等级">
+						</div>
+					</div>
+					<div class="weui-cells__title">商品详情</div>
+					<div class="weui-cells weui-cells_form">
+						<div class="weui-cell">
+							<div class="weui-cell__bd">
+								<textarea class="weui-textarea" placeholder="请输入商品详情" rows="3"></textarea>
+								<div class="weui-textarea-counter"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="page__bd">
+				<div class="weui-gallery" id="gallery">
+					<span class="weui-gallery__img" id="galleryImg"></span>
+					<div class="weui-gallery__opr">
+						<a href="javascript:" class="weui-gallery__del">
+							<i class="weui-icon-delete weui-icon_gallery-delete"></i>
+						</a>
+					</div>
+				</div>
 
-	</table>
+				<div class="weui-cells weui-cells_form">
+					<div class="weui-cell">
+						<div class="weui-cell__bd">
+							<div class="weui-uploader">
+								<div class="weui-uploader__hd">
+									<p class="weui-uploader__title">商品图片</p>
+								</div>
+								<div class="weui-uploader__bd">
+									<ul class="weui-uploader__files" id="uploaderFiles">
+										<input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+										<li class="weui-uploader__file" style="background-image:url(../../images/imgBg.png)" onclick="alert(1)"></li>
+										<li class="weui-uploader__file" style="background-image:url(../../images/imgBg.png)" onclick="alert(2)"></li>
+										<li class="weui-uploader__file" style="background-image:url(../../images/imgBg.png)"></li>
+										<li class="weui-uploader__file" style="background-image:url(../../images/imgBg.png)"></li>
+										<li class="weui-uploader__file" style="background-image:url(../../images/imgBg.png)"></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="weui-btn-area">
+					<a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">提交</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="../../../js/lh/layout.js"></script>
 	<script type="text/javascript" src="../../../js/lh/common.js"></script>

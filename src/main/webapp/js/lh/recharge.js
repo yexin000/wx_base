@@ -6,9 +6,14 @@ function submitRecharge(){
        var money = parseInt(rechargeMoney);
        if(money <100){
            //充值下限低于100
+           $("#dialogLabel").html("充值金额不能低于100");
            $("#iosDialog2").show();
            return;
        }
+   } else {
+       $("#dialogLabel").html("请输入充值金额");
+       $("#iosDialog2").show();
+       return;
    }
    //后台需要创建订单并返回订单id
     var params = {};
