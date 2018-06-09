@@ -1,6 +1,7 @@
 package cn.trustway.weixin.service;
 
 import cn.trustway.weixin.bean.MoneyStream;
+import cn.trustway.weixin.bean.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,31 +79,31 @@ public class WeixinUserService<T> extends BaseService<T> {
 	 * @param
 	 * @throws Exception
 	 */
-	public String payAfter(String type ,String wxid,String money) throws Exception {
-		WeixinUser weixinUser =  queryWeixinUser(wxid);
+	public String payAfter(Order order) throws Exception {
+		WeixinUser weixinUser =  queryWeixinUser(order.getWxid());
 		if(null != weixinUser){
-			BigDecimal moneyD = new BigDecimal(money);
+			BigDecimal moneyD = new BigDecimal(order.getOrderMoney());
 			//更新用户余额
 			double balance  = weixinUser.getBalance();
 			BigDecimal bal = new BigDecimal(balance);
-			if("3".equals(type)){
+			if("3".equals(order.getOrderType())){
 				if(bal.compareTo(moneyD) > 0 ){
 					bal = bal.subtract(moneyD);
 				}else{
 					return "-2";
 				}
-			}else if("5".equals(type)){
+			}else if("5".equals(order.getOrderType())){
 				bal = bal.add(moneyD);
 			}
 			weixinUser.setBalance(bal.doubleValue());
 			getDao().updateWeixinUser(weixinUser);
 			//生成充值流水
 			MoneyStream bean = new MoneyStream();
-			bean.setWxid(wxid);
+			bean.setWxid(order.getWxid());
 			bean.setStreammoney(moneyD.doubleValue());
 			bean.setCreatetime(new Date());
 			bean.setFlownumber(createCode());
-			bean.setStreamtype(type);
+			bean.setStreamtype(order.getOrderType());
 			moneyStreamService.add(bean);
 		}
 		return "-1";

@@ -1,8 +1,10 @@
 package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.Order;
+import cn.trustway.weixin.bean.WeixinUser;
 import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.service.OrderService;
+import cn.trustway.weixin.service.WeixinUserService;
 import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.HttpClientUtil;
 import cn.trustway.weixin.util.MD5;
@@ -38,6 +40,8 @@ public class WxPayController extends BaseController {
     @Autowired
     OrderService<Order> orderService;
 
+    @Autowired
+    private WeixinUserService<WeixinUser> weixinUserService;
     /**
      * 微信支付统一下单
      *
@@ -186,6 +190,14 @@ public class WxPayController extends BaseController {
                 order.setPayTime(new Date());
                 order.setStatus("3");
                 orderService.updateBySelective(order);
+                if("3".equals(order.getOrderType()))
+                {
+                    //充值订单
+                    String atferStatus = weixinUserService.payAfter(order);
+                    if("-1".equals(atferStatus)){
+                        //用户信息获取失败
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
