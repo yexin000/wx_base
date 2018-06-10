@@ -29,23 +29,26 @@
         <result column="standard" property="standard" />
         <result column="age" property="age" />
         <result column="degree" property="degree" />
+        <result column="attribute" property="attribute" />
+        <result column="uploadwxid" property="uploadWxid" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="AuctionItem_Base_Column_List">
 		t.id,t.name,t.type,t.description,t.startTime,t.endTime,t.startPrice,t.curPrice,t.finalPrice,t.businessId,
 		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId,
-		t.isshowbanner,t.stock,t.standard,t.age,t.degree
+		t.isshowbanner,t.stock,t.standard,t.age,t.degree,t.attribute,t.uploadwxid
 	</sql>
 
     <!-- 插入记录 -->
-    <insert id="add" parameterType="Object">
+    <insert id="add" parameterType="cn.trustway.weixin.bean.AuctionItem" keyProperty="id" useGeneratedKeys="true">
         insert into
         t_e_auction_item(id,name,type,description,startTime,endTime,startPrice,curPrice,finalPrice,
-		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId,standard,age,degree,businessId)
+		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId,standard,age,degree,
+		  businessId,attribute,uploadwxid)
         values(null,#{name},#{type},#{description},#{startTime},#{endTime},#{startPrice},
             #{curPrice},#{finalPrice},#{addPrice},#{depositPrice},#{rate}, #{detail}, '1',
-            #{isShow},'0',#{auctionId},#{standard},#{age},#{degree},#{businessId});
+            #{isShow},'0',#{auctionId},#{standard},#{age},#{degree},#{businessId},#{attribute},#{uploadWxid});
     </insert>
 
     <!-- 根据id，修改记录 -->
@@ -61,7 +64,7 @@
     <!-- 设置开始时间超出当前时间的未开始拍卖的拍卖会为已开始 -->
     <update id="updateAuctionItemStart" parameterType="Object">
 		update t_e_auction_item set auctionstatus='1'
-		where auctionstatus='0' and status='3' and starttime &lt; now()
+		where auctionstatus='0' and status='3' and attribute='0' and starttime &lt; now()
  	</update>
 
     <!-- 修改记录，只修改只不为空的字段 -->
@@ -131,7 +134,15 @@
             <if test="businessId != null and businessId != '' ">
                 businessid=#{businessId},
             </if>
-
+            <if test="businessId != null and businessId != '' ">
+                businessid=#{businessId},
+            </if>
+            <if test="attribute != null and attribute != '' ">
+                attribute=#{attribute},
+            </if>
+            <if test="uploadWxid != null and uploadWxid != '' ">
+                uploadWxid=#{uploadWxid},
+            </if>
         </trim>
         where id=#{id}
     </update>
@@ -211,6 +222,9 @@
             <if test="auctionId != null and auctionId != ''">
                 and t.auctionid = #{auctionId}
             </if>
+            <if test="status != null and status != ''">
+                and t.status = #{status}
+            </if>
         </trim>
         order by t.id desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
@@ -230,6 +244,7 @@
         WHERE
         t.STATUS = '3'
         AND t.auctionstatus = '1'
+        AND attribute='0'
         AND t.endtime &lt; now()
     </select>
 </mapper>

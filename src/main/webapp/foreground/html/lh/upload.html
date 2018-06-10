@@ -19,6 +19,27 @@
 		<a href="mine.html" class="header-back"></a>
 		<h1>商品上传</h1>
 	</header>
+	<div class="js_dialog" id="tipDialog" style="display: none;">
+		<div class="weui-mask">
+			<div class="weui-dialog">
+				<div class="weui-dialog__bd" id="tipLabel"></div>
+				<div class="weui-dialog__ft">
+					<a onclick="$('#tipDialog').hide();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="loadingToast" style="opacity: 1; display: none;">
+		<div class="weui-mask_transparent"></div>
+		<div class="weui-toast">
+			<i class="weui-loading weui-icon_toast"></i>
+			<p class="weui-toast__content">数据加载中</p>
+		</div>
+	</div>
+	<form id="uploadform" method="post" enctype="multipart/form-data" action="/weixin/auctionItem/ajaxUploadAuctionItem.do">
+		<input id="status" name="status" type="hidden" value="1">
+		<input id="auctionStatus" name="auctionStatus" type="hidden" value="0">
+		<input id="wxid" name="wxid" type="hidden">
 	<div class="container" id="container" style="margin-top: 0.45rem;">
 		<div class="page input js_show">
 			<div class="page__bd">
@@ -26,7 +47,7 @@
 					<div class="weui-cell">
 						<div class="weui-cell__hd"><label class="weui-label">商家名称</label></div>
 						<div class="weui-cell__bd">
-							<input class="weui-input" type="text" placeholder="请输入商家名称">
+							<input id="businessName" name="businessName" class="weui-input" type="text" placeholder="请输入商家名称">
 						</div>
 					</div>
 					<div class="weui-cell">
@@ -34,7 +55,7 @@
 							<label class="weui-label">商家电话</label>
 						</div>
 						<div class="weui-cell__bd">
-							<input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入商家电话">
+							<input id="businessTelNum" name="businessTelNum" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入商家电话">
 						</div>
 					</div>
 					<div class="weui-cell">
@@ -42,13 +63,19 @@
 							<label class="weui-label">微信号</label>
 						</div>
 						<div class="weui-cell__bd">
-							<input class="weui-input" type="text" placeholder="请输入微信号">
+							<input id="businessWxNum" name="businessWxNum" class="weui-input" type="text" placeholder="请输入微信号">
 						</div>
 					</div>
 					<div class="weui-cell">
 						<div class="weui-cell__hd"><label class="weui-label">商家地址</label></div>
 						<div class="weui-cell__bd">
-							<input class="weui-input" type="text" placeholder="请输入商家地址">
+							<input id="businessAddress" name="businessAddress" class="weui-input" type="text" placeholder="请输入商家地址">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd"><label class="weui-label">商品名称</label></div>
+						<div class="weui-cell__bd">
+							<input id="name" name="name" class="weui-input" type="text" placeholder="请输入商品名称">
 						</div>
 					</div>
 					<div class="weui-cells" style="margin-top: 0;">
@@ -57,7 +84,7 @@
 								<label class="weui-label">商品性质</label>
 							</div>
 							<div class="weui-cell__bd">
-								<select class="weui-select" name="select2">
+								<select class="weui-select" id="attribute" name="attribute">
 									<option value="1">拍卖</option>
 									<option value="2">买卖</option>
 								</select>
@@ -68,7 +95,7 @@
 								<label class="weui-label">商品分类</label>
 							</div>
 							<div class="weui-cell__bd">
-								<select class="weui-select" name="select2">
+								<select class="weui-select" id="type" name="type">
 									<option value="1">现代瓷器</option>
 									<option value="2">现代书画</option>
 								</select>
@@ -78,7 +105,7 @@
 					<div class="weui-cell">
 						<div class="weui-cell__hd"><label class="weui-label">商品介绍</label></div>
 						<div class="weui-cell__bd">
-							<input class="weui-input" type="text" placeholder="请输入商品介绍">
+							<input class="weui-input" type="text" placeholder="请输入商品介绍" id="description" name="description">
 						</div>
 					</div>
 					<div class="weui-cell">
@@ -86,7 +113,7 @@
 							<label class="weui-label">起拍价</label>
 						</div>
 						<div class="weui-cell__bd">
-							<input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入起拍价">
+							<input id="startPrice" name="startPrice" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入起拍价">
 						</div>
 					</div>
 					<div class="weui-cell">
@@ -94,36 +121,45 @@
 							<label class="weui-label">加价幅度</label>
 						</div>
 						<div class="weui-cell__bd">
-							<input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入加价幅度">
+							<input id="addPrice" name="addPrice" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入加价幅度">
 						</div>
 					</div>
 					<div class="weui-cell">
 						<div class="weui-cell__hd"><label class="weui-label">商品规格</label></div>
 						<div class="weui-cell__bd">
-							<input class="weui-input" type="text" placeholder="请输入商品规格">
+							<input id="standard" name="standard" class="weui-input" type="text" placeholder="请输入商品规格">
 						</div>
 					</div>
 					<div class="weui-cell">
 						<div class="weui-cell__hd"><label class="weui-label">商品年代</label></div>
 						<div class="weui-cell__bd">
-							<input class="weui-input" type="text" placeholder="请输入商品年代">
+							<input id="age" name="age" class="weui-input" type="text" placeholder="请输入商品年代">
 						</div>
 					</div>
 					<div class="weui-cell">
 						<div class="weui-cell__hd"><label class="weui-label">商品等级</label></div>
 						<div class="weui-cell__bd">
-							<input class="weui-input" type="text" placeholder="请输入商品等级">
+							<input id="degree" name="degree" class="weui-input" type="text" placeholder="请输入商品等级">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label">库存</label>
+						</div>
+						<div class="weui-cell__bd">
+							<input id="stock" name="stock" class="weui-input" type="number" value="1">
 						</div>
 					</div>
 					<div class="weui-cells__title">商品详情</div>
 					<div class="weui-cells weui-cells_form">
 						<div class="weui-cell">
 							<div class="weui-cell__bd">
-								<textarea class="weui-textarea" placeholder="请输入商品详情" rows="3"></textarea>
+								<textarea id="detail" name="detail" class="weui-textarea" placeholder="请输入商品详情" rows="3"></textarea>
 								<div class="weui-textarea-counter"></div>
 							</div>
 						</div>
 					</div>
+					<div class="weui-cells__tips">交易成功后，平台收取成交额6%的手续费</div>
 				</div>
 			</div>
 			<div class="page__bd">
@@ -144,12 +180,8 @@
 									<p class="weui-uploader__title">商品图片</p>
 								</div>
 								<div class="weui-uploader__bd">
+									<input id="itemImages" name="itemImages" class="weui-uploader__input" type="file" accept="image/*" multiple="">
 									<ul class="weui-uploader__files" id="uploaderFiles">
-										<input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple="">
-										<li class="weui-uploader__file" style="background-image:url(../../images/imgBg.png)" onclick="alert(1)"></li>
-										<li class="weui-uploader__file" style="background-image:url(../../images/imgBg.png)" onclick="alert(2)"></li>
-										<li class="weui-uploader__file" style="background-image:url(../../images/imgBg.png)"></li>
-										<li class="weui-uploader__file" style="background-image:url(../../images/imgBg.png)"></li>
 										<li class="weui-uploader__file" style="background-image:url(../../images/imgBg.png)"></li>
 									</ul>
 								</div>
@@ -158,12 +190,12 @@
 					</div>
 				</div>
 				<div class="weui-btn-area">
-					<a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">提交</a>
+					<a class="weui-btn weui-btn_primary" href="javascript:" id="uploadBtn">提交</a>
 				</div>
 			</div>
 		</div>
 	</div>
-
+	</form>
 	<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="../../../js/lh/layout.js"></script>
 	<script type="text/javascript" src="../../../js/lh/common.js"></script>

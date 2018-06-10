@@ -39,6 +39,21 @@ public class WeixinUser extends BaseBean {
 	 */
 	private String avatarUrl;
 
+	/**
+	 * 买家/卖家名称
+	 */
+	private String bussinessName;
+
+	/**
+	 * 买家/卖家地址
+	 */
+	private String businessAddress;
+
+	/**
+	 * 微信号
+	 */
+	private String wxAccount;
+
 	public Integer getId() {
 		return id;
 	}
@@ -101,5 +116,29 @@ public class WeixinUser extends BaseBean {
 
 	public void setAvatarUrl(String avatarUrl) {
 		this.avatarUrl = avatarUrl;
+	}
+
+	public String getBussinessName() {
+		return bussinessName;
+	}
+
+	public void setBussinessName(String bussinessName) {
+		this.bussinessName = bussinessName;
+	}
+
+	public String getBusinessAddress() {
+		return businessAddress;
+	}
+
+	public void setBusinessAddress(String businessAddress) {
+		this.businessAddress = businessAddress;
+	}
+
+	public String getWxAccount() {
+		return wxAccount;
+	}
+
+	public void setWxAccount(String wxAccount) {
+		this.wxAccount = wxAccount;
 	}
 }

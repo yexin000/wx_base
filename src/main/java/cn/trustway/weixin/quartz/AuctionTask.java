@@ -91,6 +91,9 @@ public class AuctionTask {
                 // 设置拍卖品为拍卖成功并设置成交价格
                 auctionItem.setAuctionStatus("2");
                 auctionItem.setFinalPrice(bidBean.getBidPrice());
+                if(auctionItem.getStock() > 0) {
+                    auctionItem.setStock(auctionItem.getStock() - 1);
+                }
                 auctionItemService.updateBySelective(auctionItem);
             } else {
                 // 无人出价
@@ -103,7 +106,7 @@ public class AuctionTask {
     }
 
     /**
-     * 拍卖品状态监控定时任务
+     * 订单状态监控定时任务
      * @throws Exception
      */
     @Scheduled(cron = "0/30 * * * * ? ")

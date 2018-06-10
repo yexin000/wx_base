@@ -110,7 +110,7 @@ public class AuctionItem extends BaseBean {
     /**
      * 库存
      */
-    private String stock ;
+    private Integer stock ;
 
     /**
      * 是否收藏:0-否,1-是
@@ -136,6 +136,13 @@ public class AuctionItem extends BaseBean {
      * 等级
      */
     private String degree;
+
+    /**
+     * 商品性质:0-拍卖品,1-商品
+     */
+    private String attribute;
+
+    private String uploadWxid;
 
     public Integer getBusinessId() {
         return businessId;
@@ -321,11 +328,11 @@ public class AuctionItem extends BaseBean {
         this.isShowBanner = isShowBanner;
     }
 
-    public String getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(String stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
@@ -367,5 +374,21 @@ public class AuctionItem extends BaseBean {
 
     public void setDegree(String degree) {
         this.degree = degree;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
+
+    public String getUploadWxid() {
+        return uploadWxid;
+    }
+
+    public void setUploadWxid(String uploadWxid) {
+        this.uploadWxid = uploadWxid;
     }
 }

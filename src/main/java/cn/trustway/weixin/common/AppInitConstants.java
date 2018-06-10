@@ -84,6 +84,8 @@ public class AppInitConstants {
 		public static final String HTTP_WXPAY_FAIL = "10007";
 		// 已是当前最高出价
 		public static final String HTTP_PRICE_SAME_ERROR = "10008";
+		// 上传商品失败
+		public static final String HTTP_ITEM_UPLOAD_ERROR = "10009";
 	}
 
 	/**

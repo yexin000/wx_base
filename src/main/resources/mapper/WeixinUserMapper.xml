@@ -13,11 +13,14 @@
 		<result column="extractedmoney" property="extractedMoney"/>
 		<result column="nickname" property="nickName"/>
 		<result column="avatarUrl" property="avatarUrl"/>
+		<result column="bussinessname" property="bussinessName"/>
+		<result column="businessaddress" property="businessAddress"/>
+		<result column="wxaccount" property="wxAccount"/>
 	</resultMap>
 
 	<!-- sys_user table all fields -->
-	<sql id="Base_Column_List">
-		id,wxid,phonenum,balance,moneyextracting,extractedmoney,nickname,avatarUrl
+	<sql id="WeixinUser_Base_Column_List">
+		id,wxid,phonenum,balance,moneyextracting,extractedmoney,nickname,avatarUrl,bussinessname,businessaddress,wxaccount
 	</sql>
 
 
@@ -83,6 +86,15 @@
 			<if test="avatarUrl != null  and avatarUrl != '' ">
 				avatarUrl=#{avatarUrl},
 			</if>
+			<if test="bussinessName != null  and bussinessName != '' ">
+				bussinessname=#{bussinessName},
+			</if>
+			<if test="businessAddress != null  and businessAddress != '' ">
+				businessaddress=#{businessAddress},
+			</if>
+			<if test="wxAccount != null  and wxAccount != '' ">
+				wxaccount=#{wxAccount},
+			</if>
 		</trim>
 		where wxid=#{wxid}
 	</update>
@@ -100,7 +112,7 @@
 	<!-- 根据id查询微信用户 -->
 	<select id="queryById" resultMap="BaseResultMap" parameterType="Object">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="WeixinUser_Base_Column_List" />
 		from weixin_user where id = #{id}
 	</select>
 
@@ -115,7 +127,7 @@
 	<select id="queryByList" resultMap="BaseResultMap"
 		parameterType="Object">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="WeixinUser_Base_Column_List" />
 		from weixin_user
 		<include refid="Example_Where_Clause" />
 		<if test="pager.orderCondition != null and pager.orderCondition != ''">
@@ -130,7 +142,7 @@
 	<!-- 根据wxid查询 系统用户 -->
 	<select id="queryWeixinUser" resultMap="BaseResultMap" parameterType="string">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="WeixinUser_Base_Column_List" />
 		from weixin_user where wxid = #{wxid}
 	</select>
 

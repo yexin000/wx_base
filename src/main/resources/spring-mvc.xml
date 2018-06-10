@@ -50,6 +50,7 @@
 					<value>/business/ajaxGetId.do</value>
 					<value>/auctionItem/ajaxDataList.do</value>
 					<value>/auctionItem/ajaxGetId.do</value>
+					<value>/auctionItem/ajaxUploadAuctionItem.do</value>
 					<value>/wxCode/queryListByCode.do</value>
 					<value>/file/setHeadImg.do</value>
 					<value>/wxCode/getAuctionItemType.do</value>
@@ -126,6 +127,6 @@
 
 	<!-- 设置上传文件最大值   1M=1*1024*1024(B)=1048576 bytes -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="1048576" />
+		<property name="maxUploadSize" value="20971520" />
 	</bean>
 </beans>
