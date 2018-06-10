@@ -12,6 +12,7 @@
         <result column="createtime" property="createtime" />
         <result column="flownumber" property="flownumber" />
         <result column="status" property="status" />
+        <result column="whereabouts" property="whereabouts" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
@@ -22,8 +23,8 @@
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_money_stream(id,wxid,streamtype,streammoney,createtime,flownumber )
-        values(null,#{wxid},#{streamtype},#{streammoney},#{createtime},#{flownumber});
+        t_e_money_stream(id,wxid,streamtype,streammoney,createtime,flownumber,whereabouts )
+        values(null,#{wxid},#{streamtype},#{streammoney},#{createtime},#{flownumber},#{whereabouts});
     </insert>
 
     <!-- 根据id，修改记录 -->

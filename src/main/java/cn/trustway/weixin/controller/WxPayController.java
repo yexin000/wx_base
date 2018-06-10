@@ -206,6 +206,30 @@ public class WxPayController extends BaseController {
         }
     }
 
+
+    /**
+     * @param request
+     * @param response
+     */
+    @RequestMapping(value = "/unifiedOrderCallbacks")
+    public void unifiedOrderCallbacks(HttpServletRequest request,Integer orderId, HttpServletResponse response) {
+        Order order = null;
+        try {
+            order = orderService.queryById(orderId);
+
+            if("3".equals(order.getOrderType()))
+            {
+                //充值订单
+                String atferStatus = weixinUserService.payAfter(order);
+                if("-1".equals(atferStatus)){
+                    //用户信息获取失败
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 对所有传入参数按照字段名的 ASCII 码从小到大排序（字典序），并且生成url参数串
      *

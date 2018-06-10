@@ -104,6 +104,11 @@
 		update weixin_user set ylzd1=to_char(sysdate, 'YYYY-MM-DD HH24:MI:SS') where wxid=#{wxid}
 	</update>
 
+	<!-- 更新微信用户余额 -->
+	<update id="updateByBal" parameterType="Object">
+		update weixin_user set balance = #{balance} where wxid=#{wxid}
+	</update>
+
 	<!-- 删除记录 -->
 	<delete id="delete" parameterType="Object">
 		delete from weixin_user where id = #{id}

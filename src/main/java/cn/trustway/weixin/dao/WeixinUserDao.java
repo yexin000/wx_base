@@ -45,4 +45,12 @@ public interface WeixinUserDao<T> extends BaseDao<T> {
 	 * @return
 	 */
 	public void updateUserOperTime(String wxid);
+
+	/**
+	 * 更新微信用户余额
+	 * @param weixinUser
+	 * @return
+	 */
+	public void updateByBal(WeixinUser weixinUser);
+
 }

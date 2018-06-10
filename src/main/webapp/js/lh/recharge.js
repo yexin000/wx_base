@@ -59,7 +59,7 @@ function zhifu(orderId){
                 var params = "?timeStamp=" +timeStamp+ "&nonceStr=" + nonceStr
                     + "&prepay_id="+prepay_id+"&paySign=" + paySign
                     + "&orderId=" + orderId;
-                var path = '/pages/wxpay/wxpay' + params;
+                var path = '/pages/wxpay/wxpayRec' + params;
                 wx.miniProgram.navigateTo({ url: path });
             } else {
                 showToast("调用微信支付失败", function () {

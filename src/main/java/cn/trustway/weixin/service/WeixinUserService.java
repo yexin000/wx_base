@@ -63,7 +63,18 @@ public class WeixinUserService<T> extends BaseService<T> {
 	public void updateWeixinUser(WeixinUser weixinUser) {
 		getDao().updateWeixinUser(weixinUser);
 	}
-	
+
+
+	/**
+	 * 修改微信用户
+	 * @param
+	 * @return
+	 */
+	public void updateByBal(WeixinUser weixinUser) {
+		getDao().updateWeixinUser(weixinUser);
+	}
+
+
 	/**
 	 * 更新微信用户操作时间
 	 * @param wxid
@@ -86,17 +97,9 @@ public class WeixinUserService<T> extends BaseService<T> {
 			//更新用户余额
 			double balance  = weixinUser.getBalance();
 			BigDecimal bal = new BigDecimal(balance);
-			if("3".equals(order.getOrderType())){
-				if(bal.compareTo(moneyD) > 0 ){
-					bal = bal.subtract(moneyD);
-				}else{
-					return "-2";
-				}
-			}else if("5".equals(order.getOrderType())){
-				bal = bal.add(moneyD);
-			}
+			bal = bal.add(moneyD);
 			weixinUser.setBalance(bal.doubleValue());
-			getDao().updateWeixinUser(weixinUser);
+			getDao().updateByBal(weixinUser);
 			//生成充值流水
 			MoneyStream bean = new MoneyStream();
 			bean.setWxid(order.getWxid());
@@ -104,6 +107,8 @@ public class WeixinUserService<T> extends BaseService<T> {
 			bean.setCreatetime(new Date());
 			bean.setFlownumber(createCode());
 			bean.setStreamtype(order.getOrderType());
+			bean.setStatus(1);
+			bean.setWhereabouts("用户余额");
 			moneyStreamService.add(bean);
 		}
 		return "-1";

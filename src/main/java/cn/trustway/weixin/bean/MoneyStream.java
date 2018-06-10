@@ -39,6 +39,12 @@ public class MoneyStream {
      */
     private Date createtime;
 
+    /**
+     * 去向
+     * @return
+     */
+    private String whereabouts;
+
     public Integer getId() {
         return id;
     }
@@ -93,5 +99,13 @@ public class MoneyStream {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getWhereabouts() {
+        return whereabouts;
+    }
+
+    public void setWhereabouts(String whereabouts) {
+        this.whereabouts = whereabouts;
     }
 }

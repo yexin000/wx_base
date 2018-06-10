@@ -22,36 +22,21 @@
     <h1>充值</h1>
 </header>
 
-<!--BEGIN dialog2-->
-<div class="js_dialog" id="iosDialog2" style="display: none;">
-    <div class="weui-mask"></div>
-    <div class="weui-dialog">
-        <div class="weui-dialog__bd" id="dialogLabel"></div>
-        <div class="weui-dialog__ft">
-            <a href="javascript:closeTip();" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+<div class="page" style="margin-top: 1rem;opacity:1;">
+    <div class="weui-msg">
+        <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+        <div class="weui-msg__text-area">
+            <h2 class="weui-msg__title">充值成功</h2>
+            <p class="weui-msg__desc">恭喜您充值余额成功，系统将自动返回个人中界面。<br><a href="mine.html;">返回个人中心</a></p>
         </div>
+
     </div>
 </div>
-
-</div>
-
-<div style="width: 100%;margin-top: 0.42rem;text-align: center; ">
-     <div style="margin-top: 0.68rem;width: 100%">
-        <p style="line-height: 0.4rem;">
-            <span style="font-size: 20px;margin-left: 0.1rem;float: left">充值金额1:</span>
-            <input type="number" id="rechargeMoney" placeholder="请输入充值金额" style=" width: 1.8rem; height: 0.22rem;">
-        </p>
-     </div>
-    <div style="margin-top: 0.22rem;line-height: 0.44rem;border-radius: 4%;width: 80%;margin-left: 10%; font-size: 24px;background-color: #2bae10;color: #FFFFFF" onclick="submitRecharge()">
-        立即充值
-    </div>
-
 </div>
 
 <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>
-<script type="text/javascript" src="../../../js/lh/recharge.js"></script>
 <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
 </body>
 </html>
