@@ -6,7 +6,7 @@ $(function(){
 function submitRecharge() {
 
     var bean = {};
-    bean.streamtype = 5;
+    bean.streamtype = 3;
     bean.streammoney = $("#rechargeMoney").val();
     bean.whereabouts = $("#whereabouts").val();
     bean.wxid = localStorage.getItem("openId");
@@ -33,11 +33,13 @@ function submitRecharge() {
         cache: false,
         success: function (data) {
             $('#loadingToast').hide();
-            if (data.success == true) {
+            if (data.status != "-1") {
                 showToast("操作成功", function () {
                     history.back(-1);
                 });
                 return;
+            }else{
+                $("#iosDialog4").show();
             }
         }
     })
@@ -46,4 +48,5 @@ function submitRecharge() {
 function closeTip(){
     $("#iosDialog2").hide();
     $("#iosDialog3").hide();
+    $("#iosDialog4").hide();
 }

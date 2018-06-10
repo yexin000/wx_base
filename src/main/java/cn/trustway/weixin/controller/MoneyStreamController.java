@@ -1,16 +1,20 @@
 package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.MoneyStream;
+import cn.trustway.weixin.bean.WeixinUser;
 import cn.trustway.weixin.model.GroupModel;
 import cn.trustway.weixin.model.MoneyStreamModel;
 import cn.trustway.weixin.service.MoneyStreamService;
+import cn.trustway.weixin.service.WeixinUserService;
 import cn.trustway.weixin.util.HtmlUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,6 +32,8 @@ public class MoneyStreamController extends BaseController {
     @Autowired
     private MoneyStreamService<MoneyStream> moneyStreamService;
 
+    @Autowired
+    private WeixinUserService<WeixinUser> weixinUserService;
     /**
      * json 列表页面
      *
@@ -74,6 +80,19 @@ public class MoneyStreamController extends BaseController {
     @RequestMapping("/save")
     public void save(@RequestBody MoneyStream bean, HttpServletResponse response) throws Exception {
         Integer id = bean.getId();
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        String status = "0";
+        if(StringUtils.isNotEmpty(bean.getStreammoney()+"")){
+            BigDecimal sm = new BigDecimal(bean.getStreammoney());
+            WeixinUser wu = weixinUserService.queryWeixinUser(bean.getWxid());
+            if(null != wu){
+                BigDecimal myBal = new BigDecimal(wu.getBalance());
+                if(myBal.compareTo(sm) < 0){
+                    status = "-1";
+                }
+            }
+        }
+
         if(id != null && id > 0) {
             moneyStreamService.updateBySelective(bean);
         } else {
@@ -81,7 +100,8 @@ public class MoneyStreamController extends BaseController {
             bean.setFlownumber(createCode());
             moneyStreamService.add(bean);
         }
-        sendSuccessMessage(response, "保存成功~");
+        jsonMap.put("status", status);
+        HtmlUtil.writerJson(response, jsonMap);
     }
 
     private String createCode (){
