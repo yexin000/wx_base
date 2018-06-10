@@ -19,7 +19,10 @@ import java.util.Properties;
 public class AppInitConstants {
 	/** 获取Log4j实例 */
 	private final Logger logger = Logger.getLogger(getClass());
-
+	/**
+	 * 是否获取access_token
+	 */
+	public static boolean IS_TOKEN_CTRL;
 	/**
 	 * 小程序APPID
 	 */
@@ -118,6 +121,7 @@ public class AppInitConstants {
 			XCX_MCHID = prop.getProperty("wx.mchId");
 			XCX_SERVICE_URL = prop.getProperty("wx.serviceUrl");
 			XCX_MCHKEY = prop.getProperty("wx.key");
+			IS_TOKEN_CTRL = Boolean.valueOf(prop.getProperty("isTokenCtrl"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -191,9 +191,10 @@ function toBid(){
             $('#loadingToast').hide();
             var code = data.code;
             if(code == 0){
-                showToast("竞拍成功", function () {
-                    loadAuctionItemBid(id);
-                });
+                var beOveredUser = data.beOveredUser;
+                var path = '/pages/bid/bid?bidMoney='+bidMoney+"&itemName="+$("#itemName").html()+"&beOveredUser="+beOveredUser;
+                loadAuctionItemBid(id);
+                wx.miniProgram.navigateTo({ url: path });
             }else{
                 $("#msgLabel").html(data.msg);
                 $("#msgDialog").show();

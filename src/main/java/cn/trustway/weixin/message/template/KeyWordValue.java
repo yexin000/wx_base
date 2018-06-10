@@ -1,0 +1,13 @@
+package cn.trustway.weixin.message.template;
+
+public class KeyWordValue {
+    private String value;
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+}

@@ -67,11 +67,10 @@
 					<value>/userAddr/ajaxAddAddr.do</value>
 					<value>/moneyStream/save.do</value>
 					<value>/moneyStream/ajaxDataList.do</value>
-					<value>/wxPay/unifiedOrderCallbacks.do</value>
-
 					<value>cn.trustway.weixin.controller.FavoriteController</value>
 					<value>cn.trustway.weixin.controller.UserAddrController</value>
-					<value>cn.trustway.weixin.controller.WxPayController</value>
+                    <value>cn.trustway.weixin.controller.WxPayController</value>
+                    <value>/templateMsg/bidOverTemplateMsg.do</value>
 				</list>
 			</property>
 		</bean>

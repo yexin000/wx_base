@@ -19,15 +19,15 @@ public class InitServlet extends HttpServlet {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(this.getServletContext());
 		wxCodeService = (WxCodeService) ctx.getBean("wxCodeService");
-		//TokenThread.appid = wxCodeService.getBeanByCode("APPID").getValue();
-		//TokenThread.appsecret = wxCodeService.getBeanByCode("APPSECRET").getValue();
-
-		System.out.println("weixin api appid:" + TokenThread.appid);
-		System.out.println("weixin api appsecret:" + TokenThread.appsecret);
 
 		//加载系统配置
 		AppInitConstants appInitConstants = new AppInitConstants(this.getServletContext());
 		appInitConstants.initialize();
+		TokenThread.appid = AppInitConstants.XCX_APP_ID;
+		TokenThread.appsecret = AppInitConstants.XCX_APP_SECRET;
+
+		System.out.println("weixin api appid:" + TokenThread.appid);
+		System.out.println("weixin api appsecret:" + TokenThread.appsecret);
 		// 未配置appid、appsecret时给出提示
 		if ("".equals(TokenThread.appid) || "".equals(TokenThread.appsecret)) {
 			log.error("appid and appsecret configuration error, please check carefully.");

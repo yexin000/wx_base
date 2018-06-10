@@ -105,6 +105,7 @@ public class BidController extends BaseController {
         model.setAuctionItemId(bean.getAuctionItemId());
         List<BidBean> dataList = bidService.queryByList(model);
 
+        String beOveredUser = "";
         //比较当前商品出价是否符合规则
         // 商品已有用户出价
         if(CollectionUtils.isNotEmpty(dataList)) {
@@ -122,6 +123,7 @@ public class BidController extends BaseController {
                 sendFailure(response, AppInitConstants.HttpCode.HTTP_PRICE_MIN_ERROR, "出价失败，加价金额低于最低加价金额");
                 return;
             }
+            beOveredUser = lastBid.getWxid();
         }
 
         // 设置商品所有出价记录为出局
@@ -132,7 +134,11 @@ public class BidController extends BaseController {
         // 更新商品价格
         auctionItem.setCurPrice(bean.getBidPrice());
         auctionItemService.updateBySelective(auctionItem);
-        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "保存成功~");
+
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("beOveredUser", beOveredUser);
+        jsonMap.put(CODE, AppInitConstants.HttpCode.HTTP_SUCCESS);
+        HtmlUtil.writerJson(response, jsonMap);
     }
 
     /**
