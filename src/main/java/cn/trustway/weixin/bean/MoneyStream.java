@@ -45,6 +45,12 @@ public class MoneyStream {
      */
     private String whereabouts;
 
+    /**
+     *
+     * @return
+     */
+    private String wxName;
+
     public Integer getId() {
         return id;
     }
@@ -107,5 +113,13 @@ public class MoneyStream {
 
     public void setWhereabouts(String whereabouts) {
         this.whereabouts = whereabouts;
+    }
+
+    public String getWxName() {
+        return wxName;
+    }
+
+    public void setWxName(String wxName) {
+        this.wxName = wxName;
     }
 }

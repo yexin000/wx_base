@@ -2,7 +2,6 @@ package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.MoneyStream;
 import cn.trustway.weixin.bean.WeixinUser;
-import cn.trustway.weixin.model.GroupModel;
 import cn.trustway.weixin.model.MoneyStreamModel;
 import cn.trustway.weixin.model.OrderModel;
 import cn.trustway.weixin.service.MoneyStreamService;
@@ -26,13 +25,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 微拍群控制类
+ * 提现控制类
  * @author dingjia
  *
  */
 @Controller
-@RequestMapping("/moneyStream")
-public class MoneyStreamController extends BaseController {
+@RequestMapping("/putForward")
+public class PutForwardController extends BaseController {
     @Autowired
     private MoneyStreamService<MoneyStream> moneyStreamService;
 
@@ -47,9 +46,9 @@ public class MoneyStreamController extends BaseController {
      * @return
      */
     @RequestMapping("/list")
-    public ModelAndView list(OrderModel model, HttpServletRequest request) throws Exception {
+    public ModelAndView list(MoneyStreamModel model, HttpServletRequest request) throws Exception {
         Map<String, Object> context = getRootMap();
-        return forword("auction/moneyStream", context);
+        return forword("auction/putForward", context);
     }
 
 
@@ -80,61 +79,13 @@ public class MoneyStreamController extends BaseController {
     }
 
     private void queryDataList(MoneyStreamModel model, HttpServletResponse response) throws Exception {
+        model.setStreamtype("3");
         List<MoneyStream> dataList = moneyStreamService.queryByList(model);
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         jsonMap.put("total", model.getPager().getRowCount());
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
-    }
-
-    /**
-     * 添加或修改数据
-     *
-     * @param bean
-     * @param response
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping("/save")
-    public void save(@RequestBody MoneyStream bean, HttpServletResponse response) throws Exception {
-        Integer id = bean.getId();
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
-        String status = "0";
-        if(StringUtils.isNotEmpty(bean.getStreammoney()+"")){
-            BigDecimal sm = new BigDecimal(bean.getStreammoney());
-            WeixinUser wu = weixinUserService.queryWeixinUser(bean.getWxid());
-            if(null != wu){
-                BigDecimal myBal = new BigDecimal(wu.getBalance());
-                if(myBal.compareTo(sm) < 0){
-                    status = "-1";
-                }
-            }
-        }
-
-        if(id != null && id > 0) {
-            moneyStreamService.updateBySelective(bean);
-        } else {
-            bean.setCreatetime(new Date());
-            bean.setFlownumber(createCode());
-            moneyStreamService.add(bean);
-        }
-        jsonMap.put("status", status);
-        HtmlUtil.writerJson(response, jsonMap);
-    }
-
-    private String createCode (){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        return  "No"+sdf.format(new Date())+getIDCode4();
-    }
-
-    /**
-     * 生成4位数的随机数
-     * @return
-     */
-    protected static String getIDCode4() {
-        int idCode = (int) (Math.random()*9000+1000);
-        return idCode+"";
     }
 
     /**
@@ -159,17 +110,17 @@ public class MoneyStreamController extends BaseController {
     }
 
     /**
-     * 根据ID删除记录
+     * 根据ID审核记录
      *
-     * @param id
+     * @param examineId
      * @param response
      * @return
      * @throws Exception
      */
-    @RequestMapping("/delete")
-    public void delete(Integer[] id, HttpServletResponse response) throws Exception {
-        moneyStreamService.delete(id);
-        sendSuccessMessage(response, "删除成功");
+    @RequestMapping("/examine")
+    public void delete(Integer examineId, HttpServletResponse response) throws Exception {
+        moneyStreamService.updateByExamine(examineId);
+        sendSuccessMessage(response, "审核成功");
     }
 
 }

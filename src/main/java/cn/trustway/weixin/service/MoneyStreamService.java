@@ -20,4 +20,14 @@ public class MoneyStreamService<T> extends BaseService<T> {
     }
 
 
+    /**
+     * 修改微信用户
+     * @param
+     * @return
+     */
+    public void updateByExamine(Integer id) {
+        getDao().updateByExamine(id);
+    }
+
+
 }

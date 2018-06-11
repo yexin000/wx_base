@@ -89,6 +89,8 @@ public class AppInitConstants {
 		public static final String HTTP_PRICE_SAME_ERROR = "10008";
 		// 上传商品失败
 		public static final String HTTP_ITEM_UPLOAD_ERROR = "10009";
+		// 余额支付失败
+		public static final String HTTP_PAY_FAIL = "10010";
 	}
 
 	/**

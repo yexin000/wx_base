@@ -13,11 +13,12 @@
         <result column="flownumber" property="flownumber" />
         <result column="status" property="status" />
         <result column="whereabouts" property="whereabouts" />
+        <result column="wxName" property="wxName" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="MoneyStream_Base_Column_List">
-		t.id,t.wxid,t.streamtype,t.streammoney,t.createtime,t.flownumber,t.status
+		t.id,t.wxid,t.streamtype,t.streammoney,t.createtime,t.flownumber,t.status,whereabouts
 	</sql>
 
     <!-- 插入记录 -->
@@ -85,8 +86,9 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="MoneyStream_Base_Column_List" />
+        <include refid="MoneyStream_Base_Column_List" />,wu.nickname wxName
         from t_e_money_stream t
+        left join weixin_user wu on t.wxid = wu.wxid
         where 1 = 1
         <trim suffixOverrides=",">
             <if test="wxid != null and wxid != ''">
@@ -104,5 +106,11 @@
             ${pager.mysqlQueryCondition}
         </if>
     </select>
+
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByExamine" parameterType="Object">
+        update t_e_money_stream set  status= 1   where id=#{id}
+    </update>
 
 </mapper>

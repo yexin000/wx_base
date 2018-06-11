@@ -71,7 +71,7 @@ public class WeixinUserService<T> extends BaseService<T> {
 	 * @return
 	 */
 	public void updateByBal(WeixinUser weixinUser) {
-		getDao().updateWeixinUser(weixinUser);
+		getDao().updateByBal(weixinUser);
 	}
 
 
@@ -85,8 +85,9 @@ public class WeixinUserService<T> extends BaseService<T> {
 	}
 
 
+
 	/**
-	 * 生成用户流水
+	 * 充值生成用户流水
 	 * @param
 	 * @throws Exception
 	 */
@@ -106,7 +107,7 @@ public class WeixinUserService<T> extends BaseService<T> {
 			bean.setStreammoney(moneyD.doubleValue());
 			bean.setCreatetime(new Date());
 			bean.setFlownumber(createCode());
-			bean.setStreamtype(order.getOrderType());
+			bean.setStreamtype("5");
 			bean.setStatus(1);
 			bean.setWhereabouts("用户余额");
 			moneyStreamService.add(bean);

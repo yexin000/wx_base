@@ -10,42 +10,74 @@ $(function(){
             $("#iosDialog1").show();
             return;
         }
-        var params = {};
-        params.wxid = localStorage.getItem("openId");
-        params.orderId = id;
-        var url = "/weixin/wxPay/createUnifiedOrder.do?wxid="+params.wxid+"&orderId="+params.orderId;
-        // 发起统一下单请求
-        $.ajax({
-            url: url,
-            type: 'post',
-            data: "",
-            contentType: "application/json;charset=utf-8",
-            dataType: 'JSON',
-            cache: false,
-            success: function (result) {
-                if(result.code == "0") {
-                    var data = result.data;
-                    var timeStamp = data.timeStamp;
-                    var nonceStr = data.nonceStr;
-                    var package = data.package;
-                    var prepay_id = data.prepay_id;
-                    var paySign = data.paySign;
-                    var orderId = data.orderId;
-                    var params = "?timeStamp=" +timeStamp+ "&nonceStr=" + nonceStr
-                        + "&prepay_id="+prepay_id+"&paySign=" + paySign
-                        + "&orderId=" + orderId;
-                    var path = '/pages/wxpay/wxpay' + params;
-                    wx.miniProgram.navigateTo({ url: path });
-                } else {
-                    showToast("调用微信支付失败", function () {
-                        history.back(-1);
-                    });
-                    return;
-                }
-            }
-        });
+        //先判断余额支付，余额不足时调用微信支付
+        myMoneyPay(id);
     })
 })
+
+function myMoneyPay (id){
+    var params = {};
+    params.wxid = localStorage.getItem("openId");
+    params.orderId = id;
+    var url = "/weixin/wxPay/myMoneyPay.do?orderId="+params.orderId;
+    // 发起统一下单请求
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: "",
+        contentType: "application/json;charset=utf-8",
+        dataType: 'JSON',
+        cache: false,
+        success: function (result) {
+            if(result.code == "0") {
+                showToast("余额支付成功", function () {
+                    history.back(-1);
+                });
+                return;
+            } else {
+                wxPay();
+            }
+        }
+    });
+}
+
+
+function wxPay (id){
+    var params = {};
+    params.wxid = localStorage.getItem("openId");
+    params.orderId = id;
+    var url = "/weixin/wxPay/createUnifiedOrder.do?wxid="+params.wxid+"&orderId="+params.orderId;
+    // 发起统一下单请求
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: "",
+        contentType: "application/json;charset=utf-8",
+        dataType: 'JSON',
+        cache: false,
+        success: function (result) {
+            if(result.code == "0") {
+                var data = result.data;
+                var timeStamp = data.timeStamp;
+                var nonceStr = data.nonceStr;
+                var package = data.package;
+                var prepay_id = data.prepay_id;
+                var paySign = data.paySign;
+                var orderId = data.orderId;
+                var params = "?timeStamp=" +timeStamp+ "&nonceStr=" + nonceStr
+                    + "&prepay_id="+prepay_id+"&paySign=" + paySign
+                    + "&orderId=" + orderId;
+                var path = '/pages/wxpay/wxpay' + params;
+                wx.miniProgram.navigateTo({ url: path });
+            } else {
+                showToast("调用微信支付失败", function () {
+                    history.back(-1);
+                });
+                return;
+            }
+        }
+    });
+}
 
 function loadOrderDetail(id){
     $('#loadingToast').show();

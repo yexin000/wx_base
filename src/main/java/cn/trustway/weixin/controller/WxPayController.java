@@ -1,8 +1,10 @@
 package cn.trustway.weixin.controller;
 
+import cn.trustway.weixin.bean.MoneyStream;
 import cn.trustway.weixin.bean.Order;
 import cn.trustway.weixin.bean.WeixinUser;
 import cn.trustway.weixin.common.AppInitConstants;
+import cn.trustway.weixin.service.MoneyStreamService;
 import cn.trustway.weixin.service.OrderService;
 import cn.trustway.weixin.service.WeixinUserService;
 import cn.trustway.weixin.util.HtmlUtil;
@@ -24,7 +26,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -42,6 +46,10 @@ public class WxPayController extends BaseController {
 
     @Autowired
     private WeixinUserService<WeixinUser> weixinUserService;
+
+    @Autowired
+    private MoneyStreamService<MoneyStream> moneyStreamService;
+
     /**
      * 微信支付统一下单
      *
@@ -208,26 +216,49 @@ public class WxPayController extends BaseController {
 
 
     /**
+     * 余额支付
      * @param request
      * @param response
      */
-    @RequestMapping(value = "/unifiedOrderCallbacks")
-    public void unifiedOrderCallbacks(HttpServletRequest request,Integer orderId, HttpServletResponse response) {
-        Order order = null;
+    @RequestMapping(value = "/myMoneyPay")
+    public void myMoneyPay(HttpServletRequest request,Integer orderId, HttpServletResponse response) {
+        Map<String, Object> result = new HashMap<String, Object>();
         try {
-            order = orderService.queryById(orderId);
+            Order order =  orderService.queryById(orderId);
+            WeixinUser wu = weixinUserService.queryWeixinUser(order.getWxid());
+            if(null != wu.getBalance()){
+                BigDecimal myMoney = new BigDecimal(wu.getBalance());
+                BigDecimal ordMoney = new BigDecimal(order.getOrderMoney());
+                if(myMoney.compareTo(ordMoney) > -1)
+                {
+                    myMoney = myMoney.subtract(ordMoney);
+                    wu.setBalance(myMoney.doubleValue());
+                    weixinUserService.updateByBal(wu);
 
-            if("3".equals(order.getOrderType()))
-            {
-                //充值订单
-                String atferStatus = weixinUserService.payAfter(order);
-                if("-1".equals(atferStatus)){
-                    //用户信息获取失败
+                    //访问DB
+                    order.setPayTime(new Date());
+                    order.setStatus("3");
+                    orderService.updateBySelective(order);
+
+                    //生成充值流水
+                    MoneyStream bean = new MoneyStream();
+                    bean.setWxid(order.getWxid());
+                    bean.setStreammoney(ordMoney.doubleValue());
+                    bean.setCreatetime(new Date());
+                    bean.setFlownumber(createCode());
+                    bean.setStreamtype("2");
+                    bean.setStatus(1);
+                    bean.setWhereabouts("订单支付");
+                    moneyStreamService.add(bean);
+                    result.put(CODE, AppInitConstants.HttpCode.HTTP_SUCCESS);
+                }else{
+                    result.put(CODE, AppInitConstants.HttpCode.HTTP_PAY_FAIL);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        HtmlUtil.writerJson(response, result);
     }
 
     /**
@@ -342,5 +373,19 @@ public class WxPayController extends BaseController {
         }
 
         return sb.toString();
+    }
+
+    private String createCode (){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        return  "No"+sdf.format(new Date())+getIDCode4();
+    }
+
+    /**
+     * 生成4位数的随机数
+     * @return
+     */
+    protected static String getIDCode4() {
+        int idCode = (int) (Math.random()*9000+1000);
+        return idCode+"";
     }
 }

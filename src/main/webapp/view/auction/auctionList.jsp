@@ -30,12 +30,12 @@
         <div class="ui-edit">
             <div class="ftitle">拍卖会信息</div>
             <div class="fitem">
-                <label>拍卖会名称:</label>
+                <label>拍卖会名称1:</label>
                 <input class="easyui-validatebox" type="text" name="name" data-options="required:true">
             </div>
 
             <div class="fitem">
-                <label>开始时间:</label>
+                <label>开始时间2:</label>
                 <input type="text" name="starttime" editable="false" class="easyui-datetimebox" data-options="required:true">
             </div>
             <div class="fitem">
