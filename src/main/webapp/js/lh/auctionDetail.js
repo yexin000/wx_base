@@ -70,7 +70,7 @@ function loadAuctionItem(id){
                     if(obj.resList && obj.resList.length > 0) {
                         coverimg = obj.resList[0].path;
                     }
-                    str+='<tr onclick="toAuctionItemDetail('+obj.id+')">';
+                    str+='<tr onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')">';
                     str+='  <td class="pro-item-M"><img src="' + hostPath + coverimg +  '"  alt=""></td>';
                     str+='  <td class="pro-item-H">';
                     str+='      <h2>'+obj.name+'</h2>';

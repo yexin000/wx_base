@@ -51,7 +51,7 @@ var imagePath = "http://127.0.0.1:8080/";
                     var str = '';
                     $.each(dataList,function(i,obj){
                         str+='<tr style="border-bottom: 1px solid #808080;">';
-                        str+='  <td class="pro-item-M" onclick="toAuctionItemDetail('+obj.favId+')"><img src="' + hostPath + obj.logoPath + '"  alt=""></td>';
+                        str+='  <td class="pro-item-M" onclick="toAuctionItemDetail('+obj.favId+','+obj.favType+')"><img src="' + hostPath + obj.logoPath + '"  alt=""></td>';
                         str+='  <td class="pro-item-H">';
                         str+='      <h2>'+obj.favName+'</h2>';
                         str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';

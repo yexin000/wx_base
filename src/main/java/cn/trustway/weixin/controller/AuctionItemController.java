@@ -41,9 +41,6 @@ public class AuctionItemController extends BaseController {
     @Autowired(required = false)
     private ItemResService<ItemRes> itemResService;
 
-    @Autowired(required = false)
-    private BidService<BidBean> bidservice;
-
     @Autowired
     private FavoriteService<Favorite> favoriteService;
 
@@ -52,6 +49,15 @@ public class AuctionItemController extends BaseController {
 
     @Autowired
     private WeixinUserService<WeixinUser> weixinUserService;
+
+    @Autowired
+    OrderService<Order> orderService;
+
+    @Autowired
+    OrderLogService<OrderLog> orderLogService;
+
+    @Autowired
+    UserAddrService<UserAddr> userAddrService;
 
     @Autowired
     private FileUploadService fileUploadService;
@@ -300,5 +306,81 @@ public class AuctionItemController extends BaseController {
     public void delete(Integer[] id, HttpServletResponse response) throws Exception {
         auctionItemService.delete(id);
         sendSuccessMessage(response, "删除成功");
+    }
+
+
+    /**
+     * 购买
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/purchase")
+    public void purchase(Integer id, String wxid, HttpServletResponse response) throws Exception {
+        Map<String, Object> context = getRootMap();
+        AuctionItem bean = auctionItemService.queryById(id);
+        if (bean == null) {
+            sendFailure(response,"-1", "没有找到对应的记录!");
+            return;
+        }
+        /**
+         *
+        //如果有拍卖会id，那么要考虑到拍卖会是否开始，否则继续
+        if(null != bean.getAuctionId()){
+            Auction auction = auctionService.queryById(bean.getAuctionId());
+            if(null != auction  ){
+                //已经开始的拍卖会才能卖
+                if("0".equals(auction.getStatus())){
+                    sendFailure(response, AppInitConstants.HttpCode.HTTP_PURCHASE_FAIL, "拍卖会信息错误!");
+                    return;
+                }else if("1".equals(auction.getStatus())){
+                    sendFailure(response, AppInitConstants.HttpCode.HTTP_PURCHASE_NOSTART_FAIL, "拍卖会未开始!");
+                    return;
+                }else if("3".equals(auction.getStatus())){
+                    sendFailure(response, AppInitConstants.HttpCode.HTTP_PURCHASE_TIMEOUT_FAIL, "拍卖会已结束!");
+                    return;
+                }
+            }
+        }
+         */
+        //判断库存是否还有
+        if(bean.getStock() < 1)
+        {
+            sendFailure(response,AppInitConstants.HttpCode.HTTP_PURCHASE_OUTOFSTOCK_FAIL, "库存不够!");
+            return;
+        }
+
+        //addressId
+        // 查询用户默认收货地址
+        UserAddr defaultAddr = userAddrService.getDefaultAddrByWxid(wxid);
+        if(null == defaultAddr) {
+            sendFailure(response,AppInitConstants.HttpCode.HTTP_PURCHASE_NOTADDRESS_FAIL, "缺少收货地址!");
+            return;
+        }
+        // 生成订单
+        Date currentTime = new Date();
+        Order order = new Order();
+        order.setOrderType("2");
+        order.setOrderMoney(bean.getStartPrice());
+        order.setWxid( wxid);
+        order.setItemId(id);
+        order.setAddressId(defaultAddr.getId()+"");
+        order.setCreateTime(currentTime);
+        orderService.add(order);
+
+        // 写入订单日志
+        Order newOrder = orderService.queryById(order.getId());
+        OrderLog orderLog = new OrderLog();
+        BeanUtils.copyProperties(newOrder, orderLog);
+        orderLog.setOrderId(newOrder.getId());
+        orderLog.setCreateTime(newOrder.getCreateTime());
+        orderLog.setStatus(newOrder.getStatus());
+        orderLogService.add(orderLog);
+
+        context.put(SUCCESS, true);
+        context.put("data", order);
+        HtmlUtil.writerJson(response, context);
     }
 }

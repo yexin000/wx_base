@@ -50,6 +50,7 @@
 					<value>/business/ajaxGetId.do</value>
 					<value>/auctionItem/ajaxDataList.do</value>
 					<value>/auctionItem/ajaxGetId.do</value>
+					<value>/auctionItem/purchase.do</value>
 					<value>/auctionItem/ajaxUploadAuctionItem.do</value>
 					<value>/wxCode/queryListByCode.do</value>
 					<value>/file/setHeadImg.do</value>

@@ -161,8 +161,12 @@ function loadMyUpload(){
             {
                 var str = '';
                 $.each(dataList,function(i,obj){
-                    str+='<tr onclick="toAuctionItemDetail('+obj.id+')" style="border-bottom: 1px solid #808080;">';
-                    str+='  <td class="pro-item-M"><img src="../../../images/lh/wshop_indexbanner1.jpg"  alt=""></td>';
+                    var coverimg = '';
+                    if(obj.resList && obj.resList.length > 0) {
+                        coverimg = obj.resList[0].path;
+                    }
+                    str+='<tr onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')" style="border-bottom: 1px solid #808080;">';
+                    str+='  <td class="pro-item-M"><img src="' + hostPath + coverimg +  '"  alt=""></td>';
                     str+='  <td class="pro-item-H">';
                     str+='      <h2>'+obj.name+'</h2>';
                     str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
