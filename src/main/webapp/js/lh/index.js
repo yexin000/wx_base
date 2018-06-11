@@ -127,6 +127,7 @@
             contentType : "application/json;charset=utf-8",
             cache: false,
             success:function(data){
+                $("#uploadBtn").show();
                 var dataList = data.rows;
                 if(dataList.length> 0)
                 {

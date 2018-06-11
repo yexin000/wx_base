@@ -116,6 +116,10 @@ public class AuctionTask {
         List<Order> invalidOrders = orderService.queryInvalidOrderList();
         if(CollectionUtils.isNotEmpty(invalidOrders)) {
             for(Order order : invalidOrders) {
+                // 订单包括的拍品库存+1
+                AuctionItem auctionItem = auctionItemService.queryById(order.getItemId());
+                auctionItem.setStock(auctionItem.getStock() + 1);
+                auctionItemService.updateBySelective(auctionItem);
                 // 更新订单状态为1-失效
                 order.setStatus("1");
                 orderService.updateBySelective(order);

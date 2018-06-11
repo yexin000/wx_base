@@ -134,8 +134,8 @@
             <if test="businessId != null and businessId != '' ">
                 businessid=#{businessId},
             </if>
-            <if test="businessId != null and businessId != '' ">
-                businessid=#{businessId},
+            <if test="stock != null and stock != '' ">
+                stock=#{stock},
             </if>
             <if test="attribute != null and attribute != '' ">
                 attribute=#{attribute},

@@ -20,7 +20,8 @@ public class TemplateMsgService {
             BidOverTemplate template = new BidOverTemplate();
             template.setTemplateValue(touser, itemName, newPrice, formId);
             String postJson = JsonToolUtil.bean2json(template);
-            HttpClientUtil.doPost(serviceUrl, postJson, "UTF-8");
+            System.out.println(postJson);
+            System.out.println(HttpClientUtil.doPost(serviceUrl, postJson, "UTF-8"));
         }
     }
 }
