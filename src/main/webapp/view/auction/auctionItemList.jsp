@@ -56,7 +56,7 @@
             </div>
             <div class="fitem">
                 <label>手续费比率:</label>
-                <input class="easyui-validatebox" type="text" name="rate" data-options="required:true">
+                <input class="easyui-validatebox" type="text" name="rate" data-options="required:true" value="6">
             </div>
             <div class="fitem">
                 <label>拍品规格:</label>
