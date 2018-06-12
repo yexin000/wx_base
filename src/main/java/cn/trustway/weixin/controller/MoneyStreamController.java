@@ -108,6 +108,22 @@ public class MoneyStreamController extends BaseController {
                 BigDecimal myBal = new BigDecimal(wu.getBalance());
                 if(myBal.compareTo(sm) < 0){
                     status = "-1";
+                }else{
+                    //成功
+                    myBal =  myBal.subtract(sm);
+                    wu.setBalance(myBal.doubleValue());
+                    wu.setMoneyExtracting(sm.doubleValue());
+                    weixinUserService.updateByBal(wu);
+                    //生成充值流水
+                    MoneyStream ms = new MoneyStream();
+                    bean.setWxid(bean.getWxid());
+                    bean.setStreammoney(sm.doubleValue());
+                    bean.setCreatetime(new Date());
+                    bean.setFlownumber(createCode());
+                    bean.setStreamtype("3");
+                    bean.setStatus(0);
+                    bean.setWhereabouts(bean.getWhereabouts());
+                    moneyStreamService.add(bean);
                 }
             }
         }

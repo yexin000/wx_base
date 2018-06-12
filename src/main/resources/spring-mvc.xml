@@ -65,6 +65,8 @@
 					<value>/order/ajaxGetId.do</value>
 					<value>/order/rechargeOrder.do</value>
 					<value>/favorite/ajaxDataList.do</value>
+					<value>/favorite/ajaxAddFavorite.do</value>
+					<value>/favorite/ajaxDelFavorite.do</value>
 					<value>/userAddr/ajaxAddAddr.do</value>
 					<value>/moneyStream/save.do</value>
 					<value>/moneyStream/ajaxDataList.do</value>

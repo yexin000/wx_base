@@ -1,11 +1,6 @@
 $(function(){
     var id = getParam("id");
-    var payFail = getParam("payFail");
-    if(payFail){
-        $("#msgLabel").html("支付失败");
-        $("#msgDialog").show();
-        //设置成失效订单 TODO
-    }
+
     loadItemData(id);
     $("#bidBtn").click(function () {
         toPurchase();
@@ -15,29 +10,9 @@ $(function(){
         $('#loadingToast').show();
         var favStatus = $("#favStatus").val();
         if(favStatus == "0") {
-            var params={}
-            params.wxid=localStorage.getItem("openId");
-            params.favType="1";
-            params.favId=getParam("id");
-            $.post("/weixin/favorite/ajaxAddFavorite.do",params,function(data){
-                $('#loadingToast').hide();
-                showToast(data.msg, function () {
-                });
-                $("#favBtn").html("取消收藏");
-                $("#favStatus").val("1");
-            });
+            favorite();
         } else {
-            // 取消收藏
-            var params={};
-            params.favId=getParam("id");
-            params.wxid=localStorage.getItem("openId");
-            $.post("/weixin/favorite/ajaxDelFavorite.do",params,function(data){
-                $('#loadingToast').hide();
-                showToast(data.msg, function () {
-                });
-                $("#favBtn").html("+收藏");
-                $("#favStatus").val("0");
-            });
+            cancleFavorite();
         }
 
     });
@@ -99,6 +74,56 @@ function loadItemData(id){
 }
 
 
+//收藏
+function favorite(){
+    $('#loadingToast').show();
+    var params={}
+    params.wxid=localStorage.getItem("openId");
+    params.favType="1";
+    params.favId=getParam("id");
+    var url= '/weixin/favorite/ajaxAddFavorite.do';
+    $.ajax({
+        url: url,
+        type: 'post',
+        data:JSON.stringify(params) ,
+        contentType : "application/json;charset=utf-8",
+        dataType: 'JSON',
+        cache: false,
+        success:function(data){
+            $('#loadingToast').hide();
+            showToast(data.msg, function () {
+            });
+            $("#favBtn").html("取消收藏");
+            $("#favStatus").val("1");
+        }
+    })
+}
+
+//取消收藏
+function cancleFavorite(){
+    $('#loadingToast').show();
+    var params={};
+    params.favId=getParam("id");
+    params.wxid=localStorage.getItem("openId");
+    var url= '/weixin/favorite/ajaxDelFavorite.do';
+    $.ajax({
+        url: url,
+        type: 'post',
+        data:JSON.stringify(params) ,
+        contentType : "application/json;charset=utf-8",
+        dataType: 'JSON',
+        cache: false,
+        success:function(data){
+            $('#loadingToast').hide();
+            showToast(data.msg, function () {
+            });
+            $("#favBtn").html("+收藏");
+            $("#favStatus").val("0");
+        }
+    })
+}
+
+
 //购买
 function toPurchase(){
     $('#loadingToast').show();
@@ -112,14 +137,14 @@ function toPurchase(){
         dataType: 'JSON',
         cache: false,
         success:function(data){
-            debugger
             $('#loadingToast').hide();
             if(data.success == false){
                 $("#msgLabel").html(data.msg);
                 $("#msgDialog").show();
             }else{
                 //生成订单
-                zhifu(data.data.id);
+                //跳转订单详情列表
+                toOrderDetail(data.data.id);
             }
         }
     })

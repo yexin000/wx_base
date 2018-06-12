@@ -41,6 +41,9 @@ function toAuctionDetail(id)
 {
     window.location.href = '../../html/lh/auctionDetail.html?id='+id;
 }
+function toOrderDetail(orderId) {
+    window.location.href = '../../html/lh/orderDetail.html?id='+orderId;
+}
 function toAuctionItemDetail(id,type)
 {
     if(type == "0"){
