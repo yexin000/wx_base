@@ -11,7 +11,7 @@
         <input class="hidden" id='search_parentId' name="parentId">
         <p class="ui-fields">
             <label class="ui-label">微信号:</label>
-            <input name="name" class="easyui-box ui-text" style="width:100px;">
+            <input name="wxAcount" class="easyui-box ui-text" style="width:100px;">
         </p>
         <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>
     </form>

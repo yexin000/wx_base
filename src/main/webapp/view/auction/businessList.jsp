@@ -43,6 +43,10 @@
                 <input class="easyui-numberbox" type="text" name="telNum" data-options="required:true,validType:'phoneNum'">
             </div>
             <div class="fitem">
+                <label>商家微信:</label>
+                <input class="easyui-validatebox" type="text" name="wxAccount" data-options="required:true">
+            </div>
+            <div class="fitem">
                 <label>是否推荐:</label>
                 <select class="easyui-combobox" name="isShow" id="isShows" data-options="required:true">
                     <option value="1" selected="selected">是</option>

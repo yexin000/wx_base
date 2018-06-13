@@ -166,7 +166,7 @@
     <select id="queryByCount" resultType="java.lang.Integer"
             parameterType="Object">
         select count(1) from t_e_auction_item t
-        where   t.status = '1'
+        where t.status != '0'
         <trim suffixOverrides=",">
             <if test="name != null and name != ''">
                 and t.name like CONCAT('%', #{name}, '%')
@@ -185,6 +185,15 @@
             </if>
             <if test="uploadWxid != null and uploadWxid != ''">
                 and t.uploadWxid = #{uploadWxid}
+            </if>
+            <if test="auctionId != null and auctionId != ''">
+                and t.auctionid = #{auctionId}
+            </if>
+            <if test="status != null and status != ''">
+                and t.status = #{status}
+            </if>
+            <if test="attribute != null and attribute != ''">
+                and t.attribute = #{attribute}
             </if>
         </trim>
     </select>
@@ -224,6 +233,9 @@
             </if>
             <if test="status != null and status != ''">
                 and t.status = #{status}
+            </if>
+            <if test="attribute != null and attribute != ''">
+                and t.attribute = #{attribute}
             </if>
         </trim>
         order by t.id desc

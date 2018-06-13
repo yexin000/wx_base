@@ -52,6 +52,11 @@ public class BusinessModel extends BaseModel {
      */
     private String isSelectItemCount;
 
+    /**
+     * 微信号
+     */
+    private String wxAccount;
+
 
     public Integer getId() {
         return id;
@@ -131,5 +136,13 @@ public class BusinessModel extends BaseModel {
 
     public void setIsSelectItemCount(String isSelectItemCount) {
         this.isSelectItemCount = isSelectItemCount;
+    }
+
+    public String getWxAccount() {
+        return wxAccount;
+    }
+
+    public void setWxAccount(String wxAccount) {
+        this.wxAccount = wxAccount;
     }
 }

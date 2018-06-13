@@ -12,6 +12,13 @@
         <p class="ui-fields">
             <label class="ui-label">拍卖会名称:</label>
             <input name="name" class="easyui-box ui-text" style="width:100px;">
+            <label class="ui-label">状态:</label>
+            <select class="easyui-combobox" name="status" data-options="required:true" style="width: 120px;">
+                <option value="" selected="selected">全部</option>
+                <option value="1">正常</option>
+                <option value="2">进行中</option>
+                <option value="3">已结束</option>
+            </select>
         </p>
         <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>
     </form>
@@ -30,12 +37,12 @@
         <div class="ui-edit">
             <div class="ftitle">拍卖会信息</div>
             <div class="fitem">
-                <label>拍卖会名称1:</label>
+                <label>拍卖会名称:</label>
                 <input class="easyui-validatebox" type="text" name="name" data-options="required:true">
             </div>
 
             <div class="fitem">
-                <label>开始时间2:</label>
+                <label>开始时间:</label>
                 <input type="text" name="starttime" editable="false" class="easyui-datetimebox" data-options="required:true">
             </div>
             <div class="fitem">

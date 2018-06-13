@@ -47,6 +47,10 @@ public class Business extends BaseBean {
      */
     private String isShow;
 
+    /**
+     * 微信号
+     */
+    private String wxAccount;
 
     public Integer getId() {
         return id;
@@ -120,4 +124,11 @@ public class Business extends BaseBean {
         this.isShow = isShow;
     }
 
+    public String getWxAccount() {
+        return wxAccount;
+    }
+
+    public void setWxAccount(String wxAccount) {
+        this.wxAccount = wxAccount;
+    }
 }

@@ -32,6 +32,7 @@ WeiXin.business = function(){
                     {field:'createTime',title:'创建时间',width:150,align:'center',sortable:true},
                     {field:'updateTime',title:'修改时间',width:150,align:'center',sortable:true},
                     {field:'telNum',title:'商家电话',width:120,align:'center',sortable:true},
+                    {field:'wxAccount',title:'商家微信',width:120,align:'center',sortable:true},
                     {field:'isShow',title:'是否推荐',width:80,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){

@@ -106,6 +106,11 @@ public class AuctionItemModel extends BaseModel {
      */
     private String uploadWxid;
 
+    /**
+     * 商品性质:0-拍卖品,1-商品
+     */
+    private String attribute;
+
     public Integer getId() {
         return id;
     }
@@ -288,5 +293,13 @@ public class AuctionItemModel extends BaseModel {
 
     public void setUploadWxid(String uploadWxid) {
         this.uploadWxid = uploadWxid;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 }

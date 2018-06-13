@@ -79,7 +79,7 @@ public class BusinessController extends BaseController {
         List<Business> dataList = businessService.queryByList(model);
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("total", model.getPager().getRowCount());
+        jsonMap.put("total", businessService.queryByCount(model));
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
     }

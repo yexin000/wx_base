@@ -10,8 +10,25 @@
     <form id="searchForm">
         <input class="hidden" id='search_parentId' name="parentId">
         <p class="ui-fields">
-            <label class="ui-label">拍品名称:</label>
+            <label class="ui-label">商品名称:</label>
             <input name="name" class="easyui-box ui-text" style="width:100px;">
+            <label class="ui-label">性质:</label>
+            <select class="easyui-combobox" name="attribute" data-options="required:true" style="width: 60px;">
+                <option value="" selected="selected">全部</option>
+                <option value="0">拍卖品</option>
+                <option value="1">商品</option>
+            </select>
+            <label class="ui-label">类型:</label>
+            <select class="easyui-combobox" name="type" id="querytypes" data-options="required:true" style="width: 100px;">
+                <option value="" selected="selected">请选择</option>
+            </select>
+            <label class="ui-label">状态:</label>
+            <select class="easyui-combobox" name="status" data-options="required:true" style="width: 80px;">
+                <option value="" selected="selected">全部</option>
+                <option value="1">未审核</option>
+                <option value="2">审核未通过</option>
+                <option value="3">正常</option>
+            </select>
         </p>
         <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>
     </form>
@@ -28,10 +45,18 @@
         <!-- 隐藏文本框 -->
         <input class="hidden" name="id">
         <div class="ui-edit">
-            <div class="ftitle">拍品信息</div>
+            <div class="ftitle">商品信息</div>
             <div class="fitem">
-                <label>拍品名称:</label>
+                <label>商品名称:</label>
                 <input class="easyui-validatebox" type="text" name="name" data-options="required:true">
+            </div>
+            <div class="fitem">
+                <label>性质:</label>
+                <select class="easyui-combobox" name="attribute" id="attributes" data-options="required:true" style="width: 60px;">
+                    <option value="" selected="selected">请选择</option>
+                    <option value="0">拍卖品</option>
+                    <option value="1">商品</option>
+                </select>
             </div>
             <div class="fitem">
                 <label>类型:</label>

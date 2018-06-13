@@ -16,6 +16,7 @@ WeiXin.auctionItem = function(){
                     $('#types').combobox('select',$('#types').combobox('getValue'));
                     $('#isshows').combobox('select',$('#isshows').combobox('getValue'));
                     $('#isShowBanners').combobox('select',$('#isShowBanners').combobox('getValue'));
+                    $('#attributes').combobox('select',$('#attributes').combobox('getValue'));
                 },
                 edit:function(){
                     _box.handler.edit(function(result){
@@ -27,7 +28,7 @@ WeiXin.auctionItem = function(){
                 url:'dataList.do',
                 columns:[[
                     {field:'id',checkbox:true},
-                    {field:'name',title:'拍品名称',width:120,align:'center',sortable:true},
+                    {field:'name',title:'商品名称',width:120,align:'center',sortable:true},
                     {field:'typeName',title:'类型',width:60,align:'center',sortable:true},
                     {field:'description',title:'介绍描述',width:120,align:'center',sortable:true},
                     {field:'startTime',title:'开始拍卖时间',width:115,align:'center',sortable:true},
@@ -36,7 +37,7 @@ WeiXin.auctionItem = function(){
                     {field:'addPrice',title:'最低加价',width:60,align:'center',sortable:true},
                     {field:'curPrice',title:'当前价格',width:60,align:'center',sortable:true},
                     {field:'finalPrice',title:'成交价格',width:60,align:'center',sortable:true},
-                    {field:'rate',title:'手续费比率',width:70,align:'center',sortable:true},
+                    {field:'rate',title:'手续费比率%',width:75,align:'center',sortable:true},
                     {field:'detail',title:'拍品详情',width:120,align:'center',sortable:true},
                     {field:'standard',title:'拍品规格',width:60,align:'center',sortable:true},
                     {field:'age',title:'拍品年代',width:60,align:'center',sortable:true},
@@ -117,6 +118,16 @@ WeiXin.auctionItem = function(){
                     data.rows[0].selected = "true";
                     $('#types').combobox({
                         data : data.rows,
+                        valueField : 'code',
+                        textField : 'name',
+                        editable:false
+                    });
+
+                    var rows = data.rows;
+                    rows[0].selected = "";
+                    rows.splice(0,0,{'code':'','name':'全部','selected':'true'})
+                    $('#querytypes').combobox({
+                        data : rows,
                         valueField : 'code',
                         textField : 'name',
                         editable:false

@@ -10,13 +10,13 @@
     <form id="searchForm">
         <input class="hidden" id='search_parentId' name="parentId">
         <p class="ui-fields">
-            <label class="ui-label">拍品名称:</label>
+            <label class="ui-label">商品名称:</label>
             <input name="itemName" class="easyui-box ui-text" style="width:100px;">
             <label class="ui-label">订单类型:</label>
             <select class="easyui-combobox" name="orderType" id="orderTypes" data-options="required:true">
-                <option value="" selected="selected">请选择</option>
+                <option value="" selected="selected">全部</option>
                 <option value="1">拍卖</option>
-                <option value="2">买卖</option>
+                <option value="2">购买</option>
             </select>
         </p>
         <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>

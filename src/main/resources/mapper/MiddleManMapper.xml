@@ -70,7 +70,11 @@
     <!-- 记录总数 -->
     <select id="queryByCount" resultType="java.lang.Integer"
             parameterType="Object">
-        select count(1) from t_e_middleman
+        select count(1) from t_e_middleman t
+        where 1=1
+        <if test="wxAcount != null and wxAcount != ''">
+            and t.wxacount like CONCAT('%', #{wxAcount}, '%')
+        </if>
     </select>
 
     <!-- 分页查询记录列表 -->
@@ -79,6 +83,9 @@
         <include refid="MiddleMan_Base_Column_List" />
         from t_e_middleman t
         where 1=1
+        <if test="wxAcount != null and wxAcount != ''">
+            and t.wxacount like CONCAT('%', #{wxAcount}, '%')
+        </if>
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
             ${pager.orderCondition}
         </if>

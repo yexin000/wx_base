@@ -73,7 +73,7 @@ public class OrderController extends BaseController {
     @RequestMapping("/dataList")
     public void dataList(OrderModel model, HttpServletResponse response)
             throws Exception {
-        queryDataList(model, response);
+        queryDataList(model, response, false);
     }
 
     /**
@@ -86,27 +86,27 @@ public class OrderController extends BaseController {
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
     public void ajaxDataList(@RequestBody OrderModel model, HttpServletResponse response) throws Exception {
-        queryDataList(model, response);
+        queryDataList(model, response, true);
     }
 
-    private void queryDataList(OrderModel model, HttpServletResponse response) throws Exception {
+    private void queryDataList(OrderModel model, HttpServletResponse response, boolean isQueryRes) throws Exception {
         List<Order> dataList = orderService.queryByList(model);
 
-        for(Order order : dataList)
-        {
-            ItemResModel resModel  = new ItemResModel();
-            resModel.setConid(order.getItemId());
-            resModel.setConType("2");
-            List<ItemRes> resDataList = itemResService.queryByList(resModel);
-            if(null != resDataList && resDataList.size() > 0)
-            {
-                order.setOrderCoverImg(resDataList.get(0).getPath());
+        if(isQueryRes) {
+            for (Order order : dataList) {
+                ItemResModel resModel = new ItemResModel();
+                resModel.setConid(order.getItemId());
+                resModel.setConType("2");
+                List<ItemRes> resDataList = itemResService.queryByList(resModel);
+                if (null != resDataList && resDataList.size() > 0) {
+                    order.setOrderCoverImg(resDataList.get(0).getPath());
+                }
             }
         }
 
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("total", model.getPager().getRowCount());
+        jsonMap.put("total",orderService.queryByCount(model));
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
     }

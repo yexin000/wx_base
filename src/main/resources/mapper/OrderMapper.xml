@@ -79,13 +79,31 @@
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
         <include refid="Order_Base_Column_List" />
-        from t_e_order t where t.id = #{id}
+        from t_e_order t where t.id = #{id} and t.status != '0'
     </select>
 
     <!-- 记录总数 -->
     <select id="queryByCount" resultType="java.lang.Integer"
             parameterType="Object">
-        select count(1) from t_e_order
+        select count(1) from t_e_order t, t_e_auction_item item
+        where 1=1 and t.itemid=item.id and t.status!='0' and t.ordertype != '3'
+        <trim suffixOverrides=",">
+            <if test="itemId != null and itemId != ''">
+                and t.itemid = #{itemId}
+            </if>
+            <if test="itemName != null and itemName != ''">
+                and item.name like CONCAT('%', #{itemName}, '%')
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and t.ordertype = #{orderType}
+            </if>
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
+            <if test="status != null and status != ''">
+                and t.status = #{status}
+            </if>
+        </trim>
     </select>
 
     <select id="queryInvalidOrderList" resultMap="BaseResultMap" parameterType="Object">
@@ -103,7 +121,7 @@
         from (t_e_order t,t_e_auction_item item,weixin_user wu)
         left join t_e_user_addr ua on t.addressid=ua.id
         left join t_e_business teb on item.businessId=teb.id
-        where 1=1 and t.status!='0'
+        where 1=1 and t.status!='0' and t.ordertype != '3'
         and t.itemid=item.id and t.wxid=wu.wxid
         <trim suffixOverrides=",">
             <if test="itemId != null and itemId != ''">

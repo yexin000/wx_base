@@ -112,7 +112,19 @@
     <!-- 记录总数 -->
     <select id="queryByCount" resultType="java.lang.Integer"
             parameterType="Object">
-        select count(1) from t_e_auction
+        select count(1) from t_e_auction t
+        where 1=1 and t.status != '0'
+        <trim suffixOverrides=",">
+            <if test="name != null and name != ''">
+                and t.name like CONCAT('%', #{name}, '%')
+            </if>
+            <if test="isShow != null and isShow != ''">
+                and t.isShow like CONCAT('%', #{isShow}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                and t.status = #{status}
+            </if>
+        </trim>
     </select>
 
     <!-- 分页查询记录列表 -->
@@ -136,6 +148,9 @@
 
             <if test="isShow != null and isShow != ''">
                 and t.isShow like CONCAT('%', #{isShow}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                and t.status = #{status}
             </if>
         </trim>
 
