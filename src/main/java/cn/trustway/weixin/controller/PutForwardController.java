@@ -112,15 +112,20 @@ public class PutForwardController extends BaseController {
     /**
      * 根据ID审核记录
      *
-     * @param examineId
+     * @param id
      * @param response
      * @return
      * @throws Exception
      */
-    @RequestMapping("/examine")
-    public void delete(Integer examineId, HttpServletResponse response) throws Exception {
-        moneyStreamService.updateByExamine(examineId);
-        sendSuccessMessage(response, "审核成功");
+    @RequestMapping("/audit")
+    public void audit(Integer id, HttpServletResponse response) throws Exception {
+        if(id != null && id > 0) {
+            moneyStreamService.updateByExamine(id);
+            sendSuccessMessage(response, "审核成功");
+        } else {
+            sendFailureMessage(response, "审核失败");
+        }
+
     }
 
 }

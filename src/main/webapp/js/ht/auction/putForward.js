@@ -2,21 +2,12 @@ $package('WeiXin.putForward');
 
 WeiXin.putForward = function(){
     var _box = null;
+    var Grid = $('#data-list');
     var _this = {
         config:{
             action:{
-                save:'', //新增&修改 保存Action
-                getId:'',//编辑获取的Action
-                delele:''//删除数据的Action
             },
             event:{
-                add : function(){
-                    _box.handler.add();//调用add方法
-                },
-                edit:function(){
-                    _box.handler.edit(function(result){
-                    });
-                }
             },
             dataGrid:{
                 title:'参数列表',
@@ -43,17 +34,19 @@ WeiXin.putForward = function(){
                     {field:'createtime',title:'创建时间',width:150,align:'center',sortable:true},
                     {field:'status',title:'受理状态',width:120,align:'center',formatter:function(value,row,index){
                             var html ="";
-                            debugger
                             if(row.status == "0"){
-                                html ="<a href='#' onclick='WeiXin.putForward.toExamine("+row.id+")'>审核</a>";
-                            }else{
-                                html ="<a href='javaScript:void(0)'  >已审核</a>";
+                                html ="<a href='#' onclick='WeiXin.putForward.audit("+row.id+")'>审核</a>";
+                            } else if(row.status == "1"){
+                                html ="<a href='javaScript:void(0)'>审核通过</a>";
+                            } else if(row.status == "2"){
+                                html ="<a href='javaScript:void(0)'>审核不通过</a>";
                             }
                             return html;
                         }
                     }
                 ]],
                 toolbar:[
+                    {}
                 ]
             }
         },
@@ -62,12 +55,37 @@ WeiXin.putForward = function(){
             _box.init();
         },
         toExamine:function(id){
-            debugger
             _box.form.search.resetForm();
             if(id){
                 $('#examineId').val(id);
                 $("#examineForm").submit();
             }
+        },
+        audit : function(id){
+            $.messager.confirm('提示','确定审核通过该提现申请?审核通过后请执行转账操作',function(r){
+                if (r){
+                    WeiXin.progress();
+                    WeiXin.auditForm('audit.do',{'id':id},function(result){
+                        WeiXin.closeProgress();
+                        if(result.success){
+                            WeiXin.alert('提示',result.msg);
+                        }else{
+                            WeiXin.alert('提示',data.msg,'error');
+                        }
+                        var param = $("#searchForm").serializeObject();
+                        Grid.datagrid('reload',param);
+                    });
+                }
+            });
+        },
+        checkSelect : function(rows){//检查grid是否有勾选的行, 有返回 true,没有返回true
+            var records =  rows;
+            if(records && records.length > 0){
+                return true;
+            }
+            WeiXin.alert('警告','未选中记录.','warning');
+            return false;
+
         }
     }
     return _this;

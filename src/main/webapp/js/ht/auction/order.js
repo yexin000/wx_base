@@ -45,6 +45,7 @@ WeiXin.order = function(){
                     {field:'invalidTime',title:'失效时间',width:120,align:'center',sortable:true}
                 ]],
                 toolbar:[
+                    {}
                 ]
             }
         },

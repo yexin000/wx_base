@@ -10,7 +10,7 @@
     <form id="searchForm">
         <input class="hidden" id='search_parentId' name="parentId">
         <p class="ui-fields">
-            <label class="ui-label">提现号:</label>
+            <label class="ui-label">提现编号:</label>
             <input name="flowNumber" class="easyui-box ui-text" style="width:100px;">
         </p>
         <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>

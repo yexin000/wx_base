@@ -157,7 +157,20 @@ var WeiXin={
 					WeiXin.alert('提示',data.msg,'error');  
 				}
 		});
-	}
+	},
+    auditForm:function(url,option,callback){
+        WeiXin.progress();
+        WeiXin.ajaxJson(url,option,function(data){
+            WeiXin.closeProgress();
+            if(data.success){
+                if(callback){
+                    callback(data);
+                }
+            }else{
+                WeiXin.alert('提示',data.msg,'error');
+            }
+        });
+    }
 }
 
 /* 自定义验证*/
