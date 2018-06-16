@@ -6,8 +6,8 @@ $(function(){
 function submitRecharge() {
 
     var bean = {};
-    bean.streammoney = $("#rechargeMoney").val();
-    bean.whereabouts = $("#whereabouts").val();
+    bean.money = $("#rechargeMoney").val();
+    bean.wxaccount = $("#whereabouts").val();
     bean.wxid = localStorage.getItem("openId");
 
     if(!$("#rechargeMoney").val() || !$("#whereabouts").val()){

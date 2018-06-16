@@ -51,6 +51,12 @@ public class MoneyStream {
      */
     private String wxName;
 
+    /**
+     * 提现id
+     * @return
+     */
+    private Integer pfId;
+
     public Integer getId() {
         return id;
     }
@@ -121,5 +127,13 @@ public class MoneyStream {
 
     public void setWxName(String wxName) {
         this.wxName = wxName;
+    }
+
+    public Integer getPfId() {
+        return pfId;
+    }
+
+    public void setPfId(Integer pfId) {
+        this.pfId = pfId;
     }
 }

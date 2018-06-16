@@ -39,6 +39,9 @@ public class PutForwardController extends BaseController {
     private PutForwardService<PutForward> putForwardService;
 
     @Autowired
+    private MoneyStreamService<MoneyStream> moneyStreamService;
+
+    @Autowired
     private WeixinUserService<WeixinUser> weixinUserService;
 
     /**
@@ -124,6 +127,16 @@ public class PutForwardController extends BaseController {
     public void audit(Integer id, HttpServletResponse response) throws Exception {
         if(id != null && id > 0) {
             putForwardService.updateByExamine(id);
+            PutForward pf = putForwardService.queryById(id);
+            //生成提现流水
+            MoneyStream bean = new MoneyStream();
+            bean.setStreammoney(pf.getMoney());
+            bean.setCreatetime(new Date());
+            bean.setStreamtype("3");
+            bean.setStatus(0);
+            bean.setPfId(pf.getId());
+            bean.setFlownumber(createCode());
+            moneyStreamService.add(bean);
             sendSuccessMessage(response, "审核成功");
         } else {
             sendFailureMessage(response, "审核失败");

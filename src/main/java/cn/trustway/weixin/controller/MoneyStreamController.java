@@ -89,7 +89,7 @@ public class MoneyStreamController extends BaseController {
     }
 
     /**
-     * 添加或修改数据
+     * 添加或修改数据 --已废弃
      *
      * @param bean
      * @param response
