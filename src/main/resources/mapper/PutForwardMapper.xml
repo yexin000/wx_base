@@ -7,10 +7,10 @@
     <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.PutForward">
         <result column="id" property="id" />
         <result column="wxid" property="wxid" />
-        <result column="putforwardno" property="putforwardno" />
+        <result column="putforwardno" property="putForwardNo" />
         <result column="money" property="money" />
         <result column="status" property="status" />
-        <result column="wxaccount" property="wxaccount" />
+        <result column="wxaccount" property="wxAccount" />
         <result column="remark" property="remark" />
         <result column="createtime" property="createtime" />
     </resultMap>
@@ -24,13 +24,13 @@
     <insert id="add" parameterType="Object">
         insert into
         t_e_put_forward(id,putforwardno,wxid,status,money,wxaccount,remark,createtime )
-        values(null,#{putforwardno},#{wxid},#{status},#{money},#{wxaccount},#{remark},#{createtime});
+        values(null,#{putForwardNo},#{wxid},#{status},#{money},#{wxAccount},#{remark},#{createtime});
     </insert>
 
     <!-- 根据id，修改记录 -->
     <update id="update" parameterType="Object">
 		update t_e_put_forward set
-		putforwardno=#{putforwardno},wxid=#{wxid},status=#{status},#{money},wxaccount=#{wxaccount},createtime=#{createtime} ,remark=#{remark}
+		putforwardno=#{putForwardNo},wxid=#{wxid},status=#{status},#{money},wxaccount=#{wxAccount},createtime=#{createtime} ,remark=#{remark}
 		where id=#{id}
 	</update>
 

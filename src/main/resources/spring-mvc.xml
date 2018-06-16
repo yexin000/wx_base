@@ -69,7 +69,7 @@
 					<value>/favorite/ajaxAddFavorite.do</value>
 					<value>/favorite/ajaxDelFavorite.do</value>
 					<value>/userAddr/ajaxAddAddr.do</value>
-					<value>/moneyStream/save.do</value>
+					<value>/putForward/save.do</value>
 					<value>/moneyStream/ajaxDataList.do</value>
 					<value>cn.trustway.weixin.controller.FavoriteController</value>
 					<value>cn.trustway.weixin.controller.UserAddrController</value>

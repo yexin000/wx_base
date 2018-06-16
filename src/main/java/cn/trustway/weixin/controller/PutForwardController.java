@@ -52,7 +52,7 @@ public class PutForwardController extends BaseController {
      * @return
      */
     @RequestMapping("/list")
-    public ModelAndView list(MoneyStreamModel model, HttpServletRequest request) throws Exception {
+    public ModelAndView list(PutForwardModel model, HttpServletRequest request) throws Exception {
         Map<String, Object> context = getRootMap();
         return forword("auction/putForward", context);
     }
@@ -67,7 +67,7 @@ public class PutForwardController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/dataList", method = RequestMethod.POST)
-    public void dataList(MoneyStreamModel model, HttpServletResponse response) throws Exception {
+    public void dataList(PutForwardModel model, HttpServletResponse response) throws Exception {
         queryDataList(model, response);
     }
 
@@ -80,12 +80,11 @@ public class PutForwardController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
-    public void ajaxDataList(@RequestBody MoneyStreamModel model, HttpServletResponse response) throws Exception {
+    public void ajaxDataList(@RequestBody PutForwardModel model, HttpServletResponse response) throws Exception {
         queryDataList(model, response);
     }
 
-    private void queryDataList(MoneyStreamModel model, HttpServletResponse response) throws Exception {
-        model.setStreamtype("3");
+    private void queryDataList(PutForwardModel model, HttpServletResponse response) throws Exception {
         List<PutForward> dataList = putForwardService.queryByList(model);
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
@@ -137,6 +136,14 @@ public class PutForwardController extends BaseController {
             bean.setPfId(pf.getId());
             bean.setFlownumber(createCode());
             moneyStreamService.add(bean);
+
+            WeixinUser wu = weixinUserService.queryWeixinUser(pf.getWxid());
+            //余额提现中，请删除
+            BigDecimal myMoneyExtracting =  new BigDecimal(wu.getMoneyExtracting());
+            myMoneyExtracting = myMoneyExtracting.subtract(new BigDecimal(pf.getMoney()));
+            wu.setMoneyExtracting(myMoneyExtracting.doubleValue());
+            weixinUserService.updateByBal(wu);
+
             sendSuccessMessage(response, "审核成功");
         } else {
             sendFailureMessage(response, "审核失败");
@@ -167,7 +174,15 @@ public class PutForwardController extends BaseController {
                     //成功
                     myBal =  myBal.subtract(sm);
                     wu.setBalance(myBal.doubleValue());
-                    wu.setMoneyExtracting(sm.doubleValue());
+                    //如果已经有余额正在提现中，请累加
+                    BigDecimal myMoneyExtracting =  null;
+                    if(null != wu.getMoneyExtracting()){
+                        myMoneyExtracting = new BigDecimal(wu.getMoneyExtracting());
+                        myMoneyExtracting = myMoneyExtracting.add(sm);
+                    }else{
+                        myMoneyExtracting = sm;
+                    }
+                    wu.setMoneyExtracting(myMoneyExtracting.doubleValue());
                     weixinUserService.updateByBal(wu);
                     weixinUserService.updateByExtracting(wu);
                     //生成提现记录

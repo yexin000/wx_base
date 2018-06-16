@@ -97,5 +97,3 @@ function updateAddress(){
     window.location.href = '../../html/lh/addressDetail.html';
 }
 
-
-

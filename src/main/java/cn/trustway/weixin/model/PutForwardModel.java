@@ -19,6 +19,22 @@ public class PutForwardModel extends BaseModel {
      */
     private String wxid;
 
+    /**
+     * 提现微信
+     */
+    private String status;
+
+    /**
+     * 提现微信
+     */
+    private String putforwardno;
+
+    /**
+     * 提现微信
+     */
+    private String wxName;
+
+
     public Double getMoney() {
         return money;
     }
@@ -41,5 +57,29 @@ public class PutForwardModel extends BaseModel {
 
     public void setWxid(String wxid) {
         this.wxid = wxid;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPutforwardno() {
+        return putforwardno;
+    }
+
+    public void setPutforwardno(String putforwardno) {
+        this.putforwardno = putforwardno;
+    }
+
+    public String getWxName() {
+        return wxName;
+    }
+
+    public void setWxName(String wxName) {
+        this.wxName = wxName;
     }
 }
