@@ -1,8 +1,3 @@
-
-//图片访问路径
-var imagePath = "http://127.0.0.1:8080/";
-
-
 $(function(){
     $(window).scroll(function(){
         var scrolltop=$(document).scrollTop();
@@ -47,7 +42,11 @@ function loadOrder(status){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     str+='<tr >  ';
-                    str+=' <td> <span style="padding-left: 0.14rem;">'+obj.businessName+'商家 > </span>  </td> ';
+                    if(obj.businessName){
+                        str+=' <td  onclick="showBusiness('+obj.businessId+','+obj.itemId+')"> <span style="padding-left: 0.14rem;">'+obj.businessName+'商家 > </span>  </td> ';
+                    }else{
+                        str+=' <td  onclick="showBusiness('+obj.businessId+','+obj.itemId+')"> <span style="padding-left: 0.14rem;">未认证商家 > </span>  </td> ';
+                    }
                     var statuName = '';
                     if(obj.status == '1'){
                         statuName = '订单已失效';
@@ -58,7 +57,6 @@ function loadOrder(status){
                     }else if(obj.status == '4'){
                         statuName = '订单已发货';
                     }else{
-                        //0
                         statuName = '订单已删除';
                     }
                     str+=' <td ><span style="float:right;padding-right: 0.2rem;color: #ff7936">'+statuName+'</span>  </td> </tr>';
@@ -78,6 +76,25 @@ function loadOrder(status){
 }
 
 function goDetail(orderId) {
-    var url = '../../html/lh/orderDetail.html?id='+orderId;
-    window.location.href = url;
+    window.location.href  = '../../html/lh/orderDetail.html?id='+orderId;
+}
+
+function showBusiness(id,itemId){
+    var url= '/weixin/business/ajaxGetIdByOrder.do?id='+id+'&itemId='+itemId;
+    $.ajax({
+        url: url,
+        type: 'post',
+        data:JSON.stringify(id),
+        contentType : "application/json;charset=utf-8",
+        dataType: 'JSON',
+        cache: false,
+        success:function(data){
+            var dataObj = data.data;
+            $("#bussinessname").empty().html(dataObj.bussinessName);
+            $("#wxaccount").empty().html(dataObj.wxAccount);
+            $("#businessaddress").empty().html(dataObj.businessaddress);
+            $("#businessCard").show();
+        }
+    })
+
 }

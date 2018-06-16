@@ -1,9 +1,13 @@
 package cn.trustway.weixin.controller;
 
+import cn.trustway.weixin.bean.AuctionItem;
 import cn.trustway.weixin.bean.Business;
+import cn.trustway.weixin.bean.WeixinUser;
 import cn.trustway.weixin.model.BusinessModel;
+import cn.trustway.weixin.service.AuctionItemService;
 import cn.trustway.weixin.service.BusinessService;
 import cn.trustway.weixin.service.FileUploadService;
+import cn.trustway.weixin.service.WeixinUserService;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +35,12 @@ public class BusinessController extends BaseController {
 
     @Autowired(required = false)
     private BusinessService<Business> businessService;
+
+    @Autowired
+    private WeixinUserService<WeixinUser> weixinUserService;
+
+    @Autowired(required = false)
+    private AuctionItemService<AuctionItem> auctionItemService;
 
     @Autowired
     private FileUploadService fileUploadService;
@@ -117,6 +127,54 @@ public class BusinessController extends BaseController {
         if (bean == null) {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
+        }
+        context.put(SUCCESS, true);
+        context.put("data", bean);
+        HtmlUtil.writerJson(response, context);
+    }
+
+
+    /**
+     * ajax根据ID查找记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxGetIdByOrder")
+    public void ajaxGetIdByOrder(  Integer id, Integer itemId, HttpServletResponse response) throws Exception {
+        Map<String, Object> context = getRootMap();
+        Business bean = new Business();
+        //订单内，如果商户id是0，则是用户商户类型
+        if(id > 0){
+            BusinessModel model = new BusinessModel();
+            model.setId(id);
+            model.setIsSelectItemCount("1");
+            bean= businessService.queryCountById(model);
+            bean.setBusinessaddress(bean.getAddress());
+            bean.setBussinessName(bean.getName());
+            if (bean == null) {
+                sendFailureMessage(response, "没有找到对应的记录!");
+                return;
+            }
+        }else{
+            // 查询用户商户类型数据
+            AuctionItem at = auctionItemService.queryById(itemId);
+            if(null != at){
+                WeixinUser wu = weixinUserService.queryWeixinUser(at.getUploadWxid());
+                if(null != wu){
+                    bean.setBusinessaddress(wu.getBusinessAddress());
+                    bean.setBussinessName(wu.getBussinessName());
+                    bean.setWxAccount(wu.getWxAccount());
+                }else{
+                    sendFailureMessage(response, "没有找到用户的记录!");
+                    return;
+                }
+            }else {
+                sendFailureMessage(response, "没有找到商品的记录!");
+                return;
+            }
         }
         context.put(SUCCESS, true);
         context.put("data", bean);

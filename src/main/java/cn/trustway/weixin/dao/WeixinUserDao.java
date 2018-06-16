@@ -53,4 +53,11 @@ public interface WeixinUserDao<T> extends BaseDao<T> {
 	 */
 	public void updateByBal(WeixinUser weixinUser);
 
+	/**
+	 * 更新微信用户提现中金额
+	 * @param weixinUser
+	 * @return
+	 */
+	public void updateByExtracting(WeixinUser weixinUser);
+
 }

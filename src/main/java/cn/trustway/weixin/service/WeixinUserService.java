@@ -74,6 +74,15 @@ public class WeixinUserService<T> extends BaseService<T> {
 		getDao().updateByBal(weixinUser);
 	}
 
+	/**
+	 * 修改微信用户
+	 * @param
+	 * @return
+	 */
+	public void updateByExtracting(WeixinUser weixinUser) {
+		getDao().updateByExtracting(weixinUser);
+	}
+
 
 	/**
 	 * 更新微信用户操作时间

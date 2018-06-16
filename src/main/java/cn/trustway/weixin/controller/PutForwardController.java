@@ -1,10 +1,13 @@
 package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.MoneyStream;
+import cn.trustway.weixin.bean.PutForward;
 import cn.trustway.weixin.bean.WeixinUser;
 import cn.trustway.weixin.model.MoneyStreamModel;
 import cn.trustway.weixin.model.OrderModel;
+import cn.trustway.weixin.model.PutForwardModel;
 import cn.trustway.weixin.service.MoneyStreamService;
+import cn.trustway.weixin.service.PutForwardService;
 import cn.trustway.weixin.service.WeixinUserService;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.apache.commons.lang.StringUtils;
@@ -33,7 +36,7 @@ import java.util.Map;
 @RequestMapping("/putForward")
 public class PutForwardController extends BaseController {
     @Autowired
-    private MoneyStreamService<MoneyStream> moneyStreamService;
+    private PutForwardService<PutForward> putForwardService;
 
     @Autowired
     private WeixinUserService<WeixinUser> weixinUserService;
@@ -80,7 +83,7 @@ public class PutForwardController extends BaseController {
 
     private void queryDataList(MoneyStreamModel model, HttpServletResponse response) throws Exception {
         model.setStreamtype("3");
-        List<MoneyStream> dataList = moneyStreamService.queryByList(model);
+        List<PutForward> dataList = putForwardService.queryByList(model);
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         jsonMap.put("total", model.getPager().getRowCount());
@@ -99,7 +102,7 @@ public class PutForwardController extends BaseController {
     @RequestMapping("/getId")
     public void getId(Integer id, HttpServletResponse response) throws Exception {
         Map<String, Object> context = getRootMap();
-        MoneyStream bean = moneyStreamService.queryById(id);
+        PutForward bean = putForwardService.queryById(id);
         if (bean == null) {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
@@ -120,12 +123,69 @@ public class PutForwardController extends BaseController {
     @RequestMapping("/audit")
     public void audit(Integer id, HttpServletResponse response) throws Exception {
         if(id != null && id > 0) {
-            moneyStreamService.updateByExamine(id);
+            putForwardService.updateByExamine(id);
             sendSuccessMessage(response, "审核成功");
         } else {
             sendFailureMessage(response, "审核失败");
         }
 
     }
+
+
+    /**
+     * 添加或修改数据
+     *
+     * @param model
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/save")
+    public void save(@RequestBody PutForwardModel model, HttpServletResponse response) throws Exception {
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        String status = "0";
+            BigDecimal sm = new BigDecimal(model.getMoney());
+            WeixinUser wu = weixinUserService.queryWeixinUser(model.getWxid());
+            if(null != wu){
+                BigDecimal myBal = new BigDecimal(wu.getBalance());
+                if(myBal.compareTo(sm) < 0){
+                    status = "-1";
+                }else{
+                    //成功
+                    myBal =  myBal.subtract(sm);
+                    wu.setBalance(myBal.doubleValue());
+                    wu.setMoneyExtracting(sm.doubleValue());
+                    weixinUserService.updateByBal(wu);
+                    weixinUserService.updateByExtracting(wu);
+                    //生成提现记录
+                    PutForward bean = new PutForward();
+                    bean.setWxid(model.getWxid());
+                    bean.setMoney(sm.doubleValue());
+                    bean.setCreatetime(new Date());
+                    bean.setWxAccount(model.getWxaccount());
+                    bean.setStatus(0);
+                    bean.setPutForwardNo(createCode());
+                    putForwardService.add(bean);
+                }
+            }
+        jsonMap.put("status", status);
+        HtmlUtil.writerJson(response, jsonMap);
+    }
+
+
+    private String createCode (){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        return  "No"+sdf.format(new Date())+getIDCode4();
+    }
+
+    /**
+     * 生成4位数的随机数
+     * @return
+     */
+    protected static String getIDCode4() {
+        int idCode = (int) (Math.random()*9000+1000);
+        return idCode+"";
+    }
+
 
 }

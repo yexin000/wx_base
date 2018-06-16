@@ -109,6 +109,11 @@
 		update weixin_user set balance = #{balance} where wxid=#{wxid}
 	</update>
 
+	<!-- 更新微信用户提现中金额 -->
+	<update id="updateByExtracting" parameterType="Object">
+		update weixin_user set moneyextracting = #{moneyExtracting} where wxid=#{wxid}
+	</update>
+
 	<!-- 删除记录 -->
 	<delete id="delete" parameterType="Object">
 		delete from weixin_user where id = #{id}

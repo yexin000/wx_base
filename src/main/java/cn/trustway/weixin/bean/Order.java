@@ -77,6 +77,11 @@ public class Order extends BaseBean {
      * 更新时间
      */
     private Date updateTime;
+
+    /**
+     * 商户名称
+     */
+    private String businessId;
     /**
      * 商户名称
      */
@@ -237,5 +242,13 @@ public class Order extends BaseBean {
 
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
+    }
+
+    public String getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId;
     }
 }

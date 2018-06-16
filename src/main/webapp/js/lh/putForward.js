@@ -6,7 +6,6 @@ $(function(){
 function submitRecharge() {
 
     var bean = {};
-    bean.streamtype = 3;
     bean.streammoney = $("#rechargeMoney").val();
     bean.whereabouts = $("#whereabouts").val();
     bean.wxid = localStorage.getItem("openId");
@@ -23,7 +22,7 @@ function submitRecharge() {
     }
 
     $('#loadingToast').show();
-    var url = '/weixin/moneyStream/save.do';
+    var url = '/weixin/putForward/save.do';
     $.ajax({
         url: url,
         type: 'post',

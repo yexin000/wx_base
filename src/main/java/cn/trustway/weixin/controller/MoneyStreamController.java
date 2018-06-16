@@ -114,27 +114,23 @@ public class MoneyStreamController extends BaseController {
                     wu.setBalance(myBal.doubleValue());
                     wu.setMoneyExtracting(sm.doubleValue());
                     weixinUserService.updateByBal(wu);
-                    //生成充值流水
-                    MoneyStream ms = new MoneyStream();
-                    bean.setWxid(bean.getWxid());
-                    bean.setStreammoney(sm.doubleValue());
-                    bean.setCreatetime(new Date());
-                    bean.setFlownumber(createCode());
-                    bean.setStreamtype("3");
-                    bean.setStatus(0);
-                    bean.setWhereabouts(bean.getWhereabouts());
-                    moneyStreamService.add(bean);
+                    weixinUserService.updateByExtracting(wu);
+                    if(id != null && id > 0) {
+                        moneyStreamService.updateBySelective(bean);
+                    } else {
+                        //生成提现流水
+                        bean.setStreammoney(sm.doubleValue());
+                        bean.setCreatetime(new Date());
+                        bean.setStreamtype("3");
+                        bean.setStatus(0);
+                        bean.setFlownumber(createCode());
+                        moneyStreamService.add(bean);
+                    }
                 }
             }
         }
 
-        if(id != null && id > 0) {
-            moneyStreamService.updateBySelective(bean);
-        } else {
-            bean.setCreatetime(new Date());
-            bean.setFlownumber(createCode());
-            moneyStreamService.add(bean);
-        }
+
         jsonMap.put("status", status);
         HtmlUtil.writerJson(response, jsonMap);
     }

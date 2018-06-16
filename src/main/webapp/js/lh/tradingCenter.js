@@ -46,16 +46,43 @@ function loadOrder(status){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     str+='  <li style="padding: 0.1rem 0.05rem 0.1rem 0;width: 3.16rem;border-bottom: 0.2px solid #808080"> ';
-                    str+='  <p> 流水编号：'+obj.flownumber;
-                    var statusStr = '未受理';
-                    if(obj.status == '1'){
+                    str+='  <p style="padding-left: 0.1rem"> 流水编号：'+obj.flownumber;
+
+
+
+
+                    if(obj.streamtype == 3){
                         var statusStr = '未受理';
-                    }else if(obj.status == '2'){
-                        var statusStr = '受理失败';
+                        if(obj.status == '1'){
+                            var statusStr = '未受理';
+                        }else if(obj.status == '2'){
+                            var statusStr = '受理失败';
+                        }
+                        str+='  <span style="float: right;"> '+statusStr+'</span> ';
+                        str+='  </p> ';
+
+                        str+='  <p style="padding-left: 0.1rem"> ';
+                        str+='  <span> 提现金额：'+obj.streammoney;
+                        str+='  </span> ';
+                        str+='  </p> ';
+
+                        str+='  <p style="padding-left: 0.1rem"> ';
+                        str+='  <span> 提现微信：'+obj.whereabouts;
+                        str+='  </span> ';
+                        str+='  </p> ';
+                    }else if(obj.streamtype == 5){
+                        str+='  <p style="padding-left: 0.1rem"> ';
+                        str+='  <span> 充值金额：'+obj.streammoney;
+                        str+='  </span> ';
+                        str+='  </p> ';
+
+                        str+='  <p style="padding-left: 0.1rem"> ';
+                        str+='  <span> 提现用户：'+obj.wxName;
+                        str+='  </span> ';
+                        str+='  </p> ';
                     }
-                    str+='  <span style="float: right;"> '+statusStr+'</span> ';
-                    str+='  </p> ';
-                    str+='  <p> 时间:' + obj.createtime;
+
+                    str+='  <p style="padding-left: 0.1rem"> 时间:' + obj.createtime;
                     str+='  </p> ';
                     str+='  </li> ';
 
@@ -66,7 +93,3 @@ function loadOrder(status){
     })
 }
 
-function goDetail(orderId) {
-    var url = '../../html/lh/orderDetail.html?id='+orderId;
-    window.location.href = url;
-}

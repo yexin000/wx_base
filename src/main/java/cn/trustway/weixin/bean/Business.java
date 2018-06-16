@@ -52,6 +52,17 @@ public class Business extends BaseBean {
      */
     private String wxAccount;
 
+    /**
+     * 微信号
+     */
+    private String bussinessName;
+
+    /**
+     * 微信号
+     */
+    private String businessaddress;
+
+
     public Integer getId() {
         return id;
     }
@@ -130,5 +141,21 @@ public class Business extends BaseBean {
 
     public void setWxAccount(String wxAccount) {
         this.wxAccount = wxAccount;
+    }
+
+    public String getBussinessName() {
+        return bussinessName;
+    }
+
+    public void setBussinessName(String bussinessName) {
+        this.bussinessName = bussinessName;
+    }
+
+    public String getBusinessaddress() {
+        return businessaddress;
+    }
+
+    public void setBusinessaddress(String businessaddress) {
+        this.businessaddress = businessaddress;
     }
 }
