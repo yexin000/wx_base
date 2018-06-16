@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.PutForwardDao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.PutForward">
+        <result column="id" property="id" />
+        <result column="wxid" property="wxid" />
+        <result column="putforwardno" property="putforwardno" />
+        <result column="money" property="money" />
+        <result column="status" property="status" />
+        <result column="wxaccount" property="wxaccount" />
+        <result column="remark" property="remark" />
+        <result column="createtime" property="createtime" />
+    </resultMap>
+
+    <!-- sys_menu table all fields -->
+    <sql id="Put_Forward_Base_Column_List">
+		t.id,t.putforwardno,t.wxid,t.status,t.money,t.wxaccount,t.remark,t.createtime
+	</sql>
+
+    <!-- 插入记录 -->
+    <insert id="add" parameterType="Object">
+        insert into
+        t_e_put_forward(id,putforwardno,wxid,status,money,wxaccount,remark,createtime )
+        values(null,#{putforwardno},#{wxid},#{status},#{money},#{wxaccount},#{remark},#{createtime});
+    </insert>
+
+    <!-- 根据id，修改记录 -->
+    <update id="update" parameterType="Object">
+		update t_e_put_forward set
+		putforwardno=#{putforwardno},wxid=#{wxid},status=#{status},#{money},wxaccount=#{wxaccount},createtime=#{createtime} ,remark=#{remark}
+		where id=#{id}
+	</update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateBySelective" parameterType="Object">
+        update t_e_put_forward set
+        <trim suffixOverrides=",">
+            <if test="wxid != null and wxid != '' ">
+                wxid=#{wxid},
+            </if>
+            <if test="wxaccount != null and wxaccount != '' ">
+                wxaccount=#{wxaccount},
+            </if>
+            <if test="remark != null and remark != '' ">
+                remark=#{remark},
+            </if>
+            <if test="status != null and status != '' ">
+                status=#{status},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <update id="delete" parameterType="Object">
+		update t_e_put_forward set wxid = '0' where id = #{id}
+	</update>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Put_Forward_Base_Column_List" />
+        from t_e_put_forward t
+        where t.id = #{id}
+    </select>
+
+    <!-- 记录总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(1) from t_e_put_forward t
+        where   1=1
+        <trim suffixOverrides=",">
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
+            <if test="status != null and status != ''">
+                and t.status = #{status}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Put_Forward_Base_Column_List" />,wu.nickname wxName
+        from t_e_put_forward t
+        left join weixin_user wu on t.wxid = wu.wxid
+        where 1 = 1
+        <trim suffixOverrides=",">
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
+            <if test="status != null and status != ''">
+                and t.status = #{status}
+            </if>
+        </trim>
+        order by t.id desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByExamine" parameterType="Object">
+        update t_e_put_forward set  status = 1   where id=#{id}
+    </update>
+
+</mapper>
