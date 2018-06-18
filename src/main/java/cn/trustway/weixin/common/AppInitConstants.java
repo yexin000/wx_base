@@ -53,6 +53,8 @@ public class AppInitConstants {
 	 */
 	public static final String XCX_AUTH_URL = "https://api.weixin.qq.com/sns/jscode2session";
 
+	public static final String XCX_QR_CODE_URL = "https://api.weixin.qq.com/wxa/getwxacodeunlimit";
+
 	/**
 	 * 小程序授权类型
 	 */

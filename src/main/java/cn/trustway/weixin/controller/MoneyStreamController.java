@@ -83,7 +83,7 @@ public class MoneyStreamController extends BaseController {
         List<MoneyStream> dataList = moneyStreamService.queryByList(model);
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("total", model.getPager().getRowCount());
+        jsonMap.put("total", moneyStreamService.queryByCount(model));
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
     }

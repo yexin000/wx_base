@@ -19,6 +19,11 @@ public class MoneyStreamModel extends BaseModel {
      */
     private String streammoney;
 
+    /**
+     * 流水编号
+     */
+    private String flownumber;
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +54,13 @@ public class MoneyStreamModel extends BaseModel {
 
     public void setStreammoney(String streammoney) {
         this.streammoney = streammoney;
+    }
+
+    public String getFlownumber() {
+        return flownumber;
+    }
+
+    public void setFlownumber(String flownumber) {
+        this.flownumber = flownumber;
     }
 }

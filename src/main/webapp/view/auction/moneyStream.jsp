@@ -11,10 +11,10 @@
         <input class="hidden" id='search_parentId' name="parentId">
         <p class="ui-fields">
             <label class="ui-label">流水号:</label>
-            <input name="flowNumber" class="easyui-box ui-text" style="width:100px;">
+            <input name="flownumber" class="easyui-box ui-text" style="width:100px;">
             <label class="ui-label">流水类型:</label>
             <!--1-保证金,2-支付,3-提现,4-退款,5-充值 -->
-            <select class="easyui-combobox" name="streamType" id="streamType" data-options="required:true">
+            <select class="easyui-combobox" name="streamtype" id="streamType" data-options="required:true">
                 <option value="" selected="selected">请选择</option>
                 <option value="1">保证金</option>
                 <option value="2">支付</option>

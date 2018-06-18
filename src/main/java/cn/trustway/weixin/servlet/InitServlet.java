@@ -33,7 +33,10 @@ public class InitServlet extends HttpServlet {
 			log.error("appid and appsecret configuration error, please check carefully.");
 		} else {
 			// 启动定时获取access_token的线程
-			new Thread(new TokenThread(ctx)).start();
+			if(AppInitConstants.IS_TOKEN_CTRL) {
+				new Thread(new TokenThread(ctx)).start();
+			}
+
 		}
 	}
 }

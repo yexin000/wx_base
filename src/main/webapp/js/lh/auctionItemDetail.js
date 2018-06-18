@@ -37,11 +37,23 @@ $(function(){
 
     });
 
+    $("#shareBtn").click(function () {
+        if(itemImage !=  '') {
+            var itemUrl = encodeURIComponent(itemImage);
+            var itemText = encodeURIComponent(itemName);
+            var shareUrl = '/pages/share/shareItem?itemUrl=' + itemUrl + "&itemText=" + itemText;
+            wx.miniProgram.navigateTo({ url: shareUrl });
+        }
+    });
+
     // 每45秒加载一次出价
     setInterval(function () {
         loadAuctionItemBid(id);
     }, 45000);
 })
+
+var itemImage = '';
+var itemName = '';
 
 //加载商品数据
 function loadItemData(id){
@@ -65,6 +77,7 @@ function loadItemData(id){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     var coverimg = obj.path;
+                    itemImage = coverimg;
                     str+='<li class="bannerItem">';
                     str+='	<a href="javaScipt:void(0)">';
                     str+=' <img src="' + hostPath + coverimg +  '" alt="">';
@@ -87,6 +100,7 @@ function loadItemData(id){
             }
 
             $("#itemName").html(dataObj.name); //拍品名字
+            itemName = dataObj.name;
             $("#itemDescription").html(dataObj.description); //拍品详情
             $("#startprice").html(dataObj.startPrice); //起拍价格
             $("#curprice").html(dataObj.curPrice); //当前价格

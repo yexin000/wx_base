@@ -80,6 +80,9 @@
             <if test="streamtype != null and streamtype != ''">
                 and t.streamtype = #{streamtype}
             </if>
+            <if test="flownumber != null and flownumber != ''">
+                and t.flownumber like CONCAT('%', #{flownumber}, '%')
+            </if>
         </trim>
     </select>
 
@@ -96,6 +99,9 @@
             </if>
             <if test="streamtype != null and streamtype != ''">
                 and t.streamtype = #{streamtype}
+            </if>
+            <if test="flownumber != null and flownumber != ''">
+                and t.flownumber like CONCAT('%', #{flownumber}, '%')
             </if>
         </trim>
         order by t.id desc
