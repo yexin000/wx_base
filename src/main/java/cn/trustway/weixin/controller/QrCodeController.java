@@ -82,7 +82,6 @@ public class QrCodeController extends BaseController {
                 MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
                 HttpEntity requestEntity = new HttpEntity(param, headers);
                 ResponseEntity<byte[]> entity = rest.exchange(codeUrl, HttpMethod.POST, requestEntity, byte[].class, new Object[0]);
-                System.out.println("调用小程序生成微信永久小程序码URL接口返回结果:" + entity.getBody());
                 byte[] result = entity.getBody();
                 inputStream = new ByteArrayInputStream(result);
 

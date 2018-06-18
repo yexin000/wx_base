@@ -9,6 +9,28 @@
         {
             localStorage.setItem('openId',getParam("openId"));
         }
+
+        var itemId = getParam("itemId");
+        if(itemId && itemId != '') {
+            var url= '/weixin/auctionItem/ajaxGetId.do?id='+itemId+"&wxid="+localStorage.getItem("openId");
+            $.ajax({
+                url: url,
+                type: 'post',
+                data:"",
+                contentType : "application/json;charset=utf-8",
+                dataType: 'JSON',
+                cache: false,
+                success:function(data){
+                    var dataObj = data.data;
+                    var attribute = dataObj.attribute;
+                    if(attribute != null && attribute != '') {
+                        toAuctionItemDetail(itemId,attribute);
+                    }
+                }
+            })
+            //window.location.href =
+        }
+
         var p=0,t=0;
         $(window).scroll(function(){
             var p=$(document).scrollTop();

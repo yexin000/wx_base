@@ -41,7 +41,8 @@ $(function(){
         if(itemImage !=  '') {
             var itemUrl = encodeURIComponent(itemImage);
             var itemText = encodeURIComponent(itemName);
-            var shareUrl = '/pages/share/shareItem?itemUrl=' + itemUrl + "&itemText=" + itemText;
+            var itemId = getParam("id");
+            var shareUrl = '/pages/share/shareItem?itemUrl=' + itemUrl + "&itemText=" + itemText + "&itemId=" + itemId;
             wx.miniProgram.navigateTo({ url: shareUrl });
         }
     });
@@ -215,6 +216,15 @@ function toBid(){
             }
         }
     })
+}
+
+function goBack() {
+    var lastUrl = document.referrer;
+    if(lastUrl.indexOf("index.html") >= 0 && lastUrl.indexOf("itemId") >= 0) {
+        window.location.href = "../../html/lh/index.html";
+    } else {
+        history.go(-1);
+    }
 }
 
 
