@@ -1,31 +1,20 @@
+var orderStatus = 0;
+var pageId = 1;
 $(function(){
-    $(window).scroll(function(){
-        var scrolltop=$(document).scrollTop();
-        var Vheight=$(window).height();
-        if(scrolltop > 0){
-            $("#backtop").show();
-        }else{
-            $("#backtop").hide();
-        }
-    });
-    $("#backtop").click(function(){
-        $("html,body").animate({scrollTop:0},"fast");
-    })
     $("#order-tit li").click(function(){
-        var selectStatus = $(this).attr("status");
-        loadOrder(selectStatus);
+        orderStatus = $(this).attr("status");
+        loadOrder();
     })
-
     $('li').eq(0).click();
 })
 
 //加载个人订单数据
-function loadOrder(status){
+function loadOrder(){
     $('#loadingToast').show();
-    $(".pro-item").empty();
     var OrderModel = {};
-    OrderModel.status = status;
+    OrderModel.status = orderStatus;
     OrderModel.wxid = localStorage.getItem("openId");
+    OrderModel.page = pageId;
     var url= '/weixin/order/ajaxDataList.do';
     $.ajax({
         url: url,
@@ -37,6 +26,7 @@ function loadOrder(status){
         success:function(data){
             $('#loadingToast').hide();
             var dataList = data.rows;
+            var datalength = data.total;
             if(dataList.length> 0)
             {
                 var str = '';
@@ -71,6 +61,10 @@ function loadOrder(status){
                 });
             }
             $(".pro-item").append(str);
+            if(datalength <= (pageId * 10)){
+                $("#loadMore").remove();
+            }
+            pageId++;
         }
     })
 }

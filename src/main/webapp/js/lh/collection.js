@@ -1,22 +1,6 @@
-
-//图片访问路径
-var imagePath = "http://127.0.0.1:8080/";
-
-
+var pageId = 1;
     $(function(){
         loadCollection();
-        $(window).scroll(function(){
-            var scrolltop=$(document).scrollTop();
-            var Vheight=$(window).height();
-            if(scrolltop > 0){
-                $("#backtop").show();
-                }else{
-                     $("#backtop").hide();
-                    }
-        });
-        $("#backtop").click(function(){
-            $("html,body").animate({scrollTop:0},"fast");
-        })
     });
 
     //取消收藏
@@ -30,12 +14,10 @@ var imagePath = "http://127.0.0.1:8080/";
         });
     }
 
-
     //加载个人收藏数据
     function loadCollection(){
         $('#loadingToast').show();
-        $(".pro-item").empty();
-        var url= '/weixin/favorite/ajaxDataList.do?wxid='+localStorage.getItem("openId");
+        var url= '/weixin/favorite/ajaxDataList.do?wxid='+localStorage.getItem("openId")+'&page='+pageId;
         $.ajax({
             url: url,
             type: 'post',
@@ -46,6 +28,7 @@ var imagePath = "http://127.0.0.1:8080/";
             success:function(data){
                 $('#loadingToast').hide();
                 var dataList = data.rows;
+                var datalength = data.total;
                 if(dataList.length> 0)
                 {
                     var str = '';
@@ -61,6 +44,10 @@ var imagePath = "http://127.0.0.1:8080/";
                     });
                 }
                 $(".pro-item").append(str);
+                if(datalength <= (pageId * 10)){
+                    $("#loadMore").remove();
+                }
+                pageId++;
             }
         })
     }

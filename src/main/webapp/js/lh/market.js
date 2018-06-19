@@ -1,8 +1,6 @@
-
-//图片访问路径
-var imagePath = "http://127.0.toTypeAuction0.1:8080/";
-
-
+var pageId = 1;
+var type1 = 0;
+var type2 = 0;
 $(function(){
     loadData();
 })
@@ -20,8 +18,6 @@ function loadData()
         cache: false,
         success:function(data){
             var dataList1 = data.rows1;
-            var dataList2 = data.rows2;
-
             if(dataList1.length> 0)
             {
                 var str1 = '';
@@ -32,10 +28,7 @@ function loadData()
                 });
                 $("#dataList1").append(str1);
             }
-
-
             loadAuctionItem();
-
         }
     })
 }
@@ -72,7 +65,10 @@ function loadData()
 
                     if(dataList2[0].id)
                     {
-                        loadAuctionItem(dataList2[0].code, $(".scrollItem2").get(0));
+                        //loadAuctionItem(dataList2[0].code, $(".scrollItem2").get(0));
+                        type1 = dataList2[0].code;
+                        type2 = $(".scrollItem2").get(0);
+                        loadAuctionItem();
                     }
                 }
             }
@@ -82,14 +78,15 @@ function loadData()
 
 
     //根据类型加载拍品数据
-    function loadAuctionItem(type, obj){
+    function loadAuctionItem(type1, type2){
         $('#loadingToast').show();
         $(".secondType").removeClass("scrollItemChecked");
-        $(obj).addClass("scrollItemChecked");
+        $(type2).addClass("scrollItemChecked");
         var AuctionItemModel = {};
-        AuctionItemModel.type = type;
+        AuctionItemModel.type = type1;
         AuctionItemModel.name =  $("#shoppingName").val();
         AuctionItemModel.status = "3";
+        AuctionItemModel.page = pageId;
         var url= '/weixin/auctionItem/ajaxDataList.do';
         $.ajax({
             url: url,
@@ -101,12 +98,12 @@ function loadData()
             success:function(data){
                 $('#loadingToast').hide();
                 var dataList = data.rows;
+                var datalength = data.total;
                 if(dataList.length> 0)
                 {
                     var str = '';
                     $.each(dataList,function(i,obj){
                         var coverimg = '';
-
                         if(obj.resList && obj.resList.length > 0) {
                             coverimg = obj.resList[0].path;
                         }
@@ -122,8 +119,12 @@ function loadData()
 
                     });
                 }
-                $(".pro-item").empty();
                 $(".pro-item").append(str);
+                if(datalength <= (pageId * 10)){
+                    $("#loadMore").remove();
+                }
+                pageId++;
+
             }
         })
     }

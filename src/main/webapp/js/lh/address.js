@@ -1,24 +1,12 @@
+var pageId = 1;
 $(function(){
     loadAddress();
-    $(window).scroll(function(){
-        var scrolltop=$(document).scrollTop();
-        var Vheight=$(window).height();
-        if(scrolltop > 0){
-            $("#backtop").show();
-        }else{
-            $("#backtop").hide();
-        }
-    });
-    $("#backtop").click(function(){
-        $("html,body").animate({scrollTop:0},"fast");
-    })
-
 })
 
 //加载收货地址
 function loadAddress(){
     $('#loadingToast').show();
-    var url= '/weixin/userAddr/dataList.do?wxid='+ localStorage.getItem("openId");
+    var url= '/weixin/userAddr/dataList.do?wxid='+ localStorage.getItem("openId")+'&page='+pageId;
     $.ajax({
         url: url,
         type: 'post',
@@ -27,9 +15,9 @@ function loadAddress(){
         contentType : "application/json;charset=utf-8",
         cache: false,
         success:function(data){
-            $("#dataDiv").empty();
             $('#loadingToast').hide();
             var dataList = data.rows;
+            var datalength = data.total;
             if(dataList.length> 0)
             {
                 var str = '';
@@ -53,8 +41,15 @@ function loadAddress(){
                     str+='   </p>';
                     str+='</div>';
                 });
+                //加载上拉加载按钮
+                 $("#loadMore").remove();
+                str +='<a href="javascript:loadAddress();" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading"><i class="weui-loading"></i>点击加载更多</a>';
             }
             $("#dataDiv").append(str);
+            if(datalength <= (pageId * 10)){
+                $("#loadMore").remove();
+            }
+            pageId++;
         }
     })
 }

@@ -84,7 +84,13 @@
     <!-- 记录总数 -->
     <select id="queryByCount" resultType="java.lang.Integer"
             parameterType="Object">
-        select count(1) from t_e_user_addr
+        select count(1) from t_e_user_addr t
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
+        </trim>
     </select>
 
     <!-- 分页查询记录列表 -->

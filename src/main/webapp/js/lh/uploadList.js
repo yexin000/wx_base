@@ -1,3 +1,4 @@
+var pageId = 1;
 $(function() {
     loadMyUpload();
 })
@@ -7,6 +8,7 @@ function loadMyUpload(){
     $('#loadingToast').show();
     var AuctionItemModel = {};
     AuctionItemModel.uploadWxid = localStorage.getItem("openId");
+    AuctionItemModel.page = pageId;
     var url= '/weixin/auctionItem/ajaxDataList.do';
     $.ajax({
         url: url,
@@ -18,6 +20,7 @@ function loadMyUpload(){
         success:function(data){
             $('#loadingToast').hide();
             var dataList = data.rows;
+            var datalength = data.total;
             if(dataList.length> 0)
             {
                 var str = '';
@@ -50,6 +53,10 @@ function loadMyUpload(){
                 });
             }
             $(".pro-item").append(str);
+            if(datalength <= (pageId * 10)){
+                $("#loadMore").remove();
+            }
+            pageId++;
         }
     })
 }

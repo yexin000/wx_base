@@ -1,26 +1,7 @@
-
-//图片访问路径
-var imagePath = "http://127.0.0.1:8080/";
-
+var pageId = 1;
 
 $(function(){	
-	
-	$("#backtop").hide()
-
     loadbusinessData();
-	$(window).scroll(function(){
-        var scrolltop=$(document).scrollTop();
-        var Vheight=$(window).height();
-        if(scrolltop > 0){
-            $("#backtop").show(); 
-            }else{
-                 $("#backtop").hide();
-                }      
-    });
-	$("#backtop").click(function(){
-		$("html,body").animate({scrollTop:0},"fast");
-	})
-	
 })
 
 //加载商户数据
@@ -28,6 +9,7 @@ function loadbusinessData(){
     $('#loadingToast').show();
     var bisinessModel = {};
     bisinessModel.isShow = '1';
+    bisinessModel.page = pageId;
     var url= '/weixin/business/ajaxDataList.do';
     $.ajax({
         url: url,
@@ -39,6 +21,7 @@ function loadbusinessData(){
         success:function(data){
             $('#loadingToast').hide();
             var dataList = data.rows;
+            var datalength = data.total;
             if(dataList.length> 0)
             {
                 var str = '';
@@ -49,8 +32,15 @@ function loadbusinessData(){
                     str+='	</div>';
                     str+='</div>';
                 });
+                //加载上拉加载按钮
+                $("#loadMore").remove();
+                str +='<a href="javascript:loadbusinessData();" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading"><i class="weui-loading"></i>点击加载更多</a>';
             }
             $("#dataDiv").append(str);
+            if(datalength <= (pageId * 10)){
+                $("#loadMore").remove();
+            }
+            pageId++;
         }
     })
 }

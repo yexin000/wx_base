@@ -1,36 +1,23 @@
-
-//图片访问路径
-var imagePath = "http://127.0.0.1:8080/";
-
-
+var pageId = 1;
+var selectStatus = 0;
 $(function(){
-    $(window).scroll(function(){
-        var scrolltop=$(document).scrollTop();
-        var Vheight=$(window).height();
-        if(scrolltop > 0){
-            $("#backtop").show();
-        }else{
-            $("#backtop").hide();
-        }
-    });
-    $("#backtop").click(function(){
-        $("html,body").animate({scrollTop:0},"fast");
-    })
     $("#tradingCenter-tit li").click(function(){
-        var selectStatus = $(this).attr("streamtype");
-        loadOrder(selectStatus);
+        pageId = 1;
+        selectStatus = $(this).attr("streamtype");
+        $(".content").empty();
+        loadOrder();
     })
     $('li').eq(0).click();
 })
 
 //加载个人流水数据
-function loadOrder(status){
+function loadOrder( ){
     $('#loadingToast').show();
-    $(".content").empty();
-    if(status == 5) {
+    if(selectStatus == 5) {
         var OrderModel = {};
-        OrderModel.streamtype = status;
+        OrderModel.streamtype = selectStatus;
         OrderModel.wxid = localStorage.getItem("openId");
+        OrderModel.page =  pageId;
         var url= '/weixin/moneyStream/ajaxDataList.do';
         $.ajax({
             url: url,
@@ -42,6 +29,7 @@ function loadOrder(status){
             success:function(data){
                 $('#loadingToast').hide();
                 var dataList = data.rows;
+                var datalength = data.total;
                 if(dataList.length> 0)
                 {
                     var str = '';
@@ -65,11 +53,16 @@ function loadOrder(status){
                     });
                 }
                 $(".content").append(str);
+                if(datalength <= (pageId * 10)){
+                    $("#loadMore").remove();
+                }
+                pageId++;
             }
         })
     } else {
         var OrderModel = {};
         OrderModel.wxid = localStorage.getItem("openId");
+        OrderModel.page =  pageId;
         var url= '/weixin/putForward/ajaxDataList.do';
         $.ajax({
             url: url,
@@ -81,6 +74,7 @@ function loadOrder(status){
             success:function(data){
                 $('#loadingToast').hide();
                 var dataList = data.rows;
+                var datalength = data.total;
                 if(dataList.length> 0)
                 {
                     var str = '';
@@ -116,6 +110,10 @@ function loadOrder(status){
                     });
                 }
                 $(".content").append(str);
+                if(datalength <= (pageId * 10)){
+                    $("#loadMore").remove();
+                }
+                pageId++;
             }
         })
     }
