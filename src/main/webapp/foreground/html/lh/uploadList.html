@@ -10,6 +10,8 @@
     <link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/order.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
     <title></title>
 </head>
 <body>
@@ -17,12 +19,28 @@
     <a href="javascript:history.back(-1);" class="header-back"></a>
     <h1>我的上传</h1>
 </header>
+<div id="loadingToast" style="opacity: 1; display: none;">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">数据加载中</p>
+    </div>
+</div>
+<div class="js_dialog" id="tipDialog" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__bd">未审核通过</div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:closeTip();" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+        </div>
+    </div>
+</div>
 <table class="pro-item" style="margin-top: 0.43rem;">
 
 </table>
 <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>
-<script type="text/javascript" src="../../../js/lh/upload.js"></script>
+<script type="text/javascript" src="../../../js/lh/uploadList.js"></script>
 </body>
 </html>
