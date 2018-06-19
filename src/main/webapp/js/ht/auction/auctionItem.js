@@ -2,6 +2,7 @@ $package('WeiXin.auctionItem');
 
 WeiXin.auctionItem = function(){
     var _box = null;
+    var Grid = $('#data-list');
     var _this = {
         config:{
             action:{
@@ -60,7 +61,7 @@ WeiXin.auctionItem = function(){
                             }
                         }
                     },
-                    {field:'status',title:'状态',width:50,align:'center',sortable:true,
+                    {field:'status',title:'状态',width:65,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){
                                 return "未审核";
@@ -84,9 +85,13 @@ WeiXin.auctionItem = function(){
                             }
                         }
                     },
-                    {field:'auctionName',title:'拍卖会',width:100,align:'center',sortable:true},
-                    {field:'opts',title:'操作',width:100,align:'center',formatter:function(value,row,index){
+                    {field:'auctionName',title:'拍卖会',width:160,align:'center',sortable:true},
+                    {field:'opts',title:'操作',width:180,align:'center',formatter:function(value,row,index){
                             var html ="<a href='#' onclick='WeiXin.auctionItem.resManage(\""+row.id + "\"," + "\"" + row.name +"\")'>图片管理("+row.picCount+")</a>";
+                            if(row.status == "1"){
+                                html += "<a href='#' onclick='WeiXin.auctionItem.audit("+row.id+")'> 审核通过</a>";
+                                html += "<a href='#' onclick='WeiXin.auctionItem.auditDeny("+row.id+")'> 审核不通过</a>";
+                            }
                             return html;
                         }
                     }
@@ -134,14 +139,46 @@ WeiXin.auctionItem = function(){
                     });
                 }
             });
-
-
         },
         resManage:function (auctionItemId, auctionItemName) {
             $("#conid").val(auctionItemId);
             $("#conName").val(auctionItemName);
             $("#resForm").submit();
-        }
+        },
+        audit : function(id){
+            $.messager.confirm('提示','确定审核通过该商品上传申请?',function(r){
+                if (r){
+                    WeiXin.progress();
+                    WeiXin.auditForm('audit.do',{'id':id},function(result){
+                        WeiXin.closeProgress();
+                        if(result.success){
+                            WeiXin.alert('提示',result.msg);
+                        }else{
+                            WeiXin.alert('提示',data.msg,'error');
+                        }
+                        var param = $("#searchForm").serializeObject();
+                        Grid.datagrid('reload',param);
+                    });
+                }
+            });
+        },
+        auditDeny : function(id){
+            $.messager.confirm('提示','确定审核驳回该商品上传申请?',function(r){
+                if (r){
+                    WeiXin.progress();
+                    WeiXin.auditForm('auditDeny.do',{'id':id},function(result){
+                        WeiXin.closeProgress();
+                        if(result.success){
+                            WeiXin.alert('提示',result.msg);
+                        }else{
+                            WeiXin.alert('提示',data.msg,'error');
+                        }
+                        var param = $("#searchForm").serializeObject();
+                        Grid.datagrid('reload',param);
+                    });
+                }
+            });
+        },
     }
     return _this;
 }();

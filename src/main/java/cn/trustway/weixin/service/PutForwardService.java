@@ -22,12 +22,21 @@ public class PutForwardService<T> extends BaseService<T> {
 
 
     /**
-     * 修改微信用户
+     * 审核通过
      * @param
      * @return
      */
     public void updateByExamine(Integer id) {
         getDao().updateByExamine(id);
+    }
+
+    /**
+     * 审核不通过
+     * @param
+     * @return
+     */
+    public void updateByDeny(Integer id) {
+        getDao().updateByDeny(id);
     }
 
 }

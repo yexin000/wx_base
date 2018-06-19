@@ -259,4 +259,9 @@
         AND attribute='0'
         AND t.endtime &lt; now()
     </select>
+
+
+    <update id="updateByItemStatus" parameterType="Object">
+        update t_e_auction_item set status = #{status} where id=#{id}
+    </update>
 </mapper>

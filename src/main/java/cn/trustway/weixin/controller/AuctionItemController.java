@@ -267,6 +267,7 @@ public class AuctionItemController extends BaseController {
         auctionItem.setRate(DEFUALT_RATE);
         auctionItem.setAuctionId(0);
         auctionItem.setBusinessId(0);
+        auctionItem.setIsShow("0");
         auctionItemService.add(auctionItem);
 
         if(null != auctionItem.getId() && auctionItem.getId() > 0 ) {
@@ -308,6 +309,49 @@ public class AuctionItemController extends BaseController {
         sendSuccessMessage(response, "删除成功");
     }
 
+    /**
+     * 根据ID审核记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/audit")
+    public void audit(Integer id, HttpServletResponse response) throws Exception {
+        if (id != null && id > 0) {
+            String status = "3";
+            Map<String, Object> params = new HashMap<>();
+            params.put("id", id);
+            params.put("status", status);
+            auctionItemService.updateByItemStatus(params);
+            sendSuccessMessage(response, "审核成功");
+        } else {
+            sendFailureMessage(response, "审核失败");
+        }
+    }
+
+    /**
+     * 根据ID审核记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/auditDeny")
+    public void auditDeny(Integer id, HttpServletResponse response) throws Exception {
+        if (id != null && id > 0) {
+            String status = "2";
+            Map<String, Object> params = new HashMap<>();
+            params.put("id", id);
+            params.put("status", status);
+            auctionItemService.updateByItemStatus(params);
+            sendSuccessMessage(response, "审核成功");
+        } else {
+            sendFailureMessage(response, "审核失败");
+        }
+    }
 
     /**
      * 购买

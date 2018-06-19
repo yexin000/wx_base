@@ -71,6 +71,7 @@
 					<value>/userAddr/ajaxAddAddr.do</value>
 					<value>/putForward/save.do</value>
 					<value>/moneyStream/ajaxDataList.do</value>
+					<value>/putForward/ajaxDataList.do</value>
 					<value>cn.trustway.weixin.controller.FavoriteController</value>
 					<value>cn.trustway.weixin.controller.UserAddrController</value>
 					<value>cn.trustway.weixin.controller.WxPayController</value>

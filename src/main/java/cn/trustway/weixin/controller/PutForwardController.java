@@ -29,8 +29,8 @@ import java.util.Map;
 
 /**
  * 提现控制类
- * @author dingjia
  *
+ * @author dingjia
  */
 @Controller
 @RequestMapping("/putForward")
@@ -88,7 +88,7 @@ public class PutForwardController extends BaseController {
         List<PutForward> dataList = putForwardService.queryByList(model);
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("total", model.getPager().getRowCount());
+        jsonMap.put("total", putForwardService.queryByCount(model));
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
     }
@@ -124,7 +124,7 @@ public class PutForwardController extends BaseController {
      */
     @RequestMapping("/audit")
     public void audit(Integer id, HttpServletResponse response) throws Exception {
-        if(id != null && id > 0) {
+        if (id != null && id > 0) {
             putForwardService.updateByExamine(id);
             PutForward pf = putForwardService.queryById(id);
             //生成提现流水
@@ -135,20 +135,50 @@ public class PutForwardController extends BaseController {
             bean.setStatus(0);
             bean.setPfId(pf.getId());
             bean.setFlownumber(createCode());
+            bean.setWxid(pf.getWxid());
+            bean.setWhereabouts(pf.getWxAccount());
             moneyStreamService.add(bean);
 
             WeixinUser wu = weixinUserService.queryWeixinUser(pf.getWxid());
-            //余额提现中，请删除
-            BigDecimal myMoneyExtracting =  new BigDecimal(wu.getMoneyExtracting());
+            //提现成功，更新提现中金额
+            BigDecimal myMoneyExtracting = new BigDecimal(wu.getMoneyExtracting());
             myMoneyExtracting = myMoneyExtracting.subtract(new BigDecimal(pf.getMoney()));
             wu.setMoneyExtracting(myMoneyExtracting.doubleValue());
-            weixinUserService.updateByBal(wu);
+            weixinUserService.updateByExtracting(wu);
 
             sendSuccessMessage(response, "审核成功");
         } else {
             sendFailureMessage(response, "审核失败");
         }
+    }
 
+    /**
+     * 根据ID审核记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/auditDeny")
+    public void auditDeny(Integer id, HttpServletResponse response) throws Exception {
+        if (id != null && id > 0) {
+            putForwardService.updateByDeny(id);
+            PutForward pf = putForwardService.queryById(id);
+
+            WeixinUser wu = weixinUserService.queryWeixinUser(pf.getWxid());
+            // 提现失败，余额回滚
+            wu.setBalance(wu.getBalance() + wu.getMoneyExtracting());
+            weixinUserService.updateByBal(wu);
+            // 提现失败，更新提现中金额
+            BigDecimal myMoneyExtracting = new BigDecimal(wu.getMoneyExtracting());
+            myMoneyExtracting = myMoneyExtracting.subtract(new BigDecimal(pf.getMoney()));
+            wu.setMoneyExtracting(myMoneyExtracting.doubleValue());
+            weixinUserService.updateByExtracting(wu);
+            sendSuccessMessage(response, "审核成功");
+        } else {
+            sendFailureMessage(response, "审核失败");
+        }
     }
 
 
@@ -164,55 +194,56 @@ public class PutForwardController extends BaseController {
     public void save(@RequestBody PutForwardModel model, HttpServletResponse response) throws Exception {
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         String status = "0";
-            BigDecimal sm = new BigDecimal(model.getMoney());
-            WeixinUser wu = weixinUserService.queryWeixinUser(model.getWxid());
-            if(null != wu){
-                BigDecimal myBal = new BigDecimal(wu.getBalance());
-                if(myBal.compareTo(sm) < 0){
-                    status = "-1";
-                }else{
-                    //成功
-                    myBal =  myBal.subtract(sm);
-                    wu.setBalance(myBal.doubleValue());
-                    //如果已经有余额正在提现中，请累加
-                    BigDecimal myMoneyExtracting =  null;
-                    if(null != wu.getMoneyExtracting()){
-                        myMoneyExtracting = new BigDecimal(wu.getMoneyExtracting());
-                        myMoneyExtracting = myMoneyExtracting.add(sm);
-                    }else{
-                        myMoneyExtracting = sm;
-                    }
-                    wu.setMoneyExtracting(myMoneyExtracting.doubleValue());
-                    weixinUserService.updateByBal(wu);
-                    weixinUserService.updateByExtracting(wu);
-                    //生成提现记录
-                    PutForward bean = new PutForward();
-                    bean.setWxid(model.getWxid());
-                    bean.setMoney(sm.doubleValue());
-                    bean.setCreatetime(new Date());
-                    bean.setWxAccount(model.getWxaccount());
-                    bean.setStatus(0);
-                    bean.setPutForwardNo(createCode());
-                    putForwardService.add(bean);
+        BigDecimal sm = new BigDecimal(model.getMoney());
+        WeixinUser wu = weixinUserService.queryWeixinUser(model.getWxid());
+        if (null != wu) {
+            BigDecimal myBal = new BigDecimal(wu.getBalance());
+            if (myBal.compareTo(sm) < 0) {
+                status = "-1";
+            } else {
+                //成功
+                myBal = myBal.subtract(sm);
+                wu.setBalance(myBal.doubleValue());
+                //如果已经有余额正在提现中，请累加
+                BigDecimal myMoneyExtracting = null;
+                if (null != wu.getMoneyExtracting()) {
+                    myMoneyExtracting = new BigDecimal(wu.getMoneyExtracting());
+                    myMoneyExtracting = myMoneyExtracting.add(sm);
+                } else {
+                    myMoneyExtracting = sm;
                 }
+                wu.setMoneyExtracting(myMoneyExtracting.doubleValue());
+                weixinUserService.updateByBal(wu);
+                weixinUserService.updateByExtracting(wu);
+                //生成提现记录
+                PutForward bean = new PutForward();
+                bean.setWxid(model.getWxid());
+                bean.setMoney(sm.doubleValue());
+                bean.setCreatetime(new Date());
+                bean.setWxAccount(model.getWxaccount());
+                bean.setStatus(0);
+                bean.setPutForwardNo(createCode());
+                putForwardService.add(bean);
             }
+        }
         jsonMap.put("status", status);
         HtmlUtil.writerJson(response, jsonMap);
     }
 
 
-    private String createCode (){
+    private String createCode() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        return  "No"+sdf.format(new Date())+getIDCode4();
+        return "No" + sdf.format(new Date()) + getIDCode4();
     }
 
     /**
      * 生成4位数的随机数
+     *
      * @return
      */
     protected static String getIDCode4() {
-        int idCode = (int) (Math.random()*9000+1000);
-        return idCode+"";
+        int idCode = (int) (Math.random() * 9000 + 1000);
+        return idCode + "";
     }
 
 

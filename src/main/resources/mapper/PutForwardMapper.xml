@@ -107,9 +107,14 @@
     </select>
 
 
-    <!-- 修改记录，只修改只不为空的字段 -->
+    <!-- 审核通过 -->
     <update id="updateByExamine" parameterType="Object">
         update t_e_put_forward set  status = 1   where id=#{id}
+    </update>
+
+    <!-- 审核不通过 -->
+    <update id="updateByDeny" parameterType="Object">
+        update t_e_put_forward set  status = 2   where id=#{id}
     </update>
 
 </mapper>

@@ -25,7 +25,7 @@
     <insert id="add" parameterType="Object">
         insert into
         t_e_money_stream(id,wxid,streamtype,streammoney,createtime,pfid,flownumber,whereabouts )
-        values(null,#{wxid},#{streamtype},#{streammoney},#{createtime},#{pfid},#{flownumber},#{whereabouts});
+        values(null,#{wxid},#{streamtype},#{streammoney},#{createtime},#{pfId},#{flownumber},#{whereabouts});
     </insert>
 
     <!-- 根据id，修改记录 -->

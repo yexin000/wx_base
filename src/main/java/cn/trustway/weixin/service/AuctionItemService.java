@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 拍品服务类
@@ -28,5 +29,9 @@ public class AuctionItemService<T> extends BaseService<T> {
 
     public List<T> queryInAuctionByList() {
         return getDao().queryInAuctionByList();
+    }
+
+    public void updateByItemStatus(Map<String, Object> params) {
+        getDao().updateByItemStatus(params);
     }
 }
