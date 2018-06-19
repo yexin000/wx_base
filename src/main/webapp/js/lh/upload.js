@@ -31,7 +31,7 @@ $(function(){
             $('#tipDialog').show();
             return;
         }
-        $("#uploaderFiles").empty();
+        //$("#uploaderFiles").empty();
         if (window.FileReader) {
             for(var i = 0; i < this.files.length; i ++) {
                 var reader = new FileReader();
@@ -141,6 +141,12 @@ function submitUpload() {
             window.location.href = "../../html/lh/uploadList.html";
         }
     });
+}
+
+function clearPics() {
+    $("#uploaderFiles").empty();
+    $("#uploaderFiles").append('<li class="weui-uploader__file" style="background-image:url(/weixin/foreground/images/imgBg.png)"></li>')
+    $('#itemImages').val('')
 }
 
 
