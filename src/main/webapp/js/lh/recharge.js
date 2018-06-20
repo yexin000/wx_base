@@ -18,7 +18,7 @@ function submitRecharge(){
    //后台需要创建订单并返回订单id
     var params = {};
     params.wxid = localStorage.getItem("openId");
-    params.orderMoney = rechargeMoney;
+    params.orderMoney = '0.01';
     var url = "/weixin/order/rechargeOrder.do";
     $.ajax({
         url: url,

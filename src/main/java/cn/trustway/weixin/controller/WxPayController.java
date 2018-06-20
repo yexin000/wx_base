@@ -22,12 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -194,6 +192,12 @@ public class WxPayController extends BaseController {
                 log.info("微信回调返回商户订单号：" + outTradeNo);
                 //访问DB
                 Order order = orderService.queryById(orderId);
+                System.out.println(">>>>>>>>>>>>>>>"+order.getId()+"正在处理回调，回调之前的订单状态为:"+order.getStatus());
+                if("3".equals(order.getStatus())){
+                    //已经支付过的订单
+                    writeMessageToResponse(response, "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>");
+                    return;
+                }
                 order.setTransactionId(map.get("transaction_id"));
                 order.setPayTime(new Date());
                 order.setStatus("3");
@@ -206,6 +210,7 @@ public class WxPayController extends BaseController {
                         //用户信息获取失败
                     }
                 }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -214,6 +219,20 @@ public class WxPayController extends BaseController {
         }
     }
 
+    protected void writeMessageToResponse(HttpServletResponse response, String message) {
+        PrintWriter writer = null;
+        try {
+            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+            writer = response.getWriter();
+            writer.write(message);
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (writer != null)
+                writer.close();
+        }
+    }
 
     /**
      * 余额支付

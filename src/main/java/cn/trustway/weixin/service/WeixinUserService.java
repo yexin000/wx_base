@@ -120,6 +120,7 @@ public class WeixinUserService<T> extends BaseService<T> {
 			bean.setStatus(1);
 			bean.setWhereabouts("用户余额");
 			moneyStreamService.add(bean);
+			return "0";
 		}
 		return "-1";
 	}
