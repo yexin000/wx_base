@@ -41,9 +41,10 @@ function loadItemData(id){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     var coverimg = obj.path;
-                    str+='<li class="bannerItem">';
+                    str+='<li class="bannerItem" onclick="showImg('+i+')">';
+                    str+='<input type="hidden" id="imgSrc'+i+'" value="' + hostPath + coverimg +  '">';
                     str+='	<a href="javaScipt:void(0)">';
-                    str+=' <img src="' + hostPath + coverimg +  '" alt="">';
+                    str+=' <img src="' + hostPath + coverimg +  '" alt="" >';
                     str+=' </a></li>';
                 });
                 $(".bannerList").append(str);
@@ -56,7 +57,10 @@ function loadItemData(id){
             $("#standardLabel").html(dataObj.standard); //规格
             $("#ageLabel").html(dataObj.age); //年代
             $("#degreeLabel").html(dataObj.degree); //等级
-            var details = dataObj.detail.split("\n");
+            var details = "";
+            if(dataObj.detail){
+                details = dataObj.detail.split("\n");
+            }
             var detail = "";
             for(var i = 0; i < details.length; i ++) {
                 detail = detail + details[i] + "<br/>";
@@ -172,7 +176,7 @@ function zhifu(orderId){
                 var package = data.package;
                 var prepay_id = data.prepay_id;
                 var paySign = data.paySign;
-                var orderId = data.orderId;
+                var orderId = data.orderId;showImg
                 var itemId = data.itemId;
                 var params = "?timeStamp=" +timeStamp+ "&nonceStr=" + nonceStr
                     + "&prepay_id="+prepay_id+"&paySign=" + paySign
@@ -187,4 +191,30 @@ function zhifu(orderId){
             }
         }
     });
+}
+
+
+function showImg(i){
+    var src = $("#imgSrc"+i).val();
+    $("#footDiv").css("z-index","0");
+    var str = '';
+    str += '<div class="page gallery js_show " id="imgDiv">'
+    str +=    '<div class="page__hd">'
+    str +=    '<h1 class="page__title">Gallery</h1>'
+    str +=     '<p class="page__desc">画廊，可实现上传图片的展示或幻灯片播放</p>'
+    str += '</div>'
+    str += '<div class="weui-gallery" style="display: block">'
+    str +=    '<span class="weui-gallery__img" id="imageSpan" style="background-image: url('+src+');"></span>'
+    str +=     '<div class="weui-gallery__opr">'
+    str +=     '<a href="javascript:" class="weui-gallery__del">'
+    str +=     '<i class="weui-icon-cancel weui-icon_gallery-cancel" onclick="closeImg()"></i>'
+    str +=     '</a>'
+    str +=     '</div>'
+    str +=     '</div>'
+    str +=    '</div>'
+    $('body').append(str);
+}
+
+function closeImg(){
+    $("#imgDiv").remove();
 }

@@ -1,6 +1,6 @@
 $(function(){
     var id = getParam("id");
-    loadItemData(id);
+    loadItemData(id);banner1
     loadAuctionItemBid(id);
     $("#bidBtn").click(function () {
         $('#bidDialog').show();
@@ -79,9 +79,10 @@ function loadItemData(id){
                 $.each(dataList,function(i,obj){
                     var coverimg = obj.path;
                     itemImage = coverimg;
-                    str+='<li class="bannerItem">';
+                    str+='<li class="bannerItem"  onclick="showImg('+i+')">';
+                    str+='<input type="hidden" id="imgSrc'+i+'" value="' + hostPath + coverimg +  '">';
                     str+='	<a href="javaScipt:void(0)">';
-                    str+=' <img src="' + hostPath + coverimg +  '" alt="">';
+                    str+=' <img src="' + hostPath + coverimg +  '" alt=""  >';
                     str+=' </a></li>';
                 });
                 $(".bannerList").append(str);
@@ -228,3 +229,28 @@ function goBack() {
 }
 
 
+
+function showImg(i){
+    var src = $("#imgSrc"+i).val();
+    $("#footDiv").css("z-index","0");
+    var str = '';
+    str += '<div class="page gallery js_show " id="imgDiv">'
+    str +=    '<div class="page__hd">'
+    str +=    '<h1 class="page__title">Gallery</h1>'
+    str +=     '<p class="page__desc">画廊，可实现上传图片的展示或幻灯片播放</p>'
+    str += '</div>'
+    str += '<div class="weui-gallery" style="display: block">'
+    str +=    '<span class="weui-gallery__img" id="imageSpan" style="background-image: url('+src+');"></span>'
+    str +=     '<div class="weui-gallery__opr">'
+    str +=     '<a href="javascript:" class="weui-gallery__del">'
+    str +=     '<i class="weui-icon-cancel weui-icon_gallery-cancel" onclick="closeImg()"></i>'
+    str +=     '</a>'
+    str +=     '</div>'
+    str +=     '</div>'
+    str +=    '</div>'
+    $('body').append(str);
+}
+
+function closeImg(){
+    $("#imgDiv").remove();
+}
