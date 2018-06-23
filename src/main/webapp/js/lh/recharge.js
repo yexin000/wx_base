@@ -18,7 +18,7 @@ function submitRecharge(){
    //后台需要创建订单并返回订单id
     var params = {};
     params.wxid = localStorage.getItem("openId");
-    params.orderMoney = '0.01';
+    params.orderMoney = rechargeMoney;
     var url = "/weixin/order/rechargeOrder.do";
     $.ajax({
         url: url,
@@ -56,9 +56,10 @@ function zhifu(orderId){
                 var prepay_id = data.prepay_id;
                 var paySign = data.paySign;
                 var orderId = data.orderId;
+                var amount = data.amount;
                 var params = "?timeStamp=" +timeStamp+ "&nonceStr=" + nonceStr
                     + "&prepay_id="+prepay_id+"&paySign=" + paySign
-                    + "&orderId=" + orderId;
+                    + "&orderId=" + orderId + "&amount=" + amount;
                 var path = '/pages/wxpay/wxpayRec' + params;
                 wx.miniProgram.navigateTo({ url: path });
             } else {

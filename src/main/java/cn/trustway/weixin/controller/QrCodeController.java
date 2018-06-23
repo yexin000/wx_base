@@ -47,7 +47,7 @@ public class QrCodeController extends BaseController {
     @RequestMapping(value = "/getItemQrCode")
     public void getItemQrCode(String itemId, HttpServletRequest request, HttpServletResponse response) {
         String scene = SCENE_PRE;
-        if(StringUtils.isNotBlank(itemId)) {
+        if (StringUtils.isNotBlank(itemId)) {
             scene += itemId;
         } else {
             scene += 0;
@@ -55,7 +55,7 @@ public class QrCodeController extends BaseController {
 
         String itemQrCodePath = filepath + "qrCode/" + "QrCode_" + scene + ".jpg";
         File codeFile = new File(itemQrCodePath);
-        if(codeFile.exists()) {
+        if (codeFile.exists()) {
             Map<String, Object> context = new HashMap<>();
             context.put(SUCCESS, true);
             context.put("codeUrl", "qrCode/" + "QrCode_" + scene + ".jpg");
@@ -63,18 +63,18 @@ public class QrCodeController extends BaseController {
             return;
         }
 
-        if(null != TokenThread.accessToken && StringUtils.isNotBlank(TokenThread.accessToken.getToken())) {
-            String codeUrl = AppInitConstants.XCX_QR_CODE_URL  + "?access_token=" + TokenThread.accessToken.getToken();
+        if (null != TokenThread.accessToken && StringUtils.isNotBlank(TokenThread.accessToken.getToken())) {
+            String codeUrl = AppInitConstants.XCX_QR_CODE_URL + "?access_token=" + TokenThread.accessToken.getToken();
             RestTemplate rest = new RestTemplate();
             InputStream inputStream = null;
             FileOutputStream outputStream = null;
             try {
-                Map<String,Object> param = new HashMap<>();
+                Map<String, Object> param = new HashMap<>();
                 param.put("scene", scene);
                 param.put("page", "pages/index/index");
                 param.put("width", 430);
                 param.put("auto_color", false);
-                Map<String,Object> line_color = new HashMap<>();
+                Map<String, Object> line_color = new HashMap<>();
                 line_color.put("r", 0);
                 line_color.put("g", 0);
                 line_color.put("b", 0);
@@ -86,7 +86,7 @@ public class QrCodeController extends BaseController {
                 inputStream = new ByteArrayInputStream(result);
 
                 File file = new File(itemQrCodePath);
-                if (!file.exists()){
+                if (!file.exists()) {
                     file.createNewFile();
                 }
                 outputStream = new FileOutputStream(file);
@@ -97,21 +97,21 @@ public class QrCodeController extends BaseController {
                 }
                 outputStream.flush();
 
-                    Map<String, Object> context = new HashMap<>();
-                    context.put(SUCCESS, true);
-                    context.put("codeUrl", "qrCode/" + "QrCode_" + scene + ".jpg");
-                    HtmlUtil.writerJson(response, context);
+                Map<String, Object> context = new HashMap<>();
+                context.put(SUCCESS, true);
+                context.put("codeUrl", "qrCode/" + "QrCode_" + scene + ".jpg");
+                HtmlUtil.writerJson(response, context);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                if(inputStream != null){
+                if (inputStream != null) {
                     try {
                         inputStream.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-                if(outputStream != null){
+                if (outputStream != null) {
                     try {
                         outputStream.close();
                     } catch (IOException e) {

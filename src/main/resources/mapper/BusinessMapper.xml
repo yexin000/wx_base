@@ -71,7 +71,7 @@
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="Base_Column_List" />,businessaddress,bussinessname
+        <include refid="Base_Column_List" />,address as businessaddress,name as bussinessname
         from t_e_business where id = #{id}
     </select>
 

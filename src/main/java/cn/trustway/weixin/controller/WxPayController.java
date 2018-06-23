@@ -146,6 +146,7 @@ public class WxPayController extends BaseController {
                         + "&key=" + AppInitConstants.XCX_MCHKEY;
                 jsonMap.put("paySign", MD5.md532(signString).toUpperCase());
                 jsonMap.put("orderId", orderId);
+                jsonMap.put("amount", amount);
                 result.put(CODE, AppInitConstants.HttpCode.HTTP_SUCCESS);
                 result.put("data", jsonMap);
                 HtmlUtil.writerJson(response, result);

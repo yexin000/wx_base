@@ -1,9 +1,4 @@
-
-//图片访问路径
-var imagePath = "http://127.0.0.1:8080/";
-
-
-$(function(){	
+$(function(){
 	
 	$("#backtop").hide()
     var id = getParam("id");

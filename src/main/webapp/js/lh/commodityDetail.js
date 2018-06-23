@@ -218,3 +218,13 @@ function showImg(i){
 function closeImg(){
     $("#imgDiv").remove();
 }
+
+$("#shareBtn").click(function () {
+    if(itemImage !=  '') {
+        var itemUrl = encodeURIComponent(itemImage);
+        var itemText = encodeURIComponent(itemName);
+        var itemId = getParam("id");
+        var shareUrl = '/pages/share/shareItem?itemUrl=' + itemUrl + "&itemText=" + itemText + "&itemId=" + itemId;
+        wx.miniProgram.navigateTo({ url: shareUrl });
+    }
+});
