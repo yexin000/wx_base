@@ -120,9 +120,12 @@
                         } else if(status == "3") {
                             label = obj.endtime + "已结束";
                         }
+                        if(obj.logoPath == null || obj.logoPath == '') {
+                            obj.logoPath = "foreground/images/no-image.jpg";
+                        }
                         str+='<div class="posr" onclick="toAuctionDetail('+obj.id+')">';
                         str+='	<div class="left" >';
-                        str+=' 		<img src="' + hostPath + obj.logoPath +  '" alt="">';
+                        str+=' 		<img src="' + hostPath + obj.logoPath +  '" alt="" style="height: 1.7rem;">';
                         str+='	</div>';
                         str+='<p style="padding-top: 1.4rem; font-size:18px;font-weight:bold; margin-left: 0.04rem;">'+obj.name+'</p>';
                         str+='<p style="margin-left: 0.04rem;"> '+label+'</p>';

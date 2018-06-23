@@ -58,7 +58,7 @@ function loadItemData(id){
             $("#ageLabel").html(dataObj.age); //年代
             $("#degreeLabel").html(dataObj.degree); //等级
             var details = "";
-            if(dataObj.detail){
+            if(dataObj.detail != null && dataObj.detail != '') {
                 details = dataObj.detail.split("\n");
             }
             var detail = "";

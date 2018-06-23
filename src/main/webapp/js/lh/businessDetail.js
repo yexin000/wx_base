@@ -37,6 +37,9 @@ function loadfindData(id){
         cache: false,
         success:function(data){
             var dataObj = data.data;
+            if(dataObj.logoPath == null || dataObj.logoPath == '') {
+                dataObj.logoPath = "foreground/images/no-image.jpg";
+            }
             $("#businessImg").attr("src", hostPath + dataObj.logoPath);
             $("#businessName").html( dataObj.name);
             $("#dataDiv").append(dataObj);

@@ -26,9 +26,12 @@ function loadbusinessData(){
             {
                 var str = '';
                 $.each(dataList,function(i,obj){
-                    str+='<div class="posr-item" style="overflow:hidden">';
+                    if(obj.logoPath == null || obj.logoPath == '') {
+                        obj.logoPath = "foreground/images/no-image.jpg";
+                    }
+                    str+='<div class="posr-item" style="overflow:hidden;height: 1.9rem;">';
                     str+='	<div class="left" onclick="toBusinessDetail('+obj.id+')">';
-                    str+=' 		<img src= "'+hostPath + obj.logoPath + '" alt="">';
+                    str+=' 		<img src= "'+hostPath + obj.logoPath + '" alt="" style="height: 1.9rem;">';
                     str+='	</div>';
                     str+='</div>';
                 });
