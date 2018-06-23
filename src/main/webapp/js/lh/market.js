@@ -1,12 +1,13 @@
 var pageId = 1;
-var type1 = 0;
-var type2 = 0;
+var isRef = true;
 $(function(){
     loadData();
 })
 
 function loadData()
 {
+    $("#loadMore").hide();
+    pageId =1;
     var AuctionModel = {};
     var url= '/weixin/wxCode/getAuctionItemType.do';
     $.ajax({
@@ -35,6 +36,9 @@ function loadData()
 
     function loadType2Date(code, obj)
     {
+        isRef = true;
+        pageId = 1;
+        $("#loadMore").hide();
         $(".firstType").removeClass("scrollItemChecked");
         $(obj).addClass("scrollItemChecked");
         if(!code) {
@@ -42,7 +46,6 @@ function loadData()
             loadAuctionItem();
             return;
         }
-
         var url= '/weixin/wxCode/getAuctionItemSecondType.do?code='+code;
         $.ajax({
             url: url,
@@ -57,18 +60,16 @@ function loadData()
                 {
                     var str2 = '';
                     $.each(dataList2,function(i,obj){
-                        str2+='<p class="scrollItem2 secondType" onclick="loadAuctionItem(\''+obj.code+'\', this)">' + '<span>'+obj.name+'</span>';
+                        str2+='<p class="scrollItem2 secondType" onclick="loadAuctionItem(\''+obj.code+'\', this,true)">' + '<span>'+obj.name+'</span>';
                         str2+='</p>';
                     });
                     $("#dataList2").empty();
                     $("#dataList2").append(str2);
-
+                    $(".pro-item").empty();
                     if(dataList2[0].id)
                     {
-                        //loadAuctionItem(dataList2[0].code, $(".scrollItem2").get(0));
-                        type1 = dataList2[0].code;
-                        type2 = $(".scrollItem2").get(0);
-                        loadAuctionItem();
+                        type = dataList2[0].code;
+                        loadAuctionItem(type, $(".scrollItem2").get(0));
                     }
                 }
             }
@@ -78,7 +79,15 @@ function loadData()
 
 
     //根据类型加载拍品数据
-    function loadAuctionItem(type1, type2){
+    function loadAuctionItem(type1, type2,isRefByType){
+        if(isRefByType){
+            isRef = isRefByType;
+        }
+        if(isRef){
+            $(".pro-item").empty();
+            pageId = 1;
+        }
+        isRef = false;
         $('#loadingToast').show();
         $(".secondType").removeClass("scrollItemChecked");
         $(type2).addClass("scrollItemChecked");
@@ -120,11 +129,13 @@ function loadData()
                     });
                 }
                 $(".pro-item").append(str);
+                debugger
                 if(datalength <= (pageId * 10)){
-                    $("#loadMore").remove();
+                    $("#loadMore").hide();
+                }else{
+                    $("#loadMore").show();
                 }
                 pageId++;
-
             }
         })
     }

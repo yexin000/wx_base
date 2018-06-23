@@ -165,7 +165,7 @@
                         }
                         str+='<div onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')" class="posr-item">';
                         str+='	<div class="left" >';
-                        str+=' 		<img src="' + hostPath + coverimg +  '" alt="">';
+                        str+=' 		<img src="' + hostPath + coverimg +  '" alt="" style="max-height: 1.5rem;overflow: hidden;">';
                         str+='	</div>';
 
                         str+='</div>';
