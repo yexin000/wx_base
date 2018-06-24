@@ -129,7 +129,6 @@ function loadData()
                     });
                 }
                 $(".pro-item").append(str);
-                debugger
                 if(datalength <= (pageId * 10)){
                     $("#loadMore").hide();
                 }else{

@@ -123,9 +123,21 @@
                         if(obj.logoPath == null || obj.logoPath == '') {
                             obj.logoPath = "foreground/images/no-image.jpg";
                         }
+                        // 图片地址
+                        var img_url = hostPath + obj.logoPath ;
+                        // 创建对象
+                        var img = new Image();
+                        // 改变图片的src
+                        img.src = img_url;
                         str+='<div class="posr" onclick="toAuctionDetail('+obj.id+')">';
-                        str+='	<div class="left" >';
-                        str+=' 		<img src="' + hostPath + obj.logoPath +  '" alt="" style="height: 1.7rem;">';
+                        str+='	<div class="left"  >';
+                        var loadClass = '';
+                        if(img.width > img.height){
+                            loadClass = 'width';
+                        }else{
+                            loadClass = 'length';
+                        }
+                        str+=' 		<img src="' + img_url +  '" alt=""  class="'+loadClass+'" >';
                         str+='	</div>';
                         str+='<p style="padding-top: 1.4rem; font-size:18px;font-weight:bold; margin-left: 0.04rem;">'+obj.name+'</p>';
                         str+='<p style="margin-left: 0.04rem;"> '+label+'</p>';
@@ -165,7 +177,7 @@
                         }
                         str+='<div onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')" class="posr-item">';
                         str+='	<div class="left" >';
-                        str+=' 		<img src="' + hostPath + coverimg +  '" alt="" style="max-height: 1.5rem;overflow: hidden;">';
+                        str+=' 		<img src="' + hostPath + coverimg +  '" alt="" class="width">';
                         str+='	</div>';
 
                         str+='</div>';

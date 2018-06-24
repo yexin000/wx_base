@@ -1,9 +1,22 @@
 .like{margin-top: 0.55rem;width: 2.5rem;margin-left: 0.1rem;border-radius: 5px;border-style: none;height: 0.3rem;background: url(../img/rightlogo.png) no-repeat left center;background-size: 0.25rem;text-align: center;background-color: #fff;}
 .posr{width: 100%;height: 2.1rem;background-color: #fff;margin-top: 0.15rem;}
-.posr-item{width: 100%;height: 1.5rem;background-color: #fff;margin-top: 0.15rem;}
+.posr-item{width: 100%;height: 1.5rem;background-color: #fff;}
 .posr-businessDetail{width: 100%;height: 1.5rem;background-color: #fff;margin-top: 0.45rem;}
-.left{float: left; }
-.left img{width: 3.2rem;}
+.left{float: left;position: relative; width: 3.2rem;height: 1.7rem;}
+.left img.length{
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%,0);
+}
+.left img.width{
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translate(0,-50%);
+}
 .right{width: 1.8rem;float: right;}
 .right p{font-size: 0.13rem;height: 0.3rem;}
 .posr1{width: 100%;height: 0.5rem;background-color: #fff;margin-top: 0.1rem;}
@@ -15,6 +28,7 @@
 .checkList>li:after{
 	display: inline-block;content: " ";width: .08rem;height: .14rem; vertical-align: middle;background-size: 100% ;overflow: hidden;
 }
+
 .checkList>li.high:after{background:url(../img/high-low1.png) no-repeat;background-size: 100% ;}
 .checkList>li.low:after{background:url(../img/high-low2.png) no-repeat;background-size: 100%  ;}
 .cf{*zoom:1;}
