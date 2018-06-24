@@ -124,7 +124,7 @@
                             obj.logoPath = "foreground/images/no-image.jpg";
                         }
                         // 图片地址
-                        var img_url = hostPath + obj.logoPath ;
+                        var img_url = hostPath + obj.logoPath + '?d='+Date.parse(new Date());;
                         // 创建对象
                         var img = new Image();
                         // 改变图片的src
