@@ -124,6 +124,10 @@
             <if test="status != null and status != ''">
                 and t.status = #{status}
             </if>
+            <if test="businessid != null and businessid != ''">
+                and t.businessid = #{businessid}
+            </if>
+
         </trim>
     </select>
 
@@ -152,6 +156,10 @@
             <if test="status != null and status != ''">
                 and t.status = #{status}
             </if>
+            <if test="businessid != null and businessid != ''">
+                and t.businessid = #{businessid}
+            </if>
+
         </trim>
 
         order by t.modifytime desc

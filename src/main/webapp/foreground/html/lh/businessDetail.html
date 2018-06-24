@@ -23,20 +23,25 @@
     <h1>商家店铺</h1>
 </header>
     <div id="dataDiv">
-        <div class="posr-businessDetail" style="height: 1.9rem;">
+        <div class="posr-businessDetail" style="height: 2.2rem;">
          <div class="left" style="overflow:hidden;height:1.5rem;" >
-             <img src= "" id="businessImg" alt="" style="height: 1.9rem;">
+             <img src= "" id="businessImg" alt="" style="height: 1.9rem;width: 100%;">
          </div>
-         <p style="padding-left: 0.1rem;padding-top: 0.1rem;font-size: 18px;display: inline;float: left;" id="businessName"></p>
-         <p style="padding-left: 1.6rem;padding-top: 0.15rem;display: inline;float: left;" >共 <span id="shoppingCount">0</span >件拍品</p>
+         <p style="padding-left: 0.1rem;padding-top: 0.1rem;font-size: 18px;width:3.1rem;height: 0.3rem; float: left;overflow: hidden; word-break:keep-all;white-space:nowrap;text-overflow:ellipsis;" id="businessName"></p>
+         <p style="  float: right;" >共 <span id="shoppingCount">0</span >件拍品</p>
         </div>
     </div>
 
-    <div  style="margin-top: 0.4rem;">
+<ul id="business-tit">
+    <li class="cur" selectType="1">展览</li>
+    <li selectType="2">展品</li>
+</ul>
+
+
         <table class="pro-item">
 
         </table>
-    </div>
+    <a href="javascript:loadAuctionItem();" id="loadMore" style="display: none" class="weui-btn weui-btn_default weui-btn_loading"><i class="weui-loading"></i>点击加载更多</a>
     <div id="loadingToast" style="opacity: 1; display: none;">
         <div class="weui-mask_transparent"></div>
         <div class="weui-toast">
@@ -48,8 +53,6 @@
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>
 <script type="text/javascript" src="../../../js/lh/businessDetail.js"></script>
-<script type="text/javascript">
 
-</script>
 </body>
 </html>

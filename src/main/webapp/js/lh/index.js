@@ -82,7 +82,11 @@
                         if(obj.resList && obj.resList.length > 0) {
                             coverimg = obj.resList[0].path;
                         }
-                        str+='<li onclick="toAuctionItemDetail('+obj.id+')" class="bannerItem" style="background-image: url(' + hostPath + coverimg + '); no-repeat;background-size:100% 100%;-moz-background-size:100% 100%;"/>';
+                        str+='<li   class="bannerItem" onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')">';
+                        str+='	<a>';
+                        str+=' <img src="' + hostPath + coverimg +  '" alt="" >';
+                        str+=' </a></li>';
+
                     }
 
                     $(".bannerList").append(str);

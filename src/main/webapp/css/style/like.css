@@ -49,3 +49,8 @@
 .bidimg{width: 25px; height: 25px;border-radius:70%;margin-top: 5px;margin-left: 0.15rem}
 
 .bidFirst{color: red;}
+
+
+#business-tit{height: 0.42rem;line-height: 0.42rem;font-size: 0.12rem;border-bottom: 1px solid #dcdcdc;margin-top: 0.1rem;background: #fff}
+#business-tit li{width: 49%;text-align: center;float: left;}
+#business-tit li.cur{color: #fc4747;border-bottom: 1px solid #fc4747}

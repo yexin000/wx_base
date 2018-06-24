@@ -3,6 +3,8 @@ var pageId = 1;
 $(function(){
     $("#order-tit li").click(function(){
         orderStatus = $(this).attr("status");
+        pageId =1;
+        $(".pro-item").empty();
         loadOrder();
     })
     $('li').eq(0).click();
@@ -11,6 +13,7 @@ $(function(){
 //加载个人订单数据
 function loadOrder(){
     $('#loadingToast').show();
+    $("#loadMore").hide();
     var OrderModel = {};
     OrderModel.status = orderStatus;
     OrderModel.wxid = localStorage.getItem("openId");
@@ -62,7 +65,9 @@ function loadOrder(){
             }
             $(".pro-item").append(str);
             if(datalength <= (pageId * 10)){
-                $("#loadMore").remove();
+                $("#loadMore").hide();
+            }else{
+                $("#loadMore").show();
             }
             pageId++;
         }
