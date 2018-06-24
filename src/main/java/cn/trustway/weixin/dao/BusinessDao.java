@@ -2,6 +2,8 @@ package cn.trustway.weixin.dao;
 
 import cn.trustway.weixin.model.BusinessModel;
 
+import java.util.Map;
+
 /**
  * 拍卖商家操作接口
  * @author yexin
@@ -16,4 +18,8 @@ public interface BusinessDao<T> extends BaseDao<T> {
      * @return
      */
     public T queryCountById(BusinessModel bussiness);
+
+    void updateByBusinessStatus(Map<String, Object> params);
+
+    T queryByWxid(String wxid);
 }

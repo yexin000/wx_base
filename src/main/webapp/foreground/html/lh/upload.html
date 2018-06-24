@@ -37,7 +37,7 @@
 		</div>
 	</div>
 	<form id="uploadform" method="post" enctype="multipart/form-data" action="/weixin/auctionItem/ajaxUploadAuctionItem.do">
-		<input id="status" name="status" type="hidden" value="1">
+		<input id="status" name="status" type="hidden" value="3">
 		<input id="auctionStatus" name="auctionStatus" type="hidden" value="0">
 		<input id="wxid" name="wxid" type="hidden">
 	<div class="container" id="container" style="margin-top: 0.45rem;">
@@ -79,7 +79,7 @@
 						</div>
 					</div>
 					<div class="weui-cells" style="margin-top: 0;">
-						<div class="weui-cell weui-cell_select weui-cell_select-after">
+						<div class="weui-cell weui-cell_select weui-cell_select-after" style="border-color: green;border-width: 1px;border-style: solid;border-left: none;border-right: none;">
 							<div class="weui-cell__hd">
 								<label class="weui-label">商品性质</label>
 							</div>
@@ -90,7 +90,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="weui-cell weui-cell_select weui-cell_select-after">
+						<div class="weui-cell weui-cell_select weui-cell_select-after" style="border-color: green;border-width: 1px;border-style: solid;border-top: none;border-left: none;border-right: none;">
 							<div class="weui-cell__hd">
 								<label class="weui-label">商品分类</label>
 							</div>
@@ -98,6 +98,43 @@
 								<select class="weui-select" id="type" name="type">
 									<option value="1">现代瓷器</option>
 									<option value="2">现代书画</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="weui-cell weui-cell_select weui-cell_select-after auctionAttr">
+							<div class="weui-cell__hd">
+								<label class="weui-label">拍卖专场</label>
+							</div>
+							<div class="weui-cell__bd">
+								<select class="weui-select" id="auctions" name="auctionId">
+								</select>
+							</div>
+						</div>
+						<div class="weui-cells__tips auctionAttr" style="font-size: 12px;" id="auctionTimeShow"></div>
+						<div class="weui-cell auctionAttr">
+							<div class="weui-cell__hd"><label class="weui-label">开始时间</label></div>
+							<div class="weui-cell__bd">
+								<input class="weui-input" type="datetime-local" id="startTimeInput" value="" placeholder="">
+								<input type="hidden" id="startTime" name="startTime">
+							</div>
+						</div>
+
+						<div class="weui-cell auctionAttr">
+							<div class="weui-cell__hd"><label class="weui-label">结束时间</label></div>
+							<div class="weui-cell__bd">
+								<input class="weui-input" type="datetime-local" id="endTimeInput" value="" placeholder="">
+								<input type="hidden" id="endTime" name="endTime">
+							</div>
+						</div>
+
+
+						<div class="weui-cell weui-cell_select weui-cell_select-after businessAttr">
+							<div class="weui-cell__hd">
+								<label class="weui-label">商户选择</label>
+							</div>
+							<div class="weui-cell__bd">
+								<select class="weui-select" id="businesses" name="businessId">
 								</select>
 							</div>
 						</div>
@@ -125,24 +162,6 @@
 						</div>
 					</div>
 					<div class="weui-cell">
-						<div class="weui-cell__hd"><label class="weui-label">商品规格</label></div>
-						<div class="weui-cell__bd">
-							<input id="standard" name="standard" class="weui-input" type="text" placeholder="请输入商品规格">
-						</div>
-					</div>
-					<div class="weui-cell">
-						<div class="weui-cell__hd"><label class="weui-label">商品年代</label></div>
-						<div class="weui-cell__bd">
-							<input id="age" name="age" class="weui-input" type="text" placeholder="请输入商品年代">
-						</div>
-					</div>
-					<div class="weui-cell">
-						<div class="weui-cell__hd"><label class="weui-label">商品等级</label></div>
-						<div class="weui-cell__bd">
-							<input id="degree" name="degree" class="weui-input" type="text" placeholder="请输入商品等级">
-						</div>
-					</div>
-					<div class="weui-cell">
 						<div class="weui-cell__hd">
 							<label class="weui-label">库存</label>
 						</div>
@@ -159,7 +178,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="weui-cells__tips">交易成功后，平台收取成交额度的6%的服务费用用于平台正常运行</div>
+					<div class="weui-cells__tips" style="font-size: 12px;">交易成功后，平台收取成交额度的6%的服务费用用于平台正常运行</div>
 				</div>
 			</div>
 			<div class="page__bd">

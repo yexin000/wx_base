@@ -3,6 +3,7 @@ package cn.trustway.weixin.controller;
 import cn.trustway.weixin.bean.Auction;
 import cn.trustway.weixin.bean.ItemRes;
 import cn.trustway.weixin.bean.SysUser;
+import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.AuctionModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.AuctionService;
@@ -10,6 +11,7 @@ import cn.trustway.weixin.service.FileUploadService;
 import cn.trustway.weixin.service.ItemResService;
 import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.SessionUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +43,7 @@ public class AuctionController extends BaseController {
     @Autowired(required = false)
     private ItemResService<ItemRes> itemResService;
 
+    private static final Integer[] AUCTION_ITEMS = {9, 10};
     /**
      * 首页
      *
@@ -180,5 +183,32 @@ public class AuctionController extends BaseController {
         } else {
             sendFailureMessage(response, "上传失败");
         }
+    }
+
+    /**
+     * 查询商户下的拍卖会
+     * @param businessId
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxGetJoinAuctions")
+    public void ajaxGetJoinAuctions(Integer businessId, HttpServletResponse response) throws Exception {
+        Map<String, Object> params = new HashMap<>();
+        if(businessId != null && businessId > 0) {
+            params.put("businessId", businessId);
+        }
+        params.put("auctionIds", AUCTION_ITEMS);
+        List<Auction> joinAuctions = auctionService.queryByJoinAuction(params);
+        if(CollectionUtils.isNotEmpty(joinAuctions)) {
+            Map<String, Object> context = getRootMap();
+            context.put(CODE, AppInitConstants.HttpCode.HTTP_SUCCESS);
+            context.put("data", joinAuctions);
+            HtmlUtil.writerJson(response, context);
+            return;
+        } else {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_NO_BUSINESS_AUCTIONS_ERROR, "未找到拍卖会信息");
+            return;
+        }
+
     }
 }

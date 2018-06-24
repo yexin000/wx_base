@@ -84,18 +84,6 @@
                 <input class="easyui-validatebox" type="text" name="rate" data-options="required:true" value="6">
             </div>
             <div class="fitem">
-                <label>拍品规格:</label>
-                <input class="easyui-validatebox" type="text" name="standard" data-options="required:true">
-            </div>
-            <div class="fitem">
-                <label>拍品年代:</label>
-                <input class="easyui-validatebox" type="text" name="age" data-options="required:true">
-            </div>
-            <div class="fitem">
-                <label>拍品等级:</label>
-                <input class="easyui-validatebox" type="text" name="degree" data-options="required:true">
-            </div>
-            <div class="fitem">
                 <label>首页展示:</label>
                 <select class="easyui-combobox" name="isShow" id="isshows" data-options="required:true">
                     <option value="0" selected="selected">否</option>

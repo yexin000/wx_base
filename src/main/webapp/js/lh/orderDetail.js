@@ -35,7 +35,7 @@ function myMoneyPay (id){
                 });
                 return;
             } else {
-                wxPay();
+                wxPay(id);
             }
         }
     });

@@ -3,21 +3,20 @@ package cn.trustway.weixin.controller;
 import cn.trustway.weixin.bean.AuctionItem;
 import cn.trustway.weixin.bean.Business;
 import cn.trustway.weixin.bean.WeixinUser;
+import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.BusinessModel;
 import cn.trustway.weixin.service.AuctionItemService;
 import cn.trustway.weixin.service.BusinessService;
 import cn.trustway.weixin.service.FileUploadService;
 import cn.trustway.weixin.service.WeixinUserService;
 import cn.trustway.weixin.util.HtmlUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -259,4 +258,114 @@ public class BusinessController extends BaseController {
         }
     }
 
+    @RequestMapping("/ajaxBusinessJoin")
+    public void ajaxBusinessJoin(Business businessUpload, @RequestParam MultipartFile[] itemImages,
+                                      HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if(null == businessUpload || itemImages.length != 1) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_BUSINESS_JOIN_ERROR, "申请失败");
+            return;
+        }
+        String wxid = businessUpload.getWxid();
+        if(StringUtils.isEmpty(wxid)) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "申请失败，用户信息有误");
+            return;
+        }
+        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
+        if(null == user) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "申请失败，用户信息有误");
+            return;
+        }
+        businessUpload.setIsShow("0");
+        // 上传商家图片
+        MultipartFile businessPic = itemImages[0];
+        Map<String, Object> uploadResult = fileUploadService.uploadFile(businessPic, request, response);
+        boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
+        if(uploadFlag) {
+            businessUpload.setLogoPath(uploadResult.get(MSG).toString());
+            if(businessUpload.getId() != null && businessUpload.getId() > 0) {
+                businessService.updateBySelective(businessUpload);
+            } else {
+                businessService.add(businessUpload);
+            }
+
+            sendSuccessMessage(response, "申请成功");
+        } else {
+            sendFailureMessage(response, "申请失败");
+        }
+    }
+
+    /**
+     * 根据ID审核记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/audit")
+    public void audit(Integer id, HttpServletResponse response) throws Exception {
+        if (id != null && id > 0) {
+            String auditStatus = "1";
+            Map<String, Object> params = new HashMap<>();
+            params.put("id", id);
+            params.put("auditStatus", auditStatus);
+            businessService.updateByBusinessStatus(params);
+            sendSuccessMessage(response, "审核成功");
+        } else {
+            sendFailureMessage(response, "审核失败");
+        }
+    }
+
+    /**
+     * 根据ID审核记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/auditDeny")
+    public void auditDeny(Integer id, HttpServletResponse response) throws Exception {
+        if (id != null && id > 0) {
+            String auditStatus = "2";
+            Map<String, Object> params = new HashMap<>();
+            params.put("id", id);
+            params.put("auditStatus", auditStatus);
+            businessService.updateByBusinessStatus(params);
+            sendSuccessMessage(response, "审核成功");
+        } else {
+            sendFailureMessage(response, "审核失败");
+        }
+    }
+
+    /**
+     * 查询用户商户申请记录
+     * @param wxid
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxGetJoinBusiness")
+    public void ajaxGetJoinBusiness(String wxid, HttpServletResponse response) throws Exception {
+        if(StringUtils.isEmpty(wxid)) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "用户信息有误");
+            return;
+        }
+        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
+        if(null == user) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "用户信息有误");
+            return;
+        }
+
+        Business joinBusiness = businessService.queryByWxid(wxid);
+        if(joinBusiness != null) {
+            Map<String, Object> context = getRootMap();
+            context.put(CODE, AppInitConstants.HttpCode.HTTP_SUCCESS);
+            context.put("data", joinBusiness);
+            HtmlUtil.writerJson(response, context);
+            return;
+        } else {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_NO_BUSINESS_JOIN_ERROR, "未找到商家信息");
+            return;
+        }
+    }
 }

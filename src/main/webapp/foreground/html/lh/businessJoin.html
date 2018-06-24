@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"  />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-dns-prefetch-control" content="on" />
+    <link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/order.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
+    <title></title>
+</head>
+<body>
+<header class="header-hs ">
+    <a href="mine.html" class="header-back"></a>
+    <h1>商家加入</h1>
+</header>
+<div class="js_dialog" id="tipDialog" style="display: none;">
+    <div class="weui-mask">
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd" id="tipLabel"></div>
+            <div class="weui-dialog__ft">
+                <a onclick="$('#tipDialog').hide();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="loadingToast" style="opacity: 1; display: none;">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">数据加载中</p>
+    </div>
+</div>
+<form id="businessform" method="post" enctype="multipart/form-data" action="/weixin/business/ajaxBusinessJoin.do">
+    <input id="status" name="status" type="hidden" value="1">
+    <input id="auditStatus" name="auditStatus" type="hidden" value="0">
+    <input id="wxid" name="wxid" type="hidden">
+    <input id="id" name="id" type="hidden">
+    <div class="page__hd" style="margin-top: 0.45rem;display: none" id="joinShow">
+        <h1 class="page__title">您已成功加入</h1>
+    </div>
+    <div class="container" id="container" style="margin-top: 1.2rem;">
+        <div class="page input js_show">
+            <div class="page__bd">
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">商家名称</label></div>
+                        <div class="weui-cell__bd">
+                            <input id="name" name="name" class="weui-input" type="text" placeholder="请输入商家名称">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">商家电话</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <input id="telNum" name="telNum" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入商家电话">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">微信号</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <input id="wxAccount" name="wxAccount" class="weui-input" type="text" placeholder="请输入微信号">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">商家地址</label></div>
+                        <div class="weui-cell__bd">
+                            <input id="address" name="address" class="weui-input" type="text" placeholder="请输入商家地址">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page__bd">
+                <div class="weui-gallery" id="gallery">
+                    <span class="weui-gallery__img" id="galleryImg"></span>
+                    <div class="weui-gallery__opr">
+                        <a href="javascript:" class="weui-gallery__del">
+                            <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <div class="weui-uploader">
+                                <div class="weui-uploader__hd">
+                                    <p class="weui-uploader__title">商家图片</p>
+                                </div>
+                                <div class="weui-uploader__bd">
+                                    <input id="itemImages" name="itemImages" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                                    <ul class="weui-uploader__files" id="uploaderFiles">
+                                        <li class="weui-uploader__file" style="background-image:url(../../images/imgBg.png)"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui-btn-area">
+                    <a class="weui-btn weui-btn_primary" href="javascript:" id="uploadBtn">提交</a>
+                </div>
+            </div>
+            <div class="article js_show">
+                <div class="page__bd">
+                    <article class="weui-article">
+                        <section>
+                            <section>
+                                <h3 style="text-align: center;">商户须知</h3>
+                                <p>1.百姓收藏电商平台为经营古玩、艺术品、收藏品、茶文化、珠宝、首饰、玉器、特色手工艺等全国诚信商家搭建高端交易交流平台。</p>
+                                <p>2.平台内商家必须保证上传物品图片清晰度、美观度、真实度。</p>
+                                <p>3.平台内商家请认真履行国家法律、法规。禁止上传国家法律、法规规定的禁止售卖物品，如保护动物皮毛、牙齿、易燃易爆物等。如有上传本平台不承担任何责任。平台也会做出相应的惩罚。</p>
+                                <p>4.百姓收藏在这里期待精英的加入，也祝您在这里与全国藏友玩的愉快。</p>
+                            </section>
+                        </section>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../../../js/lh/layout.js"></script>
+<script type="text/javascript" src="../../../js/lh/common.js"></script>
+<script type="text/javascript" src="../../../js/lh/businessJoin.js"></script>
+</body>
+</html>

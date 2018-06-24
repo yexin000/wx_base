@@ -30,6 +30,15 @@ WeiXin.auctionItem = function(){
                 columns:[[
                     {field:'id',checkbox:true},
                     {field:'name',title:'商品名称',width:120,align:'center',sortable:true},
+                    {field:'attribute',title:'性质',width:80,align:'center',sortable:true,
+                        formatter:function(value,row,index){
+                            if(value == 1){
+                                return "商品";
+                            } else {
+                                return "拍卖品";
+                            }
+                        }
+                    },
                     {field:'typeName',title:'类型',width:60,align:'center',sortable:true},
                     {field:'description',title:'介绍描述',width:120,align:'center',sortable:true},
                     {field:'startTime',title:'开始拍卖时间',width:115,align:'center',sortable:true},
@@ -40,9 +49,6 @@ WeiXin.auctionItem = function(){
                     {field:'finalPrice',title:'成交价格',width:60,align:'center',sortable:true},
                     {field:'rate',title:'手续费比率%',width:75,align:'center',sortable:true},
                     {field:'detail',title:'拍品详情',width:120,align:'center',sortable:true},
-                    {field:'standard',title:'拍品规格',width:60,align:'center',sortable:true},
-                    {field:'age',title:'拍品年代',width:60,align:'center',sortable:true},
-                    {field:'degree',title:'拍品等级',width:60,align:'center',sortable:true},
                     {field:'isShowBanner',title:'是否轮播',width:60,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){

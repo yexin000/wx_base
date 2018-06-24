@@ -36,7 +36,7 @@ public class FavoriteController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxAddFavorite", method = RequestMethod.POST)
-    public void ajaxAddFavorite(@RequestBody Favorite bean, HttpServletResponse response) throws Exception {
+    public void ajaxAddFavorite(Favorite bean, HttpServletResponse response) throws Exception {
         favoriteService.add(bean);
         sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "收藏成功");
     }

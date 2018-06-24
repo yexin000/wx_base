@@ -103,6 +103,12 @@ public class AppInitConstants {
 		public static final String HTTP_PURCHASE_OUTOFSTOCK_FAIL = "10014";
 		// 购买失败，没有收货地址
 		public static final String HTTP_PURCHASE_NOTADDRESS_FAIL = "10015";
+		// 商家加入失败
+		public static final String HTTP_BUSINESS_JOIN_ERROR = "10016";
+		// 未找到商家加入信息
+		public static final String HTTP_NO_BUSINESS_JOIN_ERROR = "10017";
+		// 未找到商家拍卖会
+		public static final String HTTP_NO_BUSINESS_AUCTIONS_ERROR = "10018";
 	}
 
 	/**

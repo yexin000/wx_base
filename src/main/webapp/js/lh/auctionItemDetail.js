@@ -1,6 +1,6 @@
 $(function(){
     var id = getParam("id");
-    loadItemData(id);banner1
+    loadItemData(id);
     loadAuctionItemBid(id);
     $("#bidBtn").click(function () {
         $('#bidDialog').show();
@@ -78,7 +78,9 @@ function loadItemData(id){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     var coverimg = obj.path;
-                    itemImage = coverimg;
+                    if(i == 0) {
+                        itemImage = coverimg;
+                    }
                     str+='<li class="bannerItem"  onclick="showImg('+i+')">';
                     str+='<input type="hidden" id="imgSrc'+i+'" value="' + hostPath + coverimg +  '">';
                     str+='	<a href="javaScipt:void(0)">';
@@ -110,9 +112,6 @@ function loadItemData(id){
             $("#rate").html(dataObj.rate); //手续费比率
             $("#depositprice").html(dataObj.depositPrice); //保证金
             $("#wanfenbi").html('('+dataObj.wanfenbi+"万元)"); //保证金
-            $("#standardLabel").html(dataObj.standard); //规格
-            $("#ageLabel").html(dataObj.age); //年代
-            $("#degreeLabel").html(dataObj.degree); //等级
             if(dataObj.detail != null && dataObj.detail != '') {
                 var details = dataObj.detail.split("\n");
                 var detail = "";

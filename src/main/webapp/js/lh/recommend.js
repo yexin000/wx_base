@@ -8,7 +8,7 @@ $(function(){
 function loadbusinessData(){
     $('#loadingToast').show();
     var bisinessModel = {};
-    bisinessModel.isShow = '1';
+    bisinessModel.auditStatus = '1';
     bisinessModel.page = pageId;
     var url= '/weixin/business/ajaxDataList.do';
     $.ajax({

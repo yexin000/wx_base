@@ -15,18 +15,20 @@
         <result column="status" property="status" />
         <result column="isShow" property="isShow" />
         <result column="wxaccount" property="wxAccount" />
+        <result column="wxid" property="wxid" />
+        <result column="auditstatus" property="auditStatus" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="Base_Column_List">
-		id,name,address,createTime,updateTime,telNum,logoPath,status,isShow,wxaccount
+		id,name,address,createTime,updateTime,telNum,logoPath,status,isShow,wxaccount,wxid,auditstatus
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_business(id,name,address,createTime,updateTime,telNum,logoPath,status,isShow,wxaccount)
-        values(null,#{name},#{address},now(),now(),#{telNum},#{logoPath}, '1',#{isShow}, #{wxAccount})
+        t_e_business(id,name,address,createTime,updateTime,telNum,logoPath,status,isShow,wxaccount,wxid,auditstatus)
+        values(null,#{name},#{address},now(),now(),#{telNum},#{logoPath}, '1',#{isShow}, #{wxAccount}, #{wxid}, #{auditStatus})
     </insert>
 
     <!-- 根据id，修改记录 -->
@@ -91,6 +93,12 @@
             <if test="name != null and name != ''">
                 and name like CONCAT('%', #{name}, '%')
             </if>
+            <if test="isShow != null and isShow != ''">
+                and isshow = #{isShow}
+            </if>
+            <if test="auditStatus != null and auditStatus != ''">
+                and auditstatus = #{auditStatus}
+            </if>
         </trim>
     </select>
 
@@ -107,6 +115,9 @@
             <if test="isShow != null and isShow != ''">
                 and isshow = #{isShow}
             </if>
+            <if test="auditStatus != null and auditStatus != ''">
+                and auditstatus = #{auditStatus}
+            </if>
         </trim>
         order by updatetime desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
@@ -115,5 +126,16 @@
         <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
             ${pager.mysqlQueryCondition}
         </if>
+    </select>
+
+    <update id="updateByBusinessStatus" parameterType="Object">
+        update t_e_business set auditstatus = #{auditStatus} where id=#{id}
+    </update>
+
+    <!-- 根据wxid查询记录 -->
+    <select id="queryByWxid" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from t_e_business where wxid = #{wxid} and auditstatus = '1'
     </select>
 </mapper>

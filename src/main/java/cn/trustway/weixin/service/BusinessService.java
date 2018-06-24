@@ -7,6 +7,8 @@ import cn.trustway.weixin.model.BusinessModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * 拍卖商家服务类
  *
@@ -18,7 +20,7 @@ public class BusinessService<T> extends BaseService<T> {
     private BusinessDao<T> dao;
 
     @Override
-    public BaseDao<T> getDao() {
+    public BusinessDao<T> getDao() {
         return dao;
     }
 
@@ -27,4 +29,11 @@ public class BusinessService<T> extends BaseService<T> {
        return dao.queryCountById(business);
     }
 
+    public void updateByBusinessStatus(Map<String, Object> params) {
+        getDao().updateByBusinessStatus(params);
+    }
+
+    public T queryByWxid(String wxid) {
+        return getDao().queryByWxid(wxid);
+    }
 }

@@ -57,6 +57,15 @@ public class BusinessModel extends BaseModel {
      */
     private String wxAccount;
 
+    /**
+     * 申请加入的wxid
+     */
+    private String wxid;
+
+    /**
+     * 审核状态
+     */
+    private String auditStatus;
 
     public Integer getId() {
         return id;
@@ -144,5 +153,21 @@ public class BusinessModel extends BaseModel {
 
     public void setWxAccount(String wxAccount) {
         this.wxAccount = wxAccount;
+    }
+
+    public String getWxid() {
+        return wxid;
+    }
+
+    public void setWxid(String wxid) {
+        this.wxid = wxid;
+    }
+
+    public String getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(String auditStatus) {
+        this.auditStatus = auditStatus;
     }
 }

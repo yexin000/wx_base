@@ -5,6 +5,9 @@ import cn.trustway.weixin.dao.BaseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 拍卖会服务类
  *
@@ -34,5 +37,9 @@ public class AuctionService<T> extends BaseService<T> {
      */
     public void updateAuctionEnd() {
         getDao().updateAuctionEnd();
+    }
+
+    public List<T> queryByJoinAuction(Map<String, Object> params) {
+        return getDao().queryByJoinAuction(params);
     }
 }

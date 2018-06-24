@@ -1,5 +1,8 @@
 package cn.trustway.weixin.dao;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 拍卖会dao
  * @author yexin
@@ -18,4 +21,6 @@ public interface AuctionDao<T> extends BaseDao<T> {
      * @return
      */
     void updateAuctionEnd();
+
+    List<T> queryByJoinAuction(Map<String, Object> params);
 }

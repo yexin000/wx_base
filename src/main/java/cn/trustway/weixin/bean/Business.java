@@ -53,15 +53,24 @@ public class Business extends BaseBean {
     private String wxAccount;
 
     /**
-     * 微信号
+     * 商家名称
      */
     private String bussinessName;
 
     /**
-     * 微信号
+     * 商家地址
      */
     private String businessaddress;
 
+    /**
+     * 申请加入的wxid
+     */
+    private String wxid;
+
+    /**
+     * 审核状态
+     */
+    private String auditStatus;
 
     public Integer getId() {
         return id;
@@ -157,5 +166,21 @@ public class Business extends BaseBean {
 
     public void setBusinessaddress(String businessaddress) {
         this.businessaddress = businessaddress;
+    }
+
+    public String getWxid() {
+        return wxid;
+    }
+
+    public void setWxid(String wxid) {
+        this.wxid = wxid;
+    }
+
+    public String getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(String auditStatus) {
+        this.auditStatus = auditStatus;
     }
 }

@@ -45,10 +45,10 @@
         insert into
         t_e_auction_item(id,name,type,description,startTime,endTime,startPrice,curPrice,finalPrice,
 		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId,standard,age,degree,
-		  businessId,attribute,uploadwxid)
+		  businessId,attribute,uploadwxid,stock)
         values(null,#{name},#{type},#{description},#{startTime},#{endTime},#{startPrice},
-            #{curPrice},#{finalPrice},#{addPrice},#{depositPrice},#{rate}, #{detail}, '1',
-            #{isShow},'0',#{auctionId},#{standard},#{age},#{degree},#{businessId},#{attribute},#{uploadWxid});
+            #{curPrice},#{finalPrice},#{addPrice},#{depositPrice},#{rate}, #{detail}, '3',
+            #{isShow},'0',#{auctionId},#{standard},#{age},#{degree},#{businessId},#{attribute},#{uploadWxid},#{stock});
     </insert>
 
     <!-- 根据id，修改记录 -->

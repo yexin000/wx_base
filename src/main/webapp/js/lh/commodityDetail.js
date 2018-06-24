@@ -19,6 +19,9 @@ $(function(){
 
 })
 
+var itemImage = '';
+var itemName = '';
+
 //加载商品数据
 function loadItemData(id){
     $('#loadingToast').show();
@@ -41,6 +44,9 @@ function loadItemData(id){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     var coverimg = obj.path;
+                    if(i == 0) {
+                        itemImage = coverimg;
+                    }
                     str+='<li class="bannerItem" onclick="showImg('+i+')">';
                     str+='<input type="hidden" id="imgSrc'+i+'" value="' + hostPath + coverimg +  '">';
                     str+='	<a href="javaScipt:void(0)">';
@@ -51,12 +57,10 @@ function loadItemData(id){
                 bannerDW("banner1",3000,true,"red");
             }
             $("#itemName").html(dataObj.name); //拍品名字
+            itemName = dataObj.name;
             $("#itemDescription").html(dataObj.description); //拍品详情
             $("#startprice").html(dataObj.startPrice); //起拍价格
             $("#depositprice").html(dataObj.depositPrice); //保证金
-            $("#standardLabel").html(dataObj.standard); //规格
-            $("#ageLabel").html(dataObj.age); //年代
-            $("#degreeLabel").html(dataObj.degree); //等级
             var details = "";
             if(dataObj.detail != null && dataObj.detail != '') {
                 details = dataObj.detail.split("\n");
@@ -86,21 +90,13 @@ function favorite(){
     params.favType="1";
     params.favId=getParam("id");
     var url= '/weixin/favorite/ajaxAddFavorite.do';
-    $.ajax({
-        url: url,
-        type: 'post',
-        data:JSON.stringify(params) ,
-        contentType : "application/json;charset=utf-8",
-        dataType: 'JSON',
-        cache: false,
-        success:function(data){
-            $('#loadingToast').hide();
-            showToast(data.msg, function () {
-            });
-            $("#favBtn").html("取消收藏");
-            $("#favStatus").val("1");
-        }
-    })
+    $.post(url,params,function(data){
+        $('#loadingToast').hide();
+        showToast(data.msg, function () {
+        });
+        $("#favBtn").html("取消收藏");
+        $("#favStatus").val("1");
+    });
 }
 
 //取消收藏
@@ -110,21 +106,13 @@ function cancleFavorite(){
     params.favId=getParam("id");
     params.wxid=localStorage.getItem("openId");
     var url= '/weixin/favorite/ajaxDelFavorite.do';
-    $.ajax({
-        url: url,
-        type: 'post',
-        data:JSON.stringify(params) ,
-        contentType : "application/json;charset=utf-8",
-        dataType: 'JSON',
-        cache: false,
-        success:function(data){
-            $('#loadingToast').hide();
-            showToast(data.msg, function () {
-            });
-            $("#favBtn").html("+收藏");
-            $("#favStatus").val("0");
-        }
-    })
+    $.post(url,params,function(data){
+        $('#loadingToast').hide();
+        showToast(data.msg, function () {
+        });
+        $("#favBtn").html("+收藏");
+        $("#favStatus").val("0");
+    });
 }
 
 

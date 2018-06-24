@@ -106,7 +106,7 @@
         LEFT JOIN sys_user su1 on t.creator=su1.id
         LEFT JOIN sys_user su2 on t.modifier=su2.id
         LEFT JOIN t_e_business b on t.businessid=b.id
-        where t.id = #{id} and t.status != '0'
+        where t.id = #{id}
     </select>
 
     <!-- 记录总数 -->
@@ -160,6 +160,22 @@
         </if>
         <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
             ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+
+    <select id="queryByJoinAuction" resultMap="BaseResultMap" parameterType="Object">
+        select
+          <include refid="Auction_Base_Column_List" />
+        from t_e_auction t
+        where 1=2
+        <if test="businessId != null and businessId != ''">
+            or t.businessid = #{businessId}
+        </if>
+        <if test="auctionIds != null and auctionIds.length > 0">
+            or t.id IN
+            <foreach collection="auctionIds" index="index" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
         </if>
     </select>
 </mapper>

@@ -1,5 +1,63 @@
 $(function(){
-    //loadMyUpload();
+    // 判断用户是否有上传商品权限
+    var wxid = localStorage.getItem("openId");
+    var url= '/weixin/business/ajaxGetJoinBusiness.do?wxid='+ wxid;
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: {} ,
+        dataType: 'JSON',
+        contentType : "application/json;charset=utf-8",
+        cache: false,
+        success:function(result){
+            if(result.code == "0") {
+                var data = result.data;
+                $("#businessName").val(data.name);
+                $("#businessTelNum").val(data.telNum);
+                $("#businessWxNum").val(data.wxAccount);
+                $("#businessAddress").val(data.address);
+                var businessOptions = '';
+                businessOptions += '<option value="' + data.id + '" selected="selected">' + data.name + '</option>';
+                $("#businesses").empty();
+                $("#businesses").append(businessOptions);
+                var businessId = data.id;
+                // 查询商户下的拍卖会
+                $.ajax({
+                    url: '/weixin/auction/ajaxGetJoinAuctions.do?businessId='+ businessId,
+                    type: 'post',
+                    data: {} ,
+                    dataType: 'JSON',
+                    contentType : "application/json;charset=utf-8",
+                    cache: false,
+                    success:function(result){
+                        if(result.code == "0") {
+                            var auctionList = result.data;
+                            if(auctionList.length > 0) {
+                                var options = '';
+                                for(var i = 0; i < auctionList.length; i ++) {
+                                    if(i == 0) {
+                                        options += '<option value="' + auctionList[i].id + '" startAttr="' + auctionList[i].starttime + '" endAttr="' + auctionList[i].endtime + '"  selected="selected">' + auctionList[i].name + '</option>';
+                                        $("#auctionTimeShow").html(auctionList[i].starttime + " 至 " + auctionList[i].endtime);
+                                    } else {
+                                        options += '<option value="' + auctionList[i].id + '" startAttr="' + auctionList[i].starttime + '" endAttr="' + auctionList[i].endtime + '" >' + auctionList[i].name + '</option>';
+                                    }
+                                }
+                                $("#auctions").empty();
+                                $("#auctions").append(options);
+                            }
+                        }
+                    }
+                })
+            } else {
+                $("#tipLabel").html("未找到商家信息，请申请商家加入后上传商品");
+                $('#tipDialog').show();
+                setTimeout(function () {
+                    history.back(-1);
+                }, 3000);
+            }
+        }
+    })
+
     $(window).scroll(function(){
         var scrolltop=$(document).scrollTop();
         var Vheight=$(window).height();
@@ -17,6 +75,18 @@ $(function(){
         submitUpload();
     });
     $("#itemImages").empty();
+
+
+    $("#auctions").on("change", function () {
+        var auctionStartTime = $(this).find("option:selected").attr("startAttr");
+        var auctionEndTime = $(this).find("option:selected").attr("endAttr");
+        $("#auctionTimeShow").html(auctionStartTime + " 至 " + auctionEndTime);
+    });
+
+    $("#attribute").on("change", function () {
+        var attr = $(this).val();
+        showInputs(attr);
+    });
 
     $("#itemImages").on("change", function () {
         var obj = document.getElementById("itemImages");
@@ -62,6 +132,8 @@ $(function(){
             $("#type").append(options);
         }
     });
+
+    showInputs($("#attribute").val());
 })
 
 var propertyName = {
@@ -75,9 +147,6 @@ var propertyName = {
     'description' : "商品介绍",
     'startPrice' : "起拍价",
     'addPrice' : "加价幅度",
-    'standard' : "商品规格",
-    'age' : "商品年代",
-    'degree' : "商品等级",
     'detail' : "商品详情",
     'stock' : "库存"
 };
@@ -97,9 +166,6 @@ function submitUpload() {
     params.detail = $("#detail").val();
     params.status = "1";
     params.auctionStatus = "0";
-    params.standard = $("#standard").val();
-    params.age = $("#age").val();
-    params.degree = $("#degree").val();
     params.stock = $("#stock").val();
     $("#wxid").val(localStorage.getItem("openId"));
 
@@ -113,6 +179,43 @@ function submitUpload() {
         }
     }
 
+    if(params.startPrice <= 0) {
+        isPamramsRight = false;
+        $("#tipLabel").html("请输入正确的价格");
+        $('#tipDialog').show();
+    } else if (params.addPrice <= 0) {
+        isPamramsRight = false;
+        $("#tipLabel").html("请输入正确的加价幅度");
+        $('#tipDialog').show();
+    }
+
+    if($("#attribute").val() == 0) {
+        var auctionStartTime = $("#auctions").find("option:selected").attr("startAttr");
+        auctionStartTime = new Date(auctionStartTime).getTime();
+        var auctionEndTime = $("#auctions").find("option:selected").attr("endAttr");
+        auctionEndTime = new Date(auctionEndTime).getTime();
+        var startTime = new Date($("#startTimeInput").val()).getTime();
+        var endTime = new Date($("#endTimeInput").val()).getTime();
+        if(!startTime || !endTime) {
+            $("#tipLabel").html("请输入拍卖开始和结束时间");
+            $('#tipDialog').show();
+            return
+        }
+
+        if(startTime >= endTime) {
+            $("#tipLabel").html("拍卖开始时间必须小于结束时间");
+            $('#tipDialog').show();
+            return
+        }
+
+        if(startTime < auctionStartTime || startTime >= auctionEndTime
+            || endTime < auctionStartTime || endTime >= auctionEndTime ) {
+            $("#tipLabel").html("拍卖开始和结束时间必须在拍卖专场时间内");
+            $('#tipDialog').show();
+            return
+        }
+    }
+
     if(!$("#itemImages").val()) {
         $("#tipLabel").html("请选择上传商品图片");
         $('#tipDialog').show();
@@ -121,6 +224,9 @@ function submitUpload() {
     if(!isPamramsRight) {
         return;
     }
+
+    $("#startTime").val(new Date($("#startTimeInput").val()).format("yyyy-MM-dd hh:mm:ss"));
+    $("#endTime").val(new Date($("#endTimeInput").val()).format("yyyy-MM-dd hh:mm:ss"));
 
     //$("#uploadform").submit();
     $('#loadingToast').show();
@@ -147,6 +253,16 @@ function clearPics() {
     $("#uploaderFiles").empty();
     $("#uploaderFiles").append('<li class="weui-uploader__file" style="background-image:url(/weixin/foreground/images/imgBg.png)"></li>')
     $('#itemImages').val('')
+}
+
+function showInputs(attr) {
+    if(attr == "0") {
+        $(".auctionAttr").show();
+        $(".businessAttr").hide();
+    } else if(attr == "1") {
+        $(".auctionAttr").hide();
+        $(".businessAttr").show();
+    }
 }
 
 

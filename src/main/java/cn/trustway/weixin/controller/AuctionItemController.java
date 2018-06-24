@@ -265,8 +265,8 @@ public class AuctionItemController extends BaseController {
         auctionItem.setStartTime(new Date());
         auctionItem.setEndTime(new Date());
         auctionItem.setRate(DEFUALT_RATE);
-        auctionItem.setAuctionId(0);
-        auctionItem.setBusinessId(0);
+        //auctionItem.setAuctionId(0);
+        //auctionItem.setBusinessId(0);
         auctionItem.setIsShow("0");
         auctionItemService.add(auctionItem);
 
@@ -392,7 +392,7 @@ public class AuctionItemController extends BaseController {
         //判断库存是否还有
         if(bean.getStock() < 1)
         {
-            sendFailure(response,AppInitConstants.HttpCode.HTTP_PURCHASE_OUTOFSTOCK_FAIL, "库存不够!");
+            sendFailureMessage(response, "库存不足");
             return;
         }
 
@@ -400,7 +400,7 @@ public class AuctionItemController extends BaseController {
         // 查询用户默认收货地址
         UserAddr defaultAddr = userAddrService.getDefaultAddrByWxid(wxid);
         if(null == defaultAddr) {
-            sendFailure(response,AppInitConstants.HttpCode.HTTP_PURCHASE_NOTADDRESS_FAIL, "缺少收货地址!");
+            sendFailureMessage(response, "缺少收货地址");
             return;
         }
         // 生成订单
