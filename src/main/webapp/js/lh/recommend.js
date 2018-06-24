@@ -31,7 +31,7 @@ function loadbusinessData(){
                     }
                     str+='<div class="posr-item" style="overflow:hidden;height: 1.9rem;">';
                     str+='	<div class="left" onclick="toBusinessDetail('+obj.id+')">';
-                    str+=' 		<img src= "'+hostPath + obj.logoPath + '" alt="" style="height: 1.9rem;">';
+                    str+=' 		<img src= "'+hostPath + obj.logoPath + '" alt="" style="height: 1.9rem;width: 100%">';
                     str+='	</div>';
                     str+='</div>';
                 });
