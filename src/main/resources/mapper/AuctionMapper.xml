@@ -20,6 +20,8 @@
         <result column="type" property="type" />
         <result column="isShow" property="isShow" />
         <result column="logopath" property="logoPath" />
+        <result column="width" property="width" />
+        <result column="height" property="height" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
@@ -138,6 +140,8 @@
             su1.nickname as creatorName,su2.nickname as modifierName, b.name as businessName,
             (select count(1) from t_con_item_res r where r.conid=t.id and r.contype='1') as picCount,
             (select path from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as logopath,
+            (select width from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as width,
+            (select height from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as height,
             c.name as typeName
         from t_e_auction t
         left join sys_user su1 on t.creator=su1.id

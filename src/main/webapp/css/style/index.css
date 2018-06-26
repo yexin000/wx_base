@@ -30,7 +30,7 @@ body{padding-bottom: 0.58rem}
 .header-search input{border:none;background: none;font-size: 0.12rem;width:80%;outline: none;color: #fff;}
 #banner1{
 	width: 100%;
-	height: 1.55rem;
+	height: 1.75rem;
 
 }
 #banner2{
@@ -46,14 +46,14 @@ body{padding-bottom: 0.58rem}
 	width: 100%;height: 1.55rem;
 }
 
-.bannerItem>a>img.length{
+.bannerItem>div>a>img.length{
 	height: 100%;
 	position: absolute;
 	top: 0;
 	left: 50%;
 	transform: translate(-50%,0);
 }
-.bannerItem>a>img.width{
+.bannerItem>div>a>img.width{
 	width: 100%;
 	position: absolute;
 	top: 50%;

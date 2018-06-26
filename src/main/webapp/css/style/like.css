@@ -17,6 +17,24 @@
 	left: 0;
 	transform: translate(0,-50%);
 }
+
+.imgDiv{ position: relative; width: 3.2rem;height: 1.7rem;}
+.imgDiv img.length{
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%,0);
+}
+.imgDiv img.width{
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translate(0,-50%);
+}
+
+
 .right{width: 1.8rem;float: right;}
 .right p{font-size: 0.13rem;height: 0.3rem;}
 .posr1{width: 100%;height: 0.5rem;background-color: #fff;margin-top: 0.1rem;}

@@ -11,8 +11,8 @@
   float: left;
   height: 100%;
   width: 100%;
+	background-color:#fff
 }
-.bannerItem img{width: 100%;}
 .bannerPrompt{
 	position: absolute;
 	width: 100%;

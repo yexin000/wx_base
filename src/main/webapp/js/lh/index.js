@@ -78,14 +78,24 @@
                     for(var i = 0; i < dataList.length; i ++) {
                         var obj = dataList[i];
                         var coverimg = '';
-
+                        var coverimgWidth = '';
+                        var coverimgHeight = '';
                         if(obj.resList && obj.resList.length > 0) {
                             coverimg = obj.resList[0].path;
+                            coverimgWidth = obj.resList[0].width;
+                            coverimgHeight = obj.resList[0].height;
                         }
                         str+='<li   class="bannerItem" onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')">';
-                        str+='	<a>';
-                        str+=' <img src="' + hostPath + coverimg +  '" alt="" >';
-                        str+=' </a></li>';
+                        str+='	    <div style="position: relative; width: 3.2rem;height: 1.75rem;"><a>';
+                        var loadClass = '';
+                        if(parseInt(coverimgWidth) > parseInt(coverimgHeight * 1.8)){
+                            loadClass = 'width';
+                        }else{
+                            loadClass = 'length';
+                        }
+                        str+='          <img src="' + hostPath + coverimg +  '" alt="" class="'+loadClass+'" >';
+                        str+='      </a></div> ';
+                        str+='  </li>';
 
                     }
 
@@ -127,21 +137,16 @@
                         if(obj.logoPath == null || obj.logoPath == '') {
                             obj.logoPath = "foreground/images/no-image.jpg";
                         }
-                        // 图片地址
-                        var img_url = hostPath + obj.logoPath + '?d='+Date.parse(new Date());;
-                        // 创建对象
-                        var img = new Image();
-                        // 改变图片的src
-                        img.src = img_url;
+
                         str+='<div class="posr" onclick="toAuctionDetail('+obj.id+')">';
                         str+='	<div class="left"  >';
                         var loadClass = '';
-                        if(img.width > img.height){
+                        if(parseInt(obj.width) > parseInt(obj.height * 1.8)){
                             loadClass = 'width';
                         }else{
                             loadClass = 'length';
                         }
-                        str+=' 		<img src="' + img_url +  '" alt=""  class="'+loadClass+'" >';
+                        str+=' 		<img src="' +  hostPath +  obj.logoPath +  '" alt=""  class="'+loadClass+'" >';
                         str+='	</div>';
                         str+='<p style="padding-top: 1.4rem; font-size:18px;font-weight:bold; margin-left: 0.04rem;">'+obj.name+'</p>';
                         str+='<p style="margin-left: 0.04rem;"> '+label+'</p>';
@@ -175,13 +180,23 @@
                     var str = '';
                     $.each(dataList,function(i,obj){
                         var coverimg = '';
-
+                        var coverimgWidth = '';
+                        var coverimgHeight = '';
                         if(obj.resList && obj.resList.length > 0) {
                             coverimg = obj.resList[0].path;
+                            coverimgWidth = obj.resList[0].width;
+                            coverimgHeight = obj.resList[0].height;
                         }
+
                         str+='<div onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')" class="posr-item">';
                         str+='	<div class="left" >';
-                        str+=' 		<img src="' + hostPath + coverimg +  '" alt="" class="width">';
+                        var loadClass = '';
+                        if(parseInt(coverimgWidth) > parseInt(coverimgHeight * 1.8)){
+                            loadClass = 'width';
+                        }else{
+                            loadClass = 'length';
+                        }
+                        str+=' 		<img src="' + hostPath + coverimg +  '" alt="" class="'+loadClass+'">';
                         str+='	</div>';
 
                         str+='</div>';

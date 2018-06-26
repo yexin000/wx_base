@@ -1495,7 +1495,7 @@ body.ui-mobile-viewport,div.ui-mobile-viewport {
 	height: 2.75em;
 	padding: .0625em;
 	-webkit-border-radius: 2.25em;
-	border-radius: 2.25em
+	border-radius: em
 }
 
 .ui-loader-verbose .ui-icon-loading {

@@ -30,7 +30,7 @@ function loadbusinessData(){
                         obj.logoPath = "foreground/images/no-image.jpg";
                     }
                     str+='<div class="posr-item" style="overflow:hidden;height: 1.9rem;">';
-                    str+='	<div class="left" onclick="toBusinessDetail('+obj.id+')">';
+                    str+='	<div class="imgDiv" onclick="toBusinessDetail('+obj.id+')">';
                     str+=' 		<img src= "'+hostPath + obj.logoPath + '" alt="" style="height: 1.9rem;width: 100%">';
                     str+='	</div>';
                     str+='</div>';

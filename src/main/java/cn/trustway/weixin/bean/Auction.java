@@ -96,6 +96,16 @@ public class Auction extends BaseBean {
     private String logoPath;
 
     /**
+     * 拍卖会logo(第一张宽)
+     */
+    private Integer width;
+
+    /**
+     * 拍卖会logo(第一张高)
+     */
+    private Integer height;
+
+    /**
      * 资源列表
      */
     private List<ItemRes> resList;
@@ -266,5 +276,21 @@ public class Auction extends BaseBean {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 }
