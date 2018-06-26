@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -51,7 +53,12 @@ public class FileUploadService {
             String fileUrl = FileUpload.uploadFile(headImg, filepath, UUID.randomUUID().toString().trim().replaceAll("-", ""));
             //String fileUrl = FileUpload.setHead(headImg, filepath, UUID.randomUUID().toString().trim().replaceAll("-", ""));
             //String msg = userpageService.updateUserHeadImg_300(head_img, this.getUSERID());
-
+            //宽高处理
+            BufferedImage image = ImageIO.read(headImg.getInputStream());
+            if (image != null) {//如果image=null 表示上传的不是图片格式
+                context.put("width",image.getWidth());
+                context.put("height",image.getHeight());
+            }
             if(StringUtils.isNotBlank(fileUrl)){
                 context.put(SUCCESS, true);
                 context.put(MSG, fileUrl);

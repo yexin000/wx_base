@@ -283,6 +283,8 @@ public class AuctionItemController extends BaseController {
                     itemImage.setType("1");
                     itemImage.setConType("2");
                     itemImage.setIdx(i);
+                    itemImage.setHeight(Integer.parseInt(uploadResult.get("height").toString()));
+                    itemImage.setWidth(Integer.parseInt(uploadResult.get("width").toString()));
                     itemResService.add(itemImage);
                 } else {
                     sendFailureMessageText(response, "上传失败");

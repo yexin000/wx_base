@@ -91,8 +91,6 @@ public class MainController extends BaseController{
 //			sendFailureMessage(response, "验证码输入错误.");
 //			return;
 //		}
-		username="admin";
-		pwd="123456";
 		if(StringUtils.isBlank(username)){
 			sendFailureMessage(response, "账号不能为空.");
 			return;

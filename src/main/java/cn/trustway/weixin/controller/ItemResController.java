@@ -112,11 +112,15 @@ public class ItemResController extends BaseController {
 
         boolean isUploadFile = picFile != null;
         String uploadPath = "";
+        String width = "";
+        String height = "";
         if(isUploadFile) {
             Map<String, Object> uploadResult = fileUploadService.uploadFile(picFile, request, response);
             boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
             if(uploadFlag) {
                 uploadPath = uploadResult.get(MSG).toString();
+                width = uploadResult.get("width").toString();
+                height = uploadResult.get("height").toString();
             } else {
                 sendFailureMessageText(response, "上传失败");
                 return;
@@ -129,6 +133,8 @@ public class ItemResController extends BaseController {
         }
 
         if(StringUtils.isNotBlank(uploadPath)) {
+            bean.setWidth(Integer.parseInt(width));
+            bean.setHeight(Integer.parseInt(height));
             bean.setPath(uploadPath);
         }
 

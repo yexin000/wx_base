@@ -11,18 +11,20 @@
         <result column="path" property="path" />
         <result column="conType" property="conType" />
         <result column="idx" property="idx" />
+        <result column="width" property="width" />
+        <result column="height" property="height" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="Base_Column_List">
-		t.id,t.conid,t.type,t.path,t.conType,t.idx
+		t.id,t.conid,t.type,t.path,t.conType,t.idx,t.width,t.height
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_con_item_res(id,conid,type,path,conType,idx)
-        values(null,#{conid},#{type},#{path},#{conType},#{idx})
+        t_con_item_res(id,conid,type,path,conType,idx,width,height)
+        values(null,#{conid},#{type},#{path},#{conType},#{idx},#{width},#{height})
     </insert>
 
     <!-- 根据id，修改记录 -->

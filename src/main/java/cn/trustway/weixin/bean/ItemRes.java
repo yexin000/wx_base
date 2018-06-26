@@ -37,6 +37,16 @@ public class ItemRes extends BaseBean {
      */
     private String conName;
 
+    /**
+     * 图片宽
+     */
+
+    private Integer width;
+    /**
+     * 图片高
+     */
+    private Integer height;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +101,21 @@ public class ItemRes extends BaseBean {
 
     public void setConName(String conName) {
         this.conName = conName;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 }
