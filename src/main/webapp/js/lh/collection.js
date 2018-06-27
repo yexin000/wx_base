@@ -33,9 +33,16 @@ var pageId = 1;
                 {
                     var str = '';
                     $.each(dataList,function(i,obj){
-                        str+='<tr style="border-bottom: 1px solid #808080;">';
-                        str+='  <td class="pro-item-M" onclick="toAuctionItemDetail('+obj.favId+','+obj.favType+')"><img src="' + hostPath + obj.logoPath + '"  alt=""></td>';
-                        str+='  <td class="pro-item-H">';
+                        str+='<tr  >';
+                        str+='  <td class="pro-item-M" onclick="toAuctionItemDetail('+obj.favId+','+obj.favType+')"> <div class="itemDiv">';
+                        var loadClass = '';
+                        if(parseInt(obj.height) > parseInt(obj.width)){
+                            loadClass = 'length';
+                        }else{
+                            loadClass = 'width';
+                        }
+                        str+='<img src="' + hostPath + obj.logoPath + '"  alt=""  class="'+loadClass+'"></td>';
+                        str+=' </div> <td class="pro-item-H">';
                         str+='      <h2>'+obj.favName+'</h2>';
                         str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
                         str+='      <p><span>商品库存: </span><span style="overflow:hidden;  "> '+obj.stock +'<span><span onclick="cancelCollection('+obj.favId+');" style="float: right;border: 1px solid #808080;padding: 0.03rem;border-radius:6px; ">取消收藏</span></p>';

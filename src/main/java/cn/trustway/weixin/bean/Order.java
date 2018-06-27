@@ -92,6 +92,17 @@ public class Order extends BaseBean {
      */
     private String orderCoverImg;
 
+    /**
+     * 订单封面图宽
+     */
+    private Integer orderCoverImgWidth;
+
+    /**
+     * 订单封面图高
+     */
+    private Integer orderCoverImgHeight;
+
+
     public Integer getId() {
         return id;
     }
@@ -250,5 +261,21 @@ public class Order extends BaseBean {
 
     public void setBusinessId(String businessId) {
         this.businessId = businessId;
+    }
+
+    public Integer getOrderCoverImgWidth() {
+        return orderCoverImgWidth;
+    }
+
+    public void setOrderCoverImgWidth(Integer orderCoverImgWidth) {
+        this.orderCoverImgWidth = orderCoverImgWidth;
+    }
+
+    public Integer getOrderCoverImgHeight() {
+        return orderCoverImgHeight;
+    }
+
+    public void setOrderCoverImgHeight(Integer orderCoverImgHeight) {
+        this.orderCoverImgHeight = orderCoverImgHeight;
     }
 }

@@ -78,14 +78,24 @@ function loadItemData(id){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     var coverimg = obj.path;
+                    var coverimgWidth  = obj.width;
+                    var coverimgHeight = obj.height;
                     if(i == 0) {
                         itemImage = coverimg;
                     }
+
                     str+='<li class="bannerItem"  onclick="showImg('+i+')">';
                     str+='<input type="hidden" id="imgSrc'+i+'" value="' + hostPath + coverimg +  '">';
-                    str+='	<a href="javaScipt:void(0)">';
-                    str+=' <img src="' + hostPath + coverimg +  '" alt=""  >';
-                    str+=' </a></li>';
+                    str+='	    <div style="position: relative; width: 3.2rem;height: 1.75rem;"><a>';
+                    var loadClass = '';
+                    if(parseInt(coverimgWidth) > parseInt(coverimgHeight * 1.8)){
+                        loadClass = 'width';
+                    }else{
+                        loadClass = 'length';
+                    }
+                    str+='          <img src="' + hostPath + coverimg +  '" alt="" class="'+loadClass+'" >';
+                    str+='      </a></div> ';
+                    str+='  </li>';
                 });
                 $(".bannerList").append(str);
                 bannerDW("banner1",3000,true,"red");

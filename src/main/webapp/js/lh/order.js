@@ -54,7 +54,21 @@ function loadOrder(){
                     }
                     str+=' <td ><span style="float:right;padding-right: 0.2rem;color: #ff7936">'+statuName+'</span>  </td> </tr>';
                     str+='<tr  >';
-                    str+='  <td class="pro-item-M"><img src="' + hostPath + obj.orderCoverImg +  '"  alt=""></td>';
+
+                    str+='  <td class="pro-item-M">' ;
+                    str+='  <div class="itemDiv">' ;
+
+                    var loadClass = '';
+                    if(parseInt(obj.orderCoverImgHeight) > parseInt( obj.orderCoverImgWidth)){
+                        loadClass = 'height';
+                    }else{
+                        loadClass = 'width';
+                    }
+                    str+='      <img src="' + hostPath + obj.orderCoverImg +  '"   class="'+loadClass+'">'  ;
+                    str+='  </div>' ;
+                    str+='  </td>';
+
+
                     str+='  <td class="pro-item-H">';
                     str+='      <h2>'+obj.itemName+'</h2>';
                     str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';

@@ -100,6 +100,8 @@ public class OrderController extends BaseController {
                 List<ItemRes> resDataList = itemResService.queryByList(resModel);
                 if (null != resDataList && resDataList.size() > 0) {
                     order.setOrderCoverImg(resDataList.get(0).getPath());
+                    order.setOrderCoverImgHeight(resDataList.get(0).getHeight());
+                    order.setOrderCoverImgWidth(resDataList.get(0).getWidth());
                 }
             }
         }

@@ -1,5 +1,6 @@
 var selectType = 1;
 var pageId = 1;
+var id = 0 ;
 $(function(){
     $("#business-tit li").click(function(){
         $(".pro-item").empty();
@@ -12,7 +13,7 @@ $(function(){
            loadBusinessAuctionItem(id);
        }
     })
-    var id = getParam("id");
+    id = getParam("id");
     loadfindData(id);
     $('li').eq(0).click();
 })
@@ -33,7 +34,17 @@ function loadfindData(id){
             if(dataObj.logoPath == null || dataObj.logoPath == '') {
                 dataObj.logoPath = "foreground/images/no-image.jpg";
             }
+
+            var loadClass = '';
+            if(parseInt(dataObj.width) > parseInt(dataObj.height * 1.8)){
+                loadClass = 'width';
+            }else{
+                loadClass = 'length';
+            }
+
             $("#businessImg").attr("src", hostPath + dataObj.logoPath);
+            $("#businessImg").addClass(loadClass);
+
             $("#businessName").html( dataObj.name);
             $("#dataDiv").append(dataObj);
         }
@@ -65,12 +76,27 @@ function loadBusinessAuctionItem(id){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     var coverimg = '';
-
+                    var coverimgWidth = '';
+                    var coverimgHeight = '';
                     if(obj.resList && obj.resList.length > 0) {
                         coverimg = obj.resList[0].path;
+                        coverimgWidth = obj.resList[0].width;
+                        coverimgHeight = obj.resList[0].height;
                     }
                     str+='<tr onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')">';
-                    str+='  <td class="pro-item-M"><img src="' + hostPath + coverimg +  '"  alt=""></td>';
+                    str+='  <td class="pro-item-M">' ;
+                    str+='  <div class="itemDiv">' ;
+
+                    var loadClass = '';
+                    if(parseInt(coverimgHeight) > parseInt( coverimgWidth)){
+                        loadClass = 'height';
+                    }else{
+                        loadClass = 'width';
+                    }
+                    str+='      <img src="' + hostPath + coverimg +  '"   class="'+loadClass+'">'  ;
+                    str+='  </div>' ;
+                    str+='  </td>';
+
                     str+='  <td class="pro-item-H">';
                     str+='      <h2>'+obj.name+'</h2>';
                     str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
@@ -124,21 +150,16 @@ function loadindexAuction(id){
                     if(obj.logoPath == null || obj.logoPath == '') {
                         obj.logoPath = "foreground/images/no-image.jpg";
                     }
-                    // 图片地址
-                    var img_url = hostPath + obj.logoPath + '?d='+Date.parse(new Date());;
-                    // 创建对象
-                    var img = new Image();
-                    // 改变图片的src
-                    img.src = img_url;
+
                     str+='<div class="posr" onclick="toAuctionDetail('+obj.id+')">';
                     str+='	<div class="left"  >';
                     var loadClass = '';
-                    if(img.width > img.height){
+                    if(parseInt(obj.width) > parseInt(obj.height * 1.8)){
                         loadClass = 'width';
                     }else{
                         loadClass = 'length';
                     }
-                    str+=' 		<img src="' + img_url +  '" alt=""  class="'+loadClass+'" >';
+                    str+=' 		<img src="' +  hostPath +  obj.logoPath +  '" alt=""  class="'+loadClass+'" >';
                     str+='	</div>';
                     str+='<p style="padding-top: 1.4rem; font-size:18px;font-weight:bold; margin-left: 0.04rem;">'+obj.name+'</p>';
                     str+='<p style="margin-left: 0.04rem;"> '+label+'</p>';
@@ -154,4 +175,14 @@ function loadindexAuction(id){
             pageId++;
         }
     })
+}
+
+
+function loadMore(){
+
+    if(selectType == '1'){
+        loadindexAuction(id);
+    }else{
+        loadBusinessAuctionItem(id);
+    }
 }
