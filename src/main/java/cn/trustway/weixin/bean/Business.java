@@ -72,6 +72,16 @@ public class Business extends BaseBean {
      */
     private String auditStatus;
 
+    /**
+     * 图片宽
+     */
+    private Integer width;
+
+    /**
+     * 图片高
+     */
+    private Integer height;
+
     public Integer getId() {
         return id;
     }
@@ -182,5 +192,21 @@ public class Business extends BaseBean {
 
     public void setAuditStatus(String auditStatus) {
         this.auditStatus = auditStatus;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 }

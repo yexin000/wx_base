@@ -282,6 +282,7 @@ public class BusinessController extends BaseController {
         boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
         if(uploadFlag) {
             businessUpload.setLogoPath(uploadResult.get(MSG).toString());
+            //设置宽高  uploadResult.getWidth
             if(businessUpload.getId() != null && businessUpload.getId() > 0) {
                 businessService.updateBySelective(businessUpload);
             } else {

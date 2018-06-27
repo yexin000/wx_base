@@ -17,25 +17,27 @@
         <result column="wxaccount" property="wxAccount" />
         <result column="wxid" property="wxid" />
         <result column="auditstatus" property="auditStatus" />
+        <result column="width" property="width" />
+        <result column="height" property="height" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="Base_Column_List">
-		id,name,address,createTime,updateTime,telNum,logoPath,status,isShow,wxaccount,wxid,auditstatus
+		id,name,address,createTime,updateTime,telNum,logoPath,status,isShow,wxaccount,wxid,auditstatus,width,height
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_business(id,name,address,createTime,updateTime,telNum,logoPath,status,isShow,wxaccount,wxid,auditstatus)
-        values(null,#{name},#{address},now(),now(),#{telNum},#{logoPath}, '1',#{isShow}, #{wxAccount}, #{wxid}, #{auditStatus})
+        t_e_business(id,name,address,createTime,updateTime,telNum,logoPath,status,isShow,wxaccount,wxid,auditstatus,width,height)
+        values(null,#{name},#{address},now(),now(),#{telNum},#{logoPath}, '1',#{isShow}, #{wxAccount}, #{wxid}, #{auditStatus},#{width},#{height})
     </insert>
 
     <!-- 根据id，修改记录 -->
     <update id="update" parameterType="Object">
 		update t_e_business set
 		id=#{id},name=#{name},address=#{address},updateTime=sysdate,
-		telNum=#{telNum},logoPath=#{logoPath},status=#{status},isShow=#{isShow} where id=#{id}
+		telNum=#{telNum},logoPath=#{logoPath},status=#{status},isShow=#{isShow},width=#{width},height=#{height} where id=#{id}
 	</update>
 
     <!-- 修改记录，只修改只不为空的字段 -->
@@ -61,6 +63,12 @@
         </if>
         <if test="wxAccount != null and wxAccount != '' ">
             ,wxaccount=#{wxAccount}
+        </if>
+        <if test="width != null and width != '' ">
+            ,width=#{width}
+        </if>
+        <if test="height != null and height != '' ">
+            ,height=#{height}
         </if>
         where id=#{id}
     </update>
