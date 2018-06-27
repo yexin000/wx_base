@@ -75,6 +75,7 @@ $(function(){
         submitUpload();
     });
     $("#itemImages").empty();
+    imageList = new Array();
 
 
     $("#auctions").on("change", function () {
@@ -97,7 +98,7 @@ $(function(){
         }
 
         if(length > 5) {
-            $("#tipLabel").html("最多上传5张照片");
+            $("#tipLabel").html("最多选择5张照片");
             $('#tipDialog').show();
             return;
         }
@@ -109,8 +110,17 @@ $(function(){
                 reader.readAsDataURL(file);
                 //监听文件读取结束后事件
                 reader.onloadend = function (e) {
-                    var imageLi = '<li id="uploadImage0" class="weui-uploader__file" style="background-image:url(' + e.target.result + ')"></li>';
+                    var imageLi = '<li class="weui-uploader__file imglist" style="background-image:url(' + e.target.result + ')"></li>';
                     $("#uploaderFiles").append(imageLi);
+                    var image = new Image();
+                    image.onload=function(){
+                        var imageData = {};
+                        imageData.width = image.width;
+                        imageData.height = image.height;
+                        imageData.data = e.target.result.split(",")[1];
+                        imageList.push(imageData);
+                    };
+                    image.src= e.target.result;
                     //$("#uploadImage" + i).css("background-image","url(" + e.target.result + ")");    //e.target.result就是最后的路径地址
                 };
             }
@@ -136,6 +146,7 @@ $(function(){
     showInputs($("#attribute").val());
 })
 
+var imageList = new Array();
 var propertyName = {
     'businessName' : "商家名称",
     'businessTelNum' : "商家电话",
@@ -183,7 +194,7 @@ function submitUpload() {
         isPamramsRight = false;
         $("#tipLabel").html("请输入正确的价格");
         $('#tipDialog').show();
-    } else if (params.addPrice <= 0) {
+    } else if (params.addPrice <= 0 && $("#attribute").val() == 0) {
         isPamramsRight = false;
         $("#tipLabel").html("请输入正确的加价幅度");
         $('#tipDialog').show();
@@ -221,17 +232,31 @@ function submitUpload() {
         $('#tipDialog').show();
         return;
     }
+    var length = imageList.length;
+
+    if(length > 5) {
+        $("#tipLabel").html("最多上传5张商品图片");
+        $('#tipDialog').show();
+        return;
+    }
+
     if(!isPamramsRight) {
         return;
     }
 
-    $("#startTime").val(new Date($("#startTimeInput").val()).format("yyyy-MM-dd hh:mm:ss"));
-    $("#endTime").val(new Date($("#endTimeInput").val()).format("yyyy-MM-dd hh:mm:ss"));
+    if($("#attribute").val() == 0) {
+        $("#startTime").val(new Date($("#startTimeInput").val()).format("yyyy-MM-dd hh:mm:ss"));
+        $("#endTime").val(new Date($("#endTimeInput").val()).format("yyyy-MM-dd hh:mm:ss"));
+    } else {
+        $("#startTime").val(new Date().format("yyyy-MM-dd hh:mm:ss"));
+        $("#endTime").val(new Date().format("yyyy-MM-dd hh:mm:ss"));
+    }
 
     //$("#uploadform").submit();
     $('#loadingToast').show();
     var url=  $("#uploadform").attr("action");
     var formData = new FormData($("#uploadform")[0]);
+    formData.append("imageList", JSON.stringify(imageList));
     $.ajax({
         url:url,
         type: 'POST',
@@ -251,6 +276,7 @@ function submitUpload() {
 
 function clearPics() {
     $("#uploaderFiles").empty();
+    imageList = new Array();
     $("#uploaderFiles").append('<li class="weui-uploader__file" style="background-image:url(/weixin/foreground/images/imgBg.png)"></li>')
     $('#itemImages').val('')
 }
@@ -258,9 +284,12 @@ function clearPics() {
 function showInputs(attr) {
     if(attr == "0") {
         $(".auctionAttr").show();
+        $("#priceLabel").html("起拍价");
         $(".businessAttr").hide();
+
     } else if(attr == "1") {
         $(".auctionAttr").hide();
+        $("#priceLabel").html("价格");
         $(".businessAttr").show();
     }
 }

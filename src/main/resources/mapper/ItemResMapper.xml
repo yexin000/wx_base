@@ -53,6 +53,12 @@
             <if test="idx != null and idx != '' ">
                 ,idx=#{idx}
             </if>
+            <if test="width != null and width != '' ">
+                ,width=#{width}
+            </if>
+            <if test="height != null and height != '' ">
+                ,height=#{height}
+            </if>
         </trim>
         where id=#{id}
     </update>
