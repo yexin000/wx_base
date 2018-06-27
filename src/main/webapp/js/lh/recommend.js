@@ -29,9 +29,16 @@ function loadbusinessData(){
                     if(obj.logoPath == null || obj.logoPath == '') {
                         obj.logoPath = "foreground/images/no-image.jpg";
                     }
-                    str+='<div class="posr-item" style="overflow:hidden;height: 1.9rem;">';
-                    str+='	<div class="imgDiv" onclick="toBusinessDetail('+obj.id+')">';
-                    str+=' 		<img src= "'+hostPath + obj.logoPath + '" alt="" style="height: 1.9rem;width: 100%">';
+                    str+='<div class="posr-item" style="overflow:hidden;height: 1.7rem;border-bottom: 1px solid #BBBBBB;padding: 0.1rem 0 0.1rem 0;">';
+                    str+='	<div class="left" onclick="toBusinessDetail('+obj.id+')">';
+
+                    var loadClass = '';
+                    if(parseInt(obj.width) > parseInt(obj.height * 1.8)){
+                        loadClass = 'width';
+                    }else{
+                        loadClass = 'length';
+                    }
+                    str+=' 		<img src= "'+hostPath + obj.logoPath + '" alt=""  class="'+loadClass+'">';
                     str+='	</div>';
                     str+='</div>';
                 });

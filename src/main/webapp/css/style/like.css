@@ -34,6 +34,22 @@
 	transform: translate(0,-50%);
 }
 
+.itemDiv{ position: relative; width: 0.8rem;height: 0.8rem;}
+.itemDiv img.height{
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%,0);
+}
+.itemDiv img.width{
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translate(0,-50%);
+}
+
 
 .right{width: 1.8rem;float: right;}
 .right p{font-size: 0.13rem;height: 0.3rem;}

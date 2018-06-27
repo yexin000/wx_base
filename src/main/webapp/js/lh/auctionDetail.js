@@ -1,15 +1,16 @@
+var pageId = 1;
+var auctionId = '';
 $(function(){
-	
-	$("#backtop").hide()
     var id = getParam("id");
+    auctionId = id;
     loadAuctionData(id);
     loadAuctionItem(id);
 })
 
 //加载会展数据
-function loadAuctionData(id){
+function loadAuctionData(){
     $('#loadingToast').show();
-    var url= '/weixin/auction/getId.do?id='+id;
+    var url= '/weixin/auction/getId.do?id='+auctionId;
     $.ajax({
         url: url,
         type: 'post',
@@ -27,10 +28,21 @@ function loadAuctionData(id){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     var coverimg = obj.path;
+                    var coverimgWidth = obj.width;
+                    var coverimgHeight = obj.height;
                     str+='<li class="bannerItem">';
-                    str+='	<a href="javaScipt:void(0)">';
-                    str+=' <img src="' + hostPath + coverimg +  '" alt="">';
-                    str+=' </a></li>';
+
+                    str+='	    <div style="position: relative; width: 3.2rem;height: 1.75rem;"><a>';
+                    var loadClass = '';
+                    if(parseInt(coverimgWidth) > parseInt(coverimgHeight * 1.8)){
+                        loadClass = 'width';
+                    }else{
+                        loadClass = 'length';
+                    }
+
+                    str+='          <img src="' + hostPath + coverimg +  '" alt="" class="'+loadClass+'" >';
+                    str+='      </a></div> ';
+                    str+='  </li>';
                 });
                 $(".bannerList").append(str);
                 bannerDW("banner1",3000,true,"red");
@@ -41,9 +53,10 @@ function loadAuctionData(id){
 
 
 //加载会展拍品数据
-function loadAuctionItem(id){
+function loadAuctionItem(){
     var AuctionItemModel = {};
-    AuctionItemModel.auctionId = id;
+    AuctionItemModel.auctionId = auctionId;
+    AuctionItemModel.page = pageId;
     var url= '/weixin/auctionItem/ajaxDataList.do';
     $.ajax({
         url: url,
@@ -55,18 +68,33 @@ function loadAuctionItem(id){
         success:function(data){
             $('#loadingToast').hide();
             var dataList = data.rows;
+            var datalength = data.total;
             if(dataList.length> 0)
             {
-                $("#shoppingCount").html(dataList.length);
+                $("#shoppingCount").html(datalength);
                 var str = '';
                 $.each(dataList,function(i,obj){
                     var coverimg = '';
-
+                    var coverimgWidth = '';
+                    var coverimgHeight = '';
                     if(obj.resList && obj.resList.length > 0) {
                         coverimg = obj.resList[0].path;
+                        coverimgWidth = obj.resList[0].width;
+                        coverimgHeight = obj.resList[0].height;
                     }
                     str+='<tr onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')">';
-                    str+='  <td class="pro-item-M"><img src="' + hostPath + coverimg +  '"  alt=""></td>';
+                    str+='  <td class="pro-item-M">' ;
+                    str+='  <div class="itemDiv">' ;
+
+                    var loadClass = '';
+                    if(parseInt(coverimgHeight) > parseInt( coverimgWidth)){
+                        loadClass = 'height';
+                    }else{
+                        loadClass = 'width';
+                    }
+                    str+='      <img src="' + hostPath + coverimg +  '"   class="'+loadClass+'">'  ;
+                    str+='  </div>' ;
+                    str+='  </td>';
                     str+='  <td class="pro-item-H">';
                     str+='      <h2>'+obj.name+'</h2>';
                     str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
@@ -78,7 +106,12 @@ function loadAuctionItem(id){
                 });
             }
             $(".pro-item").append(str);
-
+            if(datalength <= (pageId * 10)){
+                $("#loadMore").hide();
+            }else{
+                $("#loadMore").show();
+            }
+            pageId++;
         }
     })
 }
