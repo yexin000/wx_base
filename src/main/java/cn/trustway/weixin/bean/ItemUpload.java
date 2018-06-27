@@ -1,5 +1,7 @@
 package cn.trustway.weixin.bean;
 
+import java.util.List;
+
 /**
  * 商品上传bean
  */
@@ -28,6 +30,8 @@ public class ItemUpload extends AuctionItem {
      * 上传人wxid
      */
     private String wxid;
+
+    private String imageList;
 
     public String getBusinessName() {
         return businessName;
@@ -75,5 +79,13 @@ public class ItemUpload extends AuctionItem {
 
     public void setWxid(String wxid) {
         this.wxid = wxid;
+    }
+
+    public String getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(String imageList) {
+        this.imageList = imageList;
     }
 }

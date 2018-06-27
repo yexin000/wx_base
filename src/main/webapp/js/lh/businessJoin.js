@@ -66,10 +66,9 @@ function loadBusinessJoin() {
                 $("#wxAccount").val(data.wxAccount);
                 $("#address").val(data.address);
                 $("#id").val(data.id);
-                $("#joinShow").show();
                 $("#uploadBtn").html("修改信息");
             } else {
-                $("#joinShow").hide();
+                $("#container").css("margin-top","0");
             }
         }
     })
@@ -122,7 +121,7 @@ function submitUpload() {
         contentType: false,
         success:function(result){
             $('#loadingToast').hide();
-            if($("#id") != null && $("#id") != '') {
+            if($("#id").val() != null && $("#id").val() != '') {
                 $("#tipLabel").html("修改成功");
             } else {
                 $("#tipLabel").html(result.msg);

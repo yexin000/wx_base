@@ -1,12 +1,15 @@
 package cn.trustway.weixin.util;
 
 
+import cn.trustway.weixin.bean.UploadImage;
 import com.alibaba.simpleimage.ImageWrapper;
 import com.alibaba.simpleimage.util.ImageReadHelper;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import sun.misc.BASE64Decoder;
 
 import java.io.*;
 
@@ -50,6 +53,38 @@ public class FileUpload {
             }
             fo.close();
             stream.close();
+
+        }
+        return fileUrl;
+    }
+
+    public static String uploadFile(UploadImage orginalFile, String filePath, String imgName) throws Exception {
+        String ffile = DateUtil.getDays(), fileUrl = "";
+        String rootFilePath = filePath + Const.USERAPPHEADIMG + ffile;
+        File rootFile = new File(rootFilePath);
+        if (!rootFile.exists()) {
+            rootFile.mkdirs();
+        }
+        if (null != orginalFile && StringUtils.isNotBlank(orginalFile.getData())) {
+            try {
+                String extName = "jpg"; // 扩展名格式：
+                fileUrl = Const.SDFILE + Const.USERAPPHEADIMG + ffile + "/" + imgName + extName;
+                FileOutputStream fo = new FileOutputStream(rootFilePath + "/" + imgName + extName);
+                BASE64Decoder decoder = new BASE64Decoder();
+                byte[] b = decoder.decodeBuffer(orginalFile.getData());
+                for(int i=0;i<b.length;++i) {
+                    if(b[i]<0) {
+                        //调整异常数据
+                        b[i]+=256;
+                    }
+                }
+
+                fo.write(b);
+                fo.flush();
+                fo.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
         return fileUrl;

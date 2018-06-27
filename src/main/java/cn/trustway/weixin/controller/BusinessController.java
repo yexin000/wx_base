@@ -207,6 +207,7 @@ public class BusinessController extends BaseController {
         if(id != null && id > 0) {
             businessService.updateBySelective(bean);
         } else {
+            bean.setAuditStatus("1");
             businessService.add(bean);
         }
         sendSuccessMessage(response, "保存成功~");
@@ -250,6 +251,8 @@ public class BusinessController extends BaseController {
                 return;
             } else {
                 bean.setLogoPath(uploadResult.get(MSG).toString());
+                bean.setWidth(Integer.parseInt(uploadResult.get("width").toString()));
+                bean.setHeight(Integer.parseInt(uploadResult.get("height").toString()));
                 businessService.updateBySelective(bean);
                 sendSuccessMessage(response, "上传成功");
             }
@@ -282,6 +285,8 @@ public class BusinessController extends BaseController {
         boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
         if(uploadFlag) {
             businessUpload.setLogoPath(uploadResult.get(MSG).toString());
+            businessUpload.setWidth(Integer.parseInt(uploadResult.get("width").toString()));
+            businessUpload.setHeight(Integer.parseInt(uploadResult.get("height").toString()));
             //设置宽高  uploadResult.getWidth
             if(businessUpload.getId() != null && businessUpload.getId() > 0) {
                 businessService.updateBySelective(businessUpload);

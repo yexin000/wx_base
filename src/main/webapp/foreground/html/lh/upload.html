@@ -147,18 +147,18 @@
 					</div>
 					<div class="weui-cell">
 						<div class="weui-cell__hd">
-							<label class="weui-label">起拍价</label>
+							<label class="weui-label"  id="priceLabel">起拍价</label>
 						</div>
 						<div class="weui-cell__bd">
 							<input id="startPrice" name="startPrice" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入起拍价">
 						</div>
 					</div>
-					<div class="weui-cell">
+					<div class="weui-cell auctionAttr">
 						<div class="weui-cell__hd">
 							<label class="weui-label">加价幅度</label>
 						</div>
 						<div class="weui-cell__bd">
-							<input id="addPrice" name="addPrice" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入加价幅度">
+							<input id="addPrice" name="addPrice" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入加价幅度" value="0">
 						</div>
 					</div>
 					<div class="weui-cell">
@@ -205,6 +205,7 @@
 										<li class="weui-uploader__file" style="background-image:url(../../images/imgBg.png)"></li>
 									</ul>
 								</div>
+								<div class="weui-cells__tips" style="font-size: 12px;">第一张图片为商品首图</div>
 							</div>
 						</div>
 					</div>

@@ -43,7 +43,7 @@ public class AuctionController extends BaseController {
     @Autowired(required = false)
     private ItemResService<ItemRes> itemResService;
 
-    private static final Integer[] AUCTION_ITEMS = {9, 10};
+    private static final Integer[] AUCTION_ITEMS = {9};
     /**
      * 首页
      *

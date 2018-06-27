@@ -6,7 +6,8 @@ import cn.trustway.weixin.model.AuctionItemModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
-import org.apache.commons.collections.CollectionUtils;
+import cn.trustway.weixin.util.json.JSONStringObject;
+import net.sf.json.JSONArray;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 拍品功能页面控制类
@@ -252,6 +250,16 @@ public class AuctionItemController extends BaseController {
             return;
         }
 
+        JSONArray jsonArray = JSONArray.fromObject(itemUpload.getImageList());
+        List<UploadImage> imageList = new ArrayList<>();
+        for(int j = 0; j < jsonArray.size(); j ++) {
+            UploadImage img = new UploadImage();
+            img.setWidth(String.valueOf(jsonArray.getJSONObject(j).get("width")));
+            img.setHeight(String.valueOf(jsonArray.getJSONObject(j).get("height")));
+            img.setData((String) jsonArray.getJSONObject(j).get("data"));
+            imageList.add(img);
+        }
+
         // 更新用户的买家或卖家信息
         user.setBussinessName(itemUpload.getBusinessName());
         user.setBusinessAddress(itemUpload.getBusinessAddress());
@@ -263,7 +271,8 @@ public class AuctionItemController extends BaseController {
         BeanUtils.copyProperties(itemUpload, auctionItem);
         auctionItem.setUploadWxid(itemUpload.getWxid());
         auctionItem.setStartTime(new Date());
-        auctionItem.setEndTime(new Date());
+        auctionItem.setStartTime(itemUpload.getStartTime());
+        auctionItem.setEndTime(itemUpload.getEndTime());
         auctionItem.setRate(DEFUALT_RATE);
         //auctionItem.setAuctionId(0);
         //auctionItem.setBusinessId(0);
@@ -271,24 +280,26 @@ public class AuctionItemController extends BaseController {
         auctionItemService.add(auctionItem);
 
         if(null != auctionItem.getId() && auctionItem.getId() > 0 ) {
-            for(int i = 0; i < itemImages.length; i ++) {
+            for(int i = 0; i < imageList.size(); i ++) {
                 String uploadPath = "";
-                Map<String, Object> uploadResult = fileUploadService.uploadFile(itemImages[i], request, response);
+                Map<String, Object> uploadResult = fileUploadService.uploadFile(imageList.get(i), request, response);
                 boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
                 if(uploadFlag) {
-                    uploadPath = uploadResult.get(MSG).toString();
-                    ItemRes itemImage = new ItemRes();
-                    itemImage.setConid(auctionItem.getId());
-                    itemImage.setPath(uploadPath);
-                    itemImage.setType("1");
-                    itemImage.setConType("2");
-                    itemImage.setIdx(i);
-                    itemImage.setHeight(Integer.parseInt(uploadResult.get("height").toString()));
-                    itemImage.setWidth(Integer.parseInt(uploadResult.get("width").toString()));
-                    itemResService.add(itemImage);
-                } else {
-                    sendFailureMessageText(response, "上传失败");
-                    return;
+                    if(uploadFlag) {
+                        uploadPath = uploadResult.get(MSG).toString();
+                        ItemRes itemImage = new ItemRes();
+                        itemImage.setConid(auctionItem.getId());
+                        itemImage.setPath(uploadPath);
+                        itemImage.setType("1");
+                        itemImage.setConType("2");
+                        itemImage.setIdx(i);
+                        itemImage.setHeight(Integer.parseInt(imageList.get(i).getHeight()));
+                        itemImage.setWidth(Integer.parseInt(imageList.get(i).getWidth()));
+                        itemResService.add(itemImage);
+                    } else {
+                        sendFailureMessageText(response, "上传失败");
+                        return;
+                    }
                 }
             }
         }

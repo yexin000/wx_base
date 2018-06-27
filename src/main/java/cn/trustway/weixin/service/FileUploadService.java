@@ -1,5 +1,6 @@
 package cn.trustway.weixin.service;
 
+import cn.trustway.weixin.bean.UploadImage;
 import cn.trustway.weixin.util.FileUpload;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,6 +60,30 @@ public class FileUploadService {
                 context.put("width",image.getWidth());
                 context.put("height",image.getHeight());
             }
+            if(StringUtils.isNotBlank(fileUrl)){
+                context.put(SUCCESS, true);
+                context.put(MSG, fileUrl);
+            }else {
+                context.put(SUCCESS, false);
+            }
+
+        } catch (Exception e) {
+            context.put(SUCCESS, false);
+            e.printStackTrace();
+        }
+
+        return context;
+    }
+
+    public Map uploadFile(UploadImage uploadImage, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> context = new HashMap();
+
+        try {
+            /**
+             * 根据session中的userId修改图片
+             * 先不走后台，做前端测试
+             */
+            String fileUrl = FileUpload.uploadFile(uploadImage, filepath, UUID.randomUUID().toString().trim().replaceAll("-", ""));
             if(StringUtils.isNotBlank(fileUrl)){
                 context.put(SUCCESS, true);
                 context.put(MSG, fileUrl);
