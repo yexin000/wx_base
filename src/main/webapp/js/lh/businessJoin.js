@@ -67,8 +67,9 @@ function loadBusinessJoin() {
                 $("#address").val(data.address);
                 $("#id").val(data.id);
                 $("#uploadBtn").html("修改信息");
+                $(".page__title").text("您已成功加入");
             } else {
-                $("#container").css("margin-top","0");
+                $(".page__title").text("加入我们");
             }
         }
     })
