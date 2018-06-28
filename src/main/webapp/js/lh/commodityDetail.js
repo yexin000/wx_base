@@ -58,7 +58,7 @@ function loadItemData(id){
                     }else{
                         loadClass = 'length';
                     }
-                    str+='          <img src="' + hostPath + coverimg +  '" alt="" class="'+loadClass+'" >';
+                    str+='          <img src="' + hostPath + coverimg +  '" alt="" class="'+loadClass+' userImg" >';
                     str+='      </a></div> ';
                     str+='  </li>';
                 });
@@ -191,7 +191,7 @@ function zhifu(orderId){
 }
 
 
-function showImg(i){
+function showImgs(i){
     var src = $("#imgSrc"+i).val();
     $("#footDiv").css("z-index","0");
     var str = '';
@@ -210,6 +210,24 @@ function showImg(i){
     str +=     '</div>'
     str +=    '</div>'
     $('body').append(str);
+}
+
+
+/*调用微信预览图片的方法*/
+function showImg(){
+    var imgs = [];
+    var imgObj = $(".userImg");//这里改成相应的对象
+    for(var i=0; i<imgObj.length; i++){
+        imgs.push(imgObj.eq(i).attr('src'));
+        imgObj.eq(i).click(function(){
+            var nowImgurl = $(this).attr('src');
+            WeixinJSBridge.invoke("imagePreview",{
+                "urls":imgs,
+                "current":nowImgurl
+            });
+        });
+    }
+
 }
 
 function closeImg(){
