@@ -1,8 +1,11 @@
+var topMoney = 0;//最高出价
+var addMoney = 0;//加价
 $(function(){
     var id = getParam("id");
     loadItemData(id);
-    loadAuctionItemBid(id);
     $("#bidBtn").click(function () {
+        topMoney = parseInt(topMoney + addMoney);
+        $("#bidMoney").val(topMoney);
         $('#bidDialog').show();
     });
 
@@ -118,6 +121,8 @@ function loadItemData(id){
             $("#itemDescription").html(dataObj.description); //拍品详情
             $("#startprice").html(dataObj.startPrice); //起拍价格
             $("#curprice").html(dataObj.curPrice); //当前价格
+            topMoney = dataObj.startPrice  ;
+            addMoney = dataObj.addPrice ;
             $("#addprice").html(dataObj.addPrice); //加价最低价格
             $("#rate").html(dataObj.rate); //手续费比率
             $("#depositprice").html(dataObj.depositPrice); //保证金
@@ -137,6 +142,8 @@ function loadItemData(id){
                 $("#favBtn").html("+收藏");
             }
             $("#favStatus").val(dataObj.isFavorite);
+
+            loadAuctionItemBid(id);
         }
     })
 }
@@ -171,6 +178,7 @@ function loadAuctionItemBid(id){
                     var label = '出局';
                     if(i == 0){
                         $("#curprice").html(obj.bidPrice);
+                        topMoney = obj.bidPrice;
                         label = '领先';
                         isFirst = 'bidFirst';
                     }
@@ -179,6 +187,7 @@ function loadAuctionItemBid(id){
                     str+='</div>';
                 });
             }
+
             $("#bidDataDiv").append(str);
         }
     })
