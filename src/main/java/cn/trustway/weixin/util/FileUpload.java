@@ -126,7 +126,9 @@ public class FileUpload {
         String address = thumbnailsPath + fileName;
         // 生成缩略图
         try {
-            Thumbnails.of(imageWrapper.getAsBufferedImage()).outputQuality(0.95f).size(width, heigh).toFile(
+            width = imageWrapper.getWidth();
+            heigh = imageWrapper.getHeight();
+            Thumbnails.of(imageWrapper.getAsBufferedImage()).outputQuality(1f).size(width, heigh).toFile(
                     address);
         } catch (IOException e) {
             throw e;

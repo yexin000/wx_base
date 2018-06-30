@@ -225,6 +225,7 @@ function showImg(){
                 "urls":imgs,
                 "current":nowImgurl
             });
+            WeixinJSBridge.call('closeWindow');
         });
     }
 
