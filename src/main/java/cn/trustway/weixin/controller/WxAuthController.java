@@ -108,7 +108,7 @@ public class WxAuthController extends BaseController {
                         weixinUser = new WeixinUser();
                     }
                     weixinUser.setWxid(wxid);
-                    weixinUser.setNickName(userObj.getString("nickName"));
+                    weixinUser.setNickName(userObj.getString("nickName").replaceAll("[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]", ""));
                     weixinUser.setAvatarUrl(userObj.getString("avatarUrl"));
 
                     try {

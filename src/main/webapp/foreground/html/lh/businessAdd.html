@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"  />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-dns-prefetch-control" content="on" />
+    <link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/order.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
+    <title></title>
+</head>
+<body>
+<header class="header-hs ">
+    <a href="mine.html" class="header-back"></a>
+    <h1>加入我们</h1>
+</header>
+<div class="js_dialog" id="tipDialog" style="display: none;">
+    <div class="weui-mask">
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd" id="tipLabel"></div>
+            <div class="weui-dialog__ft">
+                <a onclick="$('#tipDialog').hide();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="loadingToast" style="opacity: 1; display: none;">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">数据加载中</p>
+    </div>
+</div>
+<form id="businessform" method="post" enctype="multipart/form-data" action="/weixin/business/ajaxBusinessJoin.do" style="margin-top: 0.45rem;">
+    <input id="status" name="status" type="hidden" value="1">
+    <input id="auditStatus" name="auditStatus" type="hidden" value="0">
+    <input id="wxid" name="wxid" type="hidden">
+    <input id="id" name="id" type="hidden">
+    <input id="logoPath" name="logoPath" type="hidden">
+    <input id="width" name="width" type="hidden">
+    <input id="height" name="height" type="hidden">
+    <div class="page__hd" style="margin-top: 0.45rem;background-image:url(../../images/join-bg.jpg); background-repeat:no-repeat; background-size:100% 100%;" id="joinShow">
+        <h1 class="page__title" style="color:white">您已成功加入</h1>
+    </div>
+    <div class="container" id="container" style="margin-top: 1.2rem;">
+        <div class="page input js_show">
+            <div class="page__bd inputarea">
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">商家名称</label></div>
+                        <div class="weui-cell__bd">
+                            <input id="name" name="name" class="weui-input" type="text" placeholder="请输入商家名称">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">商家电话</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <input id="telNum" name="telNum" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入商家电话">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">微信号</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <input id="wxAccount" name="wxAccount" class="weui-input" type="text" placeholder="请输入微信号">
+                        </div>
+                    </div>
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">商家地址</label></div>
+                        <div class="weui-cell__bd">
+                            <input id="address" name="address" class="weui-input" type="text" placeholder="请输入商家地址">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page__bd inputarea">
+                <div class="weui-gallery" id="gallery">
+                    <span class="weui-gallery__img" id="galleryImg"></span>
+                    <div class="weui-gallery__opr">
+                        <a href="javascript:" class="weui-gallery__del">
+                            <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell">
+                        <div class="weui-cell__bd">
+                            <div class="weui-uploader">
+                                <div class="weui-uploader__hd">
+                                    <p class="weui-uploader__title">商家图片</p>
+                                </div>
+                                <div class="weui-uploader__bd">
+                                    <ul class="weui-uploader__files" id="uploaderFiles">
+                                        <li class="weui-uploader__file" onclick="takePhoto(this)" style="background-image:url(../../images/imgBg.png)"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="weui-btn-area">
+                    <a class="weui-btn weui-btn_primary" href="javascript:" id="uploadBtn">提交</a>
+                </div>
+            </div>
+            <div class="page__bd page__bd_spacing auditarea" style="display: none;text-align: center;margin-top: 40px;">
+                <div class="icon-box">
+                    <i class="weui-icon-waiting weui-icon_msg"></i>
+                    <div class="icon-box__ctn">
+                        <h3 class="icon-box__title">审核中</h3>
+                        <p class="icon-box__desc">商家信息后台审核中</p>
+                    </div>
+                </div>
+            </div>
+            <div class="article js_show">
+                <div class="page__bd">
+                    <article class="weui-article">
+                        <section>
+                            <section>
+                                <h3 style="text-align: center;">商户须知</h3>
+                                <p>1.百姓收藏电商平台为经营古玩、艺术品、收藏品、茶文化、珠宝、首饰、玉器、特色手工艺等全国诚信商家搭建高端交易交流平台。</p>
+                                <p>2.平台内商家必须保证上传物品图片清晰度、美观度、真实度。</p>
+                                <p>3.平台内商家请认真履行国家法律、法规。禁止上传国家法律、法规规定的禁止售卖物品，如保护动物皮毛、牙齿、易燃易爆物等。如有上传本平台不承担任何责任。平台也会做出相应的惩罚。</p>
+                                <p>4.百姓收藏在这里期待精英的加入，也祝您在这里与全国藏友玩的愉快。</p>
+                            </section>
+                        </section>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../../../js/lh/layout.js"></script>
+<script type="text/javascript" src="../../../js/lh/common.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $(window).scroll(function(){
+            var scrolltop=$(document).scrollTop();
+            var Vheight=$(window).height();
+            if(scrolltop > 0){
+                $("#backtop").show();
+            }else{
+                $("#backtop").hide();
+            }
+        });
+        loadBusinessJoin();
+
+        $("#uploadBtn").click(function () {
+            submitUpload();
+        });
+        $("#itemImages").empty();
+
+        $("#itemImages").on("change", function () {
+            var obj = document.getElementById("itemImages");
+            var length = obj.files.length;
+
+            if(length <= 0 ) {
+                return;
+            }
+
+            if(length > 5) {
+                $("#tipLabel").html("最多上传5张照片");
+                $('#tipDialog').show();
+                return;
+            }
+            $("#uploaderFiles").empty();
+            if (window.FileReader) {
+                for(var i = 0; i < this.files.length; i ++) {
+                    var reader = new FileReader();
+                    var file = this.files[i];
+                    reader.readAsDataURL(file);
+                    //监听文件读取结束后事件
+                    reader.onloadend = function (e) {
+                        var imageLi = '<li id="uploadImage0" class="weui-uploader__file" style="background-image:url(' + e.target.result + ')"></li>';
+                        $("#uploaderFiles").append(imageLi);
+                        //$("#uploadImage" + i).css("background-image","url(" + e.target.result + ")");    //e.target.result就是最后的路径地址
+                    };
+                }
+            }
+        })
+
+        $.post("/weixin/jsapi/sign.do",{"url":document.location.href},jsapiCallback);
+    })
+
+    function jsapiCallback(data) {
+        if(data != null) {
+            var dataJson = data.data;
+            wx.config({
+                debug: false,
+                appId: 'wx1d801370818d7ec2',
+                timestamp: dataJson.timestamp,
+                nonceStr: dataJson.nonceStr,
+                signature: dataJson.signature,
+                jsApiList: [
+                    'chooseImage',
+                    'uploadImage'
+                ]
+            });
+        } else {
+        }
+    }
+
+    var localIds;
+    //点击照片
+    function takePhoto(obj) {
+        wx.chooseImage({
+            count: 1,
+            sizeType: ['compressed'],
+            success: function (res) {
+                clearPics();
+                localIds = res.localIds;
+                for(var i = 0; i < res.localIds.length; i ++) {
+                    var imageLi = '<img class="weui-uploader__file imglist" src="' + res.localIds[i] + '"></img>';
+                    $("#uploaderFiles").append(imageLi);
+                }
+            }
+        });
+    }
+
+    function loadBusinessJoin() {
+        // 判断用户是否有上传商品权限
+        $('#loadingToast').show();
+        var wxid = localStorage.getItem("openId");
+        var url= '/weixin/business/ajaxGetJoinBusiness.do?wxid='+ wxid;
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: {} ,
+            dataType: 'JSON',
+            contentType : "application/json;charset=utf-8",
+            cache: false,
+            success:function(result){
+                $('#loadingToast').hide();
+                if(result.code == "0") {
+                    var data = result.data;
+                    $("#name").val(data.name);
+                    $("#telNum").val(data.telNum);
+                    $("#wxAccount").val(data.wxAccount);
+                    $("#address").val(data.address);
+                    $("#id").val(data.id);
+                    $("#uploadBtn").html("修改信息");
+                    $(".page__title").text("您已成功加入");
+                } else if(result.code == "11000") {
+                    $(".inputarea").hide();
+                    $(".auditarea").show();
+                } else {
+                    $(".page__title").text("加入我们");
+                }
+            }
+        })
+    }
+
+    var propertyName = {
+        'name' : "商家名称",
+        'telNum' : "商家电话",
+        'wxAccount' : "微信号",
+        'address' : "商家地址"
+    };
+
+    function submitUpload() {
+        var params = {};
+        params.name = $("#name").val();
+        params.telNum = $("#telNum").val();
+        params.wxAccount = $("#wxAccount").val();
+        params.address = $("#address").val();
+        $("#wxid").val(localStorage.getItem("openId"));
+
+        var isPamramsRight = true;
+        for(var key in params) {
+            if(!$.trim(params[key])) {
+                isPamramsRight = false;
+                $("#tipLabel").html("请输入正确的" + propertyName[key]);
+                $('#tipDialog').show();
+                break;
+            }
+        }
+
+        if(localIds == null || localIds.length < 1) {
+            $("#tipLabel").html("请选择上传商品图片");
+            $('#tipDialog').show();
+            return;
+        }
+        var length = localIds.length;
+
+        if(length > 5) {
+            $("#tipLabel").html("最多上传5张商品图片");
+            $('#tipDialog').show();
+            return;
+        }
+        if(!isPamramsRight) {
+            return;
+        }
+
+        uploadPhoto();
+    }
+
+    function uploadPhoto() {
+        var i = 0;
+        var length = localIds.length;
+        var serverIds = [];
+        var serverId = "";
+        if(length < 1) {
+            return;
+        }
+        function upload() {
+            wx.uploadImage({
+                localId: localIds[i].toString(),
+                isShowProgressTips: 1,
+                success: function (res) {
+                    if(i == 0) {
+                        serverId = serverId + res.serverId;
+                    } else {
+                        serverId = serverId + "&" + res.serverId;
+                    }
+                    i++;
+                    serverIds.push(res.serverId);
+
+                    if (i < length) {
+                        upload();
+                    } else {
+                        $.post("/weixin/jsapi/uploadImages.do",{"serverIds":serverId},function (result) {
+                            clearPics();
+                            if(result && result.code == "0") {
+                                var dataList = result.data;
+                                if(null != dataList && dataList.length > 0) {
+                                    $("#logoPath").val(dataList[0].data);
+                                    $("#width").val(dataList[0].width);
+                                    $("#height").val(dataList[0].height);
+                                }
+                                $('#loadingToast').show();
+                                var url=  $("#businessform").attr("action");
+                                var formData = new FormData($("#businessform")[0]);
+
+                                $.ajax({
+                                    url:url,
+                                    type: 'POST',
+                                    data: formData,
+                                    dataType: 'json',
+                                    cache: false,
+                                    processData: false,
+                                    contentType: false,
+                                    success:function(result){
+                                        $('#loadingToast').hide();
+                                        if($("#id").val() != null && $("#id").val() != '') {
+                                            $("#tipLabel").html("修改成功");
+                                        } else {
+                                            $("#tipLabel").html(result.msg);
+                                        }
+
+                                        $('#tipDialog').show();
+                                        loadBusinessJoin();
+                                        //window.location.href = "../../html/lh/uploadList.html";
+                                    }
+                                });
+                            } else {
+                                $('#loadingToast').hide();
+                                $("#tipLabel").html("图片上传失败");
+                                $('#tipDialog').show();
+                            }
+                        });
+                    }
+                },
+                fail: function (res) {
+                    console.log(JSON.stringify(res));
+                }
+            });
+        }
+        upload();
+    };
+
+    function clearPics() {
+        localIds = null;
+        $("#uploaderFiles").empty();
+        imageList = new Array();
+        $("#uploaderFiles").append('<li class="weui-uploader__file" onclick="takePhoto(this)" style="background-image:url(/weixin/foreground/images/imgBg.png)"></li>')
+        $('#itemImages').val('')
+    }
+
+
+
+
+</script>
+</body>
+</html>

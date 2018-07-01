@@ -144,6 +144,6 @@
     <select id="queryByWxid" resultMap="BaseResultMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from t_e_business where wxid = #{wxid} and auditstatus = '1' and status = '1'
+        from t_e_business where wxid = #{wxid} and status = '1'
     </select>
 </mapper>

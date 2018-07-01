@@ -264,7 +264,7 @@ public class BusinessController extends BaseController {
     @RequestMapping("/ajaxBusinessJoin")
     public void ajaxBusinessJoin(Business businessUpload, @RequestParam MultipartFile[] itemImages,
                                       HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if(null == businessUpload || itemImages.length != 1) {
+        if(null == businessUpload) {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_BUSINESS_JOIN_ERROR, "申请失败");
             return;
         }
@@ -279,8 +279,15 @@ public class BusinessController extends BaseController {
             return;
         }
         businessUpload.setIsShow("0");
+        if(businessUpload.getId() != null && businessUpload.getId() > 0) {
+            businessService.updateBySelective(businessUpload);
+        } else {
+            businessService.add(businessUpload);
+        }
+
+        sendSuccessMessage(response, "申请成功");
         // 上传商家图片
-        MultipartFile businessPic = itemImages[0];
+        /*MultipartFile businessPic = itemImages[0];
         Map<String, Object> uploadResult = fileUploadService.uploadFile(businessPic, request, response);
         boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
         if(uploadFlag) {
@@ -288,16 +295,12 @@ public class BusinessController extends BaseController {
             businessUpload.setWidth(Integer.parseInt(uploadResult.get("width").toString()));
             businessUpload.setHeight(Integer.parseInt(uploadResult.get("height").toString()));
             //设置宽高  uploadResult.getWidth
-            if(businessUpload.getId() != null && businessUpload.getId() > 0) {
-                businessService.updateBySelective(businessUpload);
-            } else {
-                businessService.add(businessUpload);
-            }
+
 
             sendSuccessMessage(response, "申请成功");
         } else {
             sendFailureMessage(response, "申请失败");
-        }
+        }*/
     }
 
     /**
@@ -364,10 +367,15 @@ public class BusinessController extends BaseController {
 
         Business joinBusiness = businessService.queryByWxid(wxid);
         if(joinBusiness != null) {
-            Map<String, Object> context = getRootMap();
-            context.put(CODE, AppInitConstants.HttpCode.HTTP_SUCCESS);
-            context.put("data", joinBusiness);
-            HtmlUtil.writerJson(response, context);
+            if("1".equals(joinBusiness.getAuditStatus())) {
+                Map<String, Object> context = getRootMap();
+                context.put(CODE, AppInitConstants.HttpCode.HTTP_SUCCESS);
+                context.put("data", joinBusiness);
+                HtmlUtil.writerJson(response, context);
+            } else {
+                sendFailure(response, "11000", "商家信息审核中");
+            }
+
             return;
         } else {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_NO_BUSINESS_JOIN_ERROR, "未找到商家信息");

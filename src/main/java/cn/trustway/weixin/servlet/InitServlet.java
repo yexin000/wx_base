@@ -25,6 +25,8 @@ public class InitServlet extends HttpServlet {
 		appInitConstants.initialize();
 		TokenThread.appid = AppInitConstants.XCX_APP_ID;
 		TokenThread.appsecret = AppInitConstants.XCX_APP_SECRET;
+		TokenThread.gzhAppid = AppInitConstants.GZH_APP_ID;
+		TokenThread.gzhAppsecret = AppInitConstants.GZH_APP_SECRET;
 
 		System.out.println("weixin api appid:" + TokenThread.appid);
 		System.out.println("weixin api appsecret:" + TokenThread.appsecret);

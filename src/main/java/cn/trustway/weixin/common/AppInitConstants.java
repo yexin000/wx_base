@@ -34,6 +34,16 @@ public class AppInitConstants {
 	public static String XCX_APP_SECRET;
 
 	/**
+	 * 公众号APPID
+	 */
+	public static String GZH_APP_ID;
+
+	/**
+	 * 公众号APPSECRET
+	 */
+	public static String GZH_APP_SECRET;
+
+	/**
 	 * 小程序MCHID
 	 */
 	public static String XCX_MCHID;
@@ -138,6 +148,8 @@ public class AppInitConstants {
 			prop.load(in);
 			XCX_APP_ID = prop.getProperty("wx.appId");
 			XCX_APP_SECRET = prop.getProperty("wx.appSecret");
+			GZH_APP_ID = prop.getProperty("wx.gzhAppId");
+			GZH_APP_SECRET = prop.getProperty("wx.gzhAppSecret");
 			XCX_MCHID = prop.getProperty("wx.mchId");
 			XCX_SERVICE_URL = prop.getProperty("wx.serviceUrl");
 			XCX_MCHKEY = prop.getProperty("wx.key");

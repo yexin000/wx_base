@@ -52,7 +52,7 @@ public class CoreService {
 	 */
 	public String processMsg(String xml) {
 		// 解析消息
-		BaseMsg msg = XmlMsgUtil.xml2Bean(xml);
+		/*BaseMsg msg = XmlMsgUtil.xml2Bean(xml);
 		try {
 			// 判断用户是否存在
 			if (!isUserBindExisted(msg.getFromUserName())) {
@@ -62,7 +62,7 @@ public class CoreService {
 			// 图文回复性功能超时处理
 			// 获取用户最后一次操作时间
 			WeixinUser weixinUser = weixinUserService.queryWeixinUser(msg.getFromUserName());
-			/*String lastTimeStr = weixinUser.getYlzd1();
+			String lastTimeStr = weixinUser.getYlzd1();
 			if(!StringUtil.isEmpty(lastTimeStr)) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				// 用户最后一次操作时间
@@ -78,9 +78,9 @@ public class CoreService {
 					user.setZt("00");
 					weixinUserService.updateBySelective(user);
 				}
-			}*/
+
 			// 更新操作时间
-			weixinUserService.updateUserOperTime(msg.getFromUserName());
+			//weixinUserService.updateUserOperTime(msg.getFromUserName());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,7 +91,8 @@ public class CoreService {
 		} else {
 			// 用户消息处理
 			return processPublicMsg(msg);
-		}
+		}*/
+		return "";
 	}
 
 	/**

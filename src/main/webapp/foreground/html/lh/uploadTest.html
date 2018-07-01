@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"  />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-dns-prefetch-control" content="on" />
+    <link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/order.css" rel="stylesheet" type="text/css">
+	<link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+	<link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
+	<title></title>
+</head>
+<body>
+	<header class="header-hs ">
+		<a href="mine.html" class="header-back"></a>
+		<h1>商品上传</h1>
+	</header>
+	<div class="js_dialog" id="tipDialog" style="display: none;">
+		<div class="weui-mask">
+			<div class="weui-dialog">
+				<div class="weui-dialog__bd" id="tipLabel"></div>
+				<div class="weui-dialog__ft">
+					<a onclick="$('#tipDialog').hide();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="loadingToast" style="opacity: 1; display: none;">
+		<div class="weui-mask_transparent"></div>
+		<div class="weui-toast">
+			<i class="weui-loading weui-icon_toast"></i>
+			<p class="weui-toast__content">数据加载中</p>
+		</div>
+	</div>
+	<form id="uploadform" method="post" enctype="multipart/form-data" action="/weixin/auctionItem/ajaxUploadAuctionItem.do">
+		<input id="status" name="status" type="hidden" value="3">
+		<input id="auctionStatus" name="auctionStatus" type="hidden" value="0">
+		<input id="wxid" name="wxid" type="hidden">
+	<div class="container" id="container" style="margin-top: 0.45rem;">
+		<div class="page input js_show">
+			<div class="page__bd">
+				<div class="weui-cells weui-cells_form">
+					<div class="weui-cell">
+						<div class="weui-cell__hd"><label class="weui-label">商家名称</label></div>
+						<div class="weui-cell__bd">
+							<input id="businessName" name="businessName" class="weui-input" type="text" placeholder="请输入商家名称">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label">商家电话</label>
+						</div>
+						<div class="weui-cell__bd">
+							<input id="businessTelNum" name="businessTelNum" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入商家电话">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label">微信号</label>
+						</div>
+						<div class="weui-cell__bd">
+							<input id="businessWxNum" name="businessWxNum" class="weui-input" type="text" placeholder="请输入微信号">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd"><label class="weui-label">商家地址</label></div>
+						<div class="weui-cell__bd">
+							<input id="businessAddress" name="businessAddress" class="weui-input" type="text" placeholder="请输入商家地址">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd"><label class="weui-label">商品名称</label></div>
+						<div class="weui-cell__bd">
+							<input id="name" name="name" class="weui-input" type="text" placeholder="请输入商品名称">
+						</div>
+					</div>
+					<div class="weui-cells" style="margin-top: 0;">
+						<div class="weui-cell weui-cell_select weui-cell_select-after" style="border-color: green;border-width: 1px;border-style: solid;border-left: none;border-right: none;">
+							<div class="weui-cell__hd">
+								<label class="weui-label">商品性质</label>
+							</div>
+							<div class="weui-cell__bd">
+								<select class="weui-select" id="attribute" name="attribute">
+									<option value="0">拍卖</option>
+									<option value="1">买卖</option>
+								</select>
+							</div>
+						</div>
+						<div class="weui-cell weui-cell_select weui-cell_select-after" style="border-color: green;border-width: 1px;border-style: solid;border-top: none;border-left: none;border-right: none;">
+							<div class="weui-cell__hd">
+								<label class="weui-label">商品分类</label>
+							</div>
+							<div class="weui-cell__bd">
+								<select class="weui-select" id="type" name="type">
+									<option value="1">现代瓷器</option>
+									<option value="2">现代书画</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="weui-cell weui-cell_select weui-cell_select-after auctionAttr">
+							<div class="weui-cell__hd">
+								<label class="weui-label">拍卖专场</label>
+							</div>
+							<div class="weui-cell__bd">
+								<select class="weui-select" id="auctions" name="auctionId">
+								</select>
+							</div>
+						</div>
+						<div class="weui-cells__tips auctionAttr" style="font-size: 12px;" id="auctionTimeShow"></div>
+						<div class="weui-cell auctionAttr">
+							<div class="weui-cell__hd"><label class="weui-label">开始时间</label></div>
+							<div class="weui-cell__bd">
+								<input class="weui-input" type="datetime-local" id="startTimeInput" value="" placeholder="">
+								<input type="hidden" id="startTime" name="startTime">
+							</div>
+						</div>
+
+						<div class="weui-cell auctionAttr">
+							<div class="weui-cell__hd"><label class="weui-label">结束时间</label></div>
+							<div class="weui-cell__bd">
+								<input class="weui-input" type="datetime-local" id="endTimeInput" value="" placeholder="">
+								<input type="hidden" id="endTime" name="endTime">
+							</div>
+						</div>
+
+
+						<div class="weui-cell weui-cell_select weui-cell_select-after businessAttr">
+							<div class="weui-cell__hd">
+								<label class="weui-label">商户选择</label>
+							</div>
+							<div class="weui-cell__bd">
+								<select class="weui-select" id="businesses" name="businessId">
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd"><label class="weui-label">商品介绍</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" type="text" placeholder="请输入商品介绍" id="description" name="description">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label"  id="priceLabel">起拍价</label>
+						</div>
+						<div class="weui-cell__bd">
+							<input id="startPrice" name="startPrice" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入起拍价">
+						</div>
+					</div>
+					<div class="weui-cell auctionAttr">
+						<div class="weui-cell__hd">
+							<label class="weui-label">加价幅度</label>
+						</div>
+						<div class="weui-cell__bd">
+							<input id="addPrice" name="addPrice" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入加价幅度" value="0">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label">库存</label>
+						</div>
+						<div class="weui-cell__bd">
+							<input id="stock" name="stock" class="weui-input" type="number" value="1">
+						</div>
+					</div>
+					<div class="weui-cells__title">商品详情</div>
+					<div class="weui-cells weui-cells_form">
+						<div class="weui-cell">
+							<div class="weui-cell__bd">
+								<textarea id="detail" name="detail" class="weui-textarea" placeholder="请输入商品详情" rows="3"></textarea>
+								<div class="weui-textarea-counter"></div>
+							</div>
+						</div>
+					</div>
+					<div class="weui-cells__tips" style="font-size: 12px;">交易成功后，平台收取成交额度的6%的服务费用用于平台正常运行</div>
+				</div>
+			</div>
+			<div class="page__bd">
+				<div class="weui-gallery" id="gallery">
+					<span class="weui-gallery__img" id="galleryImg"></span>
+					<div class="weui-gallery__opr">
+						<a href="javascript:" class="weui-gallery__del">
+							<i class="weui-icon-delete weui-icon_gallery-delete"></i>
+						</a>
+					</div>
+				</div>
+
+				<div class="weui-cells weui-cells_form">
+					<div class="weui-cell">
+						<div class="weui-cell__bd">
+							<div class="weui-uploader">
+								<div class="weui-uploader__hd">
+									<p class="weui-uploader__title">商品图片</p>
+									<div class="button-sp-area"><a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" style="z-index: 2;" onclick="clearPics()">清空</a></div>
+								</div>
+								<div class="weui-uploader__bd">
+									<!--<input id="itemImages" name="itemImages" class="weui-uploader__input" type="file" accept="image/*" multiple="">-->
+									<ul class="weui-uploader__files" id="uploaderFiles">
+										<li class="weui-uploader__file" onclick="takePhoto(this)" style="background-image:url(../../images/imgBg.png)"></li>
+									</ul>
+								</div>
+								<div class="weui-cells__tips" style="font-size: 12px;">第一张图片为商品首图</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="weui-btn-area">
+					<a class="weui-btn weui-btn_primary" href="javascript:" id="uploadBtn">提交</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+	<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+	<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="../../../js/lh/layout.js"></script>
+	<script type="text/javascript" src="../../../js/lh/common.js"></script>
+
+	<script type="text/javascript">
+        $(function(){
+            // 判断用户是否有上传商品权限
+            var wxid = localStorage.getItem("openId");
+            var url= '/weixin/business/ajaxGetJoinBusiness.do?wxid='+ wxid;
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: {} ,
+                dataType: 'JSON',
+                contentType : "application/json;charset=utf-8",
+                cache: false,
+                success:function(result){
+                    if(result.code == "0") {
+                        var data = result.data;
+                        $("#businessName").val(data.name);
+                        $("#businessTelNum").val(data.telNum);
+                        $("#businessWxNum").val(data.wxAccount);
+                        $("#businessAddress").val(data.address);
+                        var businessOptions = '';
+                        businessOptions += '<option value="' + data.id + '" selected="selected">' + data.name + '</option>';
+                        $("#businesses").empty();
+                        $("#businesses").append(businessOptions);
+                        var businessId = data.id;
+                        // 查询商户下的拍卖会
+                        $.ajax({
+                            url: '/weixin/auction/ajaxGetJoinAuctions.do?businessId='+ businessId,
+                            type: 'post',
+                            data: {} ,
+                            dataType: 'JSON',
+                            contentType : "application/json;charset=utf-8",
+                            cache: false,
+                            success:function(result){
+                                if(result.code == "0") {
+                                    var auctionList = result.data;
+                                    if(auctionList.length > 0) {
+                                        var options = '';
+                                        for(var i = 0; i < auctionList.length; i ++) {
+                                            if(i == 0) {
+                                                options += '<option value="' + auctionList[i].id + '" startAttr="' + auctionList[i].starttime + '" endAttr="' + auctionList[i].endtime + '"  selected="selected">' + auctionList[i].name + '</option>';
+                                                $("#auctionTimeShow").html(auctionList[i].starttime + " 至 " + auctionList[i].endtime);
+                                            } else {
+                                                options += '<option value="' + auctionList[i].id + '" startAttr="' + auctionList[i].starttime + '" endAttr="' + auctionList[i].endtime + '" >' + auctionList[i].name + '</option>';
+                                            }
+                                        }
+                                        $("#auctions").empty();
+                                        $("#auctions").append(options);
+                                    }
+                                }
+                            }
+                        })
+                    } else {
+                        $("#tipLabel").html("未找到商家信息，请申请商家加入后上传商品");
+                        $('#tipDialog').show();
+                        setTimeout(function () {
+                            history.back(-1);
+                        }, 3000);
+                    }
+                }
+            })
+
+            $(window).scroll(function(){
+                var scrolltop=$(document).scrollTop();
+                var Vheight=$(window).height();
+                if(scrolltop > 0){
+                    $("#backtop").show();
+                }else{
+                    $("#backtop").hide();
+                }
+            });
+            $("#backtop").click(function(){
+                $("html,body").animate({scrollTop:0},"fast");
+            })
+
+            $("#uploadBtn").click(function () {
+                submitUpload();
+            });
+            $("#itemImages").empty();
+            imageList = new Array();
+
+
+            $("#auctions").on("change", function () {
+                var auctionStartTime = $(this).find("option:selected").attr("startAttr");
+                var auctionEndTime = $(this).find("option:selected").attr("endAttr");
+                $("#auctionTimeShow").html(auctionStartTime + " 至 " + auctionEndTime);
+            });
+
+            $("#attribute").on("change", function () {
+                var attr = $(this).val();
+                showInputs(attr);
+            });
+
+            $("#itemImages").on("change", function () {
+                var obj = document.getElementById("itemImages");
+                var length = obj.files.length;
+
+                if(length <= 0 ) {
+                    return;
+                }
+
+                if(length > 5) {
+                    $("#tipLabel").html("最多选择5张照片");
+                    $('#tipDialog').show();
+                    return;
+                }
+                if (window.FileReader) {
+                    for(var i = 0; i < this.files.length; i ++) {
+                        var reader = new FileReader();
+                        var file = this.files[i];
+                        reader.readAsDataURL(file);
+                        //监听文件读取结束后事件
+                        reader.onloadend = function (e) {
+                            var imageLi = '<li class="weui-uploader__file imglist" style="background-image:url(' + e.target.result + ')"></li>';
+                            $("#uploaderFiles").append(imageLi);
+                            var image = new Image();
+                            image.onload=function(){
+                                var imageData = {};
+                                imageData.width = image.width;
+                                imageData.height = image.height;
+                                imageData.data = e.target.result.split(",")[1];
+                                imageList.push(imageData);
+                            };
+                            image.src= e.target.result;
+                        };
+                    }
+                }
+            })
+
+            // 加载商品类型
+            $.post("/weixin/wxCode/getAllAuctionItemSecondType.do",{rows:100},function(data){
+                if(data.total > 0) {
+                    var options = '';
+                    for(var i = 0; i < data.rows.length; i ++) {
+                        if(i == 0) {
+                            options += '<option value="' + data.rows[i].code + '" selected="selected">' + data.rows[i].name + '</option>';
+                        } else {
+                            options += '<option value="' + data.rows[i].code + '">' + data.rows[i].name + '</option>';
+                        }
+                    }
+                    $("#type").empty();
+                    $("#type").append(options);
+                }
+            });
+
+            showInputs($("#attribute").val());
+
+            $.post("/weixin/jsapi/sign.do",{"url":document.location.href},jsapiCallback);
+        })
+
+        var imageList = new Array();
+        var propertyName = {
+            'businessName' : "商家名称",
+            'businessTelNum' : "商家电话",
+            'businessWxNum' : "微信号",
+            'businessAddress' : "商家地址",
+            'name' : "商品名称",
+            'attribute' : "商品性质",
+            'type' : "商品分类",
+            'description' : "商品介绍",
+            'startPrice' : "起拍价",
+            'addPrice' : "加价幅度",
+            'detail' : "商品详情",
+            'stock' : "库存"
+        };
+
+        function jsapiCallback(data) {
+            if(data != null) {
+                var dataJson = data.data;
+                wx.config({
+                    debug: false,
+                    appId: 'wx1d801370818d7ec2',
+                    timestamp: dataJson.timestamp,
+                    nonceStr: dataJson.nonceStr,
+                    signature: dataJson.signature,
+                    jsApiList: [
+                        'chooseImage',
+                        'uploadImage'
+                    ]
+                });
+            } else {
+                //alert("Error!!!!");
+            }
+        }
+
+        var localIds;
+        //点击照片
+        function takePhoto(obj) {
+            wx.chooseImage({
+                count: 5,
+                sizeType: ['compressed'],
+                success: function (res) {
+                    clearPics();
+                    localIds = res.localIds;
+					for(var i = 0; i < res.localIds.length; i ++) {
+                        var imageLi = '<img class="weui-uploader__file imglist" src="' + res.localIds[i] + '"></img>';
+                        $("#uploaderFiles").append(imageLi);
+					}
+                }
+            });
+        }
+
+        function submitUpload() {
+            var params = {};
+            params.businessName = $("#businessName").val();
+            params.businessTelNum = $("#businessTelNum").val();
+            params.businessWxNum = $("#businessWxNum").val();
+            params.businessAddress = $("#businessAddress").val();
+            params.name = $("#name").val();
+            params.attribute = $("#attribute").val();
+            params.type = $("#type").val();
+            params.description = $("#description").val();
+            params.startPrice = $("#startPrice").val();
+            params.addPrice = $("#addPrice").val();
+            params.detail = $("#detail").val();
+            params.status = "1";
+            params.auctionStatus = "0";
+            params.stock = $("#stock").val();
+            $("#wxid").val(localStorage.getItem("openId"));
+
+            var isPamramsRight = true;
+            for(var key in params) {
+                if(!$.trim(params[key])) {
+                    isPamramsRight = false;
+                    $("#tipLabel").html("请输入正确的" + propertyName[key]);
+                    $('#tipDialog').show();
+                    break;
+                }
+            }
+
+            if(params.startPrice <= 0) {
+                isPamramsRight = false;
+                $("#tipLabel").html("请输入正确的价格");
+                $('#tipDialog').show();
+            } else if (params.addPrice <= 0 && $("#attribute").val() == 0) {
+                isPamramsRight = false;
+                $("#tipLabel").html("请输入正确的加价幅度");
+                $('#tipDialog').show();
+            }
+
+            if($("#attribute").val() == 0) {
+                var auctionStartTime = $("#auctions").find("option:selected").attr("startAttr");
+                auctionStartTime = new Date(auctionStartTime).getTime();
+                var auctionEndTime = $("#auctions").find("option:selected").attr("endAttr");
+                auctionEndTime = new Date(auctionEndTime).getTime();
+                var startTime = new Date($("#startTimeInput").val()).getTime();
+                var endTime = new Date($("#endTimeInput").val()).getTime();
+                if(!startTime || !endTime) {
+                    $("#tipLabel").html("请输入拍卖开始和结束时间");
+                    $('#tipDialog').show();
+                    return
+                }
+
+                if(startTime >= endTime) {
+                    $("#tipLabel").html("拍卖开始时间必须小于结束时间");
+                    $('#tipDialog').show();
+                    return
+                }
+
+                if(startTime < auctionStartTime || startTime >= auctionEndTime
+                    || endTime < auctionStartTime || endTime >= auctionEndTime ) {
+                    $("#tipLabel").html("拍卖开始和结束时间必须在拍卖专场时间内");
+                    $('#tipDialog').show();
+                    return
+                }
+            }
+
+            if(localIds == null || localIds.length < 1) {
+                $("#tipLabel").html("请选择上传商品图片");
+                $('#tipDialog').show();
+                return;
+            }
+            var length = localIds.length;
+
+            if(length > 5) {
+                $("#tipLabel").html("最多上传5张商品图片");
+                $('#tipDialog').show();
+                return;
+            }
+
+            if(!isPamramsRight) {
+                return;
+            }
+
+            if($("#attribute").val() == 0) {
+                $("#startTime").val(new Date($("#startTimeInput").val()).format("yyyy-MM-dd hh:mm:ss"));
+                $("#endTime").val(new Date($("#endTimeInput").val()).format("yyyy-MM-dd hh:mm:ss"));
+            } else {
+                $("#startTime").val(new Date().format("yyyy-MM-dd hh:mm:ss"));
+                $("#endTime").val(new Date().format("yyyy-MM-dd hh:mm:ss"));
+            }
+
+            uploadPhoto();
+        }
+
+         function uploadPhoto() {
+            var i = 0;
+            var length = localIds.length;
+            var serverIds = [];
+            var serverId = "";
+            if(length < 1) {
+                return;
+            }
+            function upload() {
+                wx.uploadImage({
+                    localId: localIds[i].toString(),
+                    isShowProgressTips: 1,
+                    success: function (res) {
+                        if(i == 0) {
+                            serverId = serverId + res.serverId;
+                        } else {
+                            serverId = serverId + "&" + res.serverId;
+                        }
+                        i++;
+                        serverIds.push(res.serverId);
+
+                        if (i < length) {
+                            upload();
+                        } else {
+                            $.post("/weixin/jsapi/uploadImages.do",{"serverIds":serverId},function (result) {
+                                clearPics();
+								if(result && result.code == "0") {
+									var dataList = result.data;
+                                    $('#loadingToast').show();
+									var url=  $("#uploadform").attr("action");
+									var formData = new FormData($("#uploadform")[0]);
+									formData.append("imageList", JSON.stringify(dataList));
+									$.ajax({
+										url:url,
+										type: 'POST',
+										data: formData,
+										dataType: 'json',
+										cache: false,
+										processData: false,
+										contentType: false,
+										success:function(result){
+											$('#loadingToast').hide();
+											$("#tipLabel").html(result.msg);
+											$('#tipDialog').show();
+											window.location.href = "../../html/lh/uploadList.html";
+										}
+									});
+								} else {
+                                    $('#loadingToast').hide();
+                                    $("#tipLabel").html("图片上传失败");
+                                    $('#tipDialog').show();
+								}
+                            });
+                        }
+                    },
+                    fail: function (res) {
+                        console.log(JSON.stringify(res));
+                    }
+                });
+            }
+            upload();
+        };
+
+        function clearPics() {
+            localIds = null;
+            $("#uploaderFiles").empty();
+            imageList = new Array();
+            $("#uploaderFiles").append('<li class="weui-uploader__file" onclick="takePhoto(this)" style="background-image:url(/weixin/foreground/images/imgBg.png)"></li>')
+            $('#itemImages').val('')
+        }
+
+        function showInputs(attr) {
+            if(attr == "0") {
+                $(".auctionAttr").show();
+                $("#priceLabel").html("起拍价");
+                $(".businessAttr").hide();
+
+            } else if(attr == "1") {
+                $(".auctionAttr").hide();
+                $("#priceLabel").html("价格");
+                $(".businessAttr").show();
+            }
+        }
+	</script>
+</body>
+</html>

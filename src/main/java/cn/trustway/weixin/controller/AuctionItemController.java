@@ -235,7 +235,7 @@ public class AuctionItemController extends BaseController {
     @RequestMapping("/ajaxUploadAuctionItem")
     public void ajaxUploadAuctionItem(ItemUpload itemUpload, @RequestParam MultipartFile[] itemImages,
                                       HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if(null == itemUpload || itemImages.length == 0) {
+        if(null == itemUpload) {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_UPLOAD_ERROR, "上传商品失败");
             return;
         }
@@ -281,26 +281,27 @@ public class AuctionItemController extends BaseController {
 
         if(null != auctionItem.getId() && auctionItem.getId() > 0 ) {
             for(int i = 0; i < imageList.size(); i ++) {
-                String uploadPath = "";
+                ItemRes itemImage = new ItemRes();
+                itemImage.setConid(auctionItem.getId());
+                itemImage.setPath(imageList.get(i).getData());
+                itemImage.setType("1");
+                itemImage.setConType("2");
+                itemImage.setIdx(i);
+                itemImage.setHeight(Integer.parseInt(imageList.get(i).getHeight()));
+                itemImage.setWidth(Integer.parseInt(imageList.get(i).getWidth()));
+                itemResService.add(itemImage);
+                /*String uploadPath = "";
                 Map<String, Object> uploadResult = fileUploadService.uploadFile(imageList.get(i), request, response);
                 boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
                 if(uploadFlag) {
                     if(uploadFlag) {
                         uploadPath = uploadResult.get(MSG).toString();
-                        ItemRes itemImage = new ItemRes();
-                        itemImage.setConid(auctionItem.getId());
-                        itemImage.setPath(uploadPath);
-                        itemImage.setType("1");
-                        itemImage.setConType("2");
-                        itemImage.setIdx(i);
-                        itemImage.setHeight(Integer.parseInt(imageList.get(i).getHeight()));
-                        itemImage.setWidth(Integer.parseInt(imageList.get(i).getWidth()));
-                        itemResService.add(itemImage);
+
                     } else {
                         sendFailureMessageText(response, "上传失败");
                         return;
                     }
-                }
+                }*/
             }
         }
 

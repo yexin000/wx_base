@@ -81,6 +81,8 @@
 					<value>/templateMsg/rechargeTemplateMsg.do</value>
 					<value>/business/ajaxBusinessJoin.do</value>
 					<value>/business/ajaxGetJoinBusiness.do</value>
+					<value>/jsapi/sign.do</value>
+					<value>/jsapi/uploadImages.do</value>
 				</list>
 			</property>
 		</bean>

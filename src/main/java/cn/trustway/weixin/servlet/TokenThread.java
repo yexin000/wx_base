@@ -25,7 +25,12 @@ public class TokenThread implements Runnable {
 	public static String appid = "";
 	// 第三方用户唯一凭证密钥
 	public static String appsecret = "";
+	// 公众号appid
+	public static String gzhAppid = "";
+	// 公众号appsecret
+	public static String gzhAppsecret = "";
 	public static AccessToken accessToken = null;
+	public static AccessToken gzhAccessToken = null;
 	public static JsapiTicket jsapiTicket = null;
 	private WxCodeService<WxCode> wxCodeService;
 	
@@ -37,8 +42,14 @@ public class TokenThread implements Runnable {
 		while (true) {
 			try {
 				accessToken = WeixinUtil.getAccessToken(appid, appsecret);
-				if (null != accessToken) {
+				gzhAccessToken = WeixinUtil.getAccessToken(gzhAppid, gzhAppsecret);
+				if (null != accessToken || null != gzhAccessToken) {
 					System.out.println("获取access_token成功，有效时长" + accessToken	.getExpiresIn() + "秒" +  "token:" + accessToken.getToken());
+					System.out.println("获取公众号access_token成功，有效时长" + gzhAccessToken.getExpiresIn() + "秒" +  "token:" + gzhAccessToken.getToken());
+					jsapiTicket = WeixinUtil.getJsapiTicket(gzhAccessToken.getToken());
+					if(null != jsapiTicket) {
+						System.out.println("获取公众号jsapi_ticket成功，有效时长" + jsapiTicket	.getExpiresIn() + "秒" +  "ticket:" + jsapiTicket.getTicket());
+					}
 					// 休眠7000秒
 					Thread.sleep((accessToken.getExpiresIn() - 200) * 1000);
 				} else {
