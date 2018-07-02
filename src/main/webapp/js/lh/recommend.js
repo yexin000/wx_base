@@ -9,6 +9,7 @@ function loadbusinessData(){
     $('#loadingToast').show();
     var bisinessModel = {};
     bisinessModel.auditStatus = '1';
+    bisinessModel.status = '1';
     bisinessModel.page = pageId;
     var url= '/weixin/business/ajaxDataList.do';
     $.ajax({
@@ -44,7 +45,7 @@ function loadbusinessData(){
                 });
                 //加载上拉加载按钮
                 $("#loadMore").remove();
-                str +='<a href="javascript:loadbusinessData();" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading"><i class="weui-loading"></i>点击加载更多</a>';
+                str +='<a href="javascript:loadbusinessData();" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading"> 点击加载更多</a>';
             }
             $("#dataDiv").append(str);
             if(datalength <= (pageId * 10)){
