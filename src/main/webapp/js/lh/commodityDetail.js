@@ -244,3 +244,12 @@ $("#shareBtn").click(function () {
         wx.miniProgram.navigateTo({ url: shareUrl });
     }
 });
+
+function goBack() {
+    var lastUrl = document.referrer;
+    if(lastUrl.indexOf("index.html") >= 0 && lastUrl.indexOf("itemId") >= 0) {
+        window.location.href = "../../html/lh/index.html";
+    } else {
+        history.go(-1);
+    }
+}
