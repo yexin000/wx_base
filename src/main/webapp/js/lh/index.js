@@ -28,7 +28,6 @@
                     }
                 }
             })
-            //window.location.href =
         }
 
         var p=0,t=0;

@@ -33,17 +33,48 @@ function getParam(paramName) {
     return paramValue == "" && (paramValue = null), paramValue
 }
 
+/**
+ * 去商家详情
+ * @param id
+ */
 function toBusinessDetail(id)
 {
     window.location.href = '../../html/lh/businessDetail.html?id='+id;
 }
+
+/**
+ * 去会展详情
+ * @param id
+ */
 function toAuctionDetail(id)
 {
     window.location.href = '../../html/lh/auctionDetail.html?id='+id;
 }
+
+/**
+ * 去订单详情
+ * @param id
+ */
 function toOrderDetail(orderId) {
     window.location.href = '../../html/lh/orderDetail.html?id='+orderId;
 }
+
+/**
+ * 去活动列表
+ * @param id
+ */
+function toActivityList() {
+    window.location.href = '../../html/lh/orderDetail.html?id='+orderId;
+}
+
+/**
+ * 去活动详情
+ * @param id
+ */
+function toActivityDetail(orderId) {
+    window.location.href = '../../html/lh/orderDetail.html?id='+orderId;
+}
+
 function toAuctionItemDetail(id,type)
 {
     if(type == "0"){
@@ -63,7 +94,6 @@ function showToast(msg, callback) {
                     '</div>' +
                    '</div>');
     $("body").append(toast);
-
     setTimeout(function () {
         $("#toast").remove();
         callback();
