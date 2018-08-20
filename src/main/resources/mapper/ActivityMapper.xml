@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.ActivityDao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.Activity">
+        <result column="id" property="id" />
+        <result column="activityName" property="activityName" />
+        <result column="activityMoney" property="activityMoney" />
+        <result column="starttime" property="starttime" />
+        <result column="endtime" property="endtime" />
+        <result column="createtime" property="createtime" />
+        <result column="activityDescribe" property="activityDescribe" />
+        <result column="status" property="status" />
+        <result column="viewnum" property="viewnum" />
+        <result column="likenum" property="likenum" />
+        <result column="sharenum" property="sharenum" />
+    </resultMap>
+
+    <!-- sys_menu table all fields -->
+    <sql id="Auction_Base_Column_List">
+		t.id,t.activityName,t.starttime,t.endtime,t.createtime,t.activityDescribe,t.activityMoney, t.status,t.viewnum,t.likenum,t.sharenum
+	</sql>
+
+    <!-- 插入记录 -->
+    <insert id="add" parameterType="Object">
+        insert into
+        t_e_activity(id,activityName,starttime,endtime,createtime,activityDescribe,activityMoney,
+            status,viewnum,likenum,sharenum )
+        values(null,#{activityName},#{starttime},#{endtime},now(),#{activityDescribe},#{activityMoney},
+            #{status},#{viewnum},#{likenum},#{sharenum});
+    </insert>
+
+    <!-- 插入记录 -->
+    <insert id="addJoin" parameterType="Object">
+        insert into
+        t_e_activity_join(id,activityId,wx_id,createtime,status  )
+        values(null,#{activityId},#{wx_id},now(),'1' );
+    </insert>
+
+    <!-- 根据id，修改记录 -->
+    <update id="update" parameterType="Object">
+		update t_e_activity set
+		activityName=#{activityName},starttime=#{starttime},endtime=#{endtime} ,activityDescribe=#{activityDescribe},
+        status=#{status}
+		where id=#{id}
+	</update>
+
+    <!-- 设置开始时间超出当前时间的正常的活动为已开始 -->
+    <update id="updateActivityStart" parameterType="Object">
+		update t_e_activity set status='3'
+		where status='1' and starttime &lt; now()
+ 	</update>
+
+    <!-- 设置结束时间超出当前时间的正在进行的活动为已结束 -->
+    <update id="updateActivityEnd" parameterType="Object">
+		update t_e_activity set status='4'
+		where status='3' and endtime &lt; now()
+ 	</update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateBySelective" parameterType="Object">
+        update t_e_activity set  1 = 1
+        <if test="activityName != null and activityName != '' ">
+            ,activityName=#{activityName}
+        </if>
+        <if test="starttime != null and starttime != '' ">
+            ,starttime=#{starttime}
+        </if>
+        <if test="endtime != null and endtime != '' ">
+            ,endtime=#{endtime}
+        </if>
+        <if test="activityDescribe != null and activityDescribe != '' ">
+            ,activityDescribe=#{activityDescribe}
+        </if>
+        <if test="activityMoney != null and activityMoney != '' ">
+            ,activityMoney=#{activityMoney}
+        </if>
+        <if test="likenum != null and likenum != '' ">
+            ,likenum=#{likenum}
+        </if>
+        <if test="status != null and status != '' ">
+            ,status=#{status}
+        </if>
+        <if test="sharenum != null and sharenum != '' ">
+            ,sharenum=#{sharenum}
+        </if>
+        <if test="viewnum != null and viewnum != '' ">
+            ,viewnum=#{viewnum}
+        </if>
+        where id=#{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <update id="delete" parameterType="Object">
+		update t_e_activity set status = '0' where id = #{id}
+	</update>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+        select
+          <include refid="Auction_Base_Column_List" />
+        from t_e_activity t
+        where t.id = #{id}
+    </select>
+
+    <!-- 记录总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(1) from t_e_activity t
+        where 1=1 and t.status != '0'
+        <trim suffixOverrides=",">
+            <if test="activityName != null and activityName != ''">
+                and t.activityName like CONCAT('%', #{activityName}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                and t.status = #{status}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+            <include refid="Auction_Base_Column_List" />
+        from t_e_activity t
+        where 1=1 and t.status != '0'
+        <trim suffixOverrides=",">
+            <if test="activityName != null and activityName != ''">
+                and t.activityName like CONCAT('%', #{activityName}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                and t.status = #{status}
+            </if>
+        </trim>
+        order by t.modifytime desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+
+    <select id="queryByJoinActivity" resultMap="BaseResultMap" parameterType="Object">
+        select
+          <include refid="Auction_Base_Column_List" />
+        from t_e_activity t
+        left join t_e_activity_join t2 on t.id = t2.activityId
+        where  t.id = #{activityId}
+        <if test="wx_id != null and wx_id != ''">
+            or t2.wx_id = #{wx_id}
+        </if>
+    </select>
+</mapper>

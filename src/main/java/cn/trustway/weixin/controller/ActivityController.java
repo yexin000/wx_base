@@ -1,5 +1,6 @@
 package cn.trustway.weixin.controller;
 
+import cn.trustway.weixin.bean.Activity;
 import cn.trustway.weixin.bean.Auction;
 import cn.trustway.weixin.bean.ItemRes;
 import cn.trustway.weixin.bean.SysUser;
@@ -7,12 +8,14 @@ import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.ActivityModel;
 import cn.trustway.weixin.model.AuctionModel;
 import cn.trustway.weixin.model.ItemResModel;
+import cn.trustway.weixin.service.ActivityService;
 import cn.trustway.weixin.service.AuctionService;
 import cn.trustway.weixin.service.FileUploadService;
 import cn.trustway.weixin.service.ItemResService;
 import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.SessionUtil;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,11 +39,10 @@ import java.util.Map;
 public class ActivityController extends BaseController {
 
     @Autowired(required = false)
-    private AuctionService<Auction> auctionService;
+    private ActivityService<Activity> activityService;
 
     @Autowired
     private FileUploadService fileUploadService;
-
 
     @Autowired(required = false)
     private ItemResService<ItemRes> itemResService;
@@ -67,7 +70,7 @@ public class ActivityController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/dataList", method = RequestMethod.POST)
-    public void dataList(AuctionModel model, HttpServletResponse response) throws Exception {
+    public void dataList(ActivityModel model, HttpServletResponse response) throws Exception {
         queryDataList(model, response);
     }
 
@@ -80,15 +83,15 @@ public class ActivityController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
-    public void ajaxDataList(@RequestBody AuctionModel model, HttpServletResponse response) throws Exception {
+    public void ajaxDataList(@RequestBody ActivityModel model, HttpServletResponse response) throws Exception {
         queryDataList(model, response);
     }
 
-    private void queryDataList(AuctionModel model, HttpServletResponse response) throws Exception {
-        List<Auction> dataList = auctionService.queryByList(model);
+    private void queryDataList(ActivityModel model, HttpServletResponse response) throws Exception {
+        List<Activity> dataList = activityService.queryByList(model);
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("total", auctionService.queryByCount(model));
+        jsonMap.put("total", activityService.queryByCount(model));
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
     }
@@ -104,15 +107,14 @@ public class ActivityController extends BaseController {
     @RequestMapping("/getId")
     public void getId(Integer id, HttpServletResponse response) throws Exception {
         Map<String, Object> context = getRootMap();
-        Auction bean = auctionService.queryById(id);
+        Activity bean = activityService.queryById(id);
         if (bean == null) {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
         }
-
         ItemResModel resModel  = new ItemResModel();
         resModel.setConid(bean.getId());
-        resModel.setConType("1");
+        resModel.setConType("3");
         List<ItemRes> resDataList = itemResService.queryByList(resModel);
         bean.setResList(resDataList);
         context.put(SUCCESS, true);
@@ -129,16 +131,12 @@ public class ActivityController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/save")
-    public void save(Auction bean, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        SysUser sysUser = SessionUtil.getUser(request);
+    public void save(Activity bean, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer id = bean.getId();
         if(id != null && id > 0) {
-            bean.setModifier(sysUser.getId());
-            auctionService.updateBySelective(bean);
+            activityService.updateBySelective(bean);
         } else {
-            bean.setCreator(sysUser.getId());
-            bean.setModifier(sysUser.getId());
-            auctionService.add(bean);
+            activityService.add(bean);
         }
         sendSuccessMessage(response, "保存成功~");
     }
@@ -153,7 +151,7 @@ public class ActivityController extends BaseController {
      */
     @RequestMapping("/delete")
     public void delete(Integer[] id, HttpServletResponse response) throws Exception {
-        auctionService.delete(id);
+        activityService.delete(id);
         sendSuccessMessage(response, "删除成功");
     }
 
@@ -173,7 +171,7 @@ public class ActivityController extends BaseController {
         Map<String, Object> uploadResult = fileUploadService.uploadFile(headImg, request, response);
         boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
         if(uploadFlag) {
-            Auction bean = auctionService.queryById(businessid);
+            Activity bean = activityService.queryById(businessid);
             if (bean == null) {
                 sendFailureMessage(response, "没有找到对应的记录!");
                 return;
@@ -187,29 +185,36 @@ public class ActivityController extends BaseController {
     }
 
     /**
-     * 查询商户下的拍卖会
-     * @param businessId
+     * 报名接口
+     * @param activityId
      * @param response
      * @throws Exception
      */
-    @RequestMapping("/ajaxGetJoinAuctions")
-    public void ajaxGetJoinAuctions(Integer businessId, HttpServletResponse response) throws Exception {
+    @RequestMapping("/ajaxJoinActivity")
+    public void ajaxGetJoinAuctions(Integer activityId,String wx_id, HttpServletResponse response) throws Exception {
         Map<String, Object> params = new HashMap<>();
-        if(businessId != null && businessId > 0) {
-            params.put("businessId", businessId);
+        if(activityId != null && activityId > 0) {
+            params.put("activityId", activityId);
         }
-        params.put("auctionIds", AUCTION_ITEMS);
-        List<Auction> joinAuctions = auctionService.queryByJoinAuction(params);
-        if(CollectionUtils.isNotEmpty(joinAuctions)) {
+        if(StringUtils.isNotEmpty(wx_id)){
+            params.put("wx_id", wx_id);
+        }
+        List<Activity> joinAuctions = activityService.queryByJoinActivity(params);
+        if(null == joinAuctions || joinAuctions.size() == 0){
+            //判断当前是否在活动时间中
+            Activity activity = activityService.queryById(activityId);
+            Date now = new Date();
+            if(now.compareTo(activity.getStarttime()) < 0 || now.compareTo(activity.getEndtime()) > 0) {
+                sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_TIME_ERROR, "报名失败，不在有效时间范围");
+                return;
+            }
+            //报名
+            int col = activityService.addJoin(params);
             Map<String, Object> context = getRootMap();
-            context.put(CODE, AppInitConstants.HttpCode.HTTP_SUCCESS);
+            context.put(CODE, col > 0 ?  AppInitConstants.HttpCode.HTTP_SUCCESS : AppInitConstants.HttpCode.HTTP_PAY_FAIL);
             context.put("data", joinAuctions);
             HtmlUtil.writerJson(response, context);
-            return;
-        } else {
-            sendFailure(response, AppInitConstants.HttpCode.HTTP_NO_BUSINESS_AUCTIONS_ERROR, "未找到拍卖会信息");
-            return;
-        }
 
+        }
     }
 }
