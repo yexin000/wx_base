@@ -19,7 +19,7 @@
     </resultMap>
 
     <!-- sys_menu table all fields -->
-    <sql id="Auction_Base_Column_List">
+    <sql id="Activity_Base_Column_List">
 		t.id,t.activityName,t.starttime,t.endtime,t.createtime,t.activityDescribe,t.activityMoney, t.status,t.viewnum,t.likenum,t.sharenum
 	</sql>
 
@@ -100,7 +100,7 @@
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
-          <include refid="Auction_Base_Column_List" />
+          <include refid="Activity_Base_Column_List" />
         from t_e_activity t
         where t.id = #{id}
     </select>
@@ -123,9 +123,9 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-            <include refid="Auction_Base_Column_List" />
+            <include refid="Activity_Base_Column_List" />
         from t_e_activity t
-        where 1=1 and t.status != '0'
+        where 1=1
         <trim suffixOverrides=",">
             <if test="activityName != null and activityName != ''">
                 and t.activityName like CONCAT('%', #{activityName}, '%')
@@ -134,7 +134,7 @@
                 and t.status = #{status}
             </if>
         </trim>
-        order by t.modifytime desc
+        order by t.createtime desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
             ${pager.orderCondition}
         </if>
@@ -145,7 +145,7 @@
 
     <select id="queryByJoinActivity" resultMap="BaseResultMap" parameterType="Object">
         select
-          <include refid="Auction_Base_Column_List" />
+          <include refid="Activity_Base_Column_List" />
         from t_e_activity t
         left join t_e_activity_join t2 on t.id = t2.activityId
         where  t.id = #{activityId}

@@ -74,6 +74,7 @@
 					<value>/moneyStream/ajaxDataList.do</value>
 					<value>/putForward/ajaxDataList.do</value>
 					<value>cn.trustway.weixin.controller.FavoriteController</value>
+					<value>cn.trustway.weixin.controller.ActivityController</value>
 					<value>cn.trustway.weixin.controller.UserAddrController</value>
 					<value>cn.trustway.weixin.controller.WxPayController</value>
 					<value>cn.trustway.weixin.controller.QrCodeController</value>
