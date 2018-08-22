@@ -41,3 +41,8 @@ function contactService() {
     var path = '/pages/service/contactService';
     wx.miniProgram.navigateTo({ url: path });
 }
+
+function toMyInfo() {
+  window.location.href = '../../html/lh/myInfo.html';
+}
+
