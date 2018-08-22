@@ -24,7 +24,7 @@ public class ActivityService<T> extends BaseService<T> {
     }
 
     /**
-     * 设置开始时间超出当前时间的正常的拍卖会为已开始
+     * 设置开始时间超出当前时间的正常的活动为已开始
      * @return
      */
     public void updateAuctionStart() {

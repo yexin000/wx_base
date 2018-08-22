@@ -83,7 +83,8 @@ public class ActivityController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
-    public void ajaxDataList(@RequestBody ActivityModel model, HttpServletResponse response) throws Exception {
+    public void ajaxDataList(HttpServletResponse response) throws Exception {
+        ActivityModel model = new ActivityModel();
         queryDataList(model, response);
     }
 
@@ -208,7 +209,7 @@ public class ActivityController extends BaseController {
                 sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_TIME_ERROR, "报名失败，不在有效时间范围");
                 return;
             }
-            //报名
+            //报名(支付才能成功)
             int col = activityService.addJoin(params);
             Map<String, Object> context = getRootMap();
             context.put(CODE, col > 0 ?  AppInitConstants.HttpCode.HTTP_SUCCESS : AppInitConstants.HttpCode.HTTP_PAY_FAIL);
