@@ -64,7 +64,7 @@ function toOrderDetail(orderId) {
  * @param id
  */
 function toActivityList() {
-    window.location.href = '../../html/lh/orderDetail.html?id='+orderId;
+    window.location.href = '../../html/lh/activityList.html';
 }
 
 /**
@@ -72,7 +72,7 @@ function toActivityList() {
  * @param id
  */
 function toActivityDetail(orderId) {
-    window.location.href = '../../html/lh/orderDetail.html?id='+orderId;
+    window.location.href = '../../html/lh/activityDetail.html?id='+orderId;
 }
 
 function toAuctionItemDetail(id,type)
