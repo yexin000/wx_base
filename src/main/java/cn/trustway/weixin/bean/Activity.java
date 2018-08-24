@@ -17,7 +17,7 @@ public class Activity extends BaseBean {
     /**
      *活动名称
      */
-    private String activityName;
+    private String name;
     /**
      *开始时间
      */
@@ -33,11 +33,11 @@ public class Activity extends BaseBean {
     /**
      *描述
      */
-    private String activityDescribe;
+    private String describe;
     /**
      *金额
      */
-    private String activityMoney;
+    private String money;
     /**
      *状态：0-删除，1-正常, 3-已开始,4-已结束
      */
@@ -59,9 +59,9 @@ public class Activity extends BaseBean {
      */
     private List<ItemRes> resList;
     /**
-     * 报名id
+     * 是否报名
      */
-    private String joinId ;
+    private String isJoin ;
 
     public Integer getId() {
         return id;
@@ -71,12 +71,12 @@ public class Activity extends BaseBean {
         this.id = id;
     }
 
-    public String getActivityName() {
-        return activityName;
+    public String getName() {
+        return name;
     }
 
-    public void setActivityName(String activityName) {
-        this.activityName = activityName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getStarttime() {
@@ -103,20 +103,20 @@ public class Activity extends BaseBean {
         this.createtime = createtime;
     }
 
-    public String getActivityDescribe() {
-        return activityDescribe;
+    public String getDescribe() {
+        return describe;
     }
 
-    public void setActivityDescribe(String activityDescribe) {
-        this.activityDescribe = activityDescribe;
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 
-    public String getActivityMoney() {
-        return activityMoney;
+    public String getMoney() {
+        return money;
     }
 
-    public void setActivityMoney(String activityMoney) {
-        this.activityMoney = activityMoney;
+    public void setMoney(String money) {
+        this.money = money;
     }
 
     public String getStatus() {
@@ -159,11 +159,11 @@ public class Activity extends BaseBean {
         this.resList = resList;
     }
 
-    public String getJoinId() {
-        return joinId;
+    public String getIsJoin() {
+        return isJoin;
     }
 
-    public void setJoinId(String joinId) {
-        this.joinId = joinId;
+    public void setIsJoin(String isJoin) {
+        this.isJoin = isJoin;
     }
 }

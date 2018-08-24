@@ -17,7 +17,7 @@ public class ActivityModel extends BaseModel {
     /**
      *活动名称
      */
-    String activityName;
+    String name;
     /**
      *活动封面
      */
@@ -25,11 +25,11 @@ public class ActivityModel extends BaseModel {
     /**
      *活动描述
      */
-    String activityDescribe;
+    String describe;
     /**
      *活动金额
      */
-    BigDecimal activityMoney;
+    BigDecimal money;
     /**
      *开始时间
      */
@@ -67,12 +67,12 @@ public class ActivityModel extends BaseModel {
         this.id = id;
     }
 
-    public String getActivityName() {
-        return activityName;
+    public String getName() {
+        return name;
     }
 
-    public void setActivityName(String activityName) {
-        this.activityName = activityName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getActivityBg() {
@@ -83,20 +83,20 @@ public class ActivityModel extends BaseModel {
         this.activityBg = activityBg;
     }
 
-    public String getActivityDescribe() {
-        return activityDescribe;
+    public String getDescribe() {
+        return describe;
     }
 
-    public void setActivityDescribe(String activityDescribe) {
-        this.activityDescribe = activityDescribe;
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 
-    public BigDecimal getActivityMoney() {
-        return activityMoney;
+    public BigDecimal getMoney() {
+        return money;
     }
 
-    public void setActivityMoney(BigDecimal activityMoney) {
-        this.activityMoney = activityMoney;
+    public void setMoney(BigDecimal money) {
+        this.money = money;
     }
 
     public Date getStarttime() {

@@ -40,6 +40,14 @@ public class ActivityService<T> extends BaseService<T> {
     }
 
     /**
+     * 根据活动id查询报名状态
+     * @return
+     */
+    public Integer queryJoinById(Map<String, Object> params) {
+        return getDao().queryJoinById(params);
+    }
+
+    /**
      * 报名
      * @return
      */

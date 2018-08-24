@@ -23,6 +23,11 @@ public interface ActivityDao<T> extends BaseDao<T> {
     void updateActivityEnd();
 
     /**
+     * 根据活动id查询报名状态
+     * @return
+     */
+    Integer queryJoinById(Map<String, Object> params);
+    /**
      * 报名
      * @return
      */

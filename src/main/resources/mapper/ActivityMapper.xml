@@ -6,12 +6,12 @@
     <!-- Result Map -->
     <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.Activity">
         <result column="id" property="id" />
-        <result column="activityName" property="activityName" />
-        <result column="activityMoney" property="activityMoney" />
+        <result column="name" property="name" />
+        <result column="money" property="money" />
         <result column="starttime" property="starttime" />
         <result column="endtime" property="endtime" />
         <result column="createtime" property="createtime" />
-        <result column="activityDescribe" property="activityDescribe" />
+        <result column="describe" property="describe" />
         <result column="status" property="status" />
         <result column="viewnum" property="viewnum" />
         <result column="likenum" property="likenum" />
@@ -20,15 +20,15 @@
 
     <!-- sys_menu table all fields -->
     <sql id="Activity_Base_Column_List">
-		t.id,t.activityName,t.starttime,t.endtime,t.createtime,t.activityDescribe,t.activityMoney, t.status,t.viewnum,t.likenum,t.sharenum
+		t.id,t.name,t.starttime,t.endtime,t.createtime,t.describe,t.money, t.status,t.viewnum,t.likenum,t.sharenum
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_activity(id,activityName,starttime,endtime,createtime,activityDescribe,activityMoney,
+        t_e_activity(id,name,starttime,endtime,createtime,describe,money,
             status,viewnum,likenum,sharenum )
-        values(null,#{activityName},#{starttime},#{endtime},now(),#{activityDescribe},#{activityMoney},
+        values(null,#{name},#{starttime},#{endtime},now(),#{describe},#{money},
             #{status},#{viewnum},#{likenum},#{sharenum});
     </insert>
 
@@ -42,7 +42,7 @@
     <!-- 根据id，修改记录 -->
     <update id="update" parameterType="Object">
 		update t_e_activity set
-		activityName=#{activityName},starttime=#{starttime},endtime=#{endtime} ,activityDescribe=#{activityDescribe},
+		name=#{name},starttime=#{starttime},endtime=#{endtime} ,describe=#{describe},
         status=#{status}
 		where id=#{id}
 	</update>
@@ -62,8 +62,8 @@
     <!-- 修改记录，只修改只不为空的字段 -->
     <update id="updateBySelective" parameterType="Object">
         update t_e_activity set  1 = 1
-        <if test="activityName != null and activityName != '' ">
-            ,activityName=#{activityName}
+        <if test="name != null and name != '' ">
+            ,name=#{name}
         </if>
         <if test="starttime != null and starttime != '' ">
             ,starttime=#{starttime}
@@ -71,11 +71,11 @@
         <if test="endtime != null and endtime != '' ">
             ,endtime=#{endtime}
         </if>
-        <if test="activityDescribe != null and activityDescribe != '' ">
-            ,activityDescribe=#{activityDescribe}
+        <if test="describe != null and describe != '' ">
+            ,describe=#{describe}
         </if>
-        <if test="activityMoney != null and activityMoney != '' ">
-            ,activityMoney=#{activityMoney}
+        <if test="money != null and money != '' ">
+            ,money=#{money}
         </if>
         <if test="likenum != null and likenum != '' ">
             ,likenum=#{likenum}
@@ -105,14 +105,19 @@
         where t.id = #{id}
     </select>
 
+    <!-- 根据id查询报名记录 -->
+    <select id="queryJoinById" resultType="java.lang.Integer" parameterType="Object">
+        select count(1) from t_e_activity_join teaj where teaj.activityId = #{id} and wx_id = #{wx_id}
+    </select>
+
     <!-- 记录总数 -->
     <select id="queryByCount" resultType="java.lang.Integer"
             parameterType="Object">
         select count(1) from t_e_activity t
         where 1=1 and t.status != '0'
         <trim suffixOverrides=",">
-            <if test="activityName != null and activityName != ''">
-                and t.activityName like CONCAT('%', #{activityName}, '%')
+            <if test="name != null and name != ''">
+                and t.name like CONCAT('%', #{name}, '%')
             </if>
             <if test="status != null and status != ''">
                 and t.status = #{status}
@@ -127,8 +132,8 @@
         from t_e_activity t
         where 1=1
         <trim suffixOverrides=",">
-            <if test="activityName != null and activityName != ''">
-                and t.activityName like CONCAT('%', #{activityName}, '%')
+            <if test="name != null and name != ''">
+                and t.name like CONCAT('%', #{name}, '%')
             </if>
             <if test="status != null and status != ''">
                 and t.status = #{status}

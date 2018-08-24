@@ -77,7 +77,7 @@ public class ActivityController extends BaseController {
     /**
      * 前端数据列表查询
      *
-     * @param model
+     * @param
      * @param response
      * @return
      * @throws Exception
@@ -106,18 +106,25 @@ public class ActivityController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/getId")
-    public void getId(Integer id, HttpServletResponse response) throws Exception {
+    public void getId(Integer id,String wxid, HttpServletResponse response) throws Exception {
         Map<String, Object> context = getRootMap();
         Activity bean = activityService.queryById(id);
         if (bean == null) {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
         }
-        ItemResModel resModel  = new ItemResModel();
-        resModel.setConid(bean.getId());
-        resModel.setConType("3");
-        List<ItemRes> resDataList = itemResService.queryByList(resModel);
-        bean.setResList(resDataList);
+        //查询报名状态
+        Map<String, Object> params = new HashMap<>();
+        params.put("id",id);
+        params.put("wx_id",wxid);
+        Integer i = activityService.queryJoinById(params);
+        if(i > 0){
+            //已报名
+            bean.setIsJoin("1");
+        }else{
+            //未报名
+            bean.setIsJoin("0");
+        }
         context.put(SUCCESS, true);
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);

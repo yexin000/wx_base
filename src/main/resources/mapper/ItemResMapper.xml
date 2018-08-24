@@ -118,6 +118,9 @@
             <if test="conType == 2">
                 left join t_e_auction_item a on t.conid=a.id and t.contype='2'
             </if>
+            <if test="conType == 3">
+                left join t_e_activity a on t.conid=a.id and t.contype='3'
+            </if>
         </if>
         where 1=1
         <trim suffixOverrides=",">
