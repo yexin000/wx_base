@@ -1,9 +1,6 @@
 package cn.trustway.weixin.controller;
 
-import cn.trustway.weixin.bean.Activity;
-import cn.trustway.weixin.bean.Auction;
-import cn.trustway.weixin.bean.ItemRes;
-import cn.trustway.weixin.bean.SysUser;
+import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.ActivityModel;
 import cn.trustway.weixin.model.AuctionModel;
@@ -88,6 +85,26 @@ public class ActivityController extends BaseController {
         queryDataList(model, response);
     }
 
+    /**
+     * 前端报名列表数据列表查询
+     *
+     * @param
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/ajaxGetJoinList", method = RequestMethod.POST)
+    public void ajaxGetJoinList(HttpServletResponse response , Integer id , Integer limit) throws Exception {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id",id);
+        params.put("limit",limit);
+        List<ActivityJoinUser> dataList = activityService.queryJoinListById(params);
+        // 设置页面数据
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("rows", dataList);
+        HtmlUtil.writerJson(response, jsonMap);
+    }
+
     private void queryDataList(ActivityModel model, HttpServletResponse response) throws Exception {
         List<Activity> dataList = activityService.queryByList(model);
         // 设置页面数据
@@ -125,6 +142,8 @@ public class ActivityController extends BaseController {
             //未报名
             bean.setIsJoin("0");
         }
+        //查询最新报名的三个人
+        
         context.put(SUCCESS, true);
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);

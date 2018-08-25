@@ -18,6 +18,13 @@
         <result column="sharenum" property="sharenum" />
     </resultMap>
 
+    <resultMap id="BaseResulJointMap" type="cn.trustway.weixin.bean.ActivityJoinUser">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="wxid" property="wxid" />
+        <result column="avatarUrl" property="avatarUrl" />
+    </resultMap>
+
     <!-- sys_menu table all fields -->
     <sql id="Activity_Base_Column_List">
 		t.id,t.name,t.starttime,t.endtime,t.createtime,t.describe,t.money, t.status,t.viewnum,t.likenum,t.sharenum
@@ -147,6 +154,21 @@
             ${pager.mysqlQueryCondition}
         </if>
     </select>
+
+    <!-- 查询报名记录列表 -->
+    <select id="queryJoinListById" resultMap="BaseResulJointMap" parameterType="Object">
+        select
+          t.id,wu.wxid ,wu.avatarUrl,wu.nickname as name
+        from t_e_activity_join t
+        left join weixin_user wu on wu.wxid = t.wx_id
+        where  t.id = #{id} and t.status = '1'
+        order by t.createtime desc
+        <if test="limit != null and limit != ''">
+           limit 0 , #{limit}
+        </if>
+    </select>
+
+
 
     <select id="queryByJoinActivity" resultMap="BaseResultMap" parameterType="Object">
         select

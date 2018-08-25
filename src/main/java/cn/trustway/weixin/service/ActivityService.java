@@ -1,5 +1,6 @@
 package cn.trustway.weixin.service;
 
+import cn.trustway.weixin.bean.ActivityJoinUser;
 import cn.trustway.weixin.dao.ActivityDao;
 import cn.trustway.weixin.dao.AuctionDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,11 @@ public class ActivityService<T> extends BaseService<T> {
      */
     public Integer queryJoinById(Map<String, Object> params) {
         return getDao().queryJoinById(params);
+    }
+
+    public List<ActivityJoinUser> queryJoinListById(Map<String, Object> params) {
+
+        return getDao().queryJoinListById(params);
     }
 
     /**

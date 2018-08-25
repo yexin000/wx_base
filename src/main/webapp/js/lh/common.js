@@ -71,8 +71,8 @@ function toActivityList() {
  * 去活动详情
  * @param id
  */
-function toActivityDetail(orderId) {
-    window.location.href = '../../html/lh/activityDetail.html?id='+orderId;
+function toActivityDetail(actId) {
+    window.location.href = '../../html/lh/activityDetail.html?id='+actId;
 }
 
 function toAuctionItemDetail(id,type)

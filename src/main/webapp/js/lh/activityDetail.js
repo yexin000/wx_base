@@ -1,6 +1,8 @@
 $(function(){
     var id = getParam("id");
     loadActivityData(id);
+    loadActivityJoinListData(id);
+
     $("#shareBtn").click(function () {
         if(itemImage !=  '') {
             var itemUrl = encodeURIComponent(itemImage);
@@ -10,7 +12,10 @@ $(function(){
             wx.miniProgram.navigateTo({ url: shareUrl });
         }
     });
-
+    //去报名列表
+    $("#dataDiv").click(function () {
+        window.location.href = '../../html/lh/activityJoinList.html?id='+id;
+    });
 })
 
 //加载活动数据
@@ -38,8 +43,34 @@ function loadActivityData(id){
     })
 }
 
+//加载活动数据
+function loadActivityJoinListData(id){
+    $('#loadingToast').show();
+    var params = {};
+    params.id = id;
+    var url= '/weixin/activity/ajaxGetJoinList.do?id='+id+"&limit=3";
+    $.ajax({
+        url: url,
+        type: 'post',
+        data:"",
+        contentType : "application/json;charset=utf-8",
+        dataType: 'JSON',
+        cache: false,
+        success:function(data){
+            $('#loadingToast').hide();
+            var dataList = data.rows;
+            var str = '';
+            $.each(dataList,function(i,obj){
+                str+='     <img src="' +  obj.avatarUrl +  '" style="border-radius: 50%;width: 0.18rem;width: 0.18rem;"> ';
+            });
+            $("#dataListDiv").append(str);
 
+        }
+    })
+}
 
 function goBack() {
         history.go(-1);
 }
+
+
