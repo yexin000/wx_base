@@ -5,14 +5,12 @@ import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.ActivityModel;
 import cn.trustway.weixin.model.AuctionModel;
 import cn.trustway.weixin.model.ItemResModel;
-import cn.trustway.weixin.service.ActivityService;
-import cn.trustway.weixin.service.AuctionService;
-import cn.trustway.weixin.service.FileUploadService;
-import cn.trustway.weixin.service.ItemResService;
+import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.SessionUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +43,13 @@ public class ActivityController extends BaseController {
     @Autowired(required = false)
     private ItemResService<ItemRes> itemResService;
 
-    private static final Integer[] AUCTION_ITEMS = {9, 12};
+    @Autowired
+    OrderService<Order> orderService;
+
+    @Autowired
+    OrderLogService<OrderLog> orderLogService;
+
+
     /**
      * 首页
      *
@@ -218,13 +223,13 @@ public class ActivityController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/ajaxJoinActivity")
-    public void ajaxGetJoinAuctions(Integer activityId,String wx_id, HttpServletResponse response) throws Exception {
+    public void ajaxGetJoinAuctions(Integer activityId,String wxid, HttpServletResponse response) throws Exception {
         Map<String, Object> params = new HashMap<>();
         if(activityId != null && activityId > 0) {
             params.put("activityId", activityId);
         }
-        if(StringUtils.isNotEmpty(wx_id)){
-            params.put("wx_id", wx_id);
+        if(StringUtils.isNotEmpty(wxid)){
+            params.put("wx_id", wxid);
         }
         List<Activity> joinAuctions = activityService.queryByJoinActivity(params);
         if(null == joinAuctions || joinAuctions.size() == 0){
@@ -235,13 +240,40 @@ public class ActivityController extends BaseController {
                 sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_TIME_ERROR, "报名失败，不在有效时间范围");
                 return;
             }
+            Order order = null ;
             //报名(支付才能成功)
-            int col = activityService.addJoin(params);
+            try {
+                 order = createOrderByActivity(new BigDecimal(activity.getMoney()),wxid,activityId);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            // int col = activityService.addJoin(params);
             Map<String, Object> context = getRootMap();
-            context.put(CODE, col > 0 ?  AppInitConstants.HttpCode.HTTP_SUCCESS : AppInitConstants.HttpCode.HTTP_PAY_FAIL);
-            context.put("data", joinAuctions);
+            context.put(CODE, order != null ?  AppInitConstants.HttpCode.HTTP_SUCCESS : AppInitConstants.HttpCode.HTTP_PAY_FAIL);
+            context.put("order",order);
             HtmlUtil.writerJson(response, context);
-
         }
+    }
+
+    private Order createOrderByActivity(BigDecimal price,String wxid,int actId) throws Exception{
+        // 生成订单
+        Date currentTime = new Date();
+        Order order = new Order();
+        order.setOrderType("4");
+        order.setOrderMoney(price.doubleValue());
+        order.setWxid(wxid);
+        order.setItemId(actId);
+        order.setActId(actId);
+        order.setCreateTime(currentTime);
+        orderService.add(order);
+        // 写入订单日志
+        Order newOrder = orderService.queryById(order.getId());
+        OrderLog orderLog = new OrderLog();
+        BeanUtils.copyProperties(newOrder, orderLog);
+        orderLog.setOrderId(newOrder.getId());
+        orderLog.setCreateTime(newOrder.getCreateTime());
+        orderLog.setStatus(newOrder.getStatus());
+        orderLogService.add(orderLog);
+        return order;
     }
 }

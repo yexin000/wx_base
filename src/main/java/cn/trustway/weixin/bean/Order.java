@@ -12,7 +12,7 @@ public class Order extends BaseBean {
      */
     private Integer id;
     /**
-     * 订单类型:1-拍卖,2-买卖
+     * 订单类型:1-拍卖,2-买卖,3-充值,4-报名活动
      */
     private String orderType;
     /**
@@ -102,6 +102,10 @@ public class Order extends BaseBean {
      */
     private Integer orderCoverImgHeight;
 
+    /**
+     * 活动id
+     */
+    private Integer actId;
 
     public Integer getId() {
         return id;
@@ -277,5 +281,13 @@ public class Order extends BaseBean {
 
     public void setOrderCoverImgHeight(Integer orderCoverImgHeight) {
         this.orderCoverImgHeight = orderCoverImgHeight;
+    }
+
+    public Integer getActId() {
+        return actId;
+    }
+
+    public void setActId(Integer actId) {
+        this.actId = actId;
     }
 }

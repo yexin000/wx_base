@@ -173,7 +173,7 @@ function zhifu(orderId){
                 var package = data.package;
                 var prepay_id = data.prepay_id;
                 var paySign = data.paySign;
-                var orderId = data.orderId;showImg
+                var orderId = data.orderId;
                 var itemId = data.itemId;
                 var params = "?timeStamp=" +timeStamp+ "&nonceStr=" + nonceStr
                     + "&prepay_id="+prepay_id+"&paySign=" + paySign

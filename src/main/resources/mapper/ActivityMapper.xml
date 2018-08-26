@@ -177,7 +177,7 @@
         left join t_e_activity_join t2 on t.id = t2.activityId
         where  t.id = #{activityId}
         <if test="wx_id != null and wx_id != ''">
-            or t2.wx_id = #{wx_id}
+            and t2.wx_id = #{wx_id}
         </if>
     </select>
 </mapper>
