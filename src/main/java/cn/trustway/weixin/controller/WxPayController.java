@@ -1,9 +1,11 @@
 package cn.trustway.weixin.controller;
 
+import cn.trustway.weixin.bean.Activity;
 import cn.trustway.weixin.bean.MoneyStream;
 import cn.trustway.weixin.bean.Order;
 import cn.trustway.weixin.bean.WeixinUser;
 import cn.trustway.weixin.common.AppInitConstants;
+import cn.trustway.weixin.service.ActivityService;
 import cn.trustway.weixin.service.MoneyStreamService;
 import cn.trustway.weixin.service.OrderService;
 import cn.trustway.weixin.service.WeixinUserService;
@@ -48,6 +50,8 @@ public class WxPayController extends BaseController {
     @Autowired
     private MoneyStreamService<MoneyStream> moneyStreamService;
 
+    @Autowired(required = false)
+    private ActivityService<Activity> activityService;
     /**
      * 微信支付统一下单
      *
@@ -207,11 +211,14 @@ public class WxPayController extends BaseController {
                 {
                     //充值订单
                     String atferStatus = weixinUserService.payAfter(order);
-                    if("-1".equals(atferStatus)){
-                        //用户信息获取失败
-                    }
-                }
 
+                }else if("4".equals(order.getOrderType())){
+                    //报名订单
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("activityId", order.getItemId());//报名时，报名id就是订单项id，不另启用其他字段
+                    params.put("wx_id", order.getWxid());
+                    activityService.addJoin(params);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
