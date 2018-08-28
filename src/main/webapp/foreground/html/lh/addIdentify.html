@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"  />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="x-dns-prefetch-control" content="on" />
+  <link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/like.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/order.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
+  <title></title>
+  <style type="text/css">
+    table tr td{ border-bottom:#989898 solid 1px;}
+  </style>
+</head>
+<body>
+<header class="header-hs ">
+  <a href="javaScript:history.go(-1)" class="header-back"></a>
+  <h1>我要鉴定</h1>
+</header>
+
+<div class="container mgt-045" id="container">
+  <div class="page input js_show">
+    <div class="page__bd">
+      <div class="weui-cells weui-cells_form mg-20">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <textarea class="weui-textarea" placeholder="请输入商品描述" rows="6"></textarea>
+          </div>
+        </div>
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <div class="weui-uploader">
+              <div class="weui-uploader__hd">
+                <p class="weui-uploader__title">商品图片</p>
+                <div class="button-sp-area"><a href="javascript:;" class="weui-btn weui-btn_mini identify-btn-bg" style="z-index: 2;" onclick="clearPics()">清空</a></div>
+              </div>
+              <div class="weui-uploader__bd">
+                <ul class="weui-uploader__files" id="uploaderFiles">
+                  <li class="weui-uploader__file" onclick="takePhoto(this)" style="background-image:url(../../images/imgBg.png)"></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="weui-btn-area">
+          <a class="weui-btn identify-btn-bg" href="javascript:" id="showTooltips">我要鉴定</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../../../js/lh/layout.js"></script>
+<script type="text/javascript" src="../../../js/lh/common.js"></script>
+<script type="text/javascript" src="../../../js/lh/myInfo.js?v=1.0"></script>
+</body>
+</html>

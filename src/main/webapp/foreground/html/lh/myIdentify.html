@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"  />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="x-dns-prefetch-control" content="on" />
+  <link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/like.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/order.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
+  <title></title>
+  <style type="text/css">
+    table tr td{ border-bottom:#989898 solid 1px;}
+  </style>
+</head>
+<body>
+<header class="header-hs ">
+  <a href="javaScript:history.go(-1)" class="header-back"></a>
+  <h1>我的鉴定</h1>
+</header>
+
+<table class="pro-item" style="border-collapse:separate; margin-top: 0.45rem;padding: 10px;background-color: white;">
+  <tbody>
+    <tr>
+      <td class="pro-item-M">
+        <div class="itemDiv">
+          <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180527/6fa543a78fc94bd694637dfa3b960a70.png" class="width">
+        </div>
+      </td>
+      <td class="pro-item-H">
+        <h2 class="font-bolder">齐家文玉壁</h2>
+        <h2 class="identify-text">鉴定状态：<font class="identify-font">鉴定中</font></h2>
+        <button class="identify-btn" onclick="javascript:toIdentifyResult()">查看详情</button>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="pro-item-M">
+        <div class="itemDiv">
+          <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180527/6fa543a78fc94bd694637dfa3b960a70.png" class="width">
+        </div>
+      </td>
+      <td class="pro-item-H">
+        <h2 class="font-bolder">齐家文玉壁</h2>
+        <h2 class="identify-text">鉴定状态：<font class="identify-font">已鉴定</font></h2>
+        <button class="identify-btn">查看详情</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="page__bd page__bd_spacing" style="background-color: white;width: 100%;padding: 0;">
+  <a href="./addIdentify.html" class="identify-add weui-btn" style="color: #d1a741"><i class="identify-add-icon"></i>我要鉴定</a>
+</div>
+
+<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../../../js/lh/layout.js"></script>
+<script type="text/javascript" src="../../../js/lh/common.js"></script>
+<script type="text/javascript" src="../../../js/lh/myInfo.js?v=1.0"></script>
+<script type="text/javascript">
+  function toIdentifyResult() {
+    window.location.href = "./identifyResult.html";
+  }
+</script>
+</body>
+</html>
+

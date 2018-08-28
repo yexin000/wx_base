@@ -268,3 +268,68 @@ a{color:#888;}
 
 .cst {width: 1rem;height: 0.9rem;position: fixed;right: 0rem;top: 0.4rem;text-align: center;font-size: 0.14rem;background: #776e6e;border-radius: 5px;color: #fff;line-height: 0.3rem;/* margin-right: 0.0rem; */}
 .cst li {height: 0.3rem;}
+
+.font-bolder {
+    font-weight: bolder;
+}
+
+.color-d1a741 {
+    color : #d1a741;
+}
+
+.identify-text {
+    color : #989898;
+    margin-top: 5px;
+}
+
+.identify-font {
+    color : #d1a741;
+    font-size: 0.12rem;
+}
+
+.identify-btn {
+    background-color: white;
+    color : #d1a741;
+    font-size: 0.12rem;
+    width: 0.7rem;
+    height: 0.23rem;
+    border-radius: 10px;
+    border: 1px solid #989898;
+    margin-top: 5px;
+}
+
+.identify-add {
+    width: 100%;
+    background-color: white;
+    color : #d1a741;
+}
+
+.identify-add-icon {
+    display: inline-block;
+    text-align: center;
+    height: 15px;
+    width: 15px;
+    margin-right: 5px;
+    background: url(../../images/lh/add-identity.jpg) no-repeat center;
+}
+
+.mg-20 {
+    margin: 20px;
+}
+
+.mgt-045 {
+    margin-top: 0.45rem;
+}
+
+.identify-btn-area {
+    margin: 1.17647059em 30px 0.3em;
+}
+
+.identify-btn-bg {
+    background-color: #d0a642;
+}
+
+.identify-text {
+    color: #d0a642;
+    font-size: 16px;
+}
