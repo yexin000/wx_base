@@ -1,3 +1,6 @@
+var itemImage = '../../../images/lh/list9.png';
+var itemName = '';
+
 $(function(){
     var id = getParam("id");
     loadActivityData(id);
@@ -37,7 +40,9 @@ function loadActivityData(id){
         cache: false,
         success:function(data){
             $('#loadingToast').hide();
+
             var dataObj = data.data;
+            itemName = dataObj.name;
             //处理活动基本信息
             $("#activityDescription").html(dataObj.describe); //拍品详情
             if(dataObj.isJoin == '1'){

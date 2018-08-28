@@ -75,6 +75,14 @@ function toActivityDetail(actId) {
     window.location.href = '../../html/lh/activityDetail.html?id='+actId;
 }
 
+/**
+ * 去用户详情
+ * @param id
+ */
+function toUserInfo(wxId) {
+    window.location.href = '../../html/lh/myInfo.html?wxId='+wxId;
+}
+
 function toAuctionItemDetail(id,type)
 {
     if(type == "0"){

@@ -161,7 +161,7 @@
           t.id,wu.wxid ,wu.avatarUrl,wu.nickname as name
         from t_e_activity_join t
         left join weixin_user wu on wu.wxid = t.wx_id
-        where  t.id = #{id} and t.status = '1'
+        where  t.activityId = #{id} and t.status = '1'
         order by t.createtime desc
         <if test="limit != null and limit != ''">
            limit 0 , #{limit}

@@ -23,11 +23,11 @@ function loadActivity(){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     str+='<div style="width: 90%;height:1.5rem;margin-left: 5%;  margin-top: 0.2rem;" onclick="toActivityDetail(\''+ obj.id + '\')">';
-                    str+='   <div style="border-radius: 3%;height:1.2rem;  overflow: hidden">';
-                    str+='      <img src="../../../images/lh/redio-s.png" style="width: 100%;"> ';
+                    str+='   <div style="border-top-left-radius: 3%;border-top-right-radius: 3%;height:1.23rem;  overflow: hidden">';
+                    str+='      <img src="../../../images/lh/list9.png" style="width: 100%;height:1.23rem;"> ';
                     str+='   </div>';
                     str+='   <div style="text-align: center;background-color: #2D2D2D">';
-                    str+='       <span style="font-size: 0.16rem; margin-top: 0.03rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;color: #C8AE56 ">测试活动</span>';
+                    str+='       <span style="font-size: 0.16rem; margin-top: 0.03rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;color: #C8AE56 ">'+obj.name+'</span>';
                     str+='   </div>';
                     str+='</div>';
                 });
