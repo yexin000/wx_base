@@ -34,6 +34,43 @@ function getParam(paramName) {
 }
 
 /**
+ * 去商家列表
+ * @param id
+ */
+function toBusinessList()
+{
+    window.location.href = '../../html/lh/recommend.html';
+}
+
+/**
+ * 去联系客服(新)
+ * @param
+ */
+function toService()
+{
+    window.location.href = '../../html/lh/toService.html';
+}
+
+/**
+ * 去平台须知
+ * @param
+ */
+function toPlatformNotes()
+{
+    window.location.href = '../../html/lh/platformNotes.html';
+}
+
+/**
+ * 去推荐商品
+ * @param
+ */
+function toPickLot()
+{
+    window.location.href = '../../html/lh/pickLot.html';
+}
+
+
+/**
  * 去商家详情
  * @param id
  */

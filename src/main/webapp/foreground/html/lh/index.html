@@ -17,9 +17,9 @@
     <title></title>
 </head>
 <body>
-<marquee direction="left" behavior="scroll" scrollamount="1" scrolldelay="0" loop="-1" width="100%" height="22" bgcolor="#fff" hspace="10" vspace="10" onclick="toActivityList()">
-    <p style="letter-spacing:2px;width: 1px;" >
-        欢迎您登录陇海拍卖网
+<marquee direction="left" behavior="scroll" scrollamount="3" scrolldelay="0" loop="-1" width="100%" height="25" bgcolor="#8C8C8C" hspace="40" vspace="10" onclick="toActivityList()">
+    <p style="letter-spacing:5px;width: 1px;margin-top: 0.03rem;color: yellow;" >
+        欢迎您登录陇海拍卖
     </p>
 </marquee>
 	<header class="header-index">
@@ -30,6 +30,18 @@
            	<div  class="bannerPrompt none"></div>
        </div>
     </header>
+    <div style="width: 100%;margin-top: 0.05rem;">
+        <ul style="overflow: hidden;white-space:nowrap;text-align:center;list-style-type:none;margin-left: 0.05rem;">
+            <li style="list-style: none;float: left;width: 33%;"> <img src="../../../images/lh/tjsp.png" style="width: 0.8rem;height: 0.4rem" onclick="toPickLot()"> </li>
+            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/yzsh.png" style="width: 0.8rem;height: 0.4rem" onclick="toBusinessList()"></li>
+            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/wdgz.png" style="width: 0.8rem;height: 0.4rem"></li>
+        </ul>
+        <ul style="overflow: hidden;white-space:nowrap;text-align:center;list-style-type:none;margin-left: 0.05rem;">
+            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/v5tq.png" style="width: 0.8rem;height: 0.4rem"></li>
+            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/gzgzh.png" style="width: 0.8rem;height: 0.4rem" onclick="toService()"></li>
+            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/ptxz.png" style="width: 0.8rem;height: 0.4rem" onclick="toPlatformNotes()"></li>
+        </ul>
+    </div>
     <div id="loadingToast" style="opacity: 1; display: none;">
         <div class="weui-mask_transparent"></div>
         <div class="weui-toast">
@@ -40,7 +52,7 @@
     <div id="dataDiv">
 
     </div>
-    <div id="dataDivItem">
+    <div id="dataDivItem1">
 
     </div>
     <div id="uploadBtn" class="page__bd page__bd_spacing" style="padding-bottom: 0.48rem;display: none;">
