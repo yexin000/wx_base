@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.IdentifyDao">
+  <!-- Result Map -->
+  <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.Identify">
+    <result column="id" property="id" />
+    <result column="wxid" property="wxid" />
+    <result column="description" property="description" />
+    <result column="result" property="result" />
+    <result column="status" property="status" />
+    <result column="createtime" property="createtime" />
+    <result column="modifytime" property="modifytime" />
+  </resultMap>
+
+  <!-- sys_menu table all fields -->
+  <sql id="Identify_Base_Column_List">
+        t.id, t.wxid, t.description, t.result, t.status, t.createtime, t.modifytime
+    </sql>
+
+  <!-- 插入记录 -->
+  <insert id="add" parameterType="Object">
+        insert into
+        t_e_user_identify(id, wxid, description, result, status)
+        values(null,#{wxid},#{description},#{result},#{status})
+    </insert>
+
+  <!-- 根据id，修改记录 -->
+  <update id="update" parameterType="Object">
+        update t_e_user_identify set modifytime=now(),
+        wxid=#{wxid},description=#{description},result=#{result},
+        status=#{status} where id=#{id}
+    </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateBySelective" parameterType="Object">
+    update t_e_user_identify set modifytime=now()
+    <if test="wxid != null and wxid != '' ">
+      ,wxid=#{wxid}
+    </if>
+    <if test="description != null and description != '' ">
+      ,description=#{description}
+    </if>
+    <if test="result != null and result != '' ">
+      ,result=#{result}
+    </if>
+    <if test="status != null and status != '' ">
+      ,status=#{status}
+    </if>
+    where id=#{id}
+  </update>
+
+  <!-- 删除记录 -->
+  <update id="delete" parameterType="Object">
+        delete from t_e_user_identify where id = #{id}
+    </update>
+
+  <!-- 根据id查询记录 -->
+  <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+    select
+    <include refid="Identify_Base_Column_List" />
+    from t_e_user_identify t where t.id = #{id}
+  </select>
+
+  <!-- 记录总数 -->
+  <select id="queryByCount" resultType="java.lang.Integer"
+          parameterType="Object">
+    select count(1) from t_e_user_identify t
+    where 1=1
+    <trim suffixOverrides=",">
+      <if test="wxid != null and wxid != ''">
+        and t.wxid = #{wxid}
+      </if>
+    </trim>
+  </select>
+
+  <!-- 分页查询记录列表 -->
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+    select
+    <include refid="Identify_Base_Column_List" />
+    from t_e_user_identify t
+    where 1=1
+    <trim suffixOverrides=",">
+      <if test="wxid != null and wxid != ''">
+        and t.wxid = #{wxid}
+      </if>
+    </trim>
+    order by t.createtime desc
+    <if test="pager.orderCondition != null and pager.orderCondition != ''">
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+      ${pager.mysqlQueryCondition}
+    </if>
+  </select>
+</mapper>

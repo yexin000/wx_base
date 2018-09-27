@@ -1,5 +1,7 @@
 package cn.trustway.weixin.bean;
 
+import java.util.Date;
+
 /**
  * 商品鉴定bean
  * @author yexin
@@ -26,6 +28,14 @@ public class Identify extends BaseBean {
      * 鉴定状态：0-鉴定中,1-已鉴定
      */
     private String status;
+    /**
+     * 创建时间
+     */
+    private Date createtime;
+    /**
+     * 更新时间
+     */
+    private Date modifytime;
 
     public Integer getId() {
         return id;
@@ -65,5 +75,21 @@ public class Identify extends BaseBean {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    public Date getModifytime() {
+        return modifytime;
+    }
+
+    public void setModifytime(Date modifytime) {
+        this.modifytime = modifytime;
     }
 }
