@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 拍卖会模型
+ * 活动模型
  *
- * @author yexin
+ * @author dingjia
  *
  */
 public class ActivityModel extends BaseModel {

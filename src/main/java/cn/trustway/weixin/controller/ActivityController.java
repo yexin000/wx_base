@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 拍卖功能页面控制类
- * @author yexin
+ * 活动功能页面控制类
+ * @author dingjia
  *
  */
 @Controller

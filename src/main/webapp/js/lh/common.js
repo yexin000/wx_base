@@ -43,6 +43,15 @@ function toBusinessList()
 }
 
 /**
+ * 去我的关注
+ * @param id
+ */
+function toMyFollowList()
+{
+    window.location.href = '../../html/lh/myFollow.html';
+}
+
+/**
  * 去联系客服(新)
  * @param
  */

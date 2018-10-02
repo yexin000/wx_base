@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.FollowDao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.Follow">
+        <result column="id" property="id" />
+        <result column="followid" property="followId" />
+        <result column="followtype" property="followType" />
+        <result column="wxid" property="wxid" />
+        <result column="createtime" property="createTime" />
+    </resultMap>
+
+    <!-- sys_menu table all fields -->
+    <sql id="Follow_Base_Column_List">
+		t.id,t.followid,t.followtype,t.wxid,t.createtime
+	</sql>
+
+    <!-- 插入记录 -->
+    <insert id="add" parameterType="Object">
+        insert into
+        t_e_follow(id,followid,followtype,wxid,createtime )
+        values(null,#{followid},#{followtype},#{wxid},now() );
+    </insert>
+
+    <!-- 删除记录 -->
+    <update id="delete" parameterType="Object">
+		update t_e_follow set status = '0' where id = #{id}
+	</update>
+
+    <!-- 记录总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(1) from t_e_follow t
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="followType != null and followType != ''">
+                and t.followtype = #{followType}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+            <include refid="Follow_Base_Column_List" />
+        from t_e_follow t
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="followType != null and followType != ''">
+                and t.followtype = #{followType}
+            </if>
+        </trim>
+        order by t.createtime desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryFollowUserByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+         t.id,  t.followid, t.wxid,    wu.nickname followName,  wu.avatarUrl path , t.createtime
+        from t_e_follow t
+        left join weixin_user wu on t.followid = wu.id
+        where
+        t.wxid = #{wxid}
+        and t.followtype = 1
+        order by t.createtime desc
+        limit 0,4
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryFollowAuctionItemByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+         t.id,  t.followid, t.wxid,    teai.name followName,  t.createtime
+        from t_e_follow t
+        left join t_e_auction_item teai on t.followid = teai.id
+        where
+        t.wxid = #{wxid}
+        and t.followtype = 2
+        order by t.createtime desc
+        limit 0,4
+    </select>
+
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryFollowAuctionByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+         t.id,  t.followid, t.wxid ,tea.name followName,    t.createtime
+        from t_e_follow t
+        left join t_e_auction  tea on t.followid = tea.id
+        where
+        t.wxid = #{wxid}
+        and t.followtype = 3
+        order by t.createtime desc
+        limit 0,4
+    </select>
+
+
+</mapper>

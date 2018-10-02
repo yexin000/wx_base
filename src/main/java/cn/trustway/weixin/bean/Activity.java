@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 拍卖会Bean
+ * 活动Bean
  *
  * @author dingjia
  *
