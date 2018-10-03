@@ -25,9 +25,19 @@ public class Follow extends BaseBean {
     private String wxid;
 
     /**
+     *被关注用户
+     */
+    private String followWxId;
+
+    /**
      *被关注id
      */
     private Integer followId;
+
+    /**
+     *被关注id 属性（区别拍品和商品）
+     */
+    private String followAttribute;
 
     /**
      *被关注名
@@ -98,5 +108,21 @@ public class Follow extends BaseBean {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getFollowAttribute() {
+        return followAttribute;
+    }
+
+    public void setFollowAttribute(String followAttribute) {
+        this.followAttribute = followAttribute;
+    }
+
+    public String getFollowWxId() {
+        return followWxId;
+    }
+
+    public void setFollowWxId(String followWxId) {
+        this.followWxId = followWxId;
     }
 }

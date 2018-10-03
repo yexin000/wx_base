@@ -62,10 +62,10 @@
     </select>
 
 
-    <!-- 分页查询记录列表 -->
+    <!-- 分页查询关注用户记录列表 -->
     <select id="queryFollowUserByList" resultMap="BaseResultMap" parameterType="Object">
         select
-         t.id,  t.followid, t.wxid,    wu.nickname followName,  wu.avatarUrl path , t.createtime
+         t.id,  t.followid, t.wxid,  wu.wxid followWxId,  wu.nickname followName,  wu.avatarUrl path , t.createtime
         from t_e_follow t
         left join weixin_user wu on t.followid = wu.id
         where
@@ -75,10 +75,10 @@
         limit 0,4
     </select>
 
-    <!-- 分页查询记录列表 -->
+    <!-- 分页查询关注拍品记录列表 -->
     <select id="queryFollowAuctionItemByList" resultMap="BaseResultMap" parameterType="Object">
         select
-         t.id,  t.followid, t.wxid,    teai.name followName,  t.createtime
+         t.id,  t.followid, t.wxid,  teai.attribute followAttribute,  teai.name followName,  t.createtime
         from t_e_follow t
         left join t_e_auction_item teai on t.followid = teai.id
         where
@@ -89,7 +89,7 @@
     </select>
 
 
-    <!-- 分页查询记录列表 -->
+    <!-- 分页查询关注会展记录列表 -->
     <select id="queryFollowAuctionByList" resultMap="BaseResultMap" parameterType="Object">
         select
          t.id,  t.followid, t.wxid ,tea.name followName,    t.createtime
