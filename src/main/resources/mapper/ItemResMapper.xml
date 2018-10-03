@@ -80,6 +80,19 @@
         where t.id = #{id}
     </select>
 
+    <!-- 根据id查询记录 -->
+    <select id="queryByConId" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        ,(case
+        when t.contype='1' then (select a.name from t_e_auction a where t.conid=a.id)
+        when t.contype='2' then (select a.name from t_e_auction_item a where t.conid=a.id)
+        else '' end) as conName
+        from t_con_item_res t
+        where t.conid=#{conid}
+        limit 0,1
+    </select>
+
     <!-- 记录总数 -->
     <select id="queryByCount" resultType="java.lang.Integer"
             parameterType="Object">

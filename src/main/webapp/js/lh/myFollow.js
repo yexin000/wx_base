@@ -50,13 +50,33 @@ function loadMyFollowListData(){
         cache: false,
         success:function(data){
             $('#loadingToast').hide();
-            var dataList = data.rows1;
-            debugger
-            var str = '';
-            $.each(dataList,function(i,obj){
-                str+='     <img src="' +  obj.avatarUrl +  '" style="border-radius: 50%;width: 0.18rem;width: 0.18rem;"> ';
+            var dataList1 = data.rows1;
+            var dataList2 = data.rows2;
+            var dataList3 = data.rows3;
+            var str1 = '';
+            var str2 = '';
+            var str3 = '';
+            $.each(dataList1,function(i,obj){
+                str1+='<div style="height: 0.6rem;width: 0.6rem;margin-top: 0.1rem;display: inline-block;margin-left: 0.1rem;">';
+                //因为头像都是微信过来的，所以不需要拼地址
+                str1+='       <img src="' +  obj.path +  '" style="width: 100%;">';
+                str1+='   </div>';
             });
-            $("#dataListDiv").append(str);
+
+            $.each(dataList2,function(i,obj){
+                str2+='<div style="height: 0.6rem;width: 0.6rem;margin-top: 0.1rem;display: inline-block;margin-left: 0.1rem;">';
+                str2+='       <img src="' +  hostPath + obj.path +  '" style="width: 100%;height: 0.6rem;width: 0.6rem;">';
+                str2+='   </div>';
+            });
+
+            $.each(dataList3,function(i,obj){
+                str3+='<div style="height: 0.6rem;width: 0.6rem;margin-top: 0.1rem;display: inline-block;margin-left: 0.1rem;">';
+                str3+='       <img src="' +  hostPath + obj.path +  '" style="width: 100%;height: 0.6rem;width: 0.6rem;">';
+                str3+='   </div>';
+            });
+            $("#dataListDiv1").append(str1);
+            $("#dataListDiv2").append(str2);
+            $("#dataListDiv3").append(str3);
         }
     })
 }

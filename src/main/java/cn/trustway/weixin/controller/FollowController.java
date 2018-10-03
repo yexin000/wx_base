@@ -38,6 +38,9 @@ public class FollowController extends BaseController {
     private FollowService<Follow> followService;
 
 
+    @Autowired(required = false)
+    private ItemResService<ItemRes> itemResService;
+
     /**
      * 首页
      *
@@ -97,10 +100,31 @@ public class FollowController extends BaseController {
 
         //查询关注的拍品
         List<Follow> dataList2 = followService.queryFollowAuctionItemByList(params);
+        //需要查询第一张图
+        if(null != dataList2 && dataList2.size()>0){
+            for(Follow follow : dataList2){
+                Map<String, Object> imgParams = new HashMap<>();
+                imgParams.put("conid",follow.getFollowId());
+                ItemRes ir = itemResService.queryByConId(imgParams);
+                if(null != ir){
+                    follow.setPath(ir.getPath());
+                }
+            }
+        }
 
         //查询关注的展览
         List<Follow> dataList3 = followService.queryFollowAuctionByList(params);
-
+        //需要查询第一张图
+        if(null != dataList3 && dataList3.size()>0){
+            for(Follow follow : dataList3){
+                Map<String, Object> imgParams = new HashMap<>();
+                imgParams.put("conid",follow.getFollowId());
+                ItemRes ir = itemResService.queryByConId(imgParams);
+                if(null != ir){
+                    follow.setPath(ir.getPath());
+                }
+            }
+        }
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         jsonMap.put("rows1", dataList1);
