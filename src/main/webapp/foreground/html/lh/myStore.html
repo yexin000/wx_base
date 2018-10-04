@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"  />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="x-dns-prefetch-control" content="on" />
+  <link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/mine.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/index.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/collect.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/like.css" rel="stylesheet" type="text/css">
+  <title></title>
+</head>
+<body>
+<header class="mystore-header">
+  <div class="user-info clearfix">
+    <div class="mystore-potrait" id="headImage">
+      <img src="" id="headImg" alt="">
+    </div>
+    <h1 id="user"></h1>
+  </div>
+</header>
+<div class="mystore-tab">
+  <p class="scrollItem scrollItemChecked firstType">我的专场拍卖</p>
+  <p class="scrollItem scrollItemChecked firstType">我的拍卖品</p>
+  <p class="scrollItem scrollItemChecked firstType">我的非卖品</p>
+  <p class="scrollItem scrollItemChecked firstType">我的商品</p>
+
+</div>
+<div id="dataDiv" style="padding-bottom: 0.48rem;">
+
+</div>
+<div id="loadingToast" style="opacity: 1; display: none;">
+  <div class="weui-mask_transparent"></div>
+  <div class="weui-toast">
+    <i class="weui-loading weui-icon_toast"></i>
+    <p class="weui-toast__content">数据加载中</p>
+  </div>
+</div>
+
+<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../../../js/lh/layout.js"></script>
+<script type="text/javascript" src="../../../js/lh/common.js"></script>
+<script type="text/javascript" src="../../../js/lh/zepto.min.js"></script>
+<script type="text/javascript">
+  $(function(){
+    loadUser();
+  })
+
+  //加载个人信息数据
+  function loadUser(){
+    var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ localStorage.getItem("openId");
+    $.ajax({
+      url: url,
+      type: 'post',
+      data: {} ,
+      dataType: 'JSON',
+      contentType : "application/json;charset=utf-8",
+      cache: false,
+      success:function(data){
+        var data = data.data;
+        $("#headImg").attr("src", data.avatarUrl);
+      }
+    })
+  }
+</script>
+</body>
+</html>
