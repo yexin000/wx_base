@@ -155,6 +155,18 @@ function showToast(msg, callback) {
 
 }
 
+function showPublish() {
+  $('#publishActionsheet').addClass('weui-actionsheet_toggle');
+  $('#publishActionsheet').addClass('mb60');
+  $('#publishMask').fadeIn(200);
+}
+
+function hideActionSheet() {
+  $('#publishActionsheet').removeClass('weui-actionsheet_toggle');
+  $('#publishActionsheet').removeClass('mb60');
+  $('#publishMask').fadeOut(200);
+}
+
 
 Date.prototype.format = function(fmt) {
     var o = {

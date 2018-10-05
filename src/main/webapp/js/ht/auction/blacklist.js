@@ -1,6 +1,6 @@
-$package('WeiXin.identify');
+$package('WeiXin.blacklist');
 
-WeiXin.identify = function(){
+WeiXin.blacklist = function(){
   var _box = null;
   var Grid = $('#data-list');
   var _this = {
@@ -28,22 +28,24 @@ WeiXin.identify = function(){
         url:'dataList.do',
         columns:[[
           {field:'id',checkbox:true},
-          {field:'description',title:'鉴定描述',width:240,align:'center',sortable:true},
-          {field:'result',title:'鉴定结果',align:'center',width:240,sortable:true},
-          {field:'createTime',title:'创建时间',width:150,align:'center',sortable:true},
+          {field:'wxid',title:'微信id',width:150,align:'center',sortable:true},
+          {field:'nickname',title:'昵称',align:'center',width:120,sortable:true},
           {field:'status',title:'状态',width:80,align:'center',sortable:true,
             formatter:function(value,row,index){
               if(value == 1){
-                return "已鉴定";
+                return "黑名单";
               } else {
-                return "鉴定中";
+                return "正常";
               }
             }
           },
           {field:'opts',title:'操作',width:220,align:'left',formatter:function(value,row,index){
               var html ="";
-              if(row.auditStatus == 0) {
-                var auditHtml = " <a href='#' onclick='WeiXin.identify.audit("+row.id+")'>鉴定</a>";
+              if(row.status == 0) {
+                var auditHtml = " <a href='#' onclick='WeiXin.blacklist.addBlackList("+row.id+")'>加入黑名单</a>";
+                html += auditHtml;
+              } else {
+                var auditHtml = " <a href='#' onclick='WeiXin.blacklist.removeBlackList("+row.id+")'>移除黑名单</a>";
                 html += auditHtml;
               }
 
@@ -66,7 +68,24 @@ WeiXin.identify = function(){
     refresh : function () {
       _box.handler.refresh();
     },
-    audit : function(id){
+    addBlackList : function(id){
+      $.messager.confirm('提示','确定审核通过该商家加入申请?',function(r){
+        if (r){
+          WeiXin.progress();
+          WeiXin.auditForm('audit.do',{'id':id},function(result){
+            WeiXin.closeProgress();
+            if(result.success){
+              WeiXin.alert('提示',result.msg);
+            }else{
+              WeiXin.alert('提示',data.msg,'error');
+            }
+            var param = $("#searchForm").serializeObject();
+            Grid.datagrid('reload',param);
+          });
+        }
+      });
+    },
+    removeBlackList : function(id){
       $.messager.confirm('提示','确定审核通过该商家加入申请?',function(r){
         if (r){
           WeiXin.progress();
@@ -88,5 +107,5 @@ WeiXin.identify = function(){
 }();
 
 $(function(){
-  WeiXin.identify.init();
+  WeiXin.blacklist.init();
 });
