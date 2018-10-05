@@ -247,6 +247,21 @@
         </if>
     </select>
 
+
+
+    <!-- 分页查询我参与拍卖的记录列表 -->
+    <select id="queryMyJoinByList" resultMap="BaseResultMap" parameterType="Object">
+        select  teb.auctionitemid as id, t.name,t.type,t.description,t.startTime,t.endTime,t.startPrice,t.curPrice,t.finalPrice,t.businessId,
+		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId,
+		t.isshowbanner,t.stock,t.standard,t.age,t.degree,t.attribute,t.uploadwxid
+        from  t_e_bid teb
+        left join t_e_auction_item t on teb.auctionitemid = t.id
+        where   teb.wxid = #{wxid}
+        GROUP BY teb.auctionitemid
+        order by t.id desc
+    </select>
+
+
     <!-- 查询结束时间超出当前时间的正在拍卖的拍卖品 -->
     <select id="queryInAuctionByList" resultMap="BaseResultMap" parameterType="Object">
         SELECT
