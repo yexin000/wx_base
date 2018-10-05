@@ -122,6 +122,39 @@ public class AuctionItemController extends BaseController {
         HtmlUtil.writerJson(response, jsonMap);
     }
 
+
+    /**
+     * 前端数据列表查询  -- 我参与过的
+     *
+     * @param model
+     * @param response
+     * @return
+     * @search auctionItem/ajaxDataList  方便前端检索
+     * @throws Exception
+     */
+    @RequestMapping(value = "/ajaxMyJoinDataList", method = RequestMethod.POST)
+    public void ajaxMyJoinDataList(@RequestBody AuctionItemModel model, HttpServletResponse response) throws Exception {
+        //主数据
+        Map<String, Object> params = new HashMap<>();
+        params.put("wxid",model.getUploadWxid());
+        List<AuctionItem> dataList = auctionItemService.queryMyJoinByList(params);
+
+        for(AuctionItem ai : dataList){
+            //图片数据
+            ItemResModel resModel  = new ItemResModel();
+            resModel.setConid(ai.getId());
+            resModel.setConType("2");
+            List<ItemRes> resDataList = itemResService.queryByList(resModel);
+            ai.setResList(resDataList);
+        }
+        // 设置页面数据
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("total", auctionItemService.queryByCount(model));
+        jsonMap.put("rows", dataList);
+
+        HtmlUtil.writerJson(response, jsonMap);
+    }
+
     private void queryDataList(AuctionItemModel model, HttpServletResponse response) throws Exception {
         List<AuctionItem> dataList = auctionItemService.queryByList(model);
         // 设置页面数据

@@ -22,5 +22,13 @@ public interface AuctionItemDao<T> extends BaseDao<T> {
      */
     List<T> queryInAuctionByList();
 
+    /**
+     * 查询我参与的拍卖品
+     * @return
+     */
+    List<T> queryMyJoinByList(Map<String, Object> params);
+
+
+
     void updateByItemStatus(Map<String, Object> params);
 }

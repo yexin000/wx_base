@@ -34,4 +34,9 @@ public class AuctionItemService<T> extends BaseService<T> {
     public void updateByItemStatus(Map<String, Object> params) {
         getDao().updateByItemStatus(params);
     }
+
+
+    public List<T> queryMyJoinByList(Map<String, Object> params){
+        return getDao().queryMyJoinByList(params);
+    }
 }
