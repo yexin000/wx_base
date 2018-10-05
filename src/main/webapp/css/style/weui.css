@@ -676,7 +676,9 @@ input.weui-btn_plain-default{
 }
 .weui-form-preview__hd .weui-form-preview__value{
     font-style:normal;
-    font-size:1.6em;
+    font-size:1.0em;
+    line-height: 1.4;
+    color: #d0a642;
 }
 .weui-form-preview__bd{
     padding:10px 15px;
@@ -1530,7 +1532,7 @@ a.weui-media-box:active{
     position:relative;
     float:left;
     padding:20px 10px;
-    width:33.33333333%;
+    width:50%;
     box-sizing:border-box;
 }
 .weui-grid:before{

@@ -334,16 +334,12 @@ a{color:#888;}
     font-size: 16px;
 }
 
-.publish-icon {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    vertical-align: middle;
-    background: transparent url(../../images/lh/pulish-icon.png) no-repeat;
-    background-size: 100%;
-}
-
-.publish-item-img {
-    width: 54px;
-    height: 54px;
+.mystore-vip-icon {
+  display: inline-block;
+  float: left;
+  text-align: center;
+  height: 15px;
+  width: 45px;
+  margin-right: 5px;
+  background: url(../../images/lh/vip-icon.png) no-repeat center;
 }

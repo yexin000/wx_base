@@ -167,6 +167,9 @@ function hideActionSheet() {
   $('#publishMask').fadeOut(200);
 }
 
+function toMyStore() {
+  window.location.href = '/weixin/foreground/html/lh/myStore.html';
+}
 
 Date.prototype.format = function(fmt) {
     var o = {

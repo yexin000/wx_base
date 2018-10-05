@@ -88,3 +88,37 @@
 #business-tit{height: 0.42rem;line-height: 0.42rem;font-size: 0.12rem;border-bottom: 1px solid #dcdcdc;margin-top: 0.1rem;background: #fff}
 #business-tit li{width: 49%;text-align: center;float: left;}
 #business-tit li.cur{color: #fc4747;border-bottom: 1px solid #fc4747}
+
+.publish-icon {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	vertical-align: middle;
+	background: transparent url(../../images/lh/pulish-icon.png) no-repeat;
+	background-size: 100%;
+}
+
+.publish-item-img {
+	width: 54px;
+	height: 54px;
+}
+
+.publish-item {
+	float: none;
+	position: inherit;
+	margin: 20px 10px;
+	padding: 0;
+}
+
+.mystore-tab-item {
+	width: 25%;
+}
+
+.mystore-tab-item-check {
+	border-bottom: 2px solid #d1a542;
+	color: #d1a542;
+}
+
+.mystore-auction-img {
+	width: 100%;
+}
