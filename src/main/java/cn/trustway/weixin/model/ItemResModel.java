@@ -23,7 +23,7 @@ public class ItemResModel extends BaseModel {
      */
     private String path;
     /**
-     * 关联类型：1-拍卖会表(t_e_auction)，2-拍品表(t_e_auction_item)
+     * 关联类型：1-拍卖会表(t_e_auction)，2-拍品表(t_e_auction_item)，3-活动表(t_e_activity)，4-鉴定表(t_e_user_identify)，5-积分商品表(t_e_integral_commodity)',
      */
     private String conType;
     /**

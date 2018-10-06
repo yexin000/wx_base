@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.IntegralMallDao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.IntegralCommodity">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="describe" property="describe" />
+        <result column="consumeintegral" property="consumeintegral" />
+        <result column="stock" property="stock" />
+        <result column="createtime" property="createtime" />
+    </resultMap>
+
+    <!-- sys_menu table all fields -->
+    <sql id="IntegralCommodity_Base_Column_List">
+		t.id,t.name,t.describe,t.consumeintegral,t.createtime,t.stock
+	</sql>
+
+    <!-- 插入记录 -->
+    <insert id="add" parameterType="Object">
+        insert into
+        t_e_integral_commodity(id,name,describe,consumeintegral,stock,createtime )
+        values(null,#{name},#{describe},#{consumeintegral},#{stock},now() );
+    </insert>
+
+    <!-- 根据id，修改记录 -->
+    <update id="update" parameterType="Object">
+		update t_e_integral_commodity set
+		stock=#{stock}
+		where id=#{id}
+	</update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateBySelective" parameterType="Object">
+        update t_e_integral_commodity set  1 = 1
+        <if test="name != null and name != '' ">
+            ,name=#{name}
+        </if>
+        <if test="stock != null and stock != '' ">
+            ,stock=#{stock}
+        </if>
+        <if test="describe != null and describe != '' ">
+            ,describe=#{describe}
+        </if>
+        where id=#{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <update id="delete" parameterType="Object">
+		update t_e_integral_commodity set status = '0' where id = #{id}
+	</update>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+        select
+          <include refid="IntegralCommodity_Base_Column_List" />
+        from t_e_integral_commodity t
+        where t.id = #{id}
+    </select>
+
+
+    <!-- 记录总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(1) from t_e_integral_commodity t
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="name != null and name != ''">
+                and t.name like CONCAT('%', #{name}, '%')
+            </if>
+        </trim>
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+            <include refid="IntegralCommodity_Base_Column_List" />
+        from t_e_integral_commodity t
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="name != null and name != ''">
+                and t.name like CONCAT('%', #{name}, '%')
+            </if>
+        </trim>
+        order by t.createtime desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+
+
+</mapper>

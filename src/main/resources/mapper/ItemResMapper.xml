@@ -104,6 +104,15 @@
             <if test="conType == 2">
                 left join t_e_auction_item a on t.conid=a.id and t.contype='2'
             </if>
+            <if test="conType == 3">
+                left join t_e_activity a on t.conid=a.id and t.contype='3'
+            </if>
+            <if test="conType == 4">
+                left join t_e_user_identify a on t.conid=a.id and t.contype='4'
+            </if>
+            <if test="conType == 5">
+                left join t_e_integral_commodity a on t.conid=a.id and t.contype='5'
+            </if>
         </if>
         where 1=1
         <trim suffixOverrides=",">
@@ -133,6 +142,12 @@
             </if>
             <if test="conType == 3">
                 left join t_e_activity a on t.conid=a.id and t.contype='3'
+            </if>
+            <if test="conType == 4">
+                left join t_e_user_identify a on t.conid=a.id and t.contype='4'
+            </if>
+            <if test="conType == 5">
+                left join t_e_integral_commodity a on t.conid=a.id and t.contype='5'
             </if>
         </if>
         where 1=1

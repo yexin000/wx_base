@@ -14,11 +14,7 @@ import java.util.Map;
 public interface MessageDao<T> extends BaseDao<T> {
 
 
-    /**
-     * 根据活动id查询报名状态
-     * @return
-     */
-    Integer queryJoinById(Map<String, Object> params);
+
     /**
      * 发送消息
      * @return
@@ -26,5 +22,4 @@ public interface MessageDao<T> extends BaseDao<T> {
     Integer  addMessage(Map<String, Object> params);
 
 
-    List<T> queryByJoinActivity(Map<String, Object> params);
 }
