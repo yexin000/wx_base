@@ -49,7 +49,7 @@ function loadItemData(id){
                     if(i == 0) {
                         itemImage = coverimg;
                     }
-                    str+='<li class="bannerItem"  onclick="showImg('+i+')">';
+                    str+='<li class="bannerItem banner-bg-dark"  onclick="showImg('+i+')">';
                     str+='<input type="hidden" id="imgSrc'+i+'" value="' + hostPath + coverimg +  '">';
                     str+='	    <div style="position: relative; width: 3.2rem;height: 1.75rem;"><a>';
                     var loadClass = '';
@@ -70,6 +70,7 @@ function loadItemData(id){
             $("#itemDescription").html(dataObj.description); //拍品详情
             $("#startprice").html(dataObj.startPrice); //起拍价格
             $("#depositprice").html(dataObj.depositPrice); //保证金
+            $("#wanfenbi").html('('+dataObj.wanfenbi+"万元)"); //万分比
             var details = "";
             if(dataObj.detail != null && dataObj.detail != '') {
                 details = dataObj.detail.split("\n");
@@ -83,7 +84,7 @@ function loadItemData(id){
             if(dataObj.isFavorite == "1") {
                 $("#favBtn").html("取消收藏");
             } else {
-                $("#favBtn").html("+收藏");
+                $("#favBtn").html("收藏");
             }
             $("#favStatus").val(dataObj.isFavorite);
         }
@@ -119,7 +120,7 @@ function cancleFavorite(){
         $('#loadingToast').hide();
         showToast(data.msg, function () {
         });
-        $("#favBtn").html("+收藏");
+        $("#favBtn").html("收藏");
         $("#favStatus").val("0");
     });
 }

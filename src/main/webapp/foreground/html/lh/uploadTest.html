@@ -16,7 +16,7 @@
 </head>
 <body>
 	<header class="header-hs ">
-		<a href="mine.html" class="header-back"></a>
+		<a onclick="javascript:history.back(-1);" class="header-back"></a>
 		<h1>商品上传</h1>
 	</header>
 	<div class="js_dialog" id="tipDialog" style="display: none;">
@@ -85,8 +85,9 @@
 							</div>
 							<div class="weui-cell__bd">
 								<select class="weui-select" id="attribute" name="attribute">
-									<option value="0">拍卖</option>
-									<option value="1">买卖</option>
+									<option value="0">拍卖品</option>
+									<option value="1">商品</option>
+									<option value="2">非卖品</option>
 								</select>
 							</div>
 						</div>
@@ -274,11 +275,11 @@
                             }
                         })
                     } else {
-                        $("#tipLabel").html("未找到商家信息，请申请商家加入后上传商品");
+                        /*$("#tipLabel").html("未找到商家信息，请申请商家加入后上传商品");
                         $('#tipDialog').show();
                         setTimeout(function () {
                             history.back(-1);
-                        }, 3000);
+                        }, 3000);*/
                     }
                 }
             })
@@ -593,7 +594,7 @@
                 $("#priceLabel").html("起拍价");
                 $(".businessAttr").hide();
 
-            } else if(attr == "1") {
+            } else if(attr == "1" || attr == "2") {
                 $(".auctionAttr").hide();
                 $("#priceLabel").html("价格");
                 $(".businessAttr").show();

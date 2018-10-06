@@ -171,6 +171,14 @@ function toMyStore() {
   window.location.href = '/weixin/foreground/html/lh/myStore.html';
 }
 
+function toUpload(attr) {
+  window.location.href = '/weixin/foreground/html/lh/uploadTest.html?attr=' + attr;
+}
+
+function toCreateAuction() {
+  window.location.href = '/weixin/foreground/html/lh/createAuction.html';
+}
+
 Date.prototype.format = function(fmt) {
     var o = {
         "M+" : this.getMonth()+1,                 //月份

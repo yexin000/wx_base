@@ -28,6 +28,9 @@
             <ul class="bannerList">
 
             </ul>
+            <div class="banner-tip">
+                <span id="timeLabel" class="banner-tip-span"></span>
+            </div>
             <div  class="bannerPrompt none"></div>
         </div>
     </div>
@@ -39,42 +42,28 @@
             <p class="weui-toast__content">数据加载中</p>
         </div>
     </div>
-    <!-- 商品开拍提醒开始 -->
-    <div style="background-color: #0f8c69;width: 100%; height: 0.36rem; ">
-         <p style="color: #FFFFFF;height: 0.2rem; padding-top: 0.12rem; padding-left: 0.1rem;" id="timeLabel"></p>
-    </div>
     <!-- 商品开拍提醒结束 -->
 
     <!-- 商品详情开始 -->
-    <div style=" width: 100%; height: 0.6rem; margin-top: 0.06rem">
-         <p style=" height: 0.2rem; padding-left: 0.1rem;font-size: 16px;" id="itemName"></p>
-        <div style="width: 100%;height: 0.38rem;margin-top: 0.06rem;">
-            <div style="width: 14%;height: 0.38rem;display: inline-block;padding-left: 0.12rem;" >
-                <span >RMB</span> <br>
-                <span style="color: #0f8c69;">起拍价</span>
-            </div>
-            <div style="width: 28%;height: 0.38rem;display: inline-block" >
-                <span style="height: 0.38rem;font-size: 30px;color: #0f8c69;" id="startprice">
-                    0
-                </span>
-            </div>
-            <div style="width: 30%;height: 0.38rem;display: inline-block" >
-                <span id="wanfenbi">
-                    (0.00万元)
-                </span>
+    <div style=" width: 100%;background-color: #373737;">
+        <p style=" height: 0.2rem; padding-left: 0.1rem;padding-top: 0.1rem;font-size: 16px;color: #d0a642;" id="itemName"></p>
+        <div style="height: 0.3rem;width: 100%">
+            <div style="height: 0.1rem;width: 100%;padding-top: 0.1rem; ">
+                <p style="display: inline-block;width: 40%;padding-left: 0.1rem;color: white;"> 当前价:   <span id="curprice" style="color: #d0a642;"></span></p>
             </div>
         </div>
     </div>
-    <div style="width: 100%; border-bottom:1px solid #808080;">  </div>
-    <div style="height: 0.5rem;width: 100%">
+    <div style="width: 100%; border-bottom:1px solid white;">  </div>
+    <div style="height: 0.5rem;width: 100%;background-color: #373737;">
         <div style="height: 0.1rem;width: 100%;padding-top: 0.1rem; ">
-            <p style="display: inline-block;width: 40%;padding-left: 0.1rem"> 当前价:¥<span id="curprice"></span> </p>    <p style="display: inline-block;width: 40%;">  加价幅度:¥<span id="addprice">100</span></p>
+            <p style="display: inline-block;width: 40%;padding-left: 0.1rem;color: white;"> 起拍价:   <span id="startprice" style="color: #d0a642;"></span> </p>
+            <p style="display: inline-block;width: 40%;color: white;">  加价幅度:   <span id="addprice" style="color: #d0a642;">100</span></p>
         </div>
         <div style="height: 0.1rem;width: 100%;padding-top: 0.1rem; ">
-            <p style="display: inline-block;width: 40%;padding-left: 0.1rem"> 手续费<span id="rate">5</span>% </p>    <p style="display: inline-block;width: 40%;">  保证金:¥<span id="depositprice">0</span> </p>
+            <p style="display: inline-block;width: 40%;padding-left: 0.1rem;color: white;"> 手续费:   <span id="rate" style="color: #d0a642;">5</span></p>
         </div>
     </div>
-    <div style="width: 100%; border-bottom:1px solid #808080;"></div>
+    <div style="width: 100%; border-bottom:1px solid white;"></div>
     <div class="js_dialog" id="bidDialog" style="opacity: 1;display: none;">
         <div class="weui-mask"></div>
         <div class="weui-dialog">
@@ -97,26 +86,26 @@
         </div>
     </div>
 </div>
-    <div style="height: auto;width: 100%;border-bottom:1px solid #808080;">
-         <p style="padding: 0.1rem;" >出价记录</p>
+    <div style="height: auto;width: 100%;border-bottom:1px solid #808080;background-color: #373737;">
+         <p style="padding: 0.1rem;color: white;" >出价记录</p>
          <div id="bidDataDiv">
 
          </div>
     </div>
 
-    <div style="height: auto;width: 94%;  margin-left: 3%;margin-top: 0.1rem;">
-        <p style="font-size: 15px;display: none">拍品描述</p>
-        <div id="itemDescription" style="display: none;">
+    <div style="height: auto;background-color: #373737;padding-left: 0.1rem;">
+        <p style="font-size: 15px;color: white;">拍品描述</p>
+        <div id="itemDescription" style="color: #d0a642;">
 
         </div>
-        <div style="margin-top: 0.06rem;margin-bottom: 0.06rem;width: 100%;">
-            <p style="font-size: 15px;display: inline-block;width: 30%;">拍品详情</p><br/><p id="detailLabel" style="display: inline-block;width: 100%;font-size: 15px;"></p>
+        <div style="margin-top: 0.06rem;width: 100%;color: white;">
+            <p style="font-size: 15px;display: inline-block;width: 30%;">拍品详情</p><br/><p id="detailLabel" style="display: inline-block;width: 100%;font-size: 0.1rem;color: #d0a642;"></p>
         </div>
     </div>
 
-    <div style="width: 100%; border-bottom:1px solid #808080;margin-top: 0.12rem;">  </div>
+    <div style="width: 100%; border-bottom:1px solid white;">  </div>
 
-    <div style="width: 100%; min-height:2.2rem; height:auto!important; height:2.2rem; ">
+    <div style="min-height:2.2rem; height:auto!important; height:2.2rem;background-color: #373737;color: white;padding-left: 0.1rem;padding-right: 0.1rem;">
         <p style="font-size: 24px;width: 100%;text-align: center;">百姓收藏在线拍卖细则</p>
         <p>1.藏品预展期时间内可以出价竞拍，加价幅度由持宝人自由设定。</p>
         <p>2.开拍后拍卖时间为24小时结束制，拍卖成功后，平台收取6%的服务费。</p>
@@ -126,11 +115,12 @@
         <p>6.本平台也也提供第三方担保交易详情联系平台工作人员</p>
     </div>
     <!-- 商品详情结束 -->
-    <footer style="position: fixed;  bottom: 0; left: 0;  background: #fff; width: 100%;  height: 0.4rem; z-index: 1004;zoom: 1;border-top: 1px solid #808080;" id="footDiv">
+    <footer style="position: fixed;  bottom: 0; left: 0;  background: black; width: 100%;  height: 0.4rem; z-index: 1004;zoom: 1;border-top: 1px solid white;" id="footDiv">
         <input type="hidden" id="favStatus" value="0">
-        <a href="#" id="favBtn" style="color: #000;    font-size: 0.1rem;  float: left;  width: 0.73rem;  text-align: center;  line-height: 0.4rem;border-right: 1px solid #808080;">+收藏</a>
-        <a href="#" id="shareBtn" style="color: #000;    font-size: 0.1rem;  float: left;  width: 0.73rem;  text-align: center;  line-height: 0.4rem;">分享</a>
-        <a id="bidBtn" style="color: #fff;   background: #c1272d; font-size: 0.135rem;  float: right;  width: 1.7rem;  text-align: center;  line-height: 0.4rem;">出价</a>
+        <a href="#" id="storeBtn" style="color: white;    font-size: 0.1rem;  float: left;  width: 0.5rem;  text-align: center;  line-height: 0.4rem;border-right: 1px solid #808080;"></i>店铺</a>
+        <a href="#" id="favBtn" style="color: white;    font-size: 0.1rem;  float: left;  width: 0.5rem;  text-align: center;  line-height: 0.4rem;border-right: 1px solid #808080;"></i>收藏</a>
+        <a href="#" id="shareBtn" style="color: white;    font-size: 0.1rem;  float: left;  width: 0.5rem;  text-align: center;  line-height: 0.4rem;">分享</a>
+        <a id="bidBtn" style="color: white;   background: #d0a642; font-size: 0.135rem;  float: right;  width: 1.6rem;  text-align: center;  line-height: 0.4rem;">我要出价</a>
     </footer>
 
 

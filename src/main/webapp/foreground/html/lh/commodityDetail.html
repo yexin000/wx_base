@@ -17,7 +17,7 @@
     <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
     <title></title>
 </head>
-<body>
+<body style="background-color: #373737;">
 <header class="header-hs ">
     <a href="javascript:goBack()" class="header-back"></a>
     <h1>商品详情</h1>
@@ -39,59 +39,56 @@
             <p class="weui-toast__content">数据加载中</p>
         </div>
     </div>
-
-
+    <div style="width: 100%; border-bottom:1px solid white;"></div>
     <!-- 商品详情开始 -->
-    <div style=" width: 100%; height: 0.6rem; margin-top: 0.06rem">
-         <p style=" height: 0.2rem; padding-left: 0.1rem;font-size: 16px;" id="itemName"></p>
+    <div style=" width: 100%; height: 0.6rem;background-color: #373737;">
+         <p style=" height: 0.2rem; padding-left: 0.1rem;font-size: 16px;color: #d0a642;" id="itemName"></p>
         <div style="width: 100%;height: 0.38rem;margin-top: 0.06rem;">
-            <div style="width: 14%;height: 0.38rem;display: inline-block;padding-left: 0.12rem;" >
-                <span >RMB</span> <br>
-                <span style="color: #0f8c69;">售价</span>
+            <div style="width: 14%;height: 0.38rem;display: inline-block;padding-left: 0.12rem;color: white;" >
+                <span>RMB</span> <br>
+                <span>售价</span>
             </div>
             <div style="width: 28%;height: 0.38rem;display: inline-block" >
-                <span style="height: 0.38rem;font-size: 30px;color: #0f8c69;" id="startprice">
+                <span style="height: 0.38rem;font-size: 30px;color: white;" id="startprice">
                     0
                 </span>
             </div>
-            <div style="width: 30%;height: 0.38rem;display: inline-block" >
+            <div style="width: 30%;height: 0.38rem;display: inline-block;color: white;" >
                 <span id="wanfenbi">
                     (0.00万元)
                 </span>
             </div>
         </div>
     </div>
-    <div style="width: 100%; border-bottom:1px solid #808080;">  </div>
-
-
-<div class="js_dialog" id="msgDialog" style="display: none;">
-    <div class="weui-mask"></div>
-    <div class="weui-dialog">
-        <div class="weui-dialog__bd" id="msgLabel"></div>
-        <div class="weui-dialog__ft">
-            <a onclick="$('#msgDialog').hide();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+    <div style="width: 100%; border-bottom:1px solid white;"></div>
+    <div class="js_dialog" id="msgDialog" style="display: none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd" id="msgLabel"></div>
+            <div class="weui-dialog__ft">
+                <a onclick="$('#msgDialog').hide();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+            </div>
         </div>
     </div>
-</div>
-
-    <div style="height: auto;width: 94%;  margin-left: 3%;margin-top: 0.1rem;">
+    <div style="height: auto;padding-left: 3%;background-color: #373737;">
         <p style="font-size: 15px;display: none;">商品描述</p>
         <div id="itemDescription" style="display: none;">
 
         </div>
-        <div style="margin-top: 0.06rem;margin-bottom: 0.06rem;width: 100%;">
-            <p style="font-size: 15px;display: inline-block;width: 30%;">商品详情</p><br/><p id="detailLabel" style="display: inline-block;width: 100%;font-size: 15px;"></p>
+        <div style="margin-bottom: 0.06rem;width: 100%;">
+            <p style="font-size: 15px;display: inline-block;width: 30%;color: white;margin-top: 0.1rem;">商品详情</p><br/><p id="detailLabel" style="display: inline-block;width: 100%;font-size: 15px;color: #d0a642;"></p>
         </div>
     </div>
 
 
 
     <!-- 商品详情结束 -->
-    <footer style="position: fixed;  bottom: 0; left: 0;  background: #fff; width: 100%;  height: 0.4rem; z-index: 1004;zoom: 1;border-top: 1px solid #808080;" id="footDiv">
+    <footer style="position: fixed;  bottom: 0; left: 0;  background: black; width: 100%;  height: 0.4rem; z-index: 1004;zoom: 1;border-top: 1px solid #808080;" id="footDiv">
         <input type="hidden" id="favStatus" value="0">
-        <a href="#" id="favBtn" style="color: #000;    font-size: 0.1rem;  float: left;  width: 0.73rem;  text-align: center;  line-height: 0.4rem;border-right: 1px solid #808080;">+收藏</a>
-        <a href="#" id="shareBtn" style="color: #000;    font-size: 0.1rem;  float: left;  width: 0.73rem;  text-align: center;  line-height: 0.4rem;">分享</a>
-        <a id="bidBtn" style="color: #fff;   background: #c1272d; font-size: 0.135rem;  float: right;  width: 1.7rem;  text-align: center;  line-height: 0.4rem;">购买</a>
+        <a href="#" id="storeBtn" style="color: white;    font-size: 0.1rem;  float: left;  width: 0.5rem;  text-align: center;  line-height: 0.4rem;border-right: 1px solid #808080;"></i>店铺</a>
+        <a href="#" id="favBtn" style="color: white;    font-size: 0.1rem;  float: left;  width: 0.5rem;  text-align: center;  line-height: 0.4rem;border-right: 1px solid #808080;">收藏</a>
+        <a href="#" id="shareBtn" style="color: white;    font-size: 0.1rem;  float: left;  width: 0.5rem;  text-align: center;  line-height: 0.4rem;">分享</a>
+        <a id="bidBtn" style="color: white;   background: #d0a642; font-size: 0.135rem;  float: right;  width: 1.6rem;  text-align: center;  line-height: 0.4rem;">购买</a>
     </footer>
 
 
