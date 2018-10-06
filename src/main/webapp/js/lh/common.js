@@ -89,6 +89,16 @@ function toBusinessDetail(id)
 }
 
 /**
+* 去商家详情
+* @param id
+*/
+function toMessageDetail(id)
+{
+    window.location.href = '../../html/lh/messageDetail.html?id='+id;
+}
+
+
+/**
  * 去会展详情
  * @param id
  */
