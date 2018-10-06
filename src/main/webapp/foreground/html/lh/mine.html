@@ -12,6 +12,9 @@
     <link href="../../../css/style/mine.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/index.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/collect.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/like.css?v=1.3" rel="stylesheet" type="text/css">
     <title></title>
 </head>
 <body>
@@ -67,12 +70,64 @@
         <span>平台须知</span>
     </li>
 </ul>
+<div>
+    <div class="weui-mask" id="publishMask" style="opacity: 1; display: none;"></div>
+    <div class="weui-actionsheet" id="publishActionsheet" style="background-color: transparent;">
+        <div class="weui-flex">
+            <div class="weui-flex__item">
+                <a class="weui-grid publish-item">
+                    <div class="weui-grid__icon" style="width: 54px;height: 54px;">
+                        <img style="width: 54px;height: 54px;" src="/weixin/images/lh/add-auction-icon.png" alt="">
+                    </div>
+                    <p class="weui-grid__label" style="color: white;font-size: 12px;">创建专场拍卖</p>
+                </a>
+            </div>
+            <div class="weui-flex__item">
+                <a class="weui-grid publish-item" onclick="javascript:toUpload(0);">
+                    <div class="weui-grid__icon" style="width: 54px;height: 54px;">
+                        <img style="width: 54px;height: 54px;" src="/weixin/images/lh/create-auctionitem-icon.png" alt="">
+                    </div>
+                    <p class="weui-grid__label" style="color: white;font-size: 12px;">创建拍品</p>
+                </a>
+            </div>
+            <div class="weui-flex__item">
+                <a class="weui-grid publish-item" onclick="javascript:toUpload(1);">
+                    <div class="weui-grid__icon" style="width: 54px;height: 54px;">
+                        <img style="width: 54px;height: 54px;" src="/weixin/images/lh/create-goods-icon.png" alt="">
+                    </div>
+                    <p class="weui-grid__label" style="color: white;font-size: 12px;">创建商品</p>
+                </a>
+            </div>
+        </div>
+        <div class="weui-flex">
+            <div class="weui-flex__item">
+                <a class="weui-grid publish-item" onclick="javascript:toUpload(2);">
+                    <div class="weui-grid__icon" style="width: 54px;height: 54px;">
+                        <img style="width: 54px;height: 54px;" src="/weixin/images/lh/create-non-sale-icon.png" alt="">
+                    </div>
+                    <p class="weui-grid__label" style="color: white;font-size: 12px;">创建非卖品</p>
+                </a>
+            </div>
+            <div class="weui-flex__item">
+                <a class="weui-grid publish-item" onclick="javascript:toMyStore();">
+                    <div class="weui-grid__icon" style="width: 54px;height: 54px;">
+                        <img style="width: 54px;height: 54px;" src="/weixin/images/lh/my-store-icon.png" alt="">
+                    </div>
+                    <p class="weui-grid__label" style="color: white;font-size: 12px;">我的店铺</p>
+                </a>
+            </div>
+        </div>
+        <div class="weui-actionsheet__action" style="background-color: transparent;border-top: 1px solid #ffffff;">
+            <div class="weui-actionsheet__cell" onclick="javascript:hideActionSheet()"><i class="publish-icon"></i></div>
+        </div>
+    </div>
+</div>
 <footer class="footer-com">
     <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
             <td onclick="window.location.href='index.html'"><img src="../../../images/lh/footer-index-n.png" alt=""><br/>首页</td>
             <td onclick="window.location.href='recommend.html?v=1.3'"><img src="../../../images/lh/footer-classify-n.png" alt=""><br/>拍卖</td>
-            <td onclick="window.location.href='recommend.html?v=1.3'"><img src="../../../images/lh/footer-classify-n.png" alt=""><br/>发布</td>
+            <td onclick="javascript:showPublish();"><img src="../../../images/lh/footer-publish-n.png" alt=""><br/>发布</td>
             <td onclick="window.location.href='market.html'"><img src="../../../images/lh/footer-shopping-n.png" alt=""><br/>商城</td>
             <td class="active"><img src="../../../images/lh/footer-user-s.png" alt=""><br/>我的</td>
         </tr>
