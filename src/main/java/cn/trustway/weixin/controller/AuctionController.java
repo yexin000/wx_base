@@ -1,17 +1,19 @@
 package cn.trustway.weixin.controller;
 
-import cn.trustway.weixin.bean.Auction;
-import cn.trustway.weixin.bean.ItemRes;
-import cn.trustway.weixin.bean.SysUser;
+import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.AuctionModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.AuctionService;
 import cn.trustway.weixin.service.FileUploadService;
 import cn.trustway.weixin.service.ItemResService;
+import cn.trustway.weixin.service.WeixinUserService;
 import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.SessionUtil;
+import net.sf.json.JSONArray;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +45,9 @@ public class AuctionController extends BaseController {
 
     @Autowired(required = false)
     private ItemResService<ItemRes> itemResService;
+
+    @Autowired
+    private WeixinUserService<WeixinUser> weixinUserService;
 
     private static final Integer[] AUCTION_ITEMS = {9, 12};
     /**
@@ -210,5 +216,63 @@ public class AuctionController extends BaseController {
             return;
         }
 
+    }
+
+    /**
+     * 根据ID查找记录
+     *
+     * @param auctionUpload
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxCreateAuction")
+    public void ajaxCreateAuction(AuctionUpload auctionUpload, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        if(null == auctionUpload) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_UPLOAD_ERROR, "创建拍卖专场失败");
+            return;
+        }
+        String wxid = auctionUpload.getWxid();
+        if(StringUtils.isEmpty(wxid)) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "上传失败，用户信息有误");
+            return;
+        }
+        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
+        if(null == user) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "上传失败，用户信息有误");
+            return;
+        }
+
+        // 图片信息
+        JSONArray jsonArray = JSONArray.fromObject(auctionUpload.getImageList());
+        List<UploadImage> imageList = new ArrayList<>();
+        for(int j = 0; j < jsonArray.size(); j ++) {
+            UploadImage img = new UploadImage();
+            img.setWidth(String.valueOf(jsonArray.getJSONObject(j).get("width")));
+            img.setHeight(String.valueOf(jsonArray.getJSONObject(j).get("height")));
+            img.setData((String) jsonArray.getJSONObject(j).get("data"));
+            imageList.add(img);
+        }
+
+        // 插入拍卖会信息
+        Auction auction = new Auction();
+        BeanUtils.copyProperties(auctionUpload, auction);
+
+        auctionService.add(auction);
+
+        if(null != auction.getId() && auction.getId() > 0 ) {
+            for(int i = 0; i < imageList.size(); i ++) {
+                ItemRes itemImage = new ItemRes();
+                itemImage.setConid(auction.getId());
+                itemImage.setPath(imageList.get(i).getData());
+                itemImage.setType("1");
+                itemImage.setConType("1");
+                itemImage.setIdx(i);
+                itemImage.setHeight(Integer.parseInt(imageList.get(i).getHeight()));
+                itemImage.setWidth(Integer.parseInt(imageList.get(i).getWidth()));
+                itemResService.add(itemImage);
+            }
+        }
+
+        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "上传成功");
     }
 }

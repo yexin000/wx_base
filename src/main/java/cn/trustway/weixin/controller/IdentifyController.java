@@ -97,7 +97,7 @@ public class IdentifyController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/ajaxGetId")
-    public void ajaxGetId(@RequestBody Integer id, HttpServletResponse response) throws Exception {
+    public void ajaxGetId(Integer id, HttpServletResponse response) throws Exception {
         Map<String, Object> context = getRootMap();
         Identify bean = identifyService.queryById(id);
         if (bean == null) {
