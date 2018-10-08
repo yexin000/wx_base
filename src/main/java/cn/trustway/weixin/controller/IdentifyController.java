@@ -9,6 +9,7 @@ import cn.trustway.weixin.service.ItemResService;
 import cn.trustway.weixin.service.WeixinUserService;
 import cn.trustway.weixin.util.HtmlUtil;
 import net.sf.json.JSONArray;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,19 @@ public class IdentifyController extends BaseController {
     @RequestMapping(value = "/dataList", method = RequestMethod.POST)
     public void dataList(IdentifyModel model, HttpServletResponse response) throws Exception {
         queryDataList(model, response);
+    }
+
+    /**
+     * 保存鉴定结果
+     * @param identify
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("/identify")
+    public void identify(Identify identify, HttpServletResponse response) throws Exception {
+        identify.setStatus("1");
+        identifyService.updateBySelective(identify);
+        sendSuccessMessage(response, "鉴定成功");
     }
 
     private void queryDataList(IdentifyModel model, HttpServletResponse response) throws Exception {
@@ -134,32 +148,35 @@ public class IdentifyController extends BaseController {
             return;
         }
 
-        JSONArray jsonArray = JSONArray.fromObject(itemUpload.getImageList());
-        List<UploadImage> imageList = new ArrayList<>();
-        for (int j = 0; j < jsonArray.size(); j ++) {
-            UploadImage img = new UploadImage();
-            img.setWidth(String.valueOf(jsonArray.getJSONObject(j).get("width")));
-            img.setHeight(String.valueOf(jsonArray.getJSONObject(j).get("height")));
-            img.setData((String) jsonArray.getJSONObject(j).get("data"));
-            imageList.add(img);
-        }
-
         // 插入鉴定信息
         Identify identifyItem = new Identify();
         BeanUtils.copyProperties(itemUpload, identifyItem);
+        identifyItem.setStatus("0");
         identifyService.add(identifyItem);
 
         if (null != identifyItem.getId() && identifyItem.getId() > 0 ) {
-            for (int i = 0; i < imageList.size(); i ++) {
-                ItemRes itemImage = new ItemRes();
-                itemImage.setConid(identifyItem.getId());
-                itemImage.setPath(imageList.get(i).getData());
-                itemImage.setType("1");
-                itemImage.setConType("2");
-                itemImage.setIdx(i);
-                itemImage.setHeight(Integer.parseInt(imageList.get(i).getHeight()));
-                itemImage.setWidth(Integer.parseInt(imageList.get(i).getWidth()));
-                itemResService.add(itemImage);
+            if(StringUtils.isNotBlank(itemUpload.getImageList())) {
+                JSONArray jsonArray = JSONArray.fromObject(itemUpload.getImageList());
+                List<UploadImage> imageList = new ArrayList<>();
+                for (int j = 0; j < jsonArray.size(); j++) {
+                    UploadImage img = new UploadImage();
+                    img.setWidth(String.valueOf(jsonArray.getJSONObject(j).get("width")));
+                    img.setHeight(String.valueOf(jsonArray.getJSONObject(j).get("height")));
+                    img.setData((String) jsonArray.getJSONObject(j).get("data"));
+                    imageList.add(img);
+                }
+
+                for (int i = 0; i < imageList.size(); i ++) {
+                    ItemRes itemImage = new ItemRes();
+                    itemImage.setConid(identifyItem.getId());
+                    itemImage.setPath(imageList.get(i).getData());
+                    itemImage.setType("1");
+                    itemImage.setConType("2");
+                    itemImage.setIdx(i);
+                    itemImage.setHeight(Integer.parseInt(imageList.get(i).getHeight()));
+                    itemImage.setWidth(Integer.parseInt(imageList.get(i).getWidth()));
+                    itemResService.add(itemImage);
+                }
             }
         }
 

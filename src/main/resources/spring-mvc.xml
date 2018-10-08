@@ -49,6 +49,7 @@
 					<value>/business/ajaxGetIdByOrder.do</value>
 					<value>/auction/getId.do</value>
 					<value>/auction/ajaxGetJoinAuctions.do</value>
+					<value>/auction/ajaxCreateAuction.do</value>
 					<value>/business/ajaxGetId.do</value>
 					<value>/auctionItem/ajaxDataList.do</value>
 					<value>/auctionItem/ajaxGetId.do</value>
@@ -88,6 +89,7 @@
 					<value>/business/ajaxGetJoinBusiness.do</value>
 					<value>/identify/ajaxDataList.do</value>
 					<value>/identify/ajaxGetId.do</value>
+					<value>/identify/ajaxUploadIdentify.do</value>
 					<value>/jsapi/sign.do</value>
 					<value>/jsapi/uploadImages.do</value>
 				</list>

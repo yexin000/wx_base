@@ -6,31 +6,20 @@ WeiXin.identify = function(){
   var _this = {
     config:{
       action:{
-        save:'', //新增&修改 保存Action
-        getId:'',//编辑获取的Action
-        delele:''//删除数据的Action
+
       },
       event:{
-        add : function(){
-          _box.handler.add();//调用add方法
-          $("#dlg").hide();
-          $('#isShows').combobox('select',$('#isShows').combobox('getValue'));
-        },
-        edit:function(){
-          _box.handler.edit(function(result){
-          });
-          $("#dlg").hide();
-          $('#isShows').combobox('select',$('#isShows').combobox('getValue'));
-        }
+
       },
       dataGrid:{
         title:'参数列表',
         url:'dataList.do',
         columns:[[
           {field:'id',checkbox:true},
+          {field:'name',title:'鉴定物品名称',width:120,align:'center',sortable:true},
           {field:'description',title:'鉴定描述',width:240,align:'center',sortable:true},
           {field:'result',title:'鉴定结果',align:'center',width:240,sortable:true},
-          {field:'createTime',title:'创建时间',width:150,align:'center',sortable:true},
+          {field:'createtime',title:'创建时间',width:150,align:'center',sortable:true},
           {field:'status',title:'状态',width:80,align:'center',sortable:true,
             formatter:function(value,row,index){
               if(value == 1){
@@ -40,9 +29,9 @@ WeiXin.identify = function(){
               }
             }
           },
-          {field:'opts',title:'操作',width:220,align:'left',formatter:function(value,row,index){
+          {field:'opts',title:'操作',width:150,align:'center',formatter:function(value,row,index){
               var html ="";
-              if(row.auditStatus == 0) {
+              if(row.status == 0) {
                 var auditHtml = " <a href='#' onclick='WeiXin.identify.audit("+row.id+")'>鉴定</a>";
                 html += auditHtml;
               }
@@ -52,6 +41,7 @@ WeiXin.identify = function(){
           }
         ]],
         toolbar:[
+          {}
         ]
       }
     },
@@ -67,21 +57,37 @@ WeiXin.identify = function(){
       _box.handler.refresh();
     },
     audit : function(id){
-      $.messager.confirm('提示','确定审核通过该商家加入申请?',function(r){
-        if (r){
-          WeiXin.progress();
-          WeiXin.auditForm('audit.do',{'id':id},function(result){
-            WeiXin.closeProgress();
-            if(result.success){
-              WeiXin.alert('提示',result.msg);
-            }else{
-              WeiXin.alert('提示',data.msg,'error');
-            }
-            var param = $("#searchForm").serializeObject();
-            Grid.datagrid('reload',param);
-          });
-        }
+      $("#dlg").hide()
+      var data = {};
+      data.id = id;
+      data.result = "";
+      $("#identifyForm").form('load',data);
+      $("#identify-win").dialog({
+        buttons:[
+          {
+            text:'保存',
+            handler:WeiXin.identify.identify
+          },{
+            text:'关闭',
+            handler:$("#identify-win").dialog('close')
+          }
+        ]
       });
+      $("#identify-win").dialog('open');
+    },
+    identify : function () {
+      if($("#identifyForm").form('validate')){
+        WeiXin.progress();
+        $("#identifyForm").attr('action','identify.do');
+        WeiXin.saveForm($("#identifyForm"),function(data){
+          WeiXin.closeProgress();
+          $("#identify-win").dialog('close');
+          var param = $("#searchForm").serializeObject();
+          Grid.datagrid('reload',param);
+          $("#identifyForm").resetForm();
+          WeiXin.alert('提示','鉴定成功.','info');
+        });
+      }
     }
   }
   return _this;

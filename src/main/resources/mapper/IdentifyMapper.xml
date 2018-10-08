@@ -76,6 +76,9 @@
       <if test="wxid != null and wxid != ''">
         and t.wxid = #{wxid}
       </if>
+      <if test="status != null and status != ''">
+        and t.status = #{status}
+      </if>
     </trim>
   </select>
 
@@ -88,6 +91,9 @@
     <trim suffixOverrides=",">
       <if test="wxid != null and wxid != ''">
         and t.wxid = #{wxid}
+      </if>
+      <if test="status != null and status != ''">
+        and t.status = #{status}
       </if>
     </trim>
     order by t.createtime desc
