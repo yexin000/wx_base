@@ -323,18 +323,6 @@ public class AuctionItemController extends BaseController {
                 itemImage.setHeight(Integer.parseInt(imageList.get(i).getHeight()));
                 itemImage.setWidth(Integer.parseInt(imageList.get(i).getWidth()));
                 itemResService.add(itemImage);
-                /*String uploadPath = "";
-                Map<String, Object> uploadResult = fileUploadService.uploadFile(imageList.get(i), request, response);
-                boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
-                if(uploadFlag) {
-                    if(uploadFlag) {
-                        uploadPath = uploadResult.get(MSG).toString();
-
-                    } else {
-                        sendFailureMessageText(response, "上传失败");
-                        return;
-                    }
-                }*/
             }
         }
 
