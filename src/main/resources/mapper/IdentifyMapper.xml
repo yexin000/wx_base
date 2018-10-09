@@ -21,7 +21,7 @@
     </sql>
 
   <!-- 插入记录 -->
-  <insert id="add" parameterType="Object">
+  <insert id="add" parameterType="cn.trustway.weixin.bean.Identify" keyProperty="id" useGeneratedKeys="true">
         insert into
         t_e_user_identify(id, wxid, name, description, result, status)
         values(null,#{wxid},#{name}, #{description},#{result},#{status})

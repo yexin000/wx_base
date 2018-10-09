@@ -171,7 +171,7 @@ public class IdentifyController extends BaseController {
                     itemImage.setConid(identifyItem.getId());
                     itemImage.setPath(imageList.get(i).getData());
                     itemImage.setType("1");
-                    itemImage.setConType("2");
+                    itemImage.setConType("4");
                     itemImage.setIdx(i);
                     itemImage.setHeight(Integer.parseInt(imageList.get(i).getHeight()));
                     itemImage.setWidth(Integer.parseInt(imageList.get(i).getWidth()));

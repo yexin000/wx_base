@@ -83,6 +83,7 @@
   </div>
 </div>
 
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
 <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>
@@ -127,7 +128,7 @@
   //点击照片
   function takePhoto(obj) {
     wx.chooseImage({
-      count: 5,
+      count: 9,
       sizeType: ['compressed'],
       success: function (res) {
         clearPics();
@@ -163,8 +164,14 @@
     }
     var length = localIds.length;
 
-    if(length > 5) {
-      $("#tipLabel").html("最多上传5张商品图片");
+    if(length < 5) {
+      $("#tipLabel").html("最少上传5张图片");
+      $('#tipDialog').show();
+      return;
+    }
+
+    if(length > 9) {
+      $("#tipLabel").html("最多上传9张图片");
       $('#tipDialog').show();
       return;
     }
