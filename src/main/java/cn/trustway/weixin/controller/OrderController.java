@@ -7,6 +7,7 @@ import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.model.OrderModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
+import cn.trustway.weixin.util.LogisticsUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -201,4 +202,53 @@ public class OrderController extends BaseController {
         context.put("data", order);
         HtmlUtil.writerJson(response, context);
     }
+
+
+    /**
+     * 去查看物流界面，需要提供订单号码和货运公司编号
+     */
+
+    @RequestMapping("/ajaxGetLogistics")
+    public void ajaxGetLogistics(@RequestBody OrderModel orderModel,  HttpServletResponse response) throws Exception {
+        // 设置页面数据
+        Map<String, Object> context = getRootMap();
+        Order bean = orderService.queryById(orderModel.getId());
+        if (bean == null) {
+            sendFailureMessage(response, "没有找到对应的记录!");
+            return;
+        }
+        UserAddr useraddr = null;
+        if(StringUtils.isNotEmpty(bean.getAddressId())){
+            //带出地址信息
+            useraddr = userAddrService.queryById(bean.getAddressId());
+        }else{
+            //启用用户的默认地址
+            useraddr = userAddrService.getDefaultAddrByWxid(orderModel.getWxid());
+        }
+        if(null != useraddr){
+            context.put("useraddr", useraddr);
+        }
+        if(null != bean.getItemId()){
+            AuctionItem auctionItem = auctionItemService.queryById(bean.getItemId());
+            if(null != auctionItem){
+                context.put("auctionItem", auctionItem);
+            } else {
+                sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_NOT_EXIST, "商品不存在");
+            }
+            ItemResModel resModel  = new ItemResModel();
+            resModel.setConid(auctionItem.getId());
+            resModel.setConType("2");
+            List<ItemRes> resDataList = itemResService.queryByList(resModel);
+            auctionItem.setResList(resDataList);
+        }
+
+        // 查询物流信息
+        String logistics = LogisticsUtil.getLogistics("yuantong","DD2047086911","test","test");
+        context.put("dataList", logistics);
+        context.put(SUCCESS, true);
+        context.put("data", bean);
+        HtmlUtil.writerJson(response, context);
+    }
+
+
 }
