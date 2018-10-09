@@ -7,6 +7,7 @@
   <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.Identify">
     <result column="id" property="id" />
     <result column="wxid" property="wxid" />
+    <result column="name" property="name" />
     <result column="description" property="description" />
     <result column="result" property="result" />
     <result column="status" property="status" />
@@ -16,20 +17,20 @@
 
   <!-- sys_menu table all fields -->
   <sql id="Identify_Base_Column_List">
-        t.id, t.wxid, t.description, t.result, t.status, t.createtime, t.modifytime
+        t.id, t.wxid, t.name, t.description, t.result, t.status, t.createtime, t.modifytime
     </sql>
 
   <!-- 插入记录 -->
   <insert id="add" parameterType="Object">
         insert into
-        t_e_user_identify(id, wxid, description, result, status)
-        values(null,#{wxid},#{description},#{result},#{status})
+        t_e_user_identify(id, wxid, name, description, result, status)
+        values(null,#{wxid},#{name}, #{description},#{result},#{status})
     </insert>
 
   <!-- 根据id，修改记录 -->
   <update id="update" parameterType="Object">
         update t_e_user_identify set modifytime=now(),
-        wxid=#{wxid},description=#{description},result=#{result},
+        wxid=#{wxid},name=#{name},description=#{description},result=#{result},
         status=#{status} where id=#{id}
     </update>
 
@@ -38,6 +39,9 @@
     update t_e_user_identify set modifytime=now()
     <if test="wxid != null and wxid != '' ">
       ,wxid=#{wxid}
+    </if>
+    <if test="name != null and name != '' ">
+      ,name=#{name}
     </if>
     <if test="description != null and description != '' ">
       ,description=#{description}
@@ -72,6 +76,9 @@
       <if test="wxid != null and wxid != ''">
         and t.wxid = #{wxid}
       </if>
+      <if test="status != null and status != ''">
+        and t.status = #{status}
+      </if>
     </trim>
   </select>
 
@@ -84,6 +91,9 @@
     <trim suffixOverrides=",">
       <if test="wxid != null and wxid != ''">
         and t.wxid = #{wxid}
+      </if>
+      <if test="status != null and status != ''">
+        and t.status = #{status}
       </if>
     </trim>
     order by t.createtime desc

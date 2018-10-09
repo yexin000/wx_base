@@ -36,7 +36,7 @@
         t_e_auction(id,name,starttime,endtime,createtime,creator,modifytime,
             modifier,businessid,description,status,viewnum,type, isShow)
         values(null,#{name},#{starttime},#{endtime},now(),#{creator},now(),
-            #{modifier},#{businessid},#{description},'1', 0, '0', #{isShow});
+            #{modifier},#{businessid},#{description},'1', 0, #{type}, #{isShow});
     </insert>
 
     <!-- 根据id，修改记录 -->

@@ -26,7 +26,16 @@
 </div>
 
 <!-- Edit Win&From -->
-<div id="edit-win" class="easyui-dialog" title="编辑菜单" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:280px;">
+<div id="identify-win" class="easyui-dialog" title="鉴定" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:280px;">
+    <form id="identifyForm" class="ui-form" method="post">
+        <input class="hidden" name="id">
+        <div class="ui-edit">
+            <label>鉴定结果:</label>
+            <div class="fitem">
+                <textarea rows="5" name="result" class="easyui-validatebox" data-options="required:true" style="width: 350px;height: 150px"></textarea>
+            </div>
+        </div>
+    </form>
     <div id="dlg">
         <img id="simg" width="460px" height="280px"/>
     </div>

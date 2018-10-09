@@ -17,6 +17,10 @@ public class IdentifyModel extends BaseModel {
      */
     private String wxid;
     /**
+     * 鉴定商品名称
+     */
+    private String name;
+    /**
      * 鉴定发起人描述
      */
     private String description;
@@ -91,5 +95,13 @@ public class IdentifyModel extends BaseModel {
 
     public void setModifytime(Date modifytime) {
         this.modifytime = modifytime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
