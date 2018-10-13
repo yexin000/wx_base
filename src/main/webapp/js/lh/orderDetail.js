@@ -132,7 +132,10 @@ function loadOrderDetail(id){
             }else if(order.status == '3'){
                 $("#payBtn").text("已支付");
                 $("#payBtn").css("background", "#d5d5d6");
-                $("#payBtn").unbind()
+                $("#payBtn").unbind();
+                //录入物流信息
+                $("#luruBtn").show();
+                $("#goLogisticsBtn").show();
                 statuName = '订单已支付';
             }else if(order.status == '4'){
                 $("#payBtn").text("已支付");
@@ -159,4 +162,13 @@ function addAddress(){
 
 function cancelAddAddress(){
     $("#iosDialog1").hide();
+}
+
+function openAddLogistics(){
+    window.location.href = '../../html/lh/entryLogistics.html?orderId='+$("#orderId").val();
+}
+
+function openLogistics(){
+    $("#luruBtn").show();
+    window.location.href = '../../html/lh/logistics.html?orderId='+$("#orderId").val();
 }

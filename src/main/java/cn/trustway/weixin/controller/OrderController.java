@@ -205,6 +205,42 @@ public class OrderController extends BaseController {
 
 
     /**
+     * 修改订单物流编号
+     *
+     * @param
+     * @param
+     * @return
+     * search  order/rechargeOrder
+     * @throws Exception
+     */
+    @RequestMapping("/updateOrderLogistics")
+    public void updateOrderLogistics (@RequestBody OrderModel orderModel,  HttpServletResponse response) throws Exception{
+        // 设置页面数据
+        Map<String, Object> context = getRootMap();
+        Order order = new Order();
+        order.setId(orderModel.getId());
+        order.setWlgs(orderModel.getWlgs());
+        order.setYdbh(orderModel.getYdbh());
+        order.setCreateTime(new Date());
+        orderService.updateBySelective(order);
+
+        // 写入订单日志
+        Order newOrder = orderService.queryById(order.getId());
+        OrderLog orderLog = new OrderLog();
+        BeanUtils.copyProperties(newOrder, orderLog);
+        orderLog.setOrderId(newOrder.getId());
+        orderLog.setCreateTime(newOrder.getCreateTime());
+        orderLog.setWlgs(orderModel.getWlgs());
+        orderLog.setYdbh(orderModel.getYdbh());
+        orderLogService.add(orderLog);
+
+        context.put(SUCCESS, true);
+        context.put("data", order);
+        HtmlUtil.writerJson(response, context);
+    }
+
+
+    /**
      * 去查看物流界面，需要提供订单号码和货运公司编号
      */
 
@@ -243,7 +279,7 @@ public class OrderController extends BaseController {
         }
 
         // 查询物流信息
-        String logistics = LogisticsUtil.getLogistics("yuantong","DD2047086911","test","test");
+        String logistics = LogisticsUtil.getLogistics(bean.getWlgs(),bean.getYdbh(),"test","test");
         context.put("dataList", logistics);
         context.put(SUCCESS, true);
         context.put("data", bean);

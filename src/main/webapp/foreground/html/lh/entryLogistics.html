@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"  />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-dns-prefetch-control" content="on" />
+    <link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/mine.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/index.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/collect.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
+    <title></title>
+</head>
+<body>
+<header class="header-hs ">
+    <a href="javaScript:history.go(-1)" class="header-back"></a>
+    <h1>充值</h1>
+</header>
+
+<!--BEGIN dialog2-->
+<div class="js_dialog" id="iosDialog2" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__bd" id="dialogLabel"></div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:closeTip();" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+        </div>
+    </div>
+</div>
+
+
+<div style="width: 100%;margin-top: 0.42rem;text-align: center; ">
+     <div style="margin-top: 0.68rem;width: 100%">
+        <p style="line-height: 0.4rem;">
+            <span style="font-size: 20px;margin-left: 0.1rem;float: left">运单编号:</span>
+            <input type="text" id="ydbh" placeholder="请输入运单编号" style=" width: 1.8rem; height: 0.22rem;">
+        </p>
+         <p>
+             <span style="font-size: 20px;margin-left: 0.1rem;float: left">物流公司:</span>
+             <select style=" width: 1.8rem; height: 0.22rem;" id="wlgs">
+                 <option value="shunfeng">顺丰</option>
+                 <option value="shentong">申通</option>
+                 <option value="yuantong">圆通</option>
+                 <option value="zhongtong">中通</option>
+                 <option value="huitongkuaidi">百世汇通</option>
+                 <option value="yunda">韵达</option>
+                 <option value="tiantian">天天</option>
+                 <option value="debangwuliu">德邦</option>
+                 <option value="jd">京东</option>
+                 <option value="youzhengguonei">邮政包裹</option>
+                 <option value="ems">ems</option>
+
+             </select>
+         </p>
+     </div>
+    <div style="margin-top: 0.22rem;line-height: 0.44rem;border-radius: 4%;width: 80%;margin-left: 10%; font-size: 24px;background-color: #2bae10;color: #FFFFFF" onclick="submitLogistics()">
+       确定
+    </div>
+
+</div>
+
+<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../../../js/lh/layout.js"></script>
+<script type="text/javascript" src="../../../js/lh/common.js"></script>
+<script type="text/javascript" src="../../../js/lh/entryLogistics.js?v=1.1"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+</body>
+</html>
