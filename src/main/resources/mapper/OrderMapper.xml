@@ -23,7 +23,7 @@
     <!-- sys_menu table all fields -->
     <sql id="Order_Base_Column_List">
         t.id, t.ordertype, t.ordermoney, t.createtime, t.paytime, t.invalidtime,
-        t.transactionid, t.prepayId, t.status, t.wxid, t.addressid, t.itemid, t.updatetime
+        t.transactionid, t.prepayId, t.status, t.wxid, t.addressid, t.itemid, t.updatetime,t.wlgs,t.ydbh
     </sql>
 
     <!-- 插入记录 -->
@@ -66,6 +66,12 @@
         </if>
         <if test="transactionId != null and transactionId != '' ">
             ,transactionid=#{transactionId}
+        </if>
+        <if test="wlgs != null and wlgs != '' ">
+            ,wlgs=#{wlgs}
+        </if>
+        <if test="ydbh != null and ydbh != '' ">
+            ,ydbh=#{ydbh}
         </if>
         where id=#{id}
     </update>

@@ -55,6 +55,15 @@ public class OrderModel extends BaseModel {
      * 更新时间
      */
     private Date updateTime;
+    /**
+     * 运单编号
+     */
+    private String ydbh;
+    /**
+     * 物流公司
+     */
+    private String wlgs;
+
 
     public Integer getId() {
         return id;
@@ -150,5 +159,21 @@ public class OrderModel extends BaseModel {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
+    }
+
+    public String getYdbh() {
+        return ydbh;
+    }
+
+    public void setYdbh(String ydbh) {
+        this.ydbh = ydbh;
+    }
+
+    public String getWlgs() {
+        return wlgs;
+    }
+
+    public void setWlgs(String wlgs) {
+        this.wlgs = wlgs;
     }
 }

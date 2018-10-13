@@ -107,6 +107,17 @@ public class Order extends BaseBean {
      */
     private Integer actId;
 
+    /**
+     * 运单编号
+     */
+    private String ydbh;
+
+    /**
+     * 物流公司
+     */
+    private String wlgs;
+
+
     public Integer getId() {
         return id;
     }
@@ -289,5 +300,21 @@ public class Order extends BaseBean {
 
     public void setActId(Integer actId) {
         this.actId = actId;
+    }
+
+    public String getYdbh() {
+        return ydbh;
+    }
+
+    public void setYdbh(String ydbh) {
+        this.ydbh = ydbh;
+    }
+
+    public String getWlgs() {
+        return wlgs;
+    }
+
+    public void setWlgs(String wlgs) {
+        this.wlgs = wlgs;
     }
 }

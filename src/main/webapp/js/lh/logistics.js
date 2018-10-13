@@ -7,7 +7,7 @@ $(function(){
 function logistics(){
     $('#loadingToast').show();
     var  params = {};
-    params.id = 266;
+    params.id = getParam("orderId");
     var url= '/weixin/order/ajaxGetLogistics.do';
     $.ajax({
         url: url,
@@ -37,7 +37,7 @@ function logistics(){
                 $("#logisticsStatus").html("已签收");
             }else{
                 //问题状态处理中
-                $("#logisticsStatus").html("问题状态处理中");
+                $("#logisticsStatus").html("处理中");
             }
 
             if(myObject.com == "shunfeng"){
@@ -63,16 +63,19 @@ function logistics(){
             }else if(myObject.com == "ems"){
                 $("#logisticsCom").html("EMS");
             }else {
-                $("#logisticsCom").html("未登记的快递公司");
+                $("#logisticsCom").html("未知快递");
             }
 
             //address
             var address = data.useraddr.address;
             $("#address").html(address);
             var ldataList = myObject.data;
-            $.each(ldataList,function(i,obj){
-                str += '<p style="margin-left:0.2rem;"> <span>'+obj.time+'</span>  <span style="margin-left:0.1rem;">'+obj.context+'</span> </p>';
-            });
+            if(ldataList ){
+                $.each(ldataList,function(i,obj){
+                    str += '<p style="margin-left:0.2rem;"> <span>'+obj.time+'</span>  <span style="margin-left:0.1rem;">'+obj.context+'</span> </p>';
+                });
+            }
+
             $("#dataDiv").append(str);
         }
     })
