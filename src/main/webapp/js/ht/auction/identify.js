@@ -1,6 +1,8 @@
 $package('WeiXin.identify');
 
 WeiXin.identify = function(){
+  var curImgIdx = 0;
+  var imgList = null;
   var _box = null;
   var Grid = $('#data-list');
   var _this = {
@@ -31,6 +33,8 @@ WeiXin.identify = function(){
           },
           {field:'opts',title:'操作',width:150,align:'center',formatter:function(value,row,index){
               var html ="";
+              var imgHtml = " <a href='#' onclick='WeiXin.identify.showImage("+row.id+")'>查看图片</a>";
+              html += imgHtml;
               if(row.status == 0) {
                 var auditHtml = " <a href='#' onclick='WeiXin.identify.audit("+row.id+")'>鉴定</a>";
                 html += auditHtml;
@@ -49,9 +53,16 @@ WeiXin.identify = function(){
       _box = new YDataGrid(_this.config);
       _box.init();
     },
-    showImage : function (imgUrl) {
-      $("#dlg").show();
-      _box.showImage(imgUrl);
+    showImage : function (id) {
+      WeiXin.getById('getId.do',{id : id},function(result){
+        WeiXin.identify.curImgIdx = 0;
+        WeiXin.identify.imgList = null;
+        if(null != result.data.resList && result.data.resList.length > 0) {
+          WeiXin.identify.imgList = result.data.resList;
+          $("#dlg").show();
+          _box.showImage(urls['msUrl'] + "/" + WeiXin.identify.imgList[WeiXin.identify.curImgIdx].path, 340);
+        }
+      });
     },
     refresh : function () {
       _box.handler.refresh();
@@ -87,6 +98,24 @@ WeiXin.identify = function(){
           $("#identifyForm").resetForm();
           WeiXin.alert('提示','鉴定成功.','info');
         });
+      }
+    },
+    nextImg : function (index) {
+      if(null != WeiXin.identify.imgList) {
+        if(index > 0) {
+          if(WeiXin.identify.curImgIdx == WeiXin.identify.imgList.length) {
+            WeiXin.identify.curImgIdx = 0;
+          } else {
+            WeiXin.identify.curImgIdx ++;
+          }
+        } else {
+          if(WeiXin.identify.curImgIdx == 0) {
+            WeiXin.identify.curImgIdx = WeiXin.identify.imgList.length - 1;
+          } else {
+            WeiXin.identify.curImgIdx --;
+          }
+        }
+        $("#simg").attr("src",urls['msUrl'] + "/" + WeiXin.identify.imgList[WeiXin.identify.curImgIdx].path);
       }
     }
   }

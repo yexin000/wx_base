@@ -86,6 +86,8 @@
   <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
     select
     <include refid="Identify_Base_Column_List" />
+    ,(select count(1) from t_con_item_res r where r.conid=t.id and r.contype='4') as piccount
+    ,(select path from t_con_item_res r where r.conid=t.id and r.contype='4' order by r.idx asc limit 1) as logopath
     from t_e_user_identify t
     where 1=1
     <trim suffixOverrides=",">

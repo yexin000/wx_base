@@ -76,10 +76,15 @@
             } else if(result.rows[i].status == 1) {
               statusName = "已鉴定";
             }
+            var logoImg = "/weixin/foreground/images/no-image.jpg";
+            if(null != result.rows[i].logoPath && '' != result.rows[i].logoPath) {
+                logoImg = hostPath + result.rows[i].logoPath;
+            }
+
             itemStr += '<tr>'
                         + '<td class="pro-item-M">'
                         +    '<div class="itemDiv">'
-                        +       '<img src="/weixin/foreground/images/no-image.jpg" class="width">'
+                        +       '<img src="' + logoImg + '" class="width">'
                         +     '</div>'
                         +  '</td>'
                         +  '<td class="pro-item-H">'

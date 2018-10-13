@@ -332,11 +332,11 @@ var YDataGrid = function(config){
 			}
 		}
 
-    	this.showImage = function (imgUrl){
+    	this.showImage = function (imgUrl, height){
 			$('#dlg').dialog({
 				title: '预览',
 				width: 480,
-				height:320,
+				height:height != null ? height : 320,
 				resizable:true,
 				closed: false,
 				cache: false,

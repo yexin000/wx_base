@@ -1,6 +1,7 @@
 package cn.trustway.weixin.bean;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 商品鉴定bean
@@ -40,6 +41,18 @@ public class Identify extends BaseBean {
      * 更新时间
      */
     private Date modifytime;
+    /**
+     * 图片数量
+     */
+    private Integer picCount;
+    /**
+     * 首图地址
+     */
+    private String logoPath;
+    /**
+     * 图片列表
+     */
+    private List<ItemRes> resList;
 
     public Integer getId() {
         return id;
@@ -103,5 +116,29 @@ public class Identify extends BaseBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getPicCount() {
+        return picCount;
+    }
+
+    public void setPicCount(Integer picCount) {
+        this.picCount = picCount;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public List<ItemRes> getResList() {
+        return resList;
+    }
+
+    public void setResList(List<ItemRes> resList) {
+        this.resList = resList;
     }
 }

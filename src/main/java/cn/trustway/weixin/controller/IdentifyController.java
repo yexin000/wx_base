@@ -4,6 +4,7 @@ package cn.trustway.weixin.controller;
 import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.IdentifyModel;
+import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.IdentifyService;
 import cn.trustway.weixin.service.ItemResService;
 import cn.trustway.weixin.service.WeixinUserService;
@@ -112,12 +113,36 @@ public class IdentifyController extends BaseController {
      */
     @RequestMapping("/ajaxGetId")
     public void ajaxGetId(Integer id, HttpServletResponse response) throws Exception {
+        getById(id, response);
+    }
+
+    /**
+     * 根据ID查找记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/getId")
+    public void getId(Integer id, HttpServletResponse response) throws Exception {
+        getById(id, response);
+    }
+
+    private void getById(Integer id, HttpServletResponse response) throws Exception {
         Map<String, Object> context = getRootMap();
         Identify bean = identifyService.queryById(id);
         if (bean == null) {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
         }
+
+        ItemResModel resModel  = new ItemResModel();
+        resModel.setConid(bean.getId());
+        resModel.setConType("4");
+        List<ItemRes> resDataList = itemResService.queryByList(resModel);
+        bean.setResList(resDataList);
+
         context.put(SUCCESS, true);
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);

@@ -38,6 +38,8 @@
     </form>
     <div id="dlg">
         <img id="simg" width="460px" height="280px"/>
+        <a href="#" style="font-size: 16px;" onclick="WeiXin.identify.nextImg(-1);">上一张</a>
+        <a href="#" style="font-size: 16px;float: right" onclick="WeiXin.identify.nextImg(1);">下一张</a>
     </div>
 </div>
 

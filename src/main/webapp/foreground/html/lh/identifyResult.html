@@ -48,20 +48,6 @@
           </a>
         </div>
       </li>
-      <li class="bannerItem" style="width: 414px;">
-        <div style="position: relative; width: 3.2rem;height: 1.75rem;">
-          <a>
-            <img src="/weixin/foreground/images/no-image.jpg" alt="" class="length">
-          </a>
-        </div>
-      </li>
-      <li class="bannerItem" style="width: 414px;">
-        <div style="position: relative; width: 3.2rem;height: 1.75rem;">
-          <a>
-            <img src="/weixin/foreground/images/no-image.jpg" alt="" class="length">
-          </a>
-        </div>
-      </li>
     </ul>
     <div  class="bannerPrompt none"></div>
   </div>
@@ -99,6 +85,20 @@
       success: function (result) {
         $('#loadingToast').hide();
         if(result != null && result.success == true) {
+            // 鉴定图片轮播
+            if(null != result.data.resList && result.data.resList.length > 0) {
+                $(".bannerList").empty();
+                for(var i = 0; i < result.data.resList.length; i++) {
+                    var $li = '<li class="bannerItem" style="width: 414px;">'
+                              + '<div style="position: relative; width: 3.2rem;height: 1.75rem;">'
+                              +   '<a><img src="' + hostPath + result.data.resList[i].path + '" alt="" class="length"></a>'
+                              + '</div>'
+                              +'</li>';
+                    $(".bannerList").append($li);
+                }
+                bannerDW("banner1",3000,true,"red");
+            }
+
           $("#identifyStatus").text(result.data.status == "0" ? "鉴定中" : "已鉴定")
           $("#identifyResult").text(result.data.result == null ? "" : result.data.result)
         } else {
@@ -110,7 +110,6 @@
         }
       }
     })
-    bannerDW("banner1",3000,true,"red");
   })
 </script>
 </body>
