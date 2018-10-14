@@ -1,5 +1,5 @@
 @charset "utf-8";
-.mine-header{padding:0 0.1rem;color: #fff;background-image: url(../../foreground/images/mine-header.jpg); }
+.mine-header{padding:0 0.1rem;color: #fff;background-color: #363636; }
 .user-info{padding-bottom: 0.15rem;line-height: 0.56rem;}
 .potrait{width: 0.56rem;height: 0.56rem;border-radius: 50%;background-color: rgba(255,255,255,0.6);padding:0.025rem;overflow: hidden;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;float: left;margin-right: 0.1rem}
 .potrait img{width: 100%;border-radius: 0.26rem}
@@ -15,10 +15,10 @@
 .m-order td{height: 0.5rem;font-size: 0.12rem;color: #666;text-align: center;}
 .m-order td img{max-width: 0.27rem;max-height: 0.2rem;}
 
-.m-part , .user-part{background: #fff;width: 100%;height: auto;overflow: hidden;margin-top: 0.1rem}
-.m-part li {height: 0.42rem;line-height: 0.42rem;font-size: 0.12rem;color: #666;padding-left:0.1rem;position: relative;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border-bottom: 1px solid #eee;}
+.m-part , .user-part{background: #fff;width: 100%;height: auto;overflow: hidden;}
+.m-part li {height: 0.3rem;line-height: 0.3rem;font-size: 0.18rem;color: black;padding-left:0.1rem;position: relative;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border-bottom: 1px solid #eee;}
 .m-part li > img{width: 0.135rem;vertical-align: sub;}
-.m-part li > span{display: inline-block;background:url(../../images/lh/ico-arrowR-g.png) right center no-repeat;background-size: 0.06rem;margin-left: 0.1rem;width: calc(100% - 0.425rem);width: -webkit-calc(100% - 0.425rem);margin-right: 0.1rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+.m-part li > span{font-size: 0.13rem;display: inline-block;background:url(../../images/lh/ico-arrowR-g.png) right center no-repeat;background-size: 0.06rem;margin-left: 0.1rem;width: calc(100% - 0.425rem);width: -webkit-calc(100% - 0.225rem);margin-right: 0.1rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 .m-part li:last-child > span , .user-part li:last-child{border-bottom: none}
 
 /*账户管理*/
@@ -80,3 +80,133 @@ height: 0.15rem;background-color: #C53434;color: #fff;margin-left: 0.1rem;text-a
 .mystore-potrait{width: 0.56rem;height: 0.56rem;border-radius: 50%;background-color: rgba(255,255,255,0.6);padding:0.025rem;line-height: 1.5rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;text-align: center;margin: auto;}
 .mystore-potrait img{width: 100%;border-radius: 0.26rem}
 .mystore-tab{width: 99%; height: 0.36rem;white-space:nowrap; overflow-x:scroll;text-align: center;border-bottom: 1px solid #808080;margin-top: 0.3rem}
+
+.mine-user-info{padding-bottom: 0.3rem;}
+.mine-user-info h1{font-size: 0.15rem;float: left;color: #d1a542;}
+.mine-user-info h1 img{width: 0.34rem;margin-left: 0.05rem}
+.mine-user-info a{color: #fff;float: right;font-size: 0.12rem;background: url(../../images/lh/ico-arrowR.png) right center no-repeat;background-size: 0.06rem;padding-right: 0.1rem}
+
+.mine-icon-level {
+    display: inline-block;
+    text-align: center;
+    height: 10px;
+    width: 12px;
+    background: url(../../images/lh/icon-level.png) no-repeat center;
+}
+
+.mine-icon-money {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-money.png) no-repeat center;
+}
+
+.mine-icon-report {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-report.png) no-repeat center;
+}
+
+.mine-icon-join {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-join.png) no-repeat center;
+}
+
+.mine-icon-order {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-order.png) no-repeat center;
+}
+
+.mine-icon-aftersale {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-aftersale.png) no-repeat center;
+}
+
+.mine-icon-message {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-message.png) no-repeat center;
+}
+
+.mine-icon-personal {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-personal.png) no-repeat center;
+}
+
+.mine-icon-problem {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-problem.png) no-repeat center;
+}
+
+.mine-icon-blacklist {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-blacklist.png) no-repeat center;
+}
+
+.mine-icon-contactservice {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-contactservice.png) no-repeat center;
+}
+
+.mine-icon-integralchange {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-integralchange.png) no-repeat center;
+}
+
+.mine-icon-bigpay {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-bigpay.png) no-repeat center;
+}
+
+.mine-icon-identify {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-identify.png) no-repeat center;
+}
