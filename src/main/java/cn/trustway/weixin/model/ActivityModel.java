@@ -55,7 +55,7 @@ public class ActivityModel extends BaseModel {
      */
     Integer likenum;
     /**
-     *点赞数目
+     *分享数目
      */
     Integer sharenum;
 

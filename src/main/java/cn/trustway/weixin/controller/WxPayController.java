@@ -218,6 +218,8 @@ public class WxPayController extends BaseController {
                     params.put("activityId", order.getItemId());//报名时，报名id就是订单项id，不另启用其他字段
                     params.put("wx_id", order.getWxid());
                     activityService.addJoin(params);
+                }else if("5".equals(order.getOrderType())){
+                    //鉴定订单，只要支付成功，修改状态就ok了。
                 }
             }
         } catch (IOException e) {

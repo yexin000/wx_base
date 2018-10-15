@@ -23,8 +23,9 @@ function loadActivity(){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     str+='<div style="width: 90%;height:1.5rem;margin-left: 5%;  margin-top: 0.2rem;" onclick="toActivityDetail(\''+ obj.id + '\')">';
-                    str+='   <div style="border-top-left-radius: 3%;border-top-right-radius: 3%;height:1.23rem;  overflow: hidden">';
-                    str+='      <img src="../../../images/lh/list9.png" style="width: 100%;height:1.23rem;"> ';
+                    str+='   <div style="border-top-left-radius: 3%;border-top-right-radius: 3%;height:1.23rem;  overflow: hidden;background:url('+hostPath + obj.activityBg+') no-repeat">';
+                    str+='      <span style="color: #FFFFFF;float: right">点赞:'+obj.likenum+'</span>';
+                    str+='      <span style="color: #FFFFFF;float: right">分享:'+obj.sharenum+'</span>';
                     str+='   </div>';
                     str+='   <div style="text-align: center;background-color: #2D2D2D">';
                     str+='       <span style="font-size: 0.16rem; margin-top: 0.03rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;color: #C8AE56 ">'+obj.name+'</span>';

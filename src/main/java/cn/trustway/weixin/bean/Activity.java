@@ -54,6 +54,12 @@ public class Activity extends BaseBean {
      *分享数
      */
     private String sharenum;
+
+    /**
+     *封面图
+     */
+    private String activityBg;
+
     /**
      * 资源列表
      */
@@ -165,5 +171,13 @@ public class Activity extends BaseBean {
 
     public void setIsJoin(String isJoin) {
         this.isJoin = isJoin;
+    }
+
+    public String getActivityBg() {
+        return activityBg;
+    }
+
+    public void setActivityBg(String activityBg) {
+        this.activityBg = activityBg;
     }
 }
