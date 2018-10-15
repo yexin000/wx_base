@@ -195,6 +195,9 @@
             <if test="attribute != null and attribute != ''">
                 and t.attribute = #{attribute}
             </if>
+            <if test="isV5 != null and isV5 != ''">
+                and t.isV5 = #{isV5}
+            </if>
         </trim>
     </select>
 
@@ -236,6 +239,9 @@
             </if>
             <if test="attribute != null and attribute != ''">
                 and t.attribute = #{attribute}
+            </if>
+            <if test="isV5 != null and isV5 != ''">
+                and t.isV5 = #{isV5}
             </if>
         </trim>
         order by t.id desc

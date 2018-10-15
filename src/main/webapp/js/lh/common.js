@@ -61,6 +61,16 @@ function toService()
 }
 
 /**
+ * 去v5特区
+ * @param
+ */
+function toAuctionItemV5()
+{
+    window.location.href = '../../html/lh/auctionItemV5List.html';
+}
+
+
+/**
  * 去平台须知
  * @param
  */

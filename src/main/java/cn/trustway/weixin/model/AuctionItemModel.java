@@ -111,6 +111,8 @@ public class AuctionItemModel extends BaseModel {
      */
     private String attribute;
 
+    private String isV5;
+
     public Integer getId() {
         return id;
     }
@@ -301,5 +303,13 @@ public class AuctionItemModel extends BaseModel {
 
     public void setAttribute(String attribute) {
         this.attribute = attribute;
+    }
+
+    public String getIsV5() {
+        return isV5;
+    }
+
+    public void setIsV5(String isV5) {
+        this.isV5 = isV5;
     }
 }
