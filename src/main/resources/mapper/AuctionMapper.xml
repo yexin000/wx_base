@@ -31,12 +31,12 @@
 	</sql>
 
     <!-- 插入记录 -->
-    <insert id="add" parameterType="Object">
+    <insert id="add"  parameterType="cn.trustway.weixin.bean.Auction" keyProperty="id" useGeneratedKeys="true">
         insert into
         t_e_auction(id,name,starttime,endtime,createtime,creator,modifytime,
-            modifier,businessid,description,status,viewnum,type, isShow)
+            modifier,businessid,description,status,viewnum,type, isShow, wxid)
         values(null,#{name},#{starttime},#{endtime},now(),#{creator},now(),
-            #{modifier},#{businessid},#{description},'1', 0, #{type}, #{isShow});
+            #{modifier},#{businessid},#{description},'1', 0, #{type}, #{isShow}, #{wxid});
     </insert>
 
     <!-- 根据id，修改记录 -->

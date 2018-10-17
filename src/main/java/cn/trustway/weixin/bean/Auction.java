@@ -110,6 +110,11 @@ public class Auction extends BaseBean {
      */
     private List<ItemRes> resList;
 
+    /**
+     * 创建人wxid
+     */
+    private String wxid;
+
     public Integer getId() {
         return id;
     }
@@ -292,5 +297,13 @@ public class Auction extends BaseBean {
 
     public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public String getWxid() {
+        return wxid;
+    }
+
+    public void setWxid(String wxid) {
+        this.wxid = wxid;
     }
 }

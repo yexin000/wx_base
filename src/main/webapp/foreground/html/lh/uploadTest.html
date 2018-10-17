@@ -50,8 +50,8 @@
 							<input id="name" name="name" class="weui-input" type="text" placeholder="请输入名称">
 						</div>
 					</div>
-					<div class="weui-cells" style="margin-top: 0;display: none;">
-						<div class="weui-cell weui-cell_select weui-cell_select-after" style="border-color: green;border-width: 1px;border-style: solid;border-left: none;border-right: none;">
+					<div class="weui-cells" style="margin-top: 0;">
+						<div class="weui-cell weui-cell_select weui-cell_select-after" style="border-color: green;border-width: 1px;border-style: solid;border-left: none;border-right: none;display: none;">
 							<div class="weui-cell__hd">
 								<label class="weui-label">商品性质</label>
 							</div>
@@ -194,65 +194,6 @@
       $("#titleName").text("创建非卖品");
     }
 
-    // 判断用户是否有上传商品权限
-    var wxid = localStorage.getItem("openId");
-    var url= '/weixin/business/ajaxGetJoinBusiness.do?wxid='+ wxid;
-    $.ajax({
-      url: url,
-      type: 'post',
-      data: {} ,
-      dataType: 'JSON',
-      contentType : "application/json;charset=utf-8",
-      cache: false,
-      success:function(result){
-        if(result.code == "0") {
-          var data = result.data;
-          $("#businessName").val(data.name);
-          $("#businessTelNum").val(data.telNum);
-          $("#businessWxNum").val(data.wxAccount);
-          $("#businessAddress").val(data.address);
-          var businessOptions = '';
-          businessOptions += '<option value="' + data.id + '" selected="selected">' + data.name + '</option>';
-          $("#businesses").empty();
-          $("#businesses").append(businessOptions);
-          var businessId = data.id;
-          // 查询商户下的拍卖会
-          $.ajax({
-            url: '/weixin/auction/ajaxGetJoinAuctions.do?businessId='+ businessId,
-            type: 'post',
-            data: {} ,
-            dataType: 'JSON',
-            contentType : "application/json;charset=utf-8",
-            cache: false,
-            success:function(result){
-              if(result.code == "0") {
-                var auctionList = result.data;
-                if(auctionList.length > 0) {
-                  var options = '';
-                  for(var i = 0; i < auctionList.length; i ++) {
-                    if(i == 0) {
-                      options += '<option value="' + auctionList[i].id + '" startAttr="' + auctionList[i].starttime + '" endAttr="' + auctionList[i].endtime + '"  selected="selected">' + auctionList[i].name + '</option>';
-                      $("#auctionTimeShow").html(auctionList[i].starttime + " 至 " + auctionList[i].endtime);
-                    } else {
-                      options += '<option value="' + auctionList[i].id + '" startAttr="' + auctionList[i].starttime + '" endAttr="' + auctionList[i].endtime + '" >' + auctionList[i].name + '</option>';
-                    }
-                  }
-                  $("#auctions").empty();
-                  $("#auctions").append(options);
-                }
-              }
-            }
-          })
-        } else {
-          /*$("#tipLabel").html("未找到商家信息，请申请商家加入后上传商品");
-          $('#tipDialog').show();
-          setTimeout(function () {
-              history.back(-1);
-          }, 3000);*/
-        }
-      }
-    })
-
     $("#uploadBtn").click(function () {
       submitUpload();
     });
@@ -363,7 +304,7 @@
   //点击照片
   function takePhoto(obj) {
     wx.chooseImage({
-      count: 5,
+      count: 9,
       sizeType: ['compressed'],
       success: function (res) {
         clearPics();
@@ -444,8 +385,14 @@
     }
     var length = localIds.length;
 
-    if(length > 5) {
-      $("#tipLabel").html("最多上传5张商品图片");
+    if(length < 5) {
+      $("#tipLabel").html("最少上传5张图片");
+      $('#tipDialog').show();
+      return;
+    }
+
+    if(length > 9) {
+      $("#tipLabel").html("最多上传9张图片");
       $('#tipDialog').show();
       return;
     }

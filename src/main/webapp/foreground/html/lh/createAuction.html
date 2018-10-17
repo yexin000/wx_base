@@ -121,29 +121,6 @@
 
 <script type="text/javascript">
   $(function(){
-    // 判断用户是否有创建拍卖专场权限
-    /*var wxid = localStorage.getItem("openId");
-    var url= '/weixin/business/ajaxGetJoinBusiness.do?wxid='+ wxid;
-    $.ajax({
-      url: url,
-      type: 'post',
-      data: {} ,
-      dataType: 'JSON',
-      contentType : "application/json;charset=utf-8",
-      cache: false,
-      success:function(result){
-        if(result.code == "0") {
-
-        } else {
-          $("#tipLabel").html("未找到商家信息，请申请商家加入后上传商品");
-          $('#tipDialog').show();
-          setTimeout(function () {
-              history.back(-1);
-          }, 3000);
-        }
-      }
-    })*/
-
     $("#uploadBtn").click(function () {
       submitUpload();
     });
@@ -236,7 +213,7 @@
   //点击照片
   function takePhoto(obj) {
     wx.chooseImage({
-      count: 5,
+      count: 9,
       sizeType: ['compressed'],
       success: function (res) {
         clearPics();
@@ -274,8 +251,14 @@
     }
     var length = localIds.length;
 
-    if(length > 5) {
-      $("#tipLabel").html("最多上传5张商品图片");
+    if(length < 5) {
+      $("#tipLabel").html("最少上传5张图片");
+      $('#tipDialog').show();
+      return;
+    }
+
+    if(length > 9) {
+      $("#tipLabel").html("最多上传9张图片");
       $('#tipDialog').show();
       return;
     }

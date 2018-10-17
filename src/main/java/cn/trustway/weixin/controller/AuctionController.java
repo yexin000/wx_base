@@ -247,6 +247,7 @@ public class AuctionController extends BaseController {
         auction.setBusinessid(0);
         auction.setStatus("1");
         auction.setIsShow("0");
+        auction.setWxid(wxid);
         Date now = new Date();
         // 立即开始，持续24小时
         if("0".equals(auctionUpload.getStartType())) {

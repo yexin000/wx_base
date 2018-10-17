@@ -57,13 +57,25 @@ public class AuctionItemController extends BaseController {
     @Autowired
     UserAddrService<UserAddr> userAddrService;
 
-    @Autowired
-    private FileUploadService fileUploadService;
-
     /**
      * 默认手续费比率6%
      */
     public static final Double DEFUALT_RATE = 6d;
+
+    /**
+     * 商品类型：0-拍卖品
+     */
+    public static final String ATTRIBUTE_AUCTIONITEM = "0";
+
+    /**
+     * 商品类型：1-商品
+     */
+    public static final String ATTRIBUTE_GOODS = "1";
+
+    /**
+     * 商品类型：2-非卖品
+     */
+    public static final String ATTRIBUTE_NO_SALE = "2";
 
     /**
      * 首页
@@ -307,8 +319,10 @@ public class AuctionItemController extends BaseController {
         auctionItem.setStartTime(itemUpload.getStartTime());
         auctionItem.setEndTime(itemUpload.getEndTime());
         auctionItem.setRate(DEFUALT_RATE);
-        //auctionItem.setAuctionId(0);
-        //auctionItem.setBusinessId(0);
+        if(ATTRIBUTE_GOODS.equals(auctionItem.getAttribute()) || ATTRIBUTE_NO_SALE.equals(auctionItem.getAttribute())) {
+            auctionItem.setAuctionId(0);
+            auctionItem.setBusinessId(0);
+        }
         auctionItem.setIsShow("0");
         auctionItemService.add(auctionItem);
 
