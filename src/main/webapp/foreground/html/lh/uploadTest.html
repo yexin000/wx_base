@@ -73,7 +73,7 @@
 							</div>
 						</div>
 
-						<div class="weui-cell weui-cell_select weui-cell_select-after auctionAttr">
+						<div class="weui-cell weui-cell_select weui-cell_select-after auctionAttr" style="border-color: green;border-width: 1px;border-style: solid;border-top: none;border-left: none;border-right: none;">
 							<div class="weui-cell__hd">
 								<label class="weui-label">拍卖专场</label>
 							</div>
@@ -184,10 +184,38 @@
 
 <script type="text/javascript">
   $(function(){
+    var wxid = localStorage.getItem("openId");
     var attr = getParam("attr");
     $("#attribute").val(attr);
     if("0" == attr) {
       $("#titleName").text("创建拍卖品");
+      // 查询商户下的拍卖会
+      $.ajax({
+        url: '/weixin/auction/ajaxGetJoinAuctions.do?wxid='+ wxid,
+        type: 'post',
+        data: {} ,
+        dataType: 'JSON',
+        contentType : "application/json;charset=utf-8",
+        cache: false,
+        success:function(result){
+          if(result.code == "0") {
+            var auctionList = result.data;
+            if(auctionList.length > 0) {
+              var options = '';
+              for(var i = 0; i < auctionList.length; i ++) {
+                if(i == 0) {
+                  options += '<option value="' + auctionList[i].id + '" startAttr="' + auctionList[i].starttime + '" endAttr="' + auctionList[i].endtime + '"  selected="selected">' + auctionList[i].name + '</option>';
+                  $("#auctionTimeShow").html(auctionList[i].starttime + " 至 " + auctionList[i].endtime);
+                } else {
+                  options += '<option value="' + auctionList[i].id + '" startAttr="' + auctionList[i].starttime + '" endAttr="' + auctionList[i].endtime + '" >' + auctionList[i].name + '</option>';
+                }
+              }
+              $("#auctions").empty();
+              $("#auctions").append(options);
+            }
+          }
+        }
+      })
     } else if ("1" == attr) {
       $("#titleName").text("创建商品");
     } else if ("2" == attr) {

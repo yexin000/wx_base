@@ -190,18 +190,24 @@ public class AuctionController extends BaseController {
     }
 
     /**
-     * 查询商户下的拍卖会
-     * @param businessId
+     * 查询用户下的拍卖会
+     * @param wxid
      * @param response
      * @throws Exception
      */
     @RequestMapping("/ajaxGetJoinAuctions")
-    public void ajaxGetJoinAuctions(Integer businessId, HttpServletResponse response) throws Exception {
-        Map<String, Object> params = new HashMap<>();
-        if(businessId != null && businessId > 0) {
-            params.put("businessId", businessId);
+    public void ajaxGetJoinAuctions(String wxid, HttpServletResponse response) throws Exception {
+        if(StringUtils.isEmpty(wxid)) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "上传失败，用户信息有误");
+            return;
         }
-        params.put("auctionIds", AUCTION_ITEMS);
+        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
+        if(null == user) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "上传失败，用户信息有误");
+            return;
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("wxid", wxid);
         List<Auction> joinAuctions = auctionService.queryByJoinAuction(params);
         if(CollectionUtils.isNotEmpty(joinAuctions)) {
             Map<String, Object> context = getRootMap();

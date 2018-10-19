@@ -180,6 +180,9 @@
           <include refid="Auction_Base_Column_List" />
         from t_e_auction t
         where 1=2
+        <if test="wxid != null and wxid != ''">
+            or t.wxid = #{wxid}
+        </if>
         <if test="businessId != null and businessId != ''">
             or t.businessid = #{businessId}
         </if>
@@ -189,5 +192,6 @@
                 #{id}
             </foreach>
         </if>
+        order by t.starttime desc
     </select>
 </mapper>
