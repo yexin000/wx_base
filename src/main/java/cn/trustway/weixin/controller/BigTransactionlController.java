@@ -1,21 +1,16 @@
 package cn.trustway.weixin.controller;
 
-import cn.trustway.weixin.bean.IntegralCommodity;
-import cn.trustway.weixin.bean.ItemRes;
-import cn.trustway.weixin.bean.Message;
+import cn.trustway.weixin.bean.Transaction;
+import cn.trustway.weixin.model.BigTransactionModel;
 import cn.trustway.weixin.model.IntegralMallModel;
-import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.model.MessageModel;
-import cn.trustway.weixin.service.IntegralMallService;
-import cn.trustway.weixin.service.ItemResService;
-import cn.trustway.weixin.service.MessageService;
+import cn.trustway.weixin.service.TransactionService;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -23,18 +18,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 积分商城功能页面控制类
+ * 大额交易功能页面控制类
  * @author dingjia
  *
  */
 @Controller
-@RequestMapping("/integralMall")
-public class IntegralMallController extends BaseController {
+@RequestMapping("/transaction")
+public class BigTransactionlController extends BaseController {
 
     @Autowired(required = false)
-    private IntegralMallService<IntegralCommodity> integralMallService;
-    @Autowired(required = false)
-    private ItemResService<ItemRes> itemResService;
+    private TransactionService<Transaction> transactionService;
 
     /**
      * 首页
@@ -44,7 +37,7 @@ public class IntegralMallController extends BaseController {
      * @return
      */
     @RequestMapping("/list")
-    public ModelAndView list(IntegralMallModel model, HttpServletRequest request) throws Exception {
+    public ModelAndView list(BigTransactionModel model, HttpServletRequest request) throws Exception {
         Map<String, Object> context = getRootMap();
         return forword("auction/activityList", context);
     }
@@ -58,7 +51,7 @@ public class IntegralMallController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/dataList", method = RequestMethod.POST)
-    public void dataList(IntegralMallModel model, HttpServletResponse response) throws Exception {
+    public void dataList(BigTransactionModel model, HttpServletResponse response) throws Exception {
         queryDataList(model, response);
     }
 
@@ -72,26 +65,18 @@ public class IntegralMallController extends BaseController {
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
     public void ajaxDataList(HttpServletResponse response) throws Exception {
-        IntegralMallModel model = new IntegralMallModel();
+        BigTransactionModel model = new BigTransactionModel();
         queryDataList(model, response);
     }
 
 
 
-    private void queryDataList(IntegralMallModel model, HttpServletResponse response) throws Exception {
-        List<IntegralCommodity> dataList = integralMallService.queryByList(model);
+    private void queryDataList(BigTransactionModel model, HttpServletResponse response) throws Exception {
+        List<Transaction> dataList = transactionService.queryByList(model);
 
-        for(IntegralCommodity ic : dataList){
-            //图片数据
-            ItemResModel resModel  = new ItemResModel();
-            resModel.setConid(ic.getId());
-            resModel.setConType("5");
-            List<ItemRes> resDataList = itemResService.queryByList(resModel);
-            ic.setResList(resDataList);
-        }
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("total", integralMallService.queryByCount(model));
+        jsonMap.put("total", transactionService.queryByCount(model));
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
     }
@@ -107,7 +92,7 @@ public class IntegralMallController extends BaseController {
     @RequestMapping("/getId")
     public void getId(Integer id,String wxid, HttpServletResponse response) throws Exception {
         Map<String, Object> context = getRootMap();
-        IntegralCommodity bean = integralMallService.queryById(id);
+        Transaction bean = transactionService.queryById(id);
         if (bean == null) {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
@@ -126,12 +111,12 @@ public class IntegralMallController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/save")
-    public void save(IntegralCommodity bean, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void save(Transaction bean, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer id = bean.getId();
         if(id != null && id > 0) {
-            integralMallService.update(bean);
+            transactionService.update(bean);
         } else {
-            integralMallService.add(bean);
+            transactionService.add(bean);
         }
         sendSuccessMessage(response, "保存成功~");
     }
@@ -146,7 +131,7 @@ public class IntegralMallController extends BaseController {
      */
     @RequestMapping("/delete")
     public void delete(Integer[] id, HttpServletResponse response) throws Exception {
-        integralMallService.delete(id);
+        transactionService.delete(id);
         sendSuccessMessage(response, "删除成功");
     }
 }

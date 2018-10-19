@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.TransactionDao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.Transaction">
+        <result column="id" property="id" />
+        <result column="auctionitemid" property="auctionitemid" />
+        <result column="bankName" property="bankName" />
+        <result column="bankNo" property="bankNo" />
+        <result column="createtime" property="createtime" />
+    </resultMap>
+
+    <!-- sys_menu table all fields -->
+    <sql id="Transaction_Base_Column_List">
+		t.id,t.auctionitemid,t.bankName,t.bankNo,t.createtime
+	</sql>
+
+    <!-- 插入记录 -->
+    <insert id="add" parameterType="Object">
+        insert into
+        t_con_transaction(id,auctionitemid,bankName,bankNo,createtime )
+        values(null,#{auctionitemid},#{bankName},#{bankNo},now() );
+    </insert>
+
+    <!-- 根据id，修改记录 -->
+    <update id="update" parameterType="Object">
+		update t_con_transaction set
+		bankName=#{bankName} ,
+		bankNo=#{bankNo}
+		where id=#{id}
+	</update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateBySelective" parameterType="Object">
+        update t_con_transaction set  1 = 1
+        <if test="t_con_transaction != null and t_con_transaction != '' ">
+            ,bankName=#{bankName}
+        </if>
+        <if test="bankNo != null and bankNo != '' ">
+            ,bankNo=#{bankNo}
+        </if>
+
+        where id=#{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <update id="delete" parameterType="Object">
+		update t_con_transaction set bankNo = '0' where id = #{id}
+	</update>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+        select
+          <include refid="Transaction_Base_Column_List" />
+        from t_con_transaction t
+        where t.id = #{id}
+    </select>
+
+
+    <!-- 记录总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(1) from t_con_transaction t
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="auctionitemId != null and auctionitemId != ''">
+                and t.auctionitemid  = #{auctionitemId}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+            <include refid="Transaction_Base_Column_List" />
+        from t_con_transaction t
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="auctionitemId != null and auctionitemId != ''">
+                and t.auctionitemid = #{auctionitemId}
+            </if>
+        </trim>
+        order by t.createtime desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+
+
+</mapper>

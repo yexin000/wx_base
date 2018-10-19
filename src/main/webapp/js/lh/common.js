@@ -134,6 +134,20 @@ function toActivityList() {
 }
 
 /**
+ * 去积分商城
+ * @param id
+ */
+function toIntegralMall() {
+    window.location.href = '../../html/lh/integralMall.html';
+}
+/**
+ * 去大额支付
+ * @param id
+ */
+function toBigTransactionl() {
+    window.location.href = '../../html/lh/bigTransaction.html';
+}
+/**
  * 去活动详情
  * @param id
  */

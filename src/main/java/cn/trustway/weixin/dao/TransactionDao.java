@@ -1,13 +1,12 @@
 package cn.trustway.weixin.dao;
 
-
 /**
- * 积分商城dao
+ * 活动dao
  * @author dingjia
  *
  * @param <T>
  */
-public interface IntegralMallDao<T> extends BaseDao<T> {
+public interface TransactionDao<T> extends BaseDao<T> {
 
 
 }
