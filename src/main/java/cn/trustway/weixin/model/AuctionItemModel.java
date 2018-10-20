@@ -111,7 +111,15 @@ public class AuctionItemModel extends BaseModel {
      */
     private String attribute;
 
+    /**
+     * 是否v5商品
+     */
     private String isV5;
+
+    /**
+     * 是否v5商品推荐
+     */
+    private String isV5Show;
 
     public Integer getId() {
         return id;
@@ -311,5 +319,13 @@ public class AuctionItemModel extends BaseModel {
 
     public void setIsV5(String isV5) {
         this.isV5 = isV5;
+    }
+
+    public String getIsV5Show() {
+        return isV5Show;
+    }
+
+    public void setIsV5Show(String isV5Show) {
+        this.isV5Show = isV5Show;
     }
 }

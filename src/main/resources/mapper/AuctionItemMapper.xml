@@ -198,6 +198,9 @@
             <if test="isV5 != null and isV5 != ''">
                 and t.isV5 = #{isV5}
             </if>
+            <if test="isV5Show != null and isV5Show != ''">
+                and t.isV5Show = #{isV5Show}
+            </if>
         </trim>
     </select>
 
@@ -242,6 +245,9 @@
             </if>
             <if test="isV5 != null and isV5 != ''">
                 and t.isV5 = #{isV5}
+            </if>
+            <if test="isV5Show != null and isV5Show != ''">
+                and t.isV5Show = #{isV5Show}
             </if>
         </trim>
         order by t.id desc
