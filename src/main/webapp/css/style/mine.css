@@ -76,15 +76,19 @@ padding-left:0.04rem ;
 padding-right: 0.04rem;
 height: 0.15rem;background-color: #C53434;color: #fff;margin-left: 0.1rem;text-align: center;margin-left: 0.37rem;line-height: 0.16rem; }
 
-.mystore-header{padding:0 0.1rem;color: #fff; }
+.mystore-header{padding:0 0.1rem;color: #fff; margin-top: 0.42rem;height: 1.1rem; background-color: #363636;}
 .mystore-potrait{width: 0.56rem;height: 0.56rem;border-radius: 50%;background-color: rgba(255,255,255,0.6);padding:0.025rem;line-height: 1.5rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;text-align: center;margin: auto;}
 .mystore-potrait img{width: 100%;border-radius: 0.26rem}
-.mystore-tab{width: 99%; height: 0.36rem;white-space:nowrap; overflow-x:scroll;text-align: center;border-bottom: 1px solid #808080;margin-top: 0.3rem}
+.mystore-tab{width: 99%; height: 0.36rem;white-space:nowrap; overflow-x:scroll;text-align: center;border-bottom: 1px solid #808080;background-color: white;margin-bottom: 0.15rem;}
 
 .mine-user-info{padding-bottom: 0.3rem;}
 .mine-user-info h1{font-size: 0.15rem;float: left;color: #d1a542;}
 .mine-user-info h1 img{width: 0.34rem;margin-left: 0.05rem}
 .mine-user-info a{color: #fff;float: right;font-size: 0.12rem;background: url(../../images/lh/ico-arrowR.png) right center no-repeat;background-size: 0.06rem;padding-right: 0.1rem}
+
+.mystore-content-div {
+    background-color: #363636;
+}
 
 .mine-icon-level {
     display: inline-block;

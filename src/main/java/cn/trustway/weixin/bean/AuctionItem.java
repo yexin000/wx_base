@@ -144,6 +144,21 @@ public class AuctionItem extends BaseBean {
 
     private String uploadWxid;
 
+    /**
+     * 拍卖会logo(第一张图片)
+     */
+    private String logoPath;
+
+    /**
+     * 拍卖会logo(第一张宽)
+     */
+    private Integer width;
+
+    /**
+     * 拍卖会logo(第一张高)
+     */
+    private Integer height;
+
     public Integer getBusinessId() {
         return businessId;
     }
@@ -390,5 +405,29 @@ public class AuctionItem extends BaseBean {
 
     public void setUploadWxid(String uploadWxid) {
         this.uploadWxid = uploadWxid;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 }

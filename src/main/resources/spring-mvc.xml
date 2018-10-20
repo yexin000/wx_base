@@ -56,6 +56,7 @@
 					<value>/auctionItem/purchase.do</value>
 					<value>/auctionItem/ajaxUploadAuctionItem.do</value>
 					<value>/auctionItem/ajaxMyJoinDataList.do</value>
+					<value>/auctionItem/ajaxGetAuctionItems.do</value>
 					<value>/wxCode/queryListByCode.do</value>
 					<value>/file/setHeadImg.do</value>
 					<value>/wxCode/getAuctionItemType.do</value>
