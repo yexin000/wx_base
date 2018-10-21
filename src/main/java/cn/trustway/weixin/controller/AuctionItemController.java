@@ -8,6 +8,7 @@ import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.json.JSONStringObject;
 import net.sf.json.JSONArray;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -475,5 +476,38 @@ public class AuctionItemController extends BaseController {
         context.put(SUCCESS, true);
         context.put("data", order);
         HtmlUtil.writerJson(response, context);
+    }
+
+    /**
+     * 查询用户下的拍卖品
+     * @param wxid
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxGetAuctionItems")
+    public void ajaxGetAuctionItems(String wxid, String attribute, HttpServletResponse response) throws Exception {
+        if (StringUtils.isEmpty(wxid)) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "查询失败，用户信息有误");
+            return;
+        }
+        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
+        if (null == user) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "查询失败，用户信息有误");
+            return;
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("wxid", wxid);
+        params.put("attribute", attribute);
+        List<AuctionItem> auctionItems = auctionItemService.queryByWxid(params);
+        if(CollectionUtils.isNotEmpty(auctionItems)) {
+            Map<String, Object> context = getRootMap();
+            context.put(CODE, AppInitConstants.HttpCode.HTTP_SUCCESS);
+            context.put("data", auctionItems);
+            HtmlUtil.writerJson(response, context);
+            return;
+        } else {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_NO_BUSINESS_AUCTIONS_ERROR, "未找到拍卖品信息");
+            return;
+        }
     }
 }

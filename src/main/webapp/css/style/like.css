@@ -117,8 +117,69 @@
 .mystore-tab-item-check {
 	border-bottom: 2px solid #d1a542;
 	color: #d1a542;
+	font-size: 14px;
 }
 
 .mystore-auction-img {
 	width: 100%;
+}
+
+.mystore-auction-preview {
+	margin-right: 15px;
+	margin-bottom: 10px;
+	margin-left: 15px;
+	border-radius: 0.1rem;
+}
+
+.mystore-auction-preview-hd {
+	padding-bottom: 0;
+}
+
+.mystore-auction-preview-bd {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.mystore-auction-headimg {
+	width:20px;
+	margin-right:5px;
+	display:block;
+}
+
+.mystore-auction-headtext {
+	color: #d0a642;
+	font-size: 15px;
+}
+
+.mystore-auction-favicon {
+	width:10px;
+	margin-right:5px;
+	display:block;
+}
+
+.mystore-auctionitem-div {
+	height: 240px;
+	width: 90%;
+	padding-top: 5%;
+	margin-left: 5%;
+	background-color: white;
+	border-radius: 0.1rem;
+}
+
+.mystore-auctionitem-label {
+	float: left;
+	font-size: 12px;
+	color: black;
+	margin-left: 10px;
+	width: 80%;
+	text-align: left;
+}
+
+.mystore-auctionitem-des {
+	float: left;
+	font-size: 12px;
+	color: #d0a642;
+	margin-left: 10px;
+	width: 80%;
+	text-align: left;
 }

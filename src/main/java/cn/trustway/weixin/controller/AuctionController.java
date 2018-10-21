@@ -198,12 +198,12 @@ public class AuctionController extends BaseController {
     @RequestMapping("/ajaxGetJoinAuctions")
     public void ajaxGetJoinAuctions(String wxid, HttpServletResponse response) throws Exception {
         if(StringUtils.isEmpty(wxid)) {
-            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "上传失败，用户信息有误");
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "查询失败，用户信息有误");
             return;
         }
         WeixinUser user = weixinUserService.queryWeixinUser(wxid);
         if(null == user) {
-            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "上传失败，用户信息有误");
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "查询失败，用户信息有误");
             return;
         }
         Map<String, Object> params = new HashMap<>();

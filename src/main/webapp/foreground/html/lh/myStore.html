@@ -12,14 +12,18 @@
   <link href="../../../css/style/mine.css" rel="stylesheet" type="text/css">
   <link href="../../../css/style/index.css" rel="stylesheet" type="text/css">
   <link href="../../../css/style/collect.css" rel="stylesheet" type="text/css">
-  <link href="../../../css/style/like.css" rel="stylesheet" type="text/css">
   <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+  <link href="../../../css/style/like.css" rel="stylesheet" type="text/css">
   <title></title>
 </head>
-<body style="height: 100%;">
+<body style="height: 100%;background-color: #363636;">
+<header class="header-hs ">
+  <a onclick="javascript:history.back(-1);" class="header-back"></a>
+  <h1 id="titleName">我的店铺</h1>
+</header>
 <header class="mystore-header">
-  <div class="user-info clearfix">
-    <div class="mystore-potrait" id="headImage">
+  <div class="user-info clearfix" style="line-height: 1.5rem;">
+    <div class="mystore-potrait" id="headImage" style="background-color: transparent;">
       <img src="" id="headImg" alt="">
     </div>
     <h1 id="user"></h1>
@@ -32,130 +36,36 @@
   <p id="mySaleTab" class="scrollItem firstType mystore-tab-item">我的商品</p>
 
 </div>
-<div id="auctionDiv" class="table-content" style="padding-bottom: 0.48rem;">
-  <div class="weui-form-preview" style="margin: 10px 15px;">
-    <div class="weui-form-preview__hd" style="padding-bottom: 0;">
-      <div class="weui-form-preview__item">
-        <i class="mystore-vip-icon"></i>
-        <em class="weui-form-preview__value">专场名称  XX专场</em>
-        <em class="weui-form-preview__value">商品库存  10</em>
-      </div>
-    </div>
-    <div class="weui-form-preview__bd" style="padding-top: 0;padding-bottom: 0;">
-      <div class="weui-form-preview__item">
-        <img class="mystore-auction-img" src="/weixin/images/lh/list9.png">
-      </div>
-    </div>
-    <div class="weui-cell" style="background-color: black;">
-      <div class="weui-cell__hd"><img class="headimg" src="" alt="" style="width:20px;margin-right:5px;display:block"></div>
-      <div class="weui-cell__bd"><p class="headtext" style="color: #d0a642;font-size: 15px;"></p></div>
-      <div class="weui-cell__hd"><img src="/weixin/images/lh/mystore-fav-icon.png" alt="" style="width:10px;margin-right:5px;display:block"></div>
-      <div class="weui-cell__ft">46053</div>
-    </div>
+<div id="auctionDiv" class="table-content mystore-content-div" style="padding-bottom: 0.48rem;height: 100%;">
+  <div id="auctionNoDataDiv" class="weui-loadmore weui-loadmore_line none">
+    <span class="weui-loadmore__tips">暂无数据</span>
   </div>
+
 </div>
-<div id="auctionItemDiv" class="table-content" style="height: 100%;display: none;">
-  <div class="weui-grids" style="position: inherit;overflow: scroll;height: 100%;">
-    <a href="javascript:;" class="weui-grid" style="position: initial;">
-      <div style="height: 160px;width: 80%;padding-left: 10%;">
-        <div class="weui-grid__icon" style="width: 90%;height: 80%;">
-          <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180628/807e71dddf4b4e6eb04f4f6b8b8e458ejpg" alt="">
-        </div>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品名称:无敌金手镯</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;">商品介绍:美观的古董金手镯一枚</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品库存:2件</p>
-      </div>
-    </a>
-    <a href="javascript:;" class="weui-grid" style="position: initial;">
-      <div style="height: 160px;width: 80%;padding-left: 10%;">
-        <div class="weui-grid__icon" style="width: 90%;height: 80%;">
-          <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180628/807e71dddf4b4e6eb04f4f6b8b8e458ejpg" alt="">
-        </div>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品名称:无敌金手镯</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;">商品介绍:美观的古董金手镯一枚</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品库存:2件</p>
-      </div>
-    </a>
-    <a href="javascript:;" class="weui-grid" style="position: initial;">
-      <div style="height: 160px;width: 80%;padding-left: 10%;">
-        <div class="weui-grid__icon" style="width: 90%;height: 80%;">
-          <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180628/807e71dddf4b4e6eb04f4f6b8b8e458ejpg" alt="">
-        </div>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品名称:无敌金手镯</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;">商品介绍:美观的古董金手镯一枚</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品库存:2件</p>
-      </div>
-    </a>
+<div id="auctionItemDiv" class="table-content mystore-content-div" style="height: 100%;display: none;">
+  <div id="auctionItemDataDiv" class="weui-loadmore weui-loadmore_line none">
+    <span class="weui-loadmore__tips">暂无数据</span>
+  </div>
+  <div id="auctionItemData" class="weui-grids" style="overflow: scroll;height: 100%;">
+
   </div>
 </div>
 
-<div id="nonSaleDiv" class="table-content" style="height: 100%;display: none;">
-  <div class="weui-grids" style="position: inherit;overflow: scroll;height: 100%;">
-    <a href="javascript:;" class="weui-grid" style="position: initial;">
-      <div style="height: 160px;width: 80%;padding-left: 10%;">
-        <div class="weui-grid__icon" style="width: 90%;height: 80%;">
-          <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180628/807e71dddf4b4e6eb04f4f6b8b8e458ejpg" alt="">
-        </div>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品名称:无敌金手镯</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;">商品介绍:美观的古董金手镯一枚</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品库存:2件</p>
-      </div>
-    </a>
-    <a href="javascript:;" class="weui-grid" style="position: initial;">
-      <div style="height: 160px;width: 80%;padding-left: 10%;">
-        <div class="weui-grid__icon" style="width: 90%;height: 80%;">
-          <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180628/807e71dddf4b4e6eb04f4f6b8b8e458ejpg" alt="">
-        </div>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品名称:无敌金手镯</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;">商品介绍:美观的古董金手镯一枚</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品库存:2件</p>
-      </div>
-    </a>
-    <a href="javascript:;" class="weui-grid" style="position: initial;">
-      <div style="height: 160px;width: 80%;padding-left: 10%;">
-        <div class="weui-grid__icon" style="width: 90%;height: 80%;">
-          <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180628/807e71dddf4b4e6eb04f4f6b8b8e458ejpg" alt="">
-        </div>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品名称:无敌金手镯</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;">商品介绍:美观的古董金手镯一枚</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品库存:2件</p>
-      </div>
-    </a>
+<div id="nonSaleDiv" class="table-content mystore-content-div" style="height: 100%;display: none;">
+  <div id="nonSaleDataDiv" class="weui-loadmore weui-loadmore_line none">
+    <span class="weui-loadmore__tips">暂无数据</span>
+  </div>
+  <div id="nonSaleData" class="weui-grids" style="overflow: scroll;height: 100%;">
+
   </div>
 </div>
 
-<div id="mySaleDiv" class="table-content" style="height: 100%;display: none;">
-  <div class="weui-grids" style="position: inherit;overflow: scroll;height: 100%;">
-    <a href="javascript:;" class="weui-grid" style="position: initial;">
-      <div style="height: 160px;width: 80%;padding-left: 10%;">
-        <div class="weui-grid__icon" style="width: 90%;height: 80%;">
-          <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180628/807e71dddf4b4e6eb04f4f6b8b8e458ejpg" alt="">
-        </div>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品名称:无敌金手镯</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;">商品介绍:美观的古董金手镯一枚</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品库存:2件</p>
-      </div>
-    </a>
-    <a href="javascript:;" class="weui-grid" style="position: initial;">
-      <div style="height: 160px;width: 80%;padding-left: 10%;">
-        <div class="weui-grid__icon" style="width: 90%;height: 80%;">
-          <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180628/807e71dddf4b4e6eb04f4f6b8b8e458ejpg" alt="">
-        </div>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品名称:无敌金手镯</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;">商品介绍:美观的古董金手镯一枚</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品库存:2件</p>
-      </div>
-    </a>
-    <a href="javascript:;" class="weui-grid" style="position: initial;">
-      <div style="height: 160px;width: 80%;padding-left: 10%;">
-        <div class="weui-grid__icon" style="width: 90%;height: 80%;">
-          <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180628/807e71dddf4b4e6eb04f4f6b8b8e458ejpg" alt="">
-        </div>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品名称:无敌金手镯</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;">商品介绍:美观的古董金手镯一枚</p>
-        <p class="weui-grid__label" style="float: left;font-size: 12px;">商品库存:2件</p>
-      </div>
-    </a>
+<div id="mySaleDiv" class="table-content mystore-content-div" style="height: 100%;display: none;">
+  <div id="mySaleDataDiv" class="weui-loadmore weui-loadmore_line none">
+    <span class="weui-loadmore__tips">暂无数据</span>
+  </div>
+  <div id="mySaleData" class="weui-grids" style="overflow: scroll;height: 100%;">
+
   </div>
 </div>
 
@@ -181,17 +91,168 @@
       var id = $(this).attr("id");
       if(id == "auctionTab") {
         $("#auctionDiv").show();
+        loadAuctions();
       } else if(id == "auctionItemTab") {
         $("#auctionItemDiv").show();
+        loadItems("0");
       } else if(id == "nonSaleTab") {
         $("#nonSaleDiv").show();
+        loadItems("2");
       } else if(id == "mySaleTab") {
         $("#mySaleDiv").show();
+        loadItems("1");
       }
     });
 
-    loadUser();
+    loadAuctions();
   })
+  
+  function loadAuctions() {
+    $('#loadingToast').show();
+    var wxid = localStorage.getItem("openId");
+    $.ajax({
+      url: '/weixin/auction/ajaxGetJoinAuctions.do?wxid='+ wxid,
+      type: 'post',
+      data: {} ,
+      dataType: 'JSON',
+      contentType : "application/json;charset=utf-8",
+      cache: false,
+      success:function(result){
+        $('#loadingToast').hide();
+        if(result.code == "0") {
+          var auctionList = result.data;
+          if(auctionList.length > 0) {
+            $("#auctionNoDataDiv").hide();
+            $(".mystore-auction-preview").remove();
+            for(var i = 0; i < auctionList.length; i ++) {
+              var str = '';
+              str += '<div class="weui-form-preview mystore-auction-preview">'
+                    +   '<div class="weui-form-preview__hd mystore-auction-preview-hd">'
+                    +     '<div class="weui-form-preview__item">'
+                    +       '<i class="mystore-vip-icon"></i>'
+                    +       '<em class="weui-form-preview__value">专场名称  ' + auctionList[i].name + '</em>'
+                    +     '</div>'
+                    +   '</div>'
+                    +   '<div class="weui-form-preview__bd mystore-auction-preview-bd" style="text-align: center;">'
+                    +     '<div class="weui-form-preview__item">'
+                    +       '<img class="mystore-auction-img" src="' + hostPath + auctionList[i].logoPath + '" style="height: 120px;width: ' + 120 /auctionList[i].height * auctionList[i].width + 'px;">'
+                    +     '</div>'
+                    +   '</div>'
+                    +   '<div class="weui-cell" style="background-color: black;">'
+                    +     '<div class="weui-cell__hd"><img class="headimg mystore-auction-headimg"></div>'
+                    +     '<div class="weui-cell__bd"><p class="headtext mystore-auction-headtext"></p></div>'
+                    +     '<div class="weui-cell__hd"><img src="/weixin/images/lh/mystore-fav-icon.png" class="mystore-auction-favicon"></div>'
+                    +     '<div class="weui-cell__ft">0</div>'
+                    +   '</div>'
+                    +'</div>'
+              $("#auctionDiv").append(str);
+            }
+            loadUser();
+          } else {
+            $("#auctionNoDataDiv").show();
+          }
+        } else {
+          $("#auctionNoDataDiv").show();
+        }
+      }
+    })
+  }
+  
+  function loadItems(attribute) {
+    $('#loadingToast').show();
+    var wxid = localStorage.getItem("openId");
+    $.ajax({
+      url: '/weixin/auctionItem/ajaxGetAuctionItems.do?wxid=' + wxid + "&attribute=" + attribute,
+      type: 'post',
+      data: {},
+      dataType: 'JSON',
+      contentType: "application/json;charset=utf-8",
+      cache: false,
+      success: function (result) {
+        $('#loadingToast').hide();
+        if(result.code == "0") {
+          if (attribute == "0") {
+            var auctionItemList = result.data;
+            if (auctionItemList.length > 0) {
+              $("#auctionItemDataDiv").hide();
+              $("#auctionItemData").empty();
+              for(var i = 0; i < auctionItemList.length; i ++) {
+                var str = '';
+                str += '<a href="javascript:;" class="weui-grid" style="position: initial;">'
+                      +   '<div class="mystore-auctionitem-div">'
+                      +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
+                      +       '<img src="' + hostPath + auctionItemList[i].logoPath + '" alt="">'
+                      +     '</div>'
+                      +     '<p class="weui-grid__label mystore-auctionitem-label">名称:' + auctionItemList[i].name + '</p>'
+                      +     '<p class="weui-grid__label mystore-auctionitem-des">介绍: ' + auctionItemList[i].description + '</p>'
+                      +     '<p class="weui-grid__label mystore-auctionitem-label">库存: ' + auctionItemList[i].stock + '件　　　　　　</p>'
+                      +     '<p class="weui-grid__label mystore-auctionitem-label">价格: ' + auctionItemList[i].startPrice + '</p>'
+                      +   '</div>'
+                      + '</a>'
+                $("#auctionItemData").append(str);
+              }
+            } else {
+              $("#auctionItemDataDiv").show();
+            }
+          } else if (attribute == "1") {
+            var salesList = result.data;
+            if (salesList.length > 0) {
+              $("#mySaleDataDiv").hide();
+              $("#mySaleData").empty();
+              for(var i = 0; i < salesList.length; i ++) {
+                var str = '';
+                str += '<a href="javascript:;" class="weui-grid" style="position: initial;">'
+                    +   '<div class="mystore-auctionitem-div">'
+                    +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
+                    +       '<img src="' + hostPath + salesList[i].logoPath + '" alt="">'
+                    +     '</div>'
+                    +     '<p class="weui-grid__label mystore-auctionitem-label">名称:' + salesList[i].name + '</p>'
+                    +     '<p class="weui-grid__label mystore-auctionitem-des">介绍: ' + salesList[i].description + '</p>'
+                    +     '<p class="weui-grid__label mystore-auctionitem-label">库存: ' + salesList[i].stock + '件　　　　　　</p>'
+                    +     '<p class="weui-grid__label mystore-auctionitem-label">价格: ' + salesList[i].startPrice + '</p>'
+                    +   '</div>'
+                    + '</a>'
+                $("#mySaleData").append(str);
+              }
+            } else {
+              $("#mySaleDataDiv").show();
+            }
+          } else if (attribute == "2") {
+            var noSaleList = result.data;
+            if (noSaleList.length > 0) {
+              $("#nonSaleDataDiv").hide();
+              $("#nonSaleData").empty();
+              for(var i = 0; i < noSaleList.length; i ++) {
+                var str = '';
+                str += '<a href="javascript:;" class="weui-grid" style="position: initial;">'
+                    +   '<div class="mystore-auctionitem-div">'
+                    +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
+                    +       '<img src="' + hostPath + noSaleList[i].logoPath + '" alt="">'
+                    +     '</div>'
+                    +     '<p class="weui-grid__label mystore-auctionitem-label">名称:' + noSaleList[i].name + '</p>'
+                    +     '<p class="weui-grid__label mystore-auctionitem-des">介绍: ' + noSaleList[i].description + '</p>'
+                    +     '<p class="weui-grid__label mystore-auctionitem-label">库存: ' + noSaleList[i].stock + '件　　　　　　</p>'
+                    +     '<p class="weui-grid__label mystore-auctionitem-label">价格: ' + noSaleList[i].startPrice + '</p>'
+                    +   '</div>'
+                    + '</a>'
+                $("#nonSaleData").append(str);
+              }
+            } else {
+              $("#nonSaleDataDiv").show();
+            }
+          }
+        } else {
+          if (attribute == "0") {
+            $("#auctionItemDataDiv").show();
+          } else if (attribute == "1") {
+            $("#mySaleDataDiv").show();
+          } else if (attribute == "2") {
+            $("#nonSaleDataDiv").show();
+          }
+        }
+      }
+    });
+  }
 
   //加载个人信息数据
   function loadUser(){

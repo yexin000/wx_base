@@ -177,7 +177,10 @@
 
     <select id="queryByJoinAuction" resultMap="BaseResultMap" parameterType="Object">
         select
-          <include refid="Auction_Base_Column_List" />
+          <include refid="Auction_Base_Column_List" />,
+            (select path from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as logopath,
+            (select width from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as width,
+            (select height from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as height
         from t_e_auction t
         where 1=2
         <if test="wxid != null and wxid != ''">
