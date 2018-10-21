@@ -16,11 +16,13 @@
 		<result column="bussinessname" property="bussinessName"/>
 		<result column="businessaddress" property="businessAddress"/>
 		<result column="wxaccount" property="wxAccount"/>
+		<result column="integral" property="integral"/>
+		<result column="vipGrade" property="vipGrade"/>
 	</resultMap>
 
 	<!-- sys_user table all fields -->
 	<sql id="WeixinUser_Base_Column_List">
-		id,wxid,phonenum,balance,moneyextracting,extractedmoney,nickname,avatarUrl,bussinessname,businessaddress,wxaccount
+		id,wxid,phonenum,balance,moneyextracting,extractedmoney,nickname,avatarUrl,bussinessname,businessaddress,wxaccount,integral,vipGrade
 	</sql>
 
 
@@ -152,8 +154,10 @@
 	<!-- 根据wxid查询 系统用户 -->
 	<select id="queryWeixinUser" resultMap="BaseResultMap" parameterType="string">
 		select
-		<include refid="WeixinUser_Base_Column_List" />
-		from weixin_user where wxid = #{wxid}
+		<include refid="WeixinUser_Base_Column_List" />,
+		(select count(1) from t_e_follow tef where tef.followtype = 1 and tef.followid = wu.id) as followNum
+		from weixin_user wu where wu.wxid = #{wxid}
 	</select>
+
 
 </mapper>   

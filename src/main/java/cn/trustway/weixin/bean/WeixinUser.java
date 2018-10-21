@@ -54,6 +54,22 @@ public class WeixinUser extends BaseBean {
 	 */
 	private String wxAccount;
 
+	/**
+	 * 积分
+	 */
+	private String integral;
+
+	/**
+	 * vip等级
+	 */
+	private String vipGrade;
+
+	/**
+	 * 粉丝数
+	 */
+	private Integer followNum;
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -140,5 +156,29 @@ public class WeixinUser extends BaseBean {
 
 	public void setWxAccount(String wxAccount) {
 		this.wxAccount = wxAccount;
+	}
+
+	public String getIntegral() {
+		return integral;
+	}
+
+	public void setIntegral(String integral) {
+		this.integral = integral;
+	}
+
+	public String getVipGrade() {
+		return vipGrade;
+	}
+
+	public void setVipGrade(String vipGrade) {
+		this.vipGrade = vipGrade;
+	}
+
+	public Integer getFollowNum() {
+		return followNum;
+	}
+
+	public void setFollowNum(Integer followNum) {
+		this.followNum = followNum;
 	}
 }

@@ -32,6 +32,23 @@ function loadUser(){
             $("#user").html(data.nickName);
             $("#headImg").attr("src",   data.avatarUrl);
             $("#balance").html(data.balance);
+            $("#followNum").html(data.followNum);
+            if(data.vipGrade == 1){
+                $("#vipLv").append('<i class="mine-icon-level"></i>');
+            }else if(data.vipGrade == 2){
+                $("#vipLv").append('<i class="mine-icon-level"></i> <i class="mine-icon-level"></i>');
+            }else if(data.vipGrade == 3){
+                $("#vipLv").append('<i class="mine-icon-level"></i> <i class="mine-icon-level"></i> <i class="mine-icon-level"></i>');
+            }else if(data.vipGrade == 4){
+                $("#vipLv").append('<i class="mine-icon-level"></i> <i class="mine-icon-level"></i> <i class="mine-icon-level"></i> <i class="mine-icon-level"></i>');
+            }else if(data.vipGrade == 5){
+                $("#vipLv").append('<i class="mine-icon-level"></i> <i class="mine-icon-level"></i> <i class="mine-icon-level"></i> <i class="mine-icon-level"></i> <i class="mine-icon-level"></i>');
+            }else{
+                //无vip等级
+                $("#vipLv").append('暂无等级');
+            }
+
+
         }
     })
 }
