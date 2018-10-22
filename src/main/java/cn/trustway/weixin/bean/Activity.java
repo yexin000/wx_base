@@ -33,7 +33,7 @@ public class Activity extends BaseBean {
     /**
      *描述
      */
-    private String describe;
+    private String description;
     /**
      *金额
      */
@@ -109,12 +109,12 @@ public class Activity extends BaseBean {
         this.createtime = createtime;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getMoney() {
