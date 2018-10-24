@@ -168,6 +168,7 @@ public class ActivityController extends BaseController {
         if(id != null && id > 0) {
             activityService.updateBySelective(bean);
         } else {
+            bean.setStatus("2");
             activityService.add(bean);
         }
         sendSuccessMessage(response, "保存成功~");

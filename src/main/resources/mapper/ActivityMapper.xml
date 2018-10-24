@@ -11,7 +11,7 @@
         <result column="starttime" property="starttime" />
         <result column="endtime" property="endtime" />
         <result column="createtime" property="createtime" />
-        <result column="describe" property="describe" />
+        <result column="description" property="description" />
         <result column="status" property="status" />
         <result column="viewnum" property="viewnum" />
         <result column="likenum" property="likenum" />
@@ -27,16 +27,14 @@
 
     <!-- sys_menu table all fields -->
     <sql id="Activity_Base_Column_List">
-		t.id,t.name,t.starttime,t.endtime,t.createtime,t.describe,t.money, t.status,t.viewnum,t.likenum,t.sharenum
+		t.id,t.name,t.starttime,t.endtime,t.createtime,t.description,t.money, t.status,t.viewnum,t.likenum,t.sharenum
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_activity(id,name,starttime,endtime,createtime,describe,money,
-            status,viewnum,likenum,sharenum )
-        values(null,#{name},#{starttime},#{endtime},now(),#{describe},#{money},
-            #{status},#{viewnum},#{likenum},#{sharenum});
+        t_e_activity(id,name,starttime,endtime,createtime,description,money,status,viewnum,likenum,sharenum )
+        values(null,#{name},#{starttime},#{endtime},now(),#{description},#{money},#{status},0,0,0);
     </insert>
 
     <!-- 插入记录 -->
@@ -49,7 +47,7 @@
     <!-- 根据id，修改记录 -->
     <update id="update" parameterType="Object">
 		update t_e_activity set
-		name=#{name},starttime=#{starttime},endtime=#{endtime} ,describe=#{describe},
+		name=#{name},starttime=#{starttime},endtime=#{endtime} ,description=#{description},
         status=#{status}
 		where id=#{id}
 	</update>
@@ -68,41 +66,43 @@
 
     <!-- 修改记录，只修改只不为空的字段 -->
     <update id="updateBySelective" parameterType="Object">
-        update t_e_activity set  1 = 1
-        <if test="name != null and name != '' ">
-            ,name=#{name}
-        </if>
-        <if test="starttime != null and starttime != '' ">
-            ,starttime=#{starttime}
-        </if>
-        <if test="endtime != null and endtime != '' ">
-            ,endtime=#{endtime}
-        </if>
-        <if test="describe != null and describe != '' ">
-            ,describe=#{describe}
-        </if>
-        <if test="money != null and money != '' ">
-            ,money=#{money}
-        </if>
-        <if test="likenum != null and likenum != '' ">
-            ,likenum=#{likenum}
-        </if>
-        <if test="status != null and status != '' ">
-            ,status=#{status}
-        </if>
-        <if test="sharenum != null and sharenum != '' ">
-            ,sharenum=#{sharenum}
-        </if>
-        <if test="viewnum != null and viewnum != '' ">
-            ,viewnum=#{viewnum}
-        </if>
+        update t_e_activity set
+        <trim suffixOverrides=",">
+            <if test="name != null and name != '' ">
+                name=#{name},
+            </if>
+            <if test="starttime != null and starttime != '' ">
+                starttime=#{starttime},
+            </if>
+            <if test="endtime != null and endtime != '' ">
+                endtime=#{endtime},
+            </if>
+            <if test="description != null and description != '' ">
+                description=#{description},
+            </if>
+            <if test="money != null and money != '' ">
+                money=#{money},
+            </if>
+            <if test="likenum != null and likenum != '' ">
+                likenum=#{likenum},
+            </if>
+            <if test="status != null and status != '' ">
+                status=#{status},
+            </if>
+            <if test="sharenum != null and sharenum != '' ">
+                sharenum=#{sharenum},
+            </if>
+            <if test="viewnum != null and viewnum != '' ">
+                viewnum=#{viewnum},
+            </if>
+        </trim>
         where id=#{id}
     </update>
 
     <!-- 删除记录 -->
     <update id="delete" parameterType="Object">
-		update t_e_activity set status = '0' where id = #{id}
-	</update>
+        update t_e_activity set status = '0' where id = #{id}
+    </update>
 
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
@@ -129,6 +129,7 @@
             <if test="status != null and status != ''">
                 and t.status = #{status}
             </if>
+            and t.status != '0'
         </trim>
     </select>
 
@@ -138,7 +139,7 @@
             <include refid="Activity_Base_Column_List" />,
         (select tcir.path from  t_con_item_res tcir where tcir.conid = t.id and tcir.type = '3' limit 0,1) as activityBg
         from t_e_activity t
-        where 1=1
+        where 1=1 and t.status != '0'
         <trim suffixOverrides=",">
             <if test="name != null and name != ''">
                 and t.name like CONCAT('%', #{name}, '%')

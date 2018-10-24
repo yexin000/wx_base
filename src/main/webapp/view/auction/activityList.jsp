@@ -23,7 +23,7 @@
 </div>
 
 <!-- Edit Win&From -->
-<div id="edit-win" class="easyui-dialog" title="编辑菜单" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:280px;">
+<div id="edit-win" class="easyui-dialog" title="编辑菜单" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:320px;">
     <form id="editForm" class="ui-form" method="post">
         <!-- 隐藏文本框 -->
         <input class="hidden" name="id">
@@ -31,37 +31,37 @@
             <div class="ftitle">活动信息</div>
             <div class="fitem">
                 <label>活动名称:</label>
-                <input class="easyui-validatebox" type="text" name="activityName" data-options="required:true">
+                <input class="easyui-validatebox" type="text" name="name" data-options="required:true">
             </div>
-
             <div class="fitem">
                 <label>活动金额:</label>
-                <input type="text" name="activityMoney"></input>
+                <input class="easyui-numberbox" type="text" name="money" data-options="min:0">
             </div>
             <div class="fitem">
                 <label>开始时间:</label>
-                <input class="easyui-numberbox" type="text" name="telNum" data-options="required:true,validType:'phoneNum'">
+                <input type="text" name="starttime" editable="false" class="easyui-datetimebox" data-options="required:true">
             </div>
             <div class="fitem">
                 <label>结束时间:</label>
-                <input class="easyui-validatebox" type="text" name="wxAccount" data-options="required:true">
+                <input type="text" name="endtime" editable="false" class="easyui-datetimebox" data-options="required:true">
             </div>
             <div class="fitem">
-                <label>活动状态:</label>
-                <input class="easyui-validatebox" type="text" name="wxAccount" data-options="required:true">
+                <label>活动内容:</label>
+                <textarea rows="5" name="description" class="easyui-validatebox" data-options="required:true" style="width: 157px;"></textarea>
             </div>
         </div>
     </form>
-    <form  id="portraitform" method="post" enctype="multipart/form-data" action="uploadLogo.do" style="display: none">
-        <input type="file" accept="image/*" name="headImg" id="edit-portrait">
-        <input type="hidden" id="businessid" name="businessid">
-        <input type="submit">
+</div>
+<div id="describe-win" class="easyui-dialog" title="活动内容" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:250px;">
+    <form id="describeForm" class="ui-form" method="post">
+        <div class="ui-edit">
+            <div class="fitem">
+                <textarea rows="7" id="describeDlg" class="easyui-validatebox" data-options="required:true" style="width: 350px;height:180px;"></textarea>
+            </div>
+        </div>
     </form>
-    <div id="dlg">
-        <img id="simg" width="460px" height="280px"/>
-    </div>
 </div>
 
-<script type="text/javascript" src="${msUrl}/js/ht/auction/business.js"></script>
+<script type="text/javascript" src="${msUrl}/js/ht/auction/activity.js"></script>
 </body>
 </html>
