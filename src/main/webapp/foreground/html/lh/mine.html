@@ -16,6 +16,12 @@
     <link href="../../../css/style/like.css?v=1.3" rel="stylesheet" type="text/css">
     <link href="../../../css/style/mine.css" rel="stylesheet" type="text/css">
     <title></title>
+
+    <style type="text/css">
+        * { padding:0; margin:0;}
+        ul { width:100%; border-top:1px solid #ddd; border-left:1px solid #ddd; }
+        ul li { list-style:none; width:33.3%;  float:left; border-right:1px solid #ddd; border-bottom:1px solid #ddd; float:left;}
+    </style>
 </head>
 <body>
 
@@ -33,45 +39,49 @@
         <div><h1 style="font-size: 0.1rem;line-height: 0.1rem;">粉丝数量：<label id="followNum">0</label></h1></div>
     </div>
 </header>
-<ul class="m-part">
-    <li onclick="window.location.href='myMoney.html'">
-        <span><i class="mine-icon-money"></i>我的余额<span style="margin-left: 1.5rem;display: none;" id="balance">00.00</span></span>
+
+
+
+
+<ul class="m-part" style="padding-bottom: 0.5rem;">
+    <li onclick="window.location.href='myMoney.html'" style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-money"></i>我的余额</span>
     </li>
-    <li>
-        <span><i class="mine-icon-report"></i>店铺报表</span>
+    <li style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-report"></i>店铺报表</span>
     </li>
-    <li onclick="window.location.href='myJoin.html'">
-        <span><i class="mine-icon-join"></i>我参与的</span>
+    <li onclick="window.location.href='myJoin.html'" style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-join"></i>我参与的</span>
     </li>
-    <li onclick="window.location.href='order.html'">
-        <span><i class="mine-icon-order"></i>我的订单</span>
+    <li onclick="window.location.href='order.html'" style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-order"></i>我的订单</span>
     </li>
-    <li>
-        <span><i class="mine-icon-aftersale"></i>退货售后</span>
+    <li style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-aftersale"></i>退货售后</span>
     </li>
-    <li onclick="window.location.href='myMessageList.html'">
-        <span><i class="mine-icon-message"></i>消息通知</span>
+    <li onclick="window.location.href='myMessageList.html'" style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-message"></i>消息通知</span>
     </li>
-    <li>
-        <span><i class="mine-icon-personal"></i>个人资料</span>
+    <li style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-personal"></i>个人资料</span>
+    </li >
+    <li onclick="window.location.href='problem.html'" style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-problem"></i>平台协议</span>
     </li>
-    <li onclick="window.location.href='problem.html'">
-        <span><i class="mine-icon-problem"></i>平台协议</span>
+    <li onclick="window.location.href='blacklist.html'" style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-blacklist"></i>黑名单</span>
     </li>
-    <li onclick="window.location.href='blacklist.html'">
-        <span><i class="mine-icon-blacklist"></i>黑名单</span>
+    <li onclick="javascript:toMyStore();" style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-contactservice"></i>我的店铺</span>
     </li>
-    <li onclick="javascript:contactService()">
-        <span><i class="mine-icon-contactservice"></i>联系客服</span>
+    <li onclick="javaScript:toIntegralMall()" style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-integralchange"></i>积分兑换</span>
     </li>
-    <li onclick="javaScript:toIntegralMall()">
-        <span><i class="mine-icon-integralchange"></i>积分兑换</span>
+    <li onclick="javaScript:toBigTransactionl()" style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-bigpay"></i>大额支付</span>
     </li>
-    <li onclick="javaScript:toBigTransactionl()">
-        <span><i class="mine-icon-bigpay"></i>大额支付</span>
-    </li>
-    <li onclick="window.location.href='myIdentify.html'">
-        <span><i class="mine-icon-identify"></i>我的鉴定</span>
+    <li onclick="window.location.href='myIdentify.html'" style="height: 120px;">
+        <span style="margin-top: 40px;"><i class="mine-icon-identify"></i>我的鉴定</span>
     </li>
 </ul>
 <div>

@@ -112,6 +112,8 @@ function loadData()
                 {
                     var str = '';
                     $.each(dataList,function(i,obj){
+                        /**
+                         *
                         var coverimg = '';
                         var coverimgWidth = '';
                         var coverimgHeight = '';
@@ -140,6 +142,19 @@ function loadData()
                         str+='      <p><span>商品库存: </span><span style="overflow:hidden;  "> '+obj.stock +'<span></p>';
                         str+='  </td>';
                         str+='</tr>';
+                         * @type {string}
+                         */
+
+                        str+='    <a href="javascript:toAuctionItemDetail('+obj.id+','+obj.attribute+');" style="position: initial;background-color:#fff;border-radius:2px;float: left;padding: 6px 4px 4px 6px;width: 46%;box-sizing: border-box;margin-left: 0.07rem;margin-top: 0.1rem;">';
+                        str+='    <div style="height: 160px;width: 99%;">';
+                        str+='    <div style="background: url('+hostPath + obj.resList[0].path+');width: 100%;height: 90%;">';
+                        str+='    </div>';
+                        str+='    </div>';
+                        str+='    <p  style="float: left;font-size: 12px;">名称:'+obj.name+'</p>';
+                        str+='    <p  style="float: left;font-size: 12px;">作者:'+obj.uploader+'</p> ';
+                        str+='    <p  style="float: left;font-size: 12px;">作者:'+obj.uploader+'</p> </br>';
+                        str+='  </div>';
+                        str+=' </a>';
 
                     });
                 }

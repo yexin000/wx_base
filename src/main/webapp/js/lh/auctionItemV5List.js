@@ -54,7 +54,7 @@ function loadAcutionItemV5Banner(){
 }
 
 
-//加载活动数据
+//加载普通v5特区商品数据
 function loadAcutionItemV5(){
     $('#loadingToast').show();
     var params = {};
@@ -74,7 +74,7 @@ function loadAcutionItemV5(){
                 str+='    <a href="javascript:;" style="position: initial;background-color:#fff;border-radius:2px;float: left;padding: 6px 4px 4px 6px;width: 46%;box-sizing: border-box;margin-left: 0.07rem;margin-top: 0.1rem;">';
                 str+='    <div style="height: 160px;width: 99%;">';
                 str+='    <div style="background: url('+hostPath + obj.resList[0].path+');width: 100%;height: 90%;">';
-                str+='       <img style="float:left;margin-left: -0.05rem;" src="../../../images/lh/redio-s.png"/></div>';
+                str+='       <img style="float:left;margin-left: -0.25rem;margin-top:-0.15rem;width: 0.7rem;height:0.7rem;" src="../../../images/lh/v5.png"/></div>';
                 str+='    </div>';
                 str+='    <p class="weui-grid__label" style="float: left;font-size: 12px;">名称:'+obj.name+'</p>';
 

@@ -144,6 +144,8 @@ public class AuctionItem extends BaseBean {
 
     private String uploadWxid;
 
+    private String uploader;
+
     /**
      * 拍卖会logo(第一张图片)
      */
@@ -429,5 +431,13 @@ public class AuctionItem extends BaseBean {
 
     public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public String getUploader() {
+        return uploader;
+    }
+
+    public void setUploader(String uploader) {
+        this.uploader = uploader;
     }
 }

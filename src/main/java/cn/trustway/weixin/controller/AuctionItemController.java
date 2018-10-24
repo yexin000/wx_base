@@ -6,7 +6,6 @@ import cn.trustway.weixin.model.AuctionItemModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
-import cn.trustway.weixin.util.json.JSONStringObject;
 import net.sf.json.JSONArray;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
