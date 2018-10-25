@@ -97,6 +97,9 @@
 			<if test="wxAccount != null  and wxAccount != '' ">
 				wxaccount=#{wxAccount},
 			</if>
+			<if test="integral != null  and integral != '' ">
+				integral=#{integral},
+			</if>
 		</trim>
 		where wxid=#{wxid}
 	</update>

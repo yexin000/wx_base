@@ -140,6 +140,15 @@ function toActivityList() {
 function toIntegralMall() {
     window.location.href = '../../html/lh/integralMall.html';
 }
+
+/**
+ * 去积分商城商品详情
+ * @param id
+ */
+function integralDetail(id) {
+    window.location.href = '../../html/lh/exchange.html?id='+id;
+}
+
 /**
  * 去大额支付
  * @param id
@@ -162,6 +171,7 @@ function toActivityDetail(actId) {
 function toUserInfo(wxId) {
     window.location.href = '../../html/lh/myInfo.html?wxId='+wxId;
 }
+
 
 function toAuctionItemDetail(id,type)
 {

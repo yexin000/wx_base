@@ -31,7 +31,7 @@ function loadIntegralMall(){
                         coverimgWidth = obj.resList[0].width;
                         coverimgHeight = obj.resList[0].height;
                     }
-                    str+='<tr onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')">';
+                    str+='<tr onclick="integralDetail('+obj.id+')">';
                     str+='  <td class="pro-item-M">' ;
                     str+='  <div class="itemDiv">' ;
 

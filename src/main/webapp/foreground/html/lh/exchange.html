@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"  />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-dns-prefetch-control" content="on" />
+    <link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/order.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
+    <title></title>
+
+</head>
+<body>
+<header class="header-hs ">
+    <a href="javascript:history.back(-1);" class="header-back"></a>
+    <h1>兑换详情</h1>
+</header>
+
+
+
+<div class="order-item" style="margin-top: 0.45rem;">
+    <table class="order-i-pro">
+        <tr>
+            <td class="pro-item-M">
+                <img src="" id="itemImg" style="width: 0.78rem;height: 0.78rem;margin-left: 0.1rem;" alt="">
+            </td>
+            <td class="pro-item-H">
+                <p  class="ppp" id="itemName"></p>
+                <p><span>消耗积分:</span>  <span id="description"> </span></p>
+                <p>
+                    <span>兑换截至时间: </span>
+                    <span style="overflow:hidden;" id="endtime">
+                    </span>
+                </p>
+                <p><span>配送方式：货到付款</span></p>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<input type="hidden" id="orderId">
+<footer class="footer-sum">
+    <div style="position:absolute;bottom: 0.05rem;left: 0rem;"></div>
+    <p class="btn-sum" id="payBtn">兑换</p>
+</footer>
+
+<div id="loadingToast" style="opacity: 1; display: none;">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">数据加载中</p>
+    </div>
+</div>
+<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../../../js/lh/layout.js"></script>
+<script type="text/javascript" src="../../../js/lh/common.js"></script>
+<script type="text/javascript" src="../../../js/lh/exchange.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+<script>
+
+</script>
+</body>
+</html>

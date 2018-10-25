@@ -1,15 +1,13 @@
 package cn.trustway.weixin.controller;
 
-import cn.trustway.weixin.bean.IntegralCommodity;
-import cn.trustway.weixin.bean.ItemRes;
-import cn.trustway.weixin.bean.Message;
+import cn.trustway.weixin.bean.*;
+import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.IntegralMallModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.model.MessageModel;
-import cn.trustway.weixin.service.IntegralMallService;
-import cn.trustway.weixin.service.ItemResService;
-import cn.trustway.weixin.service.MessageService;
+import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +34,10 @@ public class IntegralMallController extends BaseController {
     private IntegralMallService<IntegralCommodity> integralMallService;
     @Autowired(required = false)
     private ItemResService<ItemRes> itemResService;
-
+    @Autowired
+    UserAddrService<UserAddr> userAddrService;
+    @Autowired
+    private WeixinUserService<WeixinUser> weixinUserService;
     /**
      * 首页
      *
@@ -46,7 +48,7 @@ public class IntegralMallController extends BaseController {
     @RequestMapping("/list")
     public ModelAndView list(IntegralMallModel model, HttpServletRequest request) throws Exception {
         Map<String, Object> context = getRootMap();
-        return forword("auction/activityList", context);
+        return forword("auction/integralMall", context);
     }
 
     /**
@@ -112,6 +114,14 @@ public class IntegralMallController extends BaseController {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
         }
+
+        //图片数据
+        ItemResModel resModel  = new ItemResModel();
+        resModel.setConid(bean.getId());
+        resModel.setConType("5");
+        List<ItemRes> resDataList = itemResService.queryByList(resModel);
+        bean.setResList(resDataList);
+
         context.put(SUCCESS, true);
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);
@@ -149,4 +159,62 @@ public class IntegralMallController extends BaseController {
         integralMallService.delete(id);
         sendSuccessMessage(response, "删除成功");
     }
+
+
+    /**
+     * 兑换
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/exchange")
+    public void exchange(Integer id, String wxid, HttpServletResponse response) throws Exception {
+        Map<String, Object> context = getRootMap();
+        IntegralCommodity bean = integralMallService.queryById(id);
+        if (bean == null) {
+            sendFailureMessage(response, "没有找到对应的记录!");
+            return;
+        }
+        //判断库存是否还有
+        if(bean.getStock() < 1)
+        {
+            sendFailureMessage(response, "库存不足");
+            return;
+        }
+
+        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
+        if(null == user) {
+            sendFailureMessage(response, "获取用户信息失败");
+            return;
+        }
+
+        String myintegralStr = user.getIntegral();
+        int myIntegeral = 0;
+        if (StringUtils.isNotEmpty(myintegralStr)){
+            myIntegeral = Integer.parseInt(myintegralStr);
+        }else{
+            //积分不足
+            sendFailureMessage(response, "积分不足");
+        }
+        if(myIntegeral < bean.getConsumeintegral()){
+            sendFailureMessage(response, "积分不足");
+        }
+
+        // 查询用户默认收货地址
+        UserAddr defaultAddr = userAddrService.getDefaultAddrByWxid(wxid);
+        if(null == defaultAddr) {
+            sendFailureMessage(response, "缺少收货地址");
+            return;
+        }
+
+        // 生成兑换记录 扣除积分
+        user.setIntegral(myIntegeral-bean.getConsumeintegral()+"");
+        weixinUserService.updateBySelective(user);
+
+        context.put(SUCCESS, true);
+        HtmlUtil.writerJson(response, context);
+    }
+
 }

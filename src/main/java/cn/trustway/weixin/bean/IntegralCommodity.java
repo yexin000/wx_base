@@ -40,6 +40,11 @@ public class IntegralCommodity extends BaseBean {
     private Date createtime;
 
     /**
+     *结束时间
+     */
+    private Date endtime;
+
+    /**
      * 资源列表
      */
     private List<ItemRes> resList;
@@ -98,5 +103,13 @@ public class IntegralCommodity extends BaseBean {
 
     public void setResList(List<ItemRes> resList) {
         this.resList = resList;
+    }
+
+    public Date getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(Date endtime) {
+        this.endtime = endtime;
     }
 }
