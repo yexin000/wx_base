@@ -11,10 +11,14 @@
         <p class="ui-fields">
             <label class="ui-label">状态:</label>
             <select class="easyui-combobox" name="status" data-options="required:true" style="width: 80px;">
-                <option value="" selected="selected">全部</option>
+                <option value="-1" selected="selected">全部</option>
                 <option value="0">正常</option>
                 <option value="1">黑名单</option>
             </select>
+        </p>
+        <p class="ui-fields">
+            <label class="ui-label">昵称:</label>
+            <input name="nickname" class="easyui-box ui-text" style="width:100px;">
         </p>
         <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>
     </form>

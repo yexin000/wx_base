@@ -57,7 +57,48 @@ public class BlacklistController extends BaseController {
      */
     @RequestMapping(value = "/dataList", method = RequestMethod.POST)
     public void dataList(BlacklistModel model, HttpServletResponse response) throws Exception {
-        queryDataList(model, response);
+        List<Blacklist> dataList = blacklistService.queryBackgroundByList(model);
+        // 设置页面数据
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("total", blacklistService.queryBackgroundByCount(model));
+        jsonMap.put("rows", dataList);
+        HtmlUtil.writerJson(response, jsonMap);
+    }
+
+    /**
+     * 后台添加黑名单
+     *
+     * @param wxid
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/addBlacklist", method = RequestMethod.POST)
+    public void addBlacklist(String wxid, HttpServletResponse response) throws Exception {
+        Blacklist bean = new Blacklist();
+        bean.setCreatorid("0");
+        bean.setType("1");
+        bean.setBlackid(wxid);
+
+        blacklistService.add(bean);
+        sendSuccessMessage(response, "操作成功~");
+    }
+
+    /**
+     * 后台移除黑名单
+     *
+     * @param wxid
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/removeBlacklist", method = RequestMethod.POST)
+    public void removeBlacklist(String wxid, HttpServletResponse response) throws Exception {
+        BlacklistModel model = new BlacklistModel();
+        model.setType("1");
+        model.setBlackid(wxid);
+        blacklistService.deleteByModel(model);
+        sendSuccessMessage(response, "操作成功~");
     }
 
     private void queryDataList(BlacklistModel model, HttpServletResponse response) throws Exception {
