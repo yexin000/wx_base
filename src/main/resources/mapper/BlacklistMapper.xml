@@ -51,6 +51,11 @@
       delete from t_e_blacklist where id = #{id}
   </update>
 
+  <!-- 后台删除记录 -->
+  <update id="deleteByModel" parameterType="Object">
+    delete from t_e_blacklist where blackid = #{blackid} and type = #{type}
+  </update>
+
   <!-- 根据id查询记录 -->
   <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
     select
@@ -68,6 +73,73 @@
         and t.creatorid = #{creatorid}
       </if>
     </trim>
+  </select>
+
+
+  <!-- 后台查询记录总数 -->
+  <select id="queryBackgroundByCount" resultType="java.lang.Integer"
+          parameterType="Object">
+    <if test="status == 1">
+      select
+      count(1)
+      from t_e_blacklist t, weixin_user u
+      where 1=1 and t.blackid = u.wxid and t.type='1'
+      <if test="nickname != null and nickname != ''">
+        and u.nickname like CONCAT('%', #{nickname}, '%')
+      </if>
+    </if>
+    <if test="status == null or status != 1">
+      select
+      count(1)
+      from weixin_user u
+      where 1=1
+      <if test="status == 0">
+        and not exists(select 1 from t_e_blacklist t where t.blackid = u.wxid and t.type='1')
+      </if>
+      <if test="nickname != null and nickname != ''">
+        and u.nickname like CONCAT('%', #{nickname}, '%')
+      </if>
+    </if>
+  </select>
+
+  <!-- 后台分页查询记录列表 -->
+  <select id="queryBackgroundByList" resultMap="BaseResultMap" parameterType="Object">
+    <if test="status == 1">
+      select
+      <include refid="Blacklist_Base_Column_List" />, u.nickname, '1' as status
+      from t_e_blacklist t, weixin_user u
+      where 1=1 and t.blackid = u.wxid and t.type='1'
+      <if test="nickname != null and nickname != ''">
+        and u.nickname like CONCAT('%', #{nickname}, '%')
+      </if>
+      order by t.createtime desc
+      <if test="pager.orderCondition != null and pager.orderCondition != ''">
+        ${pager.orderCondition}
+      </if>
+      <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+        ${pager.mysqlQueryCondition}
+      </if>
+    </if>
+    <if test="status == null or status != 1">
+      select
+      u.id, u.wxid as blackid, u.nickname, (case when t.blackid is not null then '1' else '0' end) as status
+      from weixin_user u
+      left join t_e_blacklist t on t.blackid=u.wxid and t.type='1'
+      where 1=1
+      <if test="status == 0">
+        and not exists(select 1 from t_e_blacklist t where t.blackid = u.wxid and t.type='1')
+      </if>
+      <if test="nickname != null and nickname != ''">
+        and u.nickname like CONCAT('%', #{nickname}, '%')
+      </if>
+      order by status desc, u.id asc
+      <if test="pager.orderCondition != null and pager.orderCondition != ''">
+        ${pager.orderCondition}
+      </if>
+      <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+        ${pager.mysqlQueryCondition}
+      </if>
+    </if>
   </select>
 
   <!-- 分页查询记录列表 -->
