@@ -41,7 +41,7 @@
 	<input id="auctionStatus" name="auctionStatus" type="hidden" value="0">
 	<input id="wxid" name="wxid" type="hidden">
 	<div class="container" id="container" style="margin-top: 0.45rem;">
-		<div class="page input js_show">
+		<div class="page input js_show" style="background-color: #fff;">
 			<div class="page__bd">
 				<div class="weui-cells weui-cells_form">
 					<div class="weui-cell">
@@ -199,18 +199,15 @@
         cache: false,
         success:function(result){
           if(result.code == "0") {
+            $("#auctions").empty();
+            $("#auctionTimeShow").html("");
+            $("#auctions").append('<option value="0" startAttr="" endAttr="" >官方拍卖会</option>');
             var auctionList = result.data;
             if(auctionList.length > 0) {
               var options = '';
               for(var i = 0; i < auctionList.length; i ++) {
-                if(i == 0) {
-                  options += '<option value="' + auctionList[i].id + '" startAttr="' + auctionList[i].starttime + '" endAttr="' + auctionList[i].endtime + '"  selected="selected">' + auctionList[i].name + '</option>';
-                  $("#auctionTimeShow").html(auctionList[i].starttime + " 至 " + auctionList[i].endtime);
-                } else {
-                  options += '<option value="' + auctionList[i].id + '" startAttr="' + auctionList[i].starttime + '" endAttr="' + auctionList[i].endtime + '" >' + auctionList[i].name + '</option>';
-                }
+                options += '<option value="' + auctionList[i].id + '" startAttr="' + auctionList[i].starttime + '" endAttr="' + auctionList[i].endtime + '" >' + auctionList[i].name + '</option>';
               }
-              $("#auctions").empty();
               $("#auctions").append(options);
             }
           }
@@ -232,7 +229,11 @@
     $("#auctions").on("change", function () {
       var auctionStartTime = $(this).find("option:selected").attr("startAttr");
       var auctionEndTime = $(this).find("option:selected").attr("endAttr");
-      $("#auctionTimeShow").html(auctionStartTime + " 至 " + auctionEndTime);
+      if($(this).val() != '0') {
+        $("#auctionTimeShow").html(auctionStartTime + " 至 " + auctionEndTime);
+			} else {
+        $("#auctionTimeShow").html("");
+			}
     });
 
     $("#attribute").on("change", function () {
@@ -398,11 +399,13 @@
         return
       }
 
-      if(startTime < auctionStartTime || startTime >= auctionEndTime
-          || endTime < auctionStartTime || endTime >= auctionEndTime ) {
-        $("#tipLabel").html("拍卖开始和结束时间必须在拍卖专场时间内");
-        $('#tipDialog').show();
-        return
+      if($("#auctions").val() != '0') {
+        if (startTime < auctionStartTime || startTime >= auctionEndTime
+            || endTime < auctionStartTime || endTime >= auctionEndTime) {
+          $("#tipLabel").html("拍卖开始和结束时间必须在拍卖专场时间内");
+          $('#tipDialog').show();
+          return
+        }
       }
     }
 
