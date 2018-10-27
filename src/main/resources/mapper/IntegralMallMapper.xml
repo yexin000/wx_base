@@ -35,15 +35,10 @@
 
     <!-- 修改记录，只修改只不为空的字段 -->
     <update id="updateBySelective" parameterType="Object">
-        update t_e_integral_commodity set  1 = 1
-        <if test="name != null and name != '' ">
-            ,name=#{name}
-        </if>
+        update t_e_integral_commodity set
+        name=#{name}
         <if test="stock != null and stock != '' ">
             ,stock=#{stock}
-        </if>
-        <if test="describe != null and describe != '' ">
-            ,describe=#{describe}
         </if>
         where id=#{id}
     </update>

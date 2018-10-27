@@ -1,11 +1,15 @@
 package cn.trustway.weixin.controller;
 
-import cn.trustway.weixin.bean.*;
-import cn.trustway.weixin.common.AppInitConstants;
+import cn.trustway.weixin.bean.IntegralCommodity;
+import cn.trustway.weixin.bean.ItemRes;
+import cn.trustway.weixin.bean.UserAddr;
+import cn.trustway.weixin.bean.WeixinUser;
 import cn.trustway.weixin.model.IntegralMallModel;
 import cn.trustway.weixin.model.ItemResModel;
-import cn.trustway.weixin.model.MessageModel;
-import cn.trustway.weixin.service.*;
+import cn.trustway.weixin.service.IntegralMallService;
+import cn.trustway.weixin.service.ItemResService;
+import cn.trustway.weixin.service.UserAddrService;
+import cn.trustway.weixin.service.WeixinUserService;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,26 +20,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 积分商城功能页面控制类
+ * 积分商城兑换记录页面控制类
  * @author dingjia
  *
  */
 @Controller
-@RequestMapping("/integralMall")
-public class IntegralMallController extends BaseController {
+@RequestMapping("/exchangeRecode")
+public class ExchangeRecodeController extends BaseController {
 
     @Autowired(required = false)
     private IntegralMallService<IntegralCommodity> integralMallService;
     @Autowired(required = false)
     private ItemResService<ItemRes> itemResService;
-    @Autowired
-    UserAddrService<UserAddr> userAddrService;
     @Autowired
     private WeixinUserService<WeixinUser> weixinUserService;
     /**
@@ -161,66 +162,5 @@ public class IntegralMallController extends BaseController {
     }
 
 
-    /**
-     * 兑换
-     *
-     * @param id
-     * @param response
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping("/exchange")
-    public void exchange(Integer id, String wxid, HttpServletResponse response) throws Exception {
-        Map<String, Object> context = getRootMap();
-        IntegralCommodity bean = integralMallService.queryById(id);
-        if (bean == null) {
-            sendFailureMessage(response, "没有找到对应的记录!");
-            return;
-        }
-        //判断库存是否还有
-        if(bean.getStock() < 1)
-        {
-            sendFailureMessage(response, "库存不足");
-            return;
-        }
-
-        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
-        if(null == user) {
-            sendFailureMessage(response, "获取用户信息失败");
-            return;
-        }
-
-        String myintegralStr = user.getIntegral();
-        int myIntegeral = 0;
-        if (StringUtils.isNotEmpty(myintegralStr)){
-            myIntegeral = Integer.parseInt(myintegralStr);
-        }else{
-            //积分不足
-            sendFailureMessage(response, "积分不足");
-        }
-        if(myIntegeral < bean.getConsumeintegral()){
-            sendFailureMessage(response, "积分不足");
-        }
-
-        // 查询用户默认收货地址
-        UserAddr defaultAddr = userAddrService.getDefaultAddrByWxid(wxid);
-        if(null == defaultAddr) {
-            sendFailureMessage(response, "缺少收货地址");
-            return;
-        }
-
-        // 生成兑换记录
-
-
-        // 扣除积分
-        user.setIntegral(myIntegeral-bean.getConsumeintegral()+"");
-        weixinUserService.updateBySelective(user);
-
-        //减少库存
-        bean.setStock(bean.getStock() - 1);
-        integralMallService.updateBySelective(bean);
-        context.put(SUCCESS, true);
-        HtmlUtil.writerJson(response, context);
-    }
 
 }

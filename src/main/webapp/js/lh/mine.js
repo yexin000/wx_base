@@ -33,6 +33,7 @@ function loadUser(){
             $("#headImg").attr("src",   data.avatarUrl);
             $("#balance").html(data.balance);
             $("#followNum").html(data.followNum);
+            $("#myIntegral").html(data.integral);
             if(data.vipGrade == 1){
                 $("#vipLv").append('<i class="mine-icon-level"></i>');
             }else if(data.vipGrade == 2){

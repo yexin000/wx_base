@@ -172,6 +172,14 @@ function toUserInfo(wxId) {
     window.location.href = '../../html/lh/myInfo.html?wxId='+wxId;
 }
 
+/**
+ * 去兑换记录
+ * @param wxid
+ */
+function toUserInfo(wxid) {
+    window.location.href = '../../html/lh/myInfo.html?wxId='+wxId;
+}
+
 
 function toAuctionItemDetail(id,type)
 {
