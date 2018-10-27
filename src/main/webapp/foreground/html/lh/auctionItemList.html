@@ -25,47 +25,18 @@
       }
     </style>
   </head>
-  <body>
-    <div style="height: 0.44rem;  background: #fff; padding: 0 0.1rem;line-height: 0.44rem;top: 0; left: 0; width: 100%; box-sizing: border-box;">
+  <body style="height: auto;">
+    <div class="auctionitem-search-container">
       <input class="like1" type="text" placeholder="请输入拍品名称" id="shoppingName">
-      <button style="border-radius: 5px;    width: 0.5rem;  height: 0.3rem; border: none; background-color: #5DD9EB; color: #fff;"> 搜索</button>
+      <button class="auctionitem-search-btn"> 搜索</button>
     </div>
 
-    <div id="auctionItemDiv" class="table-content" style="height: 100%;">
-      <div class="weui-grids" style="position: inherit;overflow: scroll;height: 100%;">
-        <a href="javascript:;" class="weui-grid" style="position: initial;">
-          <div style="height: 160px;width: 80%;padding-left: 10%;">
-            <div class="weui-grid__icon" style="width: 90%;height: 80%;">
-              <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180628/807e71dddf4b4e6eb04f4f6b8b8e458ejpg" alt="">
-            </div>
-            <p class="weui-grid__label" style="float: left;font-size: 12px;color: white;">商品名称:无敌金手镯</p>
-            <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;">商品介绍:美观的金手镯一枚</p>
-            <p class="weui-grid__label" style="float: left;font-size: 12px;color: white;">库存:2件　　　　　　</p>
-            <p class="weui-grid__label" style="float: left;font-size: 12px;color: white;">价格:100</p>
-          </div>
-        </a>
-        <a href="javascript:;" class="weui-grid" style="position: initial;">
-          <div style="height: 160px;width: 80%;padding-left: 10%;">
-            <div class="weui-grid__icon" style="width: 90%;height: 80%;">
-              <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180628/807e71dddf4b4e6eb04f4f6b8b8e458ejpg" alt="">
-            </div>
-            <p class="weui-grid__label" style="float: left;font-size: 12px;color: white;">商品名称:无敌金手镯</p>
-            <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;">商品介绍:美观的金手镯一枚</p>
-            <p class="weui-grid__label" style="float: left;font-size: 12px;color: white;">库存:2件　　　　　　</p>
-            <p class="weui-grid__label" style="float: left;font-size: 12px;color: white;">价格:100</p>
-          </div>
-        </a>
-        <a href="javascript:;" class="weui-grid" style="position: initial;">
-          <div style="height: 160px;width: 80%;padding-left: 10%;">
-            <div class="weui-grid__icon" style="width: 90%;height: 80%;">
-              <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180628/807e71dddf4b4e6eb04f4f6b8b8e458ejpg" alt="">
-            </div>
-            <p class="weui-grid__label" style="float: left;font-size: 12px;color: white;">商品名称:无敌金手镯</p>
-            <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;">商品介绍:美观的金手镯一枚</p>
-            <p class="weui-grid__label" style="float: left;font-size: 12px;color: white;">库存:2件　　　　　　</p>
-            <p class="weui-grid__label" style="float: left;font-size: 12px;color: white;">价格:100</p>
-          </div>
-        </a>
+    <div id="auctionItemDiv" class="table-content mystore-content-div" style="height: 100%;margin-bottom: 0.48rem;">
+      <div id="auctionItemDataDiv" class="weui-loadmore weui-loadmore_line none" style="display: none;">
+        <span class="weui-loadmore__tips">暂无数据</span>
+      </div>
+      <div id="auctionItemData" class="weui-grids" style="overflow: scroll;height: 100%;">
+
       </div>
     </div>
 
@@ -143,7 +114,71 @@
     <script type="text/javascript" src="../../../js/lh/layout.js"></script>
     <script type="text/javascript" src="../../../js/lh/common.js"></script>
     <script type="text/javascript">
+      var curPage = 1;
+      var rows = 6;
+      $(function(){
+        loadAuctionItems();
+        $(".auctionitem-search-btn").click(function () {
+          curPage = 1;
+          $('#loadMore').remove();
+          $("#auctionItemData").empty();
+          loadAuctionItems($("#shoppingName").val());
+        });
+      });
+      
+      function loadAuctionItems(name) {
+        $('#loadingToast').show();
+        var AuctionItemModel = {};
+        AuctionItemModel.name = name;
+        AuctionItemModel.attribute = '0';
+        AuctionItemModel.status = '3';
+        AuctionItemModel.page = curPage;
+        AuctionItemModel.rows = rows;
+        var url= '/weixin/auctionItem/ajaxDataList.do';
+        $.ajax({
+          url: url,
+          type: 'post',
+          data: JSON.stringify(AuctionItemModel) ,
+          dataType: 'JSON',
+          contentType : "application/json;charset=utf-8",
+          cache: false,
+          success:function(data){
+            $('#loadingToast').hide();
+            var dataList = data.rows;
+            var total = data.total;
+            if(dataList.length> 0) {
+              for(var i = 0; i < dataList.length; i ++) {
+                var str = "";
+                var coverImage = 'foreground/images/no-image.jpg';
+                if(dataList[i].resList != null && dataList[i].resList.length > 0) {
+                  coverImage = dataList[i].resList[0].path;
+                }
 
+                var price = dataList[i].curPrice;
+                if(price <= 0) {
+                  price = dataList[i].startPrice;
+                }
+                str += '<a href="javascript:toAuctionItemDetail(\''+dataList[i].id+'\',\'' + dataList[i].attribute + '\');" class="weui-grid" style="position: initial;padding: 10px 0px;">'
+                      +   '<div class="mystore-auctionitem-div">'
+                      +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
+                      +       '<img src="' + hostPath + coverImage + '" alt="">'
+                      +     '</div>'
+                      +     '<p class="weui-grid__label auctionitem-auctionitem-label">名称:' + dataList[i].name + '</p>'
+                      +     '<p class="weui-grid__label auctionitem-auctionitem-label">作者:' + dataList[i].uploader + '</p>'
+                      +     '<p class="weui-grid__label auctionitem-auctionitem-label">价格:' + price + '</p>'
+                      +     '<p class="weui-grid__label auctionitem-auctionitem-label">结束时间:' + dataList[i].endTime + '</p>'
+                      +   '</div>'
+                      +'</a>';
+                $("#auctionItemData").append(str);
+              }
+              if(total > curPage * rows) {
+                $("#auctionItemDiv").append('<a href="javascript:$(\'#loadMore\').remove();loadAuctionItems(\''+ name + '\');" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading" style="background-color: #363636;color: white;"> 点击加载更多</a>');
+              }
+              curPage ++;
+            }
+          }
+        })
+      }
     </script>
   </body>
 </html>

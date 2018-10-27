@@ -1564,7 +1564,7 @@ a.weui-media-box:active{
     transform:scaleY(0.5);
 }
 .weui-grid:active{
-    background-color:#ECECEC;
+    /*background-color:#ECECEC;*/
 }
 .weui-grid__icon{
     width:28px;

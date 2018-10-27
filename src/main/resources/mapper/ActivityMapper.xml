@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.trustway.weixin.dao.ActivityDao">
     <!-- Result Map -->
-    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.Activity">
+    <resultMap id="ActivityBaseResultMap" type="cn.trustway.weixin.bean.Activity">
         <result column="id" property="id" />
         <result column="name" property="name" />
         <result column="money" property="money" />
@@ -105,7 +105,7 @@
     </update>
 
     <!-- 根据id查询记录 -->
-    <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+    <select id="queryById" resultMap="ActivityBaseResultMap" parameterType="Object">
         select
           <include refid="Activity_Base_Column_List" />
         from t_e_activity t
@@ -134,7 +134,7 @@
     </select>
 
     <!-- 分页查询记录列表 -->
-    <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+    <select id="queryByList" resultMap="ActivityBaseResultMap" parameterType="Object">
         select
             <include refid="Activity_Base_Column_List" />,
         (select tcir.path from  t_con_item_res tcir where tcir.conid = t.id and tcir.type = '3' limit 0,1) as activityBg
@@ -172,7 +172,7 @@
 
 
 
-    <select id="queryByJoinActivity" resultMap="BaseResultMap" parameterType="Object">
+    <select id="queryByJoinActivity" resultMap="ActivityBaseResultMap" parameterType="Object">
         select
           <include refid="Activity_Base_Column_List" />
         from t_e_activity t
