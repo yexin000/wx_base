@@ -7,13 +7,13 @@ $(function(){
 function loadMyExchange(){
     $('#loadingToast').show();
     $("#loadMore").hide();
-    var AuctionItemModel = {};
-    AuctionItemModel.uploadWxid = localStorage.getItem("openId");
-    var url= '/weixin/exchangeRecode/ajaxMyJoinDataList.do';
+    var ExchangeRecodeModel = {};
+    ExchangeRecodeModel.wxid = localStorage.getItem("openId");
+    var url= '/weixin/exchangeRecode/ajaxDataList.do';
     $.ajax({
         url: url,
         type: 'post',
-        data: JSON.stringify(AuctionItemModel) ,
+        data: JSON.stringify(ExchangeRecodeModel) ,
         dataType: 'JSON',
         contentType : "application/json;charset=utf-8",
         cache: false,
@@ -48,10 +48,9 @@ function loadMyExchange(){
                     str+='  </td>';
 
                     str+='  <td class="pro-item-H">';
-                    str+='      <h2>'+obj.name+'</h2>';
-                    str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
-                    str+='      <p><span>商品价格: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
-                    str+='      <p><span>商品库存: </span><span style="overflow:hidden;  "> '+obj.stock +'<span></p>';
+                    str+='      <h2>'+obj.icName+'</h2>';
+                    str+='      <p><span>兑换数量: </span><span style="overflow:hidden;  "> '+obj.num +'<span></p>';
+                    str+='      <p><span>兑换时间: </span><span style="overflow:hidden;  "> '+obj.createtime +'<span></p>';
                     str+='  </td>';
                     str+='</tr>';
                 });

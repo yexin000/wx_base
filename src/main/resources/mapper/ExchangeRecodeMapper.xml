@@ -6,7 +6,7 @@
     <!-- Result Map -->
     <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.ExchangeRecode">
         <result column="id" property="id" />
-        <result column="icId" property="icId" />
+        <result column="icid" property="icId" />
         <result column="wxid" property="wxid" />
         <result column="status" property="status" />
         <result column="num" property="num" />
@@ -71,8 +71,9 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-            <include refid="ExchangeRecode_Base_Column_List" />
-        from t_e_integral_commodity t
+            <include refid="ExchangeRecode_Base_Column_List" /> ,teic.name as icName
+        from t_con_user_integralCommodity t
+        left join t_e_integral_commodity teic on t.icid = teic.id
         where 1=1
         <trim suffixOverrides=",">
             <if test="wxid != null and wxid != ''">

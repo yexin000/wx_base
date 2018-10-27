@@ -176,8 +176,8 @@ function toUserInfo(wxId) {
  * 去兑换记录
  * @param wxid
  */
-function toUserInfo(wxid) {
-    window.location.href = '../../html/lh/myInfo.html?wxId='+wxId;
+function toMyExchange() {
+    window.location.href = '../../html/lh/myExchange.html';
 }
 
 

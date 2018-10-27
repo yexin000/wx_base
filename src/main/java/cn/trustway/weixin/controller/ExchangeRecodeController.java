@@ -1,12 +1,14 @@
 package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.*;
+import cn.trustway.weixin.model.BidModel;
 import cn.trustway.weixin.model.ExchangeRecodeModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -65,8 +67,7 @@ public class ExchangeRecodeController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
-    public void ajaxDataList(HttpServletResponse response) throws Exception {
-        ExchangeRecodeModel model = new ExchangeRecodeModel();
+    public void ajaxDataList(@RequestBody ExchangeRecodeModel model, HttpServletResponse response) throws Exception {
         queryDataList(model, response);
     }
 

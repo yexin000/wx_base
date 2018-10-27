@@ -20,6 +20,11 @@ public class ExchangeRecode extends BaseBean {
     private Integer icId;
 
     /**
+     *名称
+     */
+    private String icName;
+
+    /**
      *兑换人
      */
     private String wxid;
@@ -98,5 +103,13 @@ public class ExchangeRecode extends BaseBean {
 
     public void setNum(Integer num) {
         this.num = num;
+    }
+
+    public String getIcName() {
+        return icName;
+    }
+
+    public void setIcName(String icName) {
+        this.icName = icName;
     }
 }

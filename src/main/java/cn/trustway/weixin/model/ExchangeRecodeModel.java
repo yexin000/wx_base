@@ -39,6 +39,10 @@ public class ExchangeRecodeModel extends BaseModel {
      */
     private Integer num;
 
+    /**
+     * 名字
+     */
+    private String name ;
 
     public Integer getId() {
         return id;
@@ -86,5 +90,13 @@ public class ExchangeRecodeModel extends BaseModel {
 
     public void setNum(Integer num) {
         this.num = num;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
