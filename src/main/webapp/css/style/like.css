@@ -183,3 +183,32 @@
 	width: 80%;
 	text-align: left;
 }
+
+.auctionitem-search-container {
+	height: 0.44rem;
+	background: #fff;
+	padding: 0 0.1rem;
+	line-height: 0.44rem;
+	top: 0;
+	left: 0;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.auctionitem-search-btn {
+	border-radius: 5px;
+	width: 0.5rem;
+	height: 0.3rem;
+	border: none;
+	background-color: #5DD9EB;
+	color: #fff;
+}
+
+.auctionitem-auctionitem-label {
+	float: left;
+	font-size: 12px;
+	color: black;
+	margin-left: 10px;
+	width: 90%;
+	text-align: left;
+}
