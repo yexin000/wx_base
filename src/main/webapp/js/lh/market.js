@@ -112,49 +112,31 @@ function loadData()
                 {
                     var str = '';
                     $.each(dataList,function(i,obj){
-                        /**
-                         *
-                        var coverimg = '';
-                        var coverimgWidth = '';
-                        var coverimgHeight = '';
-                        if(obj.resList && obj.resList.length > 0) {
-                            coverimg = obj.resList[0].path;
-                            coverimgWidth = obj.resList[0].width;
-                            coverimgHeight = obj.resList[0].height;
+                        var coverImage = '/weixin/foreground/images/no-image.jpg';
+                        if(obj.resList != null && obj.resList.length > 0) {
+                            coverImage = hostPath + obj.resList[0].path;
                         }
-                        str+='<tr onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')">';
-                        str+='  <td class="pro-item-M">' ;
-                        str+='  <div class="itemDiv">' ;
 
-                        var loadClass = '';
-                        if(parseInt(coverimgHeight) > parseInt( coverimgWidth)){
-                            loadClass = 'height';
-                        }else{
-                            loadClass = 'width';
+                        var price = obj.curPrice;
+                        if(price <= 0) {
+                            price = obj.startPrice;
                         }
-                        str+='      <img src="' + hostPath + coverimg +  '"   class="'+loadClass+'">'  ;
-                        str+='  </div>' ;
-                        str+='  </td>';
-                        str+='  <td class="pro-item-H">';
-                        str+='      <h2>'+obj.name+'</h2>';
-                        str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
-                        str+='      <p><span>商品价格: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
-                        str+='      <p><span>商品库存: </span><span style="overflow:hidden;  "> '+obj.stock +'<span></p>';
-                        str+='  </td>';
-                        str+='</tr>';
-                         * @type {string}
-                         */
 
-                        str+='    <a href="javascript:toAuctionItemDetail('+obj.id+','+obj.attribute+');" style="position: initial;background-color:#fff;border-radius:2px;float: left;padding: 6px 4px 4px 6px;width: 46%;box-sizing: border-box;margin-left: 0.07rem;margin-top: 0.1rem;">';
-                        str+='    <div style="height: 160px;width: 99%;">';
-                        str+='    <div style="background: url('+hostPath + obj.resList[0].path+')no-repeat;width: 100%;height: 90%;">';
-                        str+='    </div>';
-                        str+='    </div>';
-                        str+='    <p  style="float: left;font-size: 12px;">名称:'+obj.name+'</p>';
-                        str+='    <p  style="float: left;font-size: 12px;">作者:'+obj.uploader+'</p> ';
-                        str+='    <p  style="float: left;font-size: 12px;">作者:'+obj.uploader+'</p> </br>';
-                        str+='  </div>';
-                        str+=' </a>';
+                        var endTime = obj.endTime;
+                        if(obj.attribute != '0') {
+                          endTime = '';
+                        }
+                        str += '<a href="javascript:toAuctionItemDetail('+obj.id+','+obj.attribute+');" class="weui-grid" style="position: initial;padding: 10px 0px;">'
+                            +       '<div class="mystore-auctionitem-div">'
+                            +           '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
+                            +               '<img src="' + coverImage + '" alt="">'
+                            +           '</div>'
+                            +           '<p class="weui-grid__label auctionitem-auctionitem-label">名称:' + obj.name + '</p>'
+                            +           '<p class="weui-grid__label auctionitem-auctionitem-label">作者:' + obj.uploader + '</p>'
+                            +           '<p class="weui-grid__label auctionitem-auctionitem-label">价格:' + price + '</p>'
+                            +           '<p class="weui-grid__label auctionitem-auctionitem-label">结束时间:' + endTime + '</p>'
+                            +       '</div>'
+                            +   '</a>';
 
                     });
                 }
