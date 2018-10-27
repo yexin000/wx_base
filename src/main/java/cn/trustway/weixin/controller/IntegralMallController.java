@@ -38,6 +38,8 @@ public class IntegralMallController extends BaseController {
     UserAddrService<UserAddr> userAddrService;
     @Autowired
     private WeixinUserService<WeixinUser> weixinUserService;
+    @Autowired(required = false)
+    private ExchangeRecodeService<ExchangeRecode> exchangeRecodeService;
     /**
      * 首页
      *
@@ -210,7 +212,13 @@ public class IntegralMallController extends BaseController {
         }
 
         // 生成兑换记录
-
+        ExchangeRecode erBean = new ExchangeRecode();
+        erBean.setIcId(id);
+        erBean.setWxid(wxid);
+        erBean.setCreatetime(new Date());
+        erBean.setStatus(0);
+        erBean.setNum(1);
+        exchangeRecodeService.add(erBean);
 
         // 扣除积分
         user.setIntegral(myIntegeral-bean.getConsumeintegral()+"");

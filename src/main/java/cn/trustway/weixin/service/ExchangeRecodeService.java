@@ -1,5 +1,6 @@
 package cn.trustway.weixin.service;
 
+import cn.trustway.weixin.dao.ExchangeRecodeDao;
 import cn.trustway.weixin.dao.IntegralMallDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,10 @@ import org.springframework.stereotype.Service;
 @Service("exchangeRecodeService")
 public class ExchangeRecodeService<T> extends BaseService<T> {
     @Autowired
-    private IntegralMallDao<T> dao;
+    private ExchangeRecodeDao<T> dao;
 
     @Override
-    public IntegralMallDao<T> getDao() {
+    public ExchangeRecodeDao<T> getDao() {
         return dao;
     }
 
