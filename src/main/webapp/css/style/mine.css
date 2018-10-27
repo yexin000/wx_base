@@ -214,3 +214,12 @@ height: 0.15rem;background-color: #C53434;color: #fff;margin-left: 0.1rem;text-a
     margin-right: 4px;
     background: url(../../images/lh/icon-identify.png) no-repeat center;
 }
+
+.knowledge-icon-article {
+    display: inline-block;
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+    background: url(../../images/lh/icon-article.png) no-repeat center;
+}

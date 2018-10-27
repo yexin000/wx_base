@@ -76,7 +76,7 @@ function toAuctionItemV5()
  */
 function toPlatformNotes()
 {
-    window.location.href = '../../html/lh/platformNotes.html';
+    window.location.href = '../../html/lh/platformKnowledge.html';
 }
 
 /**

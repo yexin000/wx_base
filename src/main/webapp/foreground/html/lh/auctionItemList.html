@@ -149,9 +149,9 @@
             if(dataList.length> 0) {
               for(var i = 0; i < dataList.length; i ++) {
                 var str = "";
-                var coverImage = 'foreground/images/no-image.jpg';
+                var coverImage = '/weixin/foreground/images/no-image.jpg';
                 if(dataList[i].resList != null && dataList[i].resList.length > 0) {
-                  coverImage = dataList[i].resList[0].path;
+                  coverImage = hostPath + dataList[i].resList[0].path;
                 }
 
                 var price = dataList[i].curPrice;
@@ -161,7 +161,7 @@
                 str += '<a href="javascript:toAuctionItemDetail(\''+dataList[i].id+'\',\'' + dataList[i].attribute + '\');" class="weui-grid" style="position: initial;padding: 10px 0px;">'
                       +   '<div class="mystore-auctionitem-div">'
                       +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
-                      +       '<img src="' + hostPath + coverImage + '" alt="">'
+                      +       '<img src="' + coverImage + '" alt="">'
                       +     '</div>'
                       +     '<p class="weui-grid__label auctionitem-auctionitem-label">名称:' + dataList[i].name + '</p>'
                       +     '<p class="weui-grid__label auctionitem-auctionitem-label">作者:' + dataList[i].uploader + '</p>'
