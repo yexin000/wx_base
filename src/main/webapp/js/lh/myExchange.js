@@ -9,7 +9,7 @@ function loadMyExchange(){
     $("#loadMore").hide();
     var AuctionItemModel = {};
     AuctionItemModel.uploadWxid = localStorage.getItem("openId");
-    var url= '/weixin/auctionItem/ajaxMyJoinDataList.do';
+    var url= '/weixin/exchangeRecode/ajaxMyJoinDataList.do';
     $.ajax({
         url: url,
         type: 'post',
