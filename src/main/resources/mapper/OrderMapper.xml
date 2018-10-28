@@ -146,6 +146,7 @@
                 and t.status = #{status}
             </if>
         </trim>
+        order by t.createtime desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
             ${pager.orderCondition}
         </if>

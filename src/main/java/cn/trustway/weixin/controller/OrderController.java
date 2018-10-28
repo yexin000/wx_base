@@ -221,6 +221,7 @@ public class OrderController extends BaseController {
         order.setId(orderModel.getId());
         order.setWlgs(orderModel.getWlgs());
         order.setYdbh(orderModel.getYdbh());
+        order.setStatus("4");
         order.setCreateTime(new Date());
         orderService.updateBySelective(order);
 

@@ -7,7 +7,7 @@
 #tradingCenter-tit li{width: 50%;text-align: center;float: left;}
 #tradingCenter-tit li.cur{color: #fc4747;border-bottom: 2px solid #fc4747}
 
-.order-item{margin-top: 0.1rem;background: #fff;width: 100%;height: auto;overflow: hidden;}
+.order-item{background: #fff;width: 100%;height: auto;overflow: hidden;}
 .order-bill{margin-top: 0.05rem;background: #fff;width: 100%;height: auto;overflow: hidden;}
 .order-bill>ul>li{width: 96%;height: .18rem;margin: 0 auto;font-size: .12rem;line-height: .18rem}
 .order-bill>ul>li>span{ float: right;}
@@ -35,7 +35,7 @@
 .panicBuying>footer>p>span.panicBuying:after{position: absolute;width: .6rem;height: .1rem;background: red;display: block;content: " ";bottom: .05rem;left: 0;border-radius: .05rem;}
 .panicBuying>footer>p>span.panicBuying:before{position: absolute;width: 1rem;height: .1rem;background: #ccc;display: block;content: " ";bottom: .05rem;left: 0;border-radius: .05rem;}
 /*确认订单页面也是*/
-.order-address{margin-top: 0.54rem;background: #fff ; padding:0.1rem 10% 0.1rem 0.1rem;}
+.order-address{margin-top: 0.44rem;background: #fff ; padding:0.1rem 10% 0.1rem 0.1rem;}
 .order-address > h2{padding:0 0.1rem;font-size: 0.15rem;color: #333;margin: 0.1rem 0}
 .order-address > h2 span{color: #666;font-size: 0.12rem}
 .order-address > p{padding:0 0.1rem;line-height: 0.2rem;color: #888;font-size: 0.12rem;margin-bottom: 0.1rem}

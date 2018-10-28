@@ -133,15 +133,25 @@ function loadOrderDetail(id){
                 $("#payBtn").text("已支付");
                 $("#payBtn").css("background", "#d5d5d6");
                 $("#payBtn").unbind();
-                //录入物流信息
+
+
                 $("#luruBtn").show();
                 $("#goLogisticsBtn").show();
                 statuName = '订单已支付';
             }else if(order.status == '4'){
-                $("#payBtn").text("已支付");
+
                 $("#payBtn").css("background", "#d5d5d6");
-                $("#payBtn").unbind()
+                $("#payBtn").unbind();
                 statuName = '订单已发货';
+                if(order.wxid == localStorage.getItem("openId")){
+                    //订单是我创建的
+                    $("#payBtn").text("确认订单");
+                    $("#payBtn").css("background", "#ff7d13");
+                    $("#payBtn").bind("click",function(){
+                        //进入确认订单逻辑
+                        alert(0)
+                    });
+                }
             }else{
                 $("#payBtn").text("已删除");
                 $("#payBtn").css("background", "#d5d5d6");
