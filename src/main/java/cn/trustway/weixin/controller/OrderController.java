@@ -50,6 +50,9 @@ public class OrderController extends BaseController {
     @Autowired
     OrderLogService<OrderLog> orderLogService;
 
+    @Autowired
+    private WeixinUserService<WeixinUser> weixinUserService;
+
     /**
      * 首页
      *
@@ -222,7 +225,6 @@ public class OrderController extends BaseController {
         order.setWlgs(orderModel.getWlgs());
         order.setYdbh(orderModel.getYdbh());
         order.setStatus("4");
-        order.setCreateTime(new Date());
         orderService.updateBySelective(order);
 
         // 写入订单日志
@@ -236,6 +238,80 @@ public class OrderController extends BaseController {
         orderLogService.add(orderLog);
 
         context.put(SUCCESS, true);
+        context.put("data", order);
+        HtmlUtil.writerJson(response, context);
+    }
+
+
+    /**
+     * 确认订单
+     *
+     * @param
+     * @param
+     * @return
+     * search  order/rechargeOrder
+     * @throws Exception
+     */
+    @RequestMapping("/confirmationOfOrder")
+    public void confirmationOfOrder (@RequestBody OrderModel orderModel,  HttpServletResponse response) throws Exception{
+        Order newOrder = orderService.queryById(orderModel.getId());
+        Map<String, Object> context = getRootMap();
+        Order order = new Order();
+        if(!"5".equals(newOrder.getStatus())){
+            order.setId(orderModel.getId());
+            order.setStatus("5");
+
+
+            //交易完成，修改用户积分
+            WeixinUser wu = weixinUserService.queryWeixinUser(orderModel.getWxid());
+            String myIntegralStr = wu.getIntegral();
+            String myCountIntegralStr = wu.getIntegral();
+            int myIntegral = 0;
+            int myCountIntegral = 0;
+            if(StringUtils.isNotEmpty(myIntegralStr)){
+                myIntegral = Integer.parseInt(myIntegralStr);
+            }
+            if(StringUtils.isNotEmpty(myIntegralStr)){
+                myCountIntegral = Integer.parseInt(myCountIntegralStr);
+            }
+            int orderIntegral =   newOrder.getOrderMoney().intValue();
+            myIntegral = myIntegral + orderIntegral;
+            myCountIntegral = myCountIntegral + orderIntegral;
+            wu.setIntegral(myIntegral+"");
+            wu.setCountIntegral(myCountIntegral+"");
+
+            //交易完成，当积分达到一定限度，升级vip等级
+            if(  myCountIntegral > 1 && myCountIntegral <5000){
+                //1级
+                wu.setVipGrade("1");
+            }else if(myCountIntegral >= 5000 && myCountIntegral <20000){
+                //2
+                wu.setVipGrade("2");
+            }else if(myCountIntegral >= 20000 && myCountIntegral <50000){
+                //3
+                wu.setVipGrade("3");
+            }else if(myCountIntegral >= 50000 && myCountIntegral <100000){
+                //4
+                wu.setVipGrade("4");
+            }else if(myCountIntegral >= 100000){
+                //5
+                wu.setVipGrade("5");
+            }
+            orderService.updateBySelective(order);
+            weixinUserService.updateBySelective(wu);
+
+
+            // 写入订单日志
+            OrderLog orderLog = new OrderLog();
+            BeanUtils.copyProperties(newOrder, orderLog);
+            orderLog.setOrderId(newOrder.getId());
+            orderLog.setCreateTime(newOrder.getCreateTime());
+            orderLogService.add(orderLog);
+            context.put(SUCCESS, true);
+        }else{
+            context.put(SUCCESS, false);
+        }
+
         context.put("data", order);
         HtmlUtil.writerJson(response, context);
     }

@@ -71,6 +71,7 @@
 					<value>/order/ajaxGetLogistics.do</value>
 					<value>/order/rechargeOrder.do</value>
 					<value>/order/updateOrderLogistics.do</value>
+                    <value>/order/confirmationOfOrder.do</value>
 					<value>/favorite/ajaxDataList.do</value>
 					<value>/favorite/ajaxAddFavorite.do</value>
 					<value>/favorite/ajaxDelFavorite.do</value>

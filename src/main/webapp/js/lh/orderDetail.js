@@ -133,13 +133,10 @@ function loadOrderDetail(id){
                 $("#payBtn").text("已支付");
                 $("#payBtn").css("background", "#d5d5d6");
                 $("#payBtn").unbind();
-
-
                 $("#luruBtn").show();
                 $("#goLogisticsBtn").show();
                 statuName = '订单已支付';
             }else if(order.status == '4'){
-
                 $("#payBtn").css("background", "#d5d5d6");
                 $("#payBtn").unbind();
                 statuName = '订单已发货';
@@ -149,7 +146,7 @@ function loadOrderDetail(id){
                     $("#payBtn").css("background", "#ff7d13");
                     $("#payBtn").bind("click",function(){
                         //进入确认订单逻辑
-                        alert(0)
+                        confirmationOfOrder(order.id);
                     });
                 }
             }else{
@@ -161,8 +158,38 @@ function loadOrderDetail(id){
             $("#orderStatus").html(statuName);
         }
     })
-
 }
+
+
+function confirmationOfOrder (id){
+    var params = {};
+    params.wxid = localStorage.getItem("openId");
+    params.id = id;
+    var url = "/weixin/order/confirmationOfOrder.do";
+    // 发起统一下单请求
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: JSON.stringify(params) ,
+        contentType: "application/json;charset=utf-8",
+        dataType: 'JSON',
+        cache: false,
+        success: function (result) {
+            if(result.code == "0") {
+                showToast("交易完成", function () {
+                    history.back(-1);
+                });
+                return;
+            } else {
+                showToast("交易失败", function () {
+                    history.back(-1);
+                });
+                return;
+            }
+        }
+    });
+}
+
 
 //新增地址
 function addAddress(){

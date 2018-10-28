@@ -1,4 +1,5 @@
 $(function(){
+    //判断用户等级TODO
     loadAcutionItemV5Banner();
     loadAcutionItemV5();
 })

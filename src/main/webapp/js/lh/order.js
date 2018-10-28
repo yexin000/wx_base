@@ -49,6 +49,8 @@ function loadOrder(){
                         statuName = '订单已支付';
                     }else if(obj.status == '4'){
                         statuName = '订单已发货';
+                    }else if(obj.status == '5'){
+                        statuName = '订单已完成';
                     }else{
                         statuName = '订单已删除';
                     }

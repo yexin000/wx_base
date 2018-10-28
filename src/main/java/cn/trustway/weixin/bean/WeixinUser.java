@@ -60,6 +60,11 @@ public class WeixinUser extends BaseBean {
 	private String integral;
 
 	/**
+	 * 总积分
+	 */
+	private String countIntegral;
+
+	/**
 	 * vip等级
 	 */
 	private String vipGrade;
@@ -180,5 +185,13 @@ public class WeixinUser extends BaseBean {
 
 	public void setFollowNum(Integer followNum) {
 		this.followNum = followNum;
+	}
+
+	public String getCountIntegral() {
+		return countIntegral;
+	}
+
+	public void setCountIntegral(String countIntegral) {
+		this.countIntegral = countIntegral;
 	}
 }

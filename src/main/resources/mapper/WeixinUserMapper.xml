@@ -17,12 +17,13 @@
 		<result column="businessaddress" property="businessAddress"/>
 		<result column="wxaccount" property="wxAccount"/>
 		<result column="integral" property="integral"/>
+		<result column="countintegral" property="countIntegral"/>
 		<result column="vipGrade" property="vipGrade"/>
 	</resultMap>
 
 	<!-- sys_user table all fields -->
 	<sql id="WeixinUser_Base_Column_List">
-		id,wxid,phonenum,balance,moneyextracting,extractedmoney,nickname,avatarUrl,bussinessname,businessaddress,wxaccount,integral,vipGrade
+		id,wxid,phonenum,balance,moneyextracting,extractedmoney,nickname,avatarUrl,bussinessname,businessaddress,wxaccount,integral,countIntegral,vipGrade
 	</sql>
 
 
@@ -99,6 +100,9 @@
 			</if>
 			<if test="integral != null  and integral != '' ">
 				integral=#{integral},
+			</if>
+			<if test="countIntegral != null  and countIntegral != '' ">
+				countIntegral=#{countIntegral},
 			</if>
 		</trim>
 		where wxid=#{wxid}
