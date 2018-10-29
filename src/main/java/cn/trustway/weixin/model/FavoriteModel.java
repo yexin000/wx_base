@@ -15,7 +15,7 @@ public class FavoriteModel extends BaseModel {
      */
     private String wxid;
     /**
-     * 收藏类型:1-拍卖品,2-商品
+     * 收藏类型:1-竞拍品,2-商品
      */
     private String favType;
     /**

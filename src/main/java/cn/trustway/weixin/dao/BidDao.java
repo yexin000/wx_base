@@ -17,7 +17,7 @@ public interface BidDao<T> extends BaseDao<T> {
     void updateBidOutByAuctionItemId(Integer auctionItemId);
 
     /**
-     * 根据拍卖品id查询最高出价记录(领先记录)
+     * 根据竞拍品id查询最高出价记录(领先记录)
      * @param auctionItemId
      * @return
      */

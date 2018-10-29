@@ -12,7 +12,7 @@ public class OrderModel extends BaseModel {
      */
     private Integer id;
     /**
-     * 订单类型:1-拍卖,2-买卖
+     * 订单类型:1-竞拍,2-买卖
      */
     private String orderType;
     /**

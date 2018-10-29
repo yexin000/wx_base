@@ -25,11 +25,11 @@ public class AuctionItemModel extends BaseModel {
      */
     private String description;
     /**
-     *开始拍卖时间
+     *开始竞拍时间
      */
     private Date startTime;
     /**
-     *结束拍卖时间
+     *结束竞拍时间
      */
     private Date endTime;
     /**
@@ -37,7 +37,7 @@ public class AuctionItemModel extends BaseModel {
      */
     private Double startPrice;
     /**
-     *当前拍卖价格
+     *当前竞拍价格
      */
     private Double curPrice = 0.0d;
     /**
@@ -69,15 +69,15 @@ public class AuctionItemModel extends BaseModel {
      */
     private String isShow;
     /**
-     *拍卖状态：0-未开始拍卖，1-正在拍卖，2-拍卖成功，3-流拍
+     *竞拍状态：0-未开始竞拍，1-正在竞拍，2-竞拍成功，3-流拍
      */
     private String auctionStatus;
     /**
-     *拍卖会id
+     *竞拍会id
      */
     private Integer auctionId;
     /**
-     *拍卖会名称
+     *竞拍会名称
      */
     private String auctionName;
 
@@ -107,7 +107,7 @@ public class AuctionItemModel extends BaseModel {
     private String uploadWxid;
 
     /**
-     * 商品性质:0-拍卖品,1-商品
+     * 商品性质:0-竞拍品,1-商品
      */
     private String attribute;
 

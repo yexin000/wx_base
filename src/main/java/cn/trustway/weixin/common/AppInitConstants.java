@@ -103,13 +103,13 @@ public class AppInitConstants {
 		public static final String HTTP_ITEM_UPLOAD_ERROR = "10009";
 		// 余额支付失败
 		public static final String HTTP_PAY_FAIL = "10010";
-		// 购买失败，错误的拍卖会
+		// 购买失败，错误的竞拍会
 		public static final String HTTP_PURCHASE_FAIL = "10011";
-		// 购买失败，未开始的拍卖会
+		// 购买失败，未开始的竞拍会
 		public static final String HTTP_PURCHASE_NOSTART_FAIL = "10012";
-		// 购买失败，结束的拍卖会
+		// 购买失败，结束的竞拍会
 		public static final String HTTP_PURCHASE_TIMEOUT_FAIL = "10013";
-		// 购买失败，结束的拍卖会
+		// 购买失败，结束的竞拍会
 		public static final String HTTP_PURCHASE_OUTOFSTOCK_FAIL = "10014";
 		// 购买失败，没有收货地址
 		public static final String HTTP_PURCHASE_NOTADDRESS_FAIL = "10015";
@@ -117,7 +117,7 @@ public class AppInitConstants {
 		public static final String HTTP_BUSINESS_JOIN_ERROR = "10016";
 		// 未找到商家加入信息
 		public static final String HTTP_NO_BUSINESS_JOIN_ERROR = "10017";
-		// 未找到商家拍卖会
+		// 未找到商家竞拍会
 		public static final String HTTP_NO_BUSINESS_AUCTIONS_ERROR = "10018";
 	}
 

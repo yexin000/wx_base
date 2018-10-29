@@ -5,7 +5,7 @@ import cn.trustway.weixin.bean.ItemRes;
 import java.util.Map;
 
 /**
- * 拍卖会/拍品-资源关联dao
+ * 竞拍会/拍品-资源关联dao
  * @author yexin
  *
  * @param <T>

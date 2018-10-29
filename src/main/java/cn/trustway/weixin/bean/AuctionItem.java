@@ -26,11 +26,11 @@ public class AuctionItem extends BaseBean {
      */
     private String description;
     /**
-     *开始拍卖时间
+     *开始竞拍时间
      */
     private Date startTime;
     /**
-     *结束拍卖时间
+     *结束竞拍时间
      */
     private Date endTime;
     /**
@@ -38,7 +38,7 @@ public class AuctionItem extends BaseBean {
      */
     private Double startPrice;
     /**
-     *当前拍卖价格
+     *当前竞拍价格
      */
     private Double curPrice = 0.0d;
     /**
@@ -70,15 +70,15 @@ public class AuctionItem extends BaseBean {
      */
     private String isShow;
     /**
-     *拍卖状态：0-未开始拍卖，1-正在拍卖，2-拍卖成功，3-流拍
+     *竞拍状态：0-未开始竞拍，1-正在竞拍，2-竞拍成功，3-流拍
      */
     private String auctionStatus;
     /**
-     *拍卖会id
+     *竞拍会id
      */
     private Integer auctionId;
     /**
-     *拍卖会名称
+     *竞拍会名称
      */
     private String auctionName;
 
@@ -138,7 +138,7 @@ public class AuctionItem extends BaseBean {
     private String degree;
 
     /**
-     * 商品性质:0-拍卖品,1-商品
+     * 商品性质:0-竞拍品,1-商品
      */
     private String attribute;
 
@@ -147,17 +147,17 @@ public class AuctionItem extends BaseBean {
     private String uploader;
 
     /**
-     * 拍卖会logo(第一张图片)
+     * 竞拍会logo(第一张图片)
      */
     private String logoPath;
 
     /**
-     * 拍卖会logo(第一张宽)
+     * 竞拍会logo(第一张宽)
      */
     private Integer width;
 
     /**
-     * 拍卖会logo(第一张高)
+     * 竞拍会logo(第一张高)
      */
     private Integer height;
 
