@@ -105,13 +105,16 @@ public class MessageController extends BaseController {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
         }
+        context.put("data", bean);
+
+
         //当前主消息下面子消息
-        MessageModel selectModel = new MessageModel();
-        selectModel.setParentId(bean.getId());
-        List<Message> messageList = messageService.queryByList(selectModel);
+        Map<String, Object> maps = new HashMap<>();
+        maps.put("parentId",id);
+        List<Message> messageList = messageService.queryParentByList(maps);
         context.put("messageList",messageList);
         context.put(SUCCESS, true);
-        context.put("data", bean);
+
         HtmlUtil.writerJson(response, context);
     }
 
@@ -147,4 +150,5 @@ public class MessageController extends BaseController {
         messageService.delete(id);
         sendSuccessMessage(response, "删除成功");
     }
+
 }
