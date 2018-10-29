@@ -38,6 +38,12 @@
             <if test="followType != null and followType != ''">
                 and t.followtype = #{followType}
             </if>
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
+            <if test="followId != null and followId != ''">
+                and t.followid = #{followId}
+            </if>
         </trim>
     </select>
 
@@ -50,6 +56,12 @@
         <trim suffixOverrides=",">
             <if test="followType != null and followType != ''">
                 and t.followtype = #{followType}
+            </if>
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
+            <if test="followId != null and followId != ''">
+                and t.followid = #{followId}
             </if>
         </trim>
         order by t.createtime desc

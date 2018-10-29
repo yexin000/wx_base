@@ -74,6 +74,10 @@ public class WeixinUser extends BaseBean {
 	 */
 	private Integer followNum;
 
+	/**
+	 * 关注数
+	 */
+	private Integer myFollowNum;
 
 	public Integer getId() {
 		return id;
@@ -193,5 +197,13 @@ public class WeixinUser extends BaseBean {
 
 	public void setCountIntegral(String countIntegral) {
 		this.countIntegral = countIntegral;
+	}
+
+	public Integer getMyFollowNum() {
+		return myFollowNum;
+	}
+
+	public void setMyFollowNum(Integer myFollowNum) {
+		this.myFollowNum = myFollowNum;
 	}
 }

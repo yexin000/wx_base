@@ -1,9 +1,11 @@
 package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.*;
+import cn.trustway.weixin.model.FollowModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.pojo.WxSession;
 import cn.trustway.weixin.redis.RedisUtil;
+import cn.trustway.weixin.service.FollowService;
 import cn.trustway.weixin.service.MiddleManService;
 import cn.trustway.weixin.service.WeixinUserService;
 import cn.trustway.weixin.service.WxAuthService;
@@ -45,6 +47,9 @@ public class WxAuthController extends BaseController {
 
     @Autowired
     private WeixinUserService<WeixinUser> weixinUserService;
+
+    @Autowired
+    private FollowService<Follow> followService;
 
     /**
      * 小程序授权登陆后解析用户数据，将用户数据写入数据库，并返回首页地址
@@ -165,6 +170,19 @@ public class WxAuthController extends BaseController {
             sendFailureMessage(response, "没有找到对应的记录!");
             return;
         }
+
+        FollowModel myFollowModel = new FollowModel();
+        myFollowModel.setWxid(wxid);
+        myFollowModel.setFollowType(1);
+        int myFollowNum = followService.queryByCount(myFollowModel);
+        bean.setMyFollowNum(myFollowNum);
+
+        FollowModel followModel = new FollowModel();
+        followModel.setFollowId(bean.getId());
+        followModel.setFollowType(1);
+        int followNum = followService.queryByCount(followModel);
+        bean.setFollowNum(followNum);
+
         context.put(SUCCESS, true);
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);
