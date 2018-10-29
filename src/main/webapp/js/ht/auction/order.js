@@ -18,7 +18,7 @@ WeiXin.order = function(){
                     {field:'orderType',title:'订单类型',width:80,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){
-                                return "拍卖";
+                                return "竞拍";
                             } else if(value == 2){
                                 return "买卖";
                             }

@@ -87,7 +87,7 @@ public class BidController extends BaseController {
             return;
         }
         bean.setAuctionItemName(auctionItem.getAuctionName());
-        //判断当前是否在拍卖时间中
+        //判断当前是否在竞拍时间中
         Date now = new Date();
         if(now.compareTo(auctionItem.getStartTime()) < 0 || now.compareTo(auctionItem.getEndTime()) > 0) {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_TIME_ERROR, "出价失败，不在有效时间范围");

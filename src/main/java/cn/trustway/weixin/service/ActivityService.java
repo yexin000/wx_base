@@ -33,7 +33,7 @@ public class ActivityService<T> extends BaseService<T> {
     }
 
     /**
-     * 设置结束时间超出当前时间的正在拍卖的拍卖会为已结束
+     * 设置结束时间超出当前时间的正在竞拍的竞拍会为已结束
      * @return
      */
     public void updateAuctionEnd() {

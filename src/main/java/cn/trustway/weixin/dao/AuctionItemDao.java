@@ -11,19 +11,19 @@ import java.util.Map;
  */
 public interface AuctionItemDao<T> extends BaseDao<T> {
     /**
-     * 设置开始时间超出当前时间的未开始拍卖的拍卖会为已开始
+     * 设置开始时间超出当前时间的未开始竞拍的竞拍会为已开始
      * @return
      */
     void updateAuctionItemStart();
 
     /**
-     * 查询结束时间超出当前时间的正在拍卖的拍卖品
+     * 查询结束时间超出当前时间的正在竞拍的竞拍品
      * @return
      */
     List<T> queryInAuctionByList();
 
     /**
-     * 查询我参与的拍卖品
+     * 查询我参与的竞拍品
      * @return
      */
     List<T> queryMyJoinByList(Map<String, Object> params);
@@ -31,7 +31,7 @@ public interface AuctionItemDao<T> extends BaseDao<T> {
     void updateByItemStatus(Map<String, Object> params);
 
     /**
-     * 查询用户下的拍卖品
+     * 查询用户下的竞拍品
      * @return
      */
     List<T> queryByWxid(Map<String, Object> params);

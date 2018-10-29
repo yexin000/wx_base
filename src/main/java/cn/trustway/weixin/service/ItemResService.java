@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 拍卖会/拍品-资源关联服务类
+ * 竞拍会/拍品-资源关联服务类
  *
  * @author yexin
  */

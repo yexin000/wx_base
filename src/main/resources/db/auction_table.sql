@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      ORACLE Version 11g                           */
-/* 内容:      拍卖功能表创建                      */
+/* 内容:      竞拍功能表创建                      */
 /* Created on:     2018/4/23 21:05:32                           */
 /*==============================================================*/
 
@@ -67,7 +67,7 @@ comment on column "t_con_item_res".PATH is
 '资源路径';
 
 comment on column "t_con_item_res".CONTYPE is
-'关联类型：1-拍卖会表(t_e_auction)，2-拍品表(t_e_auction_item)';
+'关联类型：1-竞拍会表(t_e_auction)，2-拍品表(t_e_auction_item)';
 
 comment on column "t_con_item_res"."INDEX" is
 '序号，用于排序';
@@ -94,13 +94,13 @@ create table "t_e_auction"
 );
 
 comment on table "t_e_auction" is
-'拍卖会表';
+'竞拍会表';
 
 comment on column "t_e_auction".ID is
 '主键-ID';
 
 comment on column "t_e_auction".NAME is
-'拍卖会名称';
+'竞拍会名称';
 
 comment on column "t_e_auction".STARTTIME is
 '开始时间';
@@ -133,7 +133,7 @@ comment on column "t_e_auction".VIEWNUM is
 '浏览数目';
 
 comment on column "t_e_auction".TYPE is
-'拍卖会类型：';
+'竞拍会类型：';
 
 /*==============================================================*/
 /* Table: "t_e_auction_item"                                    */
@@ -161,7 +161,7 @@ create table "t_e_auction_item"
 );
 
 comment on table "t_e_auction_item" is
-'拍卖品表';
+'竞拍品表';
 
 comment on column "t_e_auction_item".NAME is
 '拍品名称';
@@ -173,16 +173,16 @@ comment on column "t_e_auction_item".DESCRIPTION is
 '介绍描述';
 
 comment on column "t_e_auction_item".STARTTIME is
-'开始拍卖时间';
+'开始竞拍时间';
 
 comment on column "t_e_auction_item".ENDTIME is
-'结束拍卖时间';
+'结束竞拍时间';
 
 comment on column "t_e_auction_item".STARTPRICE is
 '起拍价格';
 
 comment on column "t_e_auction_item".CURPRICE is
-'当前拍卖价格';
+'当前竞拍价格';
 
 comment on column "t_e_auction_item".FINALPRICE is
 '成交价格';
@@ -206,10 +206,10 @@ comment on column "t_e_auction_item".ISSHOW is
 '是否在首页显示：0-否，1-是';
 
 comment on column "t_e_auction_item".AUCTIONSTATUS is
-'拍卖状态：0-未开始拍卖，1-正在拍卖，2-拍卖成功，3-流拍';
+'竞拍状态：0-未开始竞拍，1-正在竞拍，2-竞拍成功，3-流拍';
 
 comment on column "t_e_auction_item".AUCTIONID is
-'拍卖会ID';
+'竞拍会ID';
 
 /*==============================================================*/
 /* Table: "t_e_bid"                                             */
@@ -260,7 +260,7 @@ create table "t_e_business"
 );
 
 comment on table "t_e_business" is
-'拍卖商家表';
+'竞拍商家表';
 
 comment on column "t_e_business".ID is
 'ID-主键';

@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 拍卖会定时任务
+ * 竞拍会定时任务
  * @author yexin
  *
  */
@@ -38,34 +38,34 @@ public class AuctionTask {
     OrderLogService<OrderLog> orderLogService;
 
     /**
-     * 拍卖会状态监控定时任务
+     * 竞拍会状态监控定时任务
      * @throws Exception
      */
     @Scheduled(cron = "0/30 * * * * ? ")
     @Transactional
     public void auctionStatusTask() throws Exception {
-        // 设置开始时间超出当前时间的正常的拍卖会为已开始
+        // 设置开始时间超出当前时间的正常的竞拍会为已开始
         auctionService.updateAuctionStart();
 
-        // 设置结束时间超出当前时间的正在拍卖的拍卖会为已结束
+        // 设置结束时间超出当前时间的正在竞拍的竞拍会为已结束
         auctionService.updateAuctionEnd();
     }
 
     /**
-     * 拍卖品状态监控定时任务
+     * 竞拍品状态监控定时任务
      * @throws Exception
      */
     @Scheduled(cron = "0/30 * * * * ? ")
     @Transactional
     public void auctionItemStatusTask() throws Exception {
-        // 设置开始时间超出当前时间的正常的拍卖品为正在拍卖
+        // 设置开始时间超出当前时间的正常的竞拍品为正在竞拍
         auctionItemService.updateAuctionItemStart();
 
-        // 查询结束时间超出当前时间的正在拍卖的拍卖品
+        // 查询结束时间超出当前时间的正在竞拍的竞拍品
         List<AuctionItem> auctionItemList = auctionItemService.queryInAuctionByList();
-        // 根据拍卖品的竞拍情况设置对应状态
+        // 根据竞拍品的竞拍情况设置对应状态
         for(AuctionItem auctionItem : auctionItemList) {
-            // 查询拍卖品的最高出价
+            // 查询竞拍品的最高出价
             BidBean bidBean = bidService.queryBidByItemId(auctionItem.getId());
             if(null != bidBean) {
                 // 有人出价
@@ -88,7 +88,7 @@ public class AuctionTask {
                 orderLog.setStatus(newOrder.getStatus());
                 orderLogService.add(orderLog);
 
-                // 设置拍卖品为拍卖成功并设置成交价格
+                // 设置竞拍品为竞拍成功并设置成交价格
                 auctionItem.setAuctionStatus("2");
                 auctionItem.setFinalPrice(bidBean.getBidPrice());
                 if(auctionItem.getStock() > 0) {
@@ -97,7 +97,7 @@ public class AuctionTask {
                 auctionItemService.updateBySelective(auctionItem);
             } else {
                 // 无人出价
-                // 设置拍卖品为流拍
+                // 设置竞拍品为流拍
                 auctionItem.setAuctionStatus("3");
                 auctionItemService.updateBySelective(auctionItem);
             }
