@@ -110,6 +110,6 @@
 .ppp span:nth-child(1){width:0.5rem;height: 0.15rem;position:absolute;top:0;left:0;}
 .ppp span:nth-child(2){width:1.5rem;height: 0.3rem;position:absolute;top:0;right:0;overflow:hidden;}
 
-.messageList{display:-moz-inline-box; display:inline-block; word-wrap: break-word;width: 99%;height: 0.2rem;overflow: hidden; text-overflow: ellipsis;  -o-text-overflow: ellipsis;  white-space:nowrap;}
+.messageList{display:-moz-inline-box; display:inline-block; word-wrap: break-word;width: 90%;height: 0.2rem; margin-left:0.1rem; overflow: hidden; text-overflow: ellipsis;  -o-text-overflow: ellipsis;  white-space:nowrap;}
 
 

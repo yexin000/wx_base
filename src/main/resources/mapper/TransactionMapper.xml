@@ -74,8 +74,9 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-            <include refid="Transaction_Base_Column_List" />
+            <include refid="Transaction_Base_Column_List" /> ,tea.finalprice  , tea.name
         from t_con_transaction t
+        left join t_e_auction_item tea on t.auctionitemid = tea.id
         where 1=1
         <trim suffixOverrides=",">
             <if test="auctionitemId != null and auctionitemId != ''">

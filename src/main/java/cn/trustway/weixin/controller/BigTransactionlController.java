@@ -1,9 +1,12 @@
 package cn.trustway.weixin.controller;
 
+import cn.trustway.weixin.bean.ItemRes;
 import cn.trustway.weixin.bean.Transaction;
 import cn.trustway.weixin.model.BigTransactionModel;
 import cn.trustway.weixin.model.IntegralMallModel;
+import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.model.MessageModel;
+import cn.trustway.weixin.service.ItemResService;
 import cn.trustway.weixin.service.TransactionService;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ public class BigTransactionlController extends BaseController {
 
     @Autowired(required = false)
     private TransactionService<Transaction> transactionService;
+
+    @Autowired
+    private ItemResService<ItemRes> itemResService;
 
     /**
      * 首页
@@ -73,7 +79,14 @@ public class BigTransactionlController extends BaseController {
 
     private void queryDataList(BigTransactionModel model, HttpServletResponse response) throws Exception {
         List<Transaction> dataList = transactionService.queryByList(model);
-
+        for(Transaction ic : dataList){
+            //图片数据
+            ItemResModel resModel  = new ItemResModel();
+            resModel.setConid(ic.getAuctionitemid());
+            resModel.setConType("2");
+            List<ItemRes> resDataList = itemResService.queryByList(resModel);
+            ic.setResList(resDataList);
+        }
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
         jsonMap.put("total", transactionService.queryByCount(model));

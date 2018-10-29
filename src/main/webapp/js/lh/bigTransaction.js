@@ -22,23 +22,44 @@ function loadTransaction(){
             {
                 var str = '';
                 $.each(dataList,function(i,obj){
-                    str+='<div style="width: 90%;height:1.5rem;margin-left: 5%;  margin-top: 0.2rem;" onclick="toActivityDetail(\''+ obj.id + '\')">';
-                    str+='   <div style="border-top-left-radius: 3%;border-top-right-radius: 3%;height:1.23rem;  overflow: hidden;background:url('+hostPath + obj.activityBg+') no-repeat">';
-                    str+='      <span style="color: #FFFFFF;float: right">点赞:'+obj.likenum+'</span>';
-                    str+='      <span style="color: #FFFFFF;float: right">分享:'+obj.sharenum+'</span>';
-                    str+='   </div>';
-                    str+='   <div style="text-align: center;background-color: #2D2D2D">';
-                    str+='       <span style="font-size: 0.16rem; margin-top: 0.03rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;color: #C8AE56 ">'+obj.name+'</span>';
-                    str+='   </div>';
-                    str+='</div>';
+                    debugger
+                    var coverimg = '';
+                    var coverimgWidth = '';
+                    var coverimgHeight = '';
+                    if(obj.resList && obj.resList.length > 0) {
+                        coverimg = obj.resList[0].path;
+                        coverimgWidth = obj.resList[0].width;
+                        coverimgHeight = obj.resList[0].height;
+                    }
+                    str+='<tr onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')">';
+                    str+='  <td class="pro-item-M">' ;
+                    str+='  <div class="itemDiv">' ;
+
+                    var loadClass = '';
+                    if(parseInt(coverimgHeight) > parseInt( coverimgWidth)){
+                        loadClass = 'height';
+                    }else{
+                        loadClass = 'width';
+                    }
+                    str+='      <img src="' + hostPath + coverimg +  '"   class="'+loadClass+'">'  ;
+                    str+='  </div>' ;
+                    str+='  </td>';
+
+                    str+='  <td class="pro-item-H">';
+                    str+='      <p ><span>金额:</span>  <span> '+obj.finalprice+' </span></p>';
+                    var banNo = obj.bankNo;
+                    str+='      <p><span>尾号: </span><span style="overflow:hidden;  "> '+banNo.substr(banNo.length-4) +'<span></p>';
+                    str+='      <p><span>明细: </span><span style="overflow:hidden;  "> '+obj.name +'<span></p>';
+                    str+='      <p><span>时间: </span><span style="overflow:hidden;  "> '+obj.createtime +'<span></p>';
+                    str+='  </td>';
+                    str+='</tr>';
                 });
-                //加载上拉加载按钮
-                 $("#loadMore").remove();
-                str +='<a href="javascript:loadActivity();" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading"> 点击加载更多</a>';
             }
-            $("#dataDiv").append(str);
+            $(".pro-item").append(str);
             if(datalength <= (pageId * 10)){
-                $("#loadMore").remove();
+                $("#loadMore").hide();
+            }else{
+                $("#loadMore").show();
             }
             pageId++;
         }

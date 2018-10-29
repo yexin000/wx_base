@@ -39,6 +39,16 @@ public class Transaction extends BaseBean {
      */
     private List<ItemRes> resList;
 
+    /**
+     * 拍品名称
+     */
+    private String name;
+
+    /**
+     * 成交价格
+     */
+    private String finalprice;
+
 
     public Integer getId() {
         return id;
@@ -86,5 +96,21 @@ public class Transaction extends BaseBean {
 
     public void setResList(List<ItemRes> resList) {
         this.resList = resList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFinalprice() {
+        return finalprice;
+    }
+
+    public void setFinalprice(String finalprice) {
+        this.finalprice = finalprice;
     }
 }
