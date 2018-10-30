@@ -23,7 +23,6 @@ function loadMyMessage(id){
             //加载留言消息，处理第一条
 
             var str = '';
-            debugger
             str+='  <div style="width: 99%;">';
             str+='      <p style="text-align: center">';
             str+='          <span style="color: #BBBBBB">'+data1.createtime+'</span>';

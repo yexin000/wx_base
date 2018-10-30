@@ -1,10 +1,12 @@
 package cn.trustway.weixin.service;
 
 import cn.trustway.weixin.dao.OrderDao;
+import cn.trustway.weixin.model.OrderModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 订单服务类
@@ -27,5 +29,9 @@ public class OrderService<T> extends BaseService<T> {
      */
     public List<T> queryInvalidOrderList() {
         return getDao().queryInvalidOrderList();
+    }
+
+    public List<T> queryMyOutOrderByList(OrderModel params) {
+        return getDao().queryMyOutOrderByList(params);
     }
 }

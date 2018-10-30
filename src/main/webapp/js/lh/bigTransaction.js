@@ -22,7 +22,6 @@ function loadTransaction(){
             {
                 var str = '';
                 $.each(dataList,function(i,obj){
-                    debugger
                     var coverimg = '';
                     var coverimgWidth = '';
                     var coverimgHeight = '';
@@ -41,7 +40,7 @@ function loadTransaction(){
                     }else{
                         loadClass = 'width';
                     }
-                    str+='      <img src="' + hostPath + coverimg +  '"   class="'+loadClass+'">'  ;
+                    str+='      <img src="' + hostPath + coverimg +  '"  style="border-radius: 5px;"  class="'+loadClass+'" >'  ;
                     str+='  </div>' ;
                     str+='  </td>';
 

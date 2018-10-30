@@ -1,6 +1,6 @@
 @charset "utf-8";
 #order-tit{height: 0.42rem;line-height: 0.42rem;font-size: 0.12rem;border-bottom: 1px solid #dcdcdc;margin-top: 0.44rem;background: #fff}
-#order-tit li{width: 25%;text-align: center;float: left;}
+#order-tit li{width: 20%;text-align: center;float: left;}
 #order-tit li.cur{color: #fc4747;border-bottom: 2px solid #fc4747}
 
 #tradingCenter-tit{height: 0.42rem;line-height: 0.42rem;font-size: 0.12rem;border-bottom: 1px solid #dcdcdc;margin-top: 0.44rem;background: #fff}

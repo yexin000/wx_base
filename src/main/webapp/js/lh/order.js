@@ -74,7 +74,7 @@ function loadOrder(){
                     str+='  <td class="pro-item-H">';
                     str+='      <h2>'+obj.itemName+'</h2>';
                     str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
-                    str+='      <p><span>订单价格: </span><span style="overflow:hidden;  "> '+obj.orderMoney +'<span> <span  onclick="goDetail(\''+obj.id+'\')" style="float: right;border: 1px solid #808080;padding: 0.03rem;border-radius:6px; ">查看详情</span></p>';
+                    str+='      <p><span>订单价格: </span><span style="overflow:hidden;  "> '+obj.orderMoney +'<span> <span  onclick="goDetail(\''+obj.id+'\' ,'+obj.isMyUpload+')" style="float: right;border: 1px solid #808080;padding: 0.03rem;border-radius:6px; ">查看详情</span></p>';
                     str+='  </td>';
                     str+='</tr>';
                 });
@@ -90,8 +90,8 @@ function loadOrder(){
     })
 }
 
-function goDetail(orderId) {
-    window.location.href  = '../../html/lh/orderDetail.html?id='+orderId;
+function goDetail(orderId,isMyUpload) {
+    window.location.href  = '../../html/lh/orderDetail.html?id='+orderId+'&isMyUpload='+isMyUpload;
 }
 
 function showBusiness(id,itemId){

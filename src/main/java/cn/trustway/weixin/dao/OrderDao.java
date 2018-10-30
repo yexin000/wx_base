@@ -1,6 +1,9 @@
 package cn.trustway.weixin.dao;
 
+import cn.trustway.weixin.model.OrderModel;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * 订单dao
@@ -14,4 +17,10 @@ public interface OrderDao<T> extends BaseDao<T> {
      * @return
      */
     List<T> queryInvalidOrderList();
+
+    /**
+     * 查询我的待处理订单
+     * @return
+     */
+    List<T> queryMyOutOrderByList(OrderModel params);
 }

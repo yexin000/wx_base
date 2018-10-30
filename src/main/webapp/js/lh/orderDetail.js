@@ -1,6 +1,9 @@
+var id = getParam("id");
+var isMyUpload = getParam("isMyUpload");
 $(function(){
 
-    var id = getParam("id");
+
+
     loadOrderDetail(id);
     $("#orderId").val(id);
     $("#payBtn").click(function(){
@@ -120,7 +123,7 @@ function loadOrderDetail(id){
             $("#orderMoney").html(order.orderMoney);
             $("#orderMoneys").html(order.orderMoney);
             $("#businessName").html(order.businessName);
-
+debugger
             var statuName = '';
             if(order.status == '1'){
                 $("#payBtn").text("已失效");
@@ -133,22 +136,41 @@ function loadOrderDetail(id){
                 $("#payBtn").text("已支付");
                 $("#payBtn").css("background", "#d5d5d6");
                 $("#payBtn").unbind();
-                $("#luruBtn").show();
-                $("#goLogisticsBtn").show();
+                if(isMyUpload == 1){
+                    $("#luruBtn").show();
+                    $("#goLogisticsBtn").show();
+                }
                 statuName = '订单已支付';
             }else if(order.status == '4'){
                 $("#payBtn").css("background", "#d5d5d6");
                 $("#payBtn").unbind();
                 statuName = '订单已发货';
-                if(order.wxid == localStorage.getItem("openId")){
-                    //订单是我创建的
-                    $("#payBtn").text("确认订单");
-                    $("#payBtn").css("background", "#ff7d13");
-                    $("#payBtn").bind("click",function(){
-                        //进入确认订单逻辑
-                        confirmationOfOrder(order.id);
-                    });
+
+                if(isMyUpload == 1){
+                    $("#luruBtn").show();
+                    $("#goLogisticsBtn").show();
+                    $("#payBtn").text("等待确认");
+                    $("#payBtn").css("background", "#d5d5d6");
+                    $("#payBtn").unbind();
+                }else{
+                    if(order.wxid == localStorage.getItem("openId")){
+                        //订单是我创建的
+                        $("#payBtn").text("确认订单");
+                        $("#payBtn").css("background", "#ff7d13");
+                        $("#payBtn").bind("click",function(){
+                            //进入确认订单逻辑
+                            confirmationOfOrder(order.id);
+                        });
+                    }else{
+                        $("#luruBtn").show();
+                        $("#goLogisticsBtn").show();
+                        $("#payBtn").text("等待确认");
+                        $("#payBtn").css("background", "#d5d5d6");
+                        $("#payBtn").unbind();
+                    }
                 }
+
+
             }else{
                 $("#payBtn").text("已删除");
                 $("#payBtn").css("background", "#d5d5d6");
