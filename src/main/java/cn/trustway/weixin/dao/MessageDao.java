@@ -22,4 +22,12 @@ public interface MessageDao<T> extends BaseDao<T> {
     Integer  addMessage(Map<String, Object> params);
 
 
+
+
+
+    /**
+     * 查询聊天内容
+     * @return
+     */
+    List<T> queryParentByList(Map<String, Object> params);
 }

@@ -117,6 +117,10 @@ public class Order extends BaseBean {
      */
     private String wlgs;
 
+    /**
+     * 是我上传的
+     */
+    private Integer isMyUpload;
 
     public Integer getId() {
         return id;
@@ -316,5 +320,13 @@ public class Order extends BaseBean {
 
     public void setWlgs(String wlgs) {
         this.wlgs = wlgs;
+    }
+
+    public Integer getIsMyUpload() {
+        return isMyUpload;
+    }
+
+    public void setIsMyUpload(Integer isMyUpload) {
+        this.isMyUpload = isMyUpload;
     }
 }

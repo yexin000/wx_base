@@ -45,6 +45,26 @@ public class Message extends BaseBean {
      */
     Date createtime;
 
+    /**
+     *发送人名称
+     */
+    String nickName;
+
+    /**
+     *发送人头像
+     */
+    String path;
+
+    /**
+     *接收人名称
+     */
+    String toNickName;
+
+    /**
+     *接收人头像
+     */
+    String toPath;
+
 
     public Integer getId() {
         return id;
@@ -108,5 +128,37 @@ public class Message extends BaseBean {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getToNickName() {
+        return toNickName;
+    }
+
+    public void setToNickName(String toNickName) {
+        this.toNickName = toNickName;
+    }
+
+    public String getToPath() {
+        return toPath;
+    }
+
+    public void setToPath(String toPath) {
+        this.toPath = toPath;
     }
 }

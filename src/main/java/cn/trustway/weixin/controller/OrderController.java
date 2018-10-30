@@ -94,7 +94,17 @@ public class OrderController extends BaseController {
     }
 
     private void queryDataList(OrderModel model, HttpServletResponse response, boolean isQueryRes) throws Exception {
-        List<Order> dataList = orderService.queryByList(model);
+        List<Order> dataList = null ;
+        if(StringUtils.isNotEmpty(model.getStatus()) && "5".equals(model.getStatus())){
+            Map<String, Object> params = new HashMap<>();
+            params.put("wxid", model.getWxid());
+            dataList = orderService.queryMyOutOrderByList(model);
+            for (Order o :dataList ){
+                o.setIsMyUpload(1);
+            }
+        }else{
+            dataList = orderService.queryByList(model);
+        }
 
         if(isQueryRes) {
             for (Order order : dataList) {

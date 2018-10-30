@@ -24,15 +24,15 @@ function loadMyMessage(){
                 $.each(dataList,function(i,obj){
                     str+='<div style="width: 99%;height: 0.62rem;border-bottom: 1px solid #EFEFEF" onclick="toMessageDetail(\''+ obj.id + '\')">';
                     if(obj.messageType == 1){
-                        str+='<p style="font-size: 0.14rem;">官方通知：</p>  <p>';
+                        str+='<p style="font-size: 0.14rem;margin-left: 0.1rem">官方通知：</p>  <p>';
                     }else{
                         //用户消息
-                        str+='<p style="font-size: 0.14rem;">用户留言：</p>  <p>';
+                        str+='<p style="font-size: 0.14rem;margin-left: 0.1rem">用户留言：</p>  <p>';
                     }
                     str+=' <span class="messageList"> '+obj.messagenote+'</span>';
                     str+=' </p>';
 
-                    str+='<span>'+obj.createtime+'</span>';
+                    str+='<span style="margin-left: 0.1rem">'+obj.createtime+'</span>';
                     str+='<span style="float: right">查看详情></span>';
                     str+='</div>';
                 });

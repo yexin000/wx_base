@@ -137,7 +137,7 @@
                             obj.logoPath = "foreground/images/no-image.jpg";
                         }
 
-                        str+='<div class="posr" onclick="toAuctionDetail('+obj.id+')">';
+                        str+='<div class="posr2" onclick="toAuctionDetail('+obj.id+')">';
                         str+='	<div class="left"  >';
                         var loadClass = '';
                         if(parseInt(obj.width) > parseInt(obj.height * 1.8)){
