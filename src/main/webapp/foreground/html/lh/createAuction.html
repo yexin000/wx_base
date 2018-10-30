@@ -121,6 +121,27 @@
 
 <script type="text/javascript">
   $(function(){
+    // 加载用户信息
+    var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ localStorage.getItem("openId");
+    $.ajax({
+      url: url,
+      type: 'post',
+      data: {} ,
+      dataType: 'JSON',
+      contentType : "application/json;charset=utf-8",
+      cache: false,
+      success:function(data){
+        var data = data.data;
+        if(data.vipGrade == null || data.vipGrade < 3) {
+          $("#tipLabel").html("V3以上才能创建拍卖专场");
+          $('#tipDialog').show();
+          setTimeout(function () {
+            history.back(-1);
+          }, 3000);
+        }
+      }
+    })
+
     $("#uploadBtn").click(function () {
       submitUpload();
     });

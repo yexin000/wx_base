@@ -83,7 +83,7 @@
 							</div>
 						</div>
 						<div class="weui-cells__tips auctionAttr" style="font-size: 12px;" id="auctionTimeShow"></div>
-						<div class="weui-cell auctionAttr">
+						<div class="weui-cell auctionAttr" id="startTimeSelect">
 							<div class="weui-cell__hd"><label class="weui-label">开始时间</label></div>
 							<div class="weui-cell__bd">
 								<input class="weui-input" type="datetime-local" id="startTimeInput" value="" placeholder="">
@@ -91,7 +91,7 @@
 							</div>
 						</div>
 
-						<div class="weui-cell auctionAttr">
+						<div class="weui-cell auctionAttr" id="endTimeSelect">
 							<div class="weui-cell__hd"><label class="weui-label">结束时间</label></div>
 							<div class="weui-cell__bd">
 								<input class="weui-input" type="datetime-local" id="endTimeInput" value="" placeholder="">
@@ -230,9 +230,17 @@
       var auctionStartTime = $(this).find("option:selected").attr("startAttr");
       var auctionEndTime = $(this).find("option:selected").attr("endAttr");
       if($(this).val() != '0') {
-        $("#auctionTimeShow").html(auctionStartTime + " 至 " + auctionEndTime);
+        $("#startTimeInput").val(auctionStartTime.replace(" ", "T"));
+        $("#endTimeInput").val(auctionEndTime.replace(" ", "T"));
+        $("#startTimeSelect").hide();
+        $("#endTimeSelect").hide();
+        //$("#auctionTimeShow").html(auctionStartTime + " 至 " + auctionEndTime);
 			} else {
-        $("#auctionTimeShow").html("");
+        $("#startTimeInput").val(null);
+        $("#endTimeInput").val(null);
+        $("#startTimeSelect").show();
+        $("#endTimeSelect").show();
+        //$("#auctionTimeShow").html("");
 			}
     });
 
@@ -400,8 +408,8 @@
       }
 
       if($("#auctions").val() != '0') {
-        if (startTime < auctionStartTime || startTime >= auctionEndTime
-            || endTime < auctionStartTime || endTime >= auctionEndTime) {
+        if (startTime <= auctionStartTime || startTime >= auctionEndTime
+            || endTime <= auctionStartTime || endTime >= auctionEndTime) {
           $("#tipLabel").html("拍卖开始和结束时间必须在拍卖专场时间内");
           $('#tipDialog').show();
           return
