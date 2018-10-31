@@ -168,6 +168,16 @@
 	border-radius: 0.1rem;
 }
 
+.mystore-auctionitem-div1 {
+	height: 180px;
+	width: 90%;
+	padding-top: 5%;
+	margin-left: 5%;
+	background-color: white;
+	border-radius: 0.1rem;
+}
+
+
 .mystore-auctionitem-label {
 	float: left;
 	font-size: 12px;

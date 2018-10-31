@@ -17,8 +17,8 @@
     <title></title>
 </head>
 <body>
-    <marquee direction="left" behavior="scroll" scrollamount="5" scrolldelay="0" loop="-1" width="100%" height="25" bgcolor="#8C8C8C" hspace="40" vspace="10" onclick="toActivityList()">
-    <p style="letter-spacing:5px;width: 1px;margin-top: 0.03rem;color: yellow;" >
+    <marquee direction="left" behavior="scroll" scrollamount="4" scrolldelay="0" loop="-1" width="100%" height="28" bgcolor="#8C8C8C" hspace="4" vspace="10" onclick="toActivityList()">
+    <p style="letter-spacing:5px;width: 1px;margin-top: 0.05rem;color: yellow;" >
         欢迎您登录陇海竞拍
     </p>
     </marquee>
@@ -30,16 +30,16 @@
            	<div  class="bannerPrompt none"></div>
        </div>
     </header>
-    <div style="width: 100%;margin-top: 0.05rem;">
+    <div style="width: 100%;margin-top: 0.02rem; height: 1.05rem">
         <ul style="overflow: hidden;white-space:nowrap;text-align:center;list-style-type:none;margin-left: 0.05rem;">
-            <li style="list-style: none;float: left;width: 33%;"> <img src="../../../images/lh/tjsp1.png" style="width: 0.7rem;height: 0.7rem" onclick="toPickLot()"> </li>
-            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/yzsh1.png" style="width: 0.7rem;height: 0.7rem" onclick="toBusinessList()"></li>
-            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/v5tq1.png" style="width: 0.7rem;height: 0.7rem" onclick="toAuctionItemV5()"></li>
+            <li style="list-style: none;float: left;width: 33%;"> <img src="../../../images/lh/tjsp1.png" style="width: 0.5rem;height: 0.5rem" onclick="toPickLot()"> </li>
+            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/yzsh1.png" style="width: 0.5rem;height: 0.5rem" onclick="toBusinessList()"></li>
+            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/v5tq1.png" style="width: 0.5rem;height: 0.5rem" onclick="toAuctionItemV5()"></li>
         </ul>
         <ul style="overflow: hidden;white-space:nowrap;text-align:center;list-style-type:none;margin-left: 0.05rem;">
-            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/wdgz1.png" style="width: 0.7rem;height: 0.7rem" onclick="toMyFollowList()"></li>
-            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/wddp.png" style="width: 0.7rem;height: 0.7rem" onclick="toMyStore();"></li>
-            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/wdjd.png" style="width: 0.7rem;height: 0.7rem" onclick="toMyIdentify()"></li>
+            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/wdgz1.png" style="width: 0.5rem;height: 0.5rem" onclick="toMyFollowList()"></li>
+            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/wddp.png" style="width: 0.5rem;height: 0.5rem" onclick="toMyStore();"></li>
+            <li style="list-style: none;float: left; width: 33%;"> <img src="../../../images/lh/wdjd.png" style="width:  0.5rem;height:  0.5rem" onclick="toMyIdentify()"></li>
         </ul>
     </div>
     <div id="loadingToast" style="opacity: 1; display: none;">
@@ -49,7 +49,16 @@
             <p class="weui-toast__content">数据加载中</p>
         </div>
     </div>
-    <div id="dataDiv">
+
+    <div class="posr2" onclick="toAuctionDetail(9)">
+        <div class="left">
+            <img src="https://mlhdkj.com/weixin/sdFile/uploadFiles/userappheadimg/20180630/e92774ca170349cca23d5afc1e49b20d.png" alt="" class="width">
+        </div>
+        <p style="padding-top: 1.4rem; font-size:18px;font-weight:bold; margin-left: 0.04rem;">捡漏拍卖专场</p>
+        <p style="margin-left: 0.04rem;"> 2018-06-20 06:10:00开始，火热进行中</p>
+    </div>
+
+    <div id="dataDiv1">
 
     </div>
     <div id="dataDivItem1">

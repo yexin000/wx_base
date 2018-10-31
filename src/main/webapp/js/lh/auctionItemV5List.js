@@ -81,7 +81,7 @@ function loadAcutionItemV5(){
 
                 str+='    <p class="weui-grid__label" style="float: left;font-size: 12px;color: #d0a642;width: 1.3rem;margin-left: -0.01rem;">介绍:'+obj.description+'</p>';
 
-                str+='  <p class="weui-grid__label" style="float: left;font-size: 12px;">库存:'+obj.stock+'件</p>';
+
                 str+='  </div>';
                 str+=' </a>';
             });

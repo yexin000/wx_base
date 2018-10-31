@@ -85,7 +85,7 @@
                             coverimgHeight = obj.resList[0].height;
                         }
                         str+='<li   class="bannerItem" onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')">';
-                        str+='	    <div style="position: relative; width: 3.2rem;height: 1.75rem;"><a>';
+                        str+='	    <div style="position: relative; width: 3.2rem;height: 1.3rem;"><a>';
                         var loadClass = '';
                         if(parseInt(coverimgWidth) > parseInt(coverimgHeight * 1.8)){
                             loadClass = 'width';

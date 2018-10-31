@@ -25,38 +25,30 @@ function loadIndexAuctionItem(){
             {
                 var str = '';
                 $.each(dataList,function(i,obj){
-                    var coverimg = '';
-                    var coverimgWidth = '';
-                    var coverimgHeight = '';
-                    if(obj.resList && obj.resList.length > 0) {
-                        coverimg = obj.resList[0].path;
-                        coverimgWidth = obj.resList[0].width;
-                        coverimgHeight = obj.resList[0].height;
+                    var coverImage = '/weixin/foreground/images/no-image.jpg';
+                    if(dataList[i].resList != null && dataList[i].resList.length > 0) {
+                        coverImage = hostPath + dataList[i].resList[0].path;
                     }
-                    str+='<tr onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')">';
-                    str+='  <td class="pro-item-M">' ;
-                    str+='  <div class="itemDiv">' ;
 
-                    var loadClass = '';
-                    if(parseInt(coverimgHeight) > parseInt( coverimgWidth)){
-                        loadClass = 'height';
-                    }else{
-                        loadClass = 'width';
+                    var price = dataList[i].curPrice;
+                    if(price <= 0) {
+                        price = dataList[i].startPrice;
                     }
-                    str+='      <img src="' + hostPath + coverimg +  '"   class="'+loadClass+'">'  ;
-                    str+='  </div>' ;
-                    str+='  </td>';
-
-                    str+='  <td class="pro-item-H">';
-                    str+='      <h2>'+obj.name+'</h2>';
-                    str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.description+' </span></p>';
-                    str+='      <p><span>商品价格: </span><span style="overflow:hidden;  "> '+obj.startPrice +'<span></p>';
-                    str+='      <p><span>商品库存: </span><span style="overflow:hidden;  "> '+obj.stock +'<span></p>';
-                    str+='  </td>';
-                    str+='</tr>';
+                    str += '<a href="javascript:toAuctionItemDetail(\''+dataList[i].id+'\',\'' + dataList[i].attribute + '\');" class="weui-grid" style="position: initial;padding: 10px 0px;">'
+                        +   '<div class="mystore-auctionitem-div">'
+                        +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
+                        +       '<img src="' + coverImage + '" alt="">'
+                        +     '</div>'
+                        +     '<p class="weui-grid__label auctionitem-auctionitem-label">名称:' + dataList[i].name + '</p>'
+                        +     '<p class="weui-grid__label auctionitem-auctionitem-label">作者:' + dataList[i].uploader + '</p>'
+                        +     '<p class="weui-grid__label auctionitem-auctionitem-label">价格:' + price + '</p>'
+                        +     '<p class="weui-grid__label auctionitem-auctionitem-label">结束时间:' + dataList[i].endTime + '</p>'
+                        +   '</div>'
+                        +'</a>';
+                    $("#auctionItemData").append(str);
                 });
             }
-            $(".pro-item").append(str);
+
             if(datalength <= (pageId * 10)){
                 $("#loadMore").hide();
             }else{

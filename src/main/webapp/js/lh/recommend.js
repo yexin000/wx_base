@@ -30,18 +30,17 @@ function loadbusinessData(){
                     if(obj.logoPath == null || obj.logoPath == '') {
                         obj.logoPath = "foreground/images/no-image.jpg";
                     }
-                    str+='<div class="posr-item" style="overflow:hidden;height: 1.7rem;border-bottom: 1px solid #BBBBBB;padding: 0.1rem 0 0.1rem 0;">';
-                    str+='	<div class="left" onclick="toBusinessDetail('+obj.id+')">';
-
-                    var loadClass = '';
-                    if(parseInt(obj.width) > parseInt(obj.height * 1.8)){
-                        loadClass = 'width';
-                    }else{
-                        loadClass = 'length';
-                    }
-                    str+=' 		<img src= "'+hostPath + obj.logoPath + '" alt=""  class="'+loadClass+'">';
-                    str+='	</div>';
-                    str+='</div>';
+                    var coverImage = hostPath+ obj.logoPath;
+                    str += '<a href="javascript:toBusinessDetail('+obj.id+')";" class="weui-grid" style="position: initial;padding: 10px 0px;">'
+                    str += '<div class="mystore-auctionitem-div1">'
+                    str +=   '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
+                    str +=      '<img src="' + coverImage + '" alt="">'
+                    str +=    '</div>'
+                    str +=    '<p class="weui-grid__label auctionitem-auctionitem-label">昵称:' + dataList[i].name + '</p>'
+                    str +=  '</div>'
+                    str +='</a>';
+                    $("#auctionItemData").append(str);
+                    str = '';
                 });
                 //加载上拉加载按钮
                 $("#loadMore").remove();
