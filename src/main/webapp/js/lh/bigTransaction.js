@@ -30,7 +30,7 @@ function loadTransaction(){
                         coverimgWidth = obj.resList[0].width;
                         coverimgHeight = obj.resList[0].height;
                     }
-                    str+='<tr onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')">';
+                    str+='<tr onclick="toAuctionItemDetail('+obj.auctionitemid+','+obj.attribute+')">';
                     str+='  <td class="pro-item-M">' ;
                     str+='  <div class="itemDiv">' ;
 
@@ -45,7 +45,7 @@ function loadTransaction(){
                     str+='  </td>';
 
                     str+='  <td class="pro-item-H">';
-                    str+='      <p ><span>金额:</span>  <span> '+obj.finalprice+' </span></p>';
+                    str+='      <p ><span>金额:</span>  <span> '+parseInt(obj.finalprice)+' </span></p>';
                     var banNo = obj.bankNo;
                     str+='      <p><span>尾号: </span><span style="overflow:hidden;  "> '+banNo.substr(banNo.length-4) +'<span></p>';
                     str+='      <p><span>明细: </span><span style="overflow:hidden;  "> '+obj.name +'<span></p>';

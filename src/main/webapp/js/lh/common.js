@@ -69,6 +69,15 @@ function toAuctionItemV5()
     window.location.href = '../../html/lh/auctionItemV5List.html';
 }
 
+/**
+ * 去我要鉴定
+ * @param
+ */
+function toMyIdentify()
+{
+    window.location.href = 'myIdentify.html';
+}
+
 
 /**
  * 去平台须知
@@ -222,6 +231,14 @@ function hideActionSheet() {
 function toMyStore() {
   window.location.href = '/weixin/foreground/html/lh/myStore.html';
 }
+
+/**
+ * 我去的退款
+ */
+function toMyReturn() {
+    window.location.href = '/weixin/foreground/html/lh/myReturn.html';
+}
+
 
 function toUpload(attr) {
   window.location.href = '/weixin/foreground/html/lh/uploadTest.html?attr=' + attr;

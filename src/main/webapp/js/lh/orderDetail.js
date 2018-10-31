@@ -123,7 +123,6 @@ function loadOrderDetail(id){
             $("#orderMoney").html(order.orderMoney);
             $("#orderMoneys").html(order.orderMoney);
             $("#businessName").html(order.businessName);
-debugger
             var statuName = '';
             if(order.status == '1'){
                 $("#payBtn").text("已失效");

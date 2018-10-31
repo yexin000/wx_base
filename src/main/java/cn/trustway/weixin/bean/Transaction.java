@@ -49,6 +49,11 @@ public class Transaction extends BaseBean {
      */
     private String finalprice;
 
+    /**
+     * 商品性质:0-拍卖品,1-商品,2-非卖品',
+     */
+    private String attribute;
+
 
     public Integer getId() {
         return id;
@@ -112,5 +117,13 @@ public class Transaction extends BaseBean {
 
     public void setFinalprice(String finalprice) {
         this.finalprice = finalprice;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 }
