@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"  />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -9,29 +9,34 @@
     <meta http-equiv="x-dns-prefetch-control" content="on" />
     <link href="../../../css/style/base.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/common.css" rel="stylesheet" type="text/css">
-    <link href="../../../css/style/mine.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/index.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/collect.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/style/like.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/weui.css" rel="stylesheet" type="text/css">
     <link href="../../../css/style/example.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
     <title></title>
 </head>
-<body style="background-color: white;">
+<body style="background-color: #FFFFFF">
 <header class="header-hs ">
-    <a href="javascript:history.back(-1);" class="header-back"></a>
-    <h1>联系客服</h1>
+    <a href="javascript:history.back(-1);" class="header-back"  ></a>
+    <h1>退货管理</h1>
 </header>
+    <table class="pro-item" style="margin-top: 0.43rem">
 
- <div style="height: 0.96rem;text-align: center;margin-top: 1rem;" >
-    <div style="max-width: 0.86rem;height: 0.86rem; margin-left: 37%;" >
-        <img src="../../../images/lh/lhewm1.jpg" alt="" id="agentImg" style="max-width: 0.86rem;height: 0.86rem;">
+    </table>
+
+    <a href="javascript:loadMore();" id="loadMore" style="display: none" class="weui-btn weui-btn_default weui-btn_loading"> 点击加载更多</a>
+    <div id="loadingToast" style="opacity: 1; display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">数据加载中</p>
+        </div>
     </div>
-   <p style="font-weight: bolder;margin-top: 0.1rem;">官方客服微信</p>
- </div>
-
-
-<script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>
+<script type="text/javascript" src="../../../js/lh/myJoin1.js"></script>
+
 </body>
 </html>

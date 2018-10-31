@@ -5,6 +5,11 @@ $(function(){
     $("#bidBtn").click(function () {
         toPurchase();
     });
+    $("#bidBtnV5").click(function () {
+        toV5Purchase();
+    });
+
+
 
     $("#favBtn").click(function () {
         $('#loadingToast').show();
@@ -152,6 +157,13 @@ function toPurchase(){
     })
 }
 
+
+//V5特区购买
+function toV5Purchase(){
+    toService();
+    //显示关键信息
+
+}
 
 function zhifu(orderId){
     var params = {};

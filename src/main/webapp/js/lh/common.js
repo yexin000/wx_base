@@ -192,8 +192,11 @@ function toMyExchange() {
 
 function toAuctionItemDetail(id,type)
 {
+    //商品性质:0-拍卖品,1-商品,2-非卖品,3是v5商品
     if(type == "0"){
         window.location.href = '../../html/lh/auctionItemDetail.html?id='+id;
+    }else if(type == 3){
+        window.location.href = '../../html/lh/commodityV5Detail.html?id='+id;
     }else{
         window.location.href = '../../html/lh/commodityDetail.html?id='+id;
     }
