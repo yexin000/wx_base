@@ -16,7 +16,7 @@
   <link href="../../../css/style/like.css" rel="stylesheet" type="text/css">
   <title></title>
 </head>
-<body style="height: 100%;background-color: #363636;">
+<body style="background-color: #363636;">
 <header class="header-hs ">
   <a onclick="javascript:history.back(-1);" class="header-back"></a>
   <h1 id="titleName">我的店铺</h1>
@@ -82,6 +82,18 @@
 <script type="text/javascript" src="../../../js/lh/common.js"></script>
 <script type="text/javascript" src="../../../js/lh/zepto.min.js"></script>
 <script type="text/javascript">
+  // 是否本人访问
+  var isSelf = true;
+  var wxid = getParam("wxid");
+  if(wxid == null || wxid == "") {
+    // 本人访问
+    wxid = localStorage.getItem("openId");
+    $("#titleName").text("我的店铺");
+  } else {
+    // 他人访问
+    isSelf = false;
+  }
+
   $(function(){
     $(".scrollItem").click(function () {
       $(".scrollItem").removeClass("mystore-tab-item-check");
@@ -105,11 +117,12 @@
     });
 
     loadAuctions();
+    loadUser();
   })
   
   function loadAuctions() {
     $('#loadingToast').show();
-    var wxid = localStorage.getItem("openId");
+
     $.ajax({
       url: '/weixin/auction/ajaxGetJoinAuctions.do?wxid='+ wxid,
       type: 'post',
@@ -121,6 +134,7 @@
         $('#loadingToast').hide();
         if(result.code == "0") {
           var auctionList = result.data;
+
           if(auctionList.length > 0) {
             $("#auctionNoDataDiv").hide();
             $(".mystore-auction-preview").remove();
@@ -133,7 +147,7 @@
                     +       '<em class="weui-form-preview__value">专场名称  ' + auctionList[i].name + '</em>'
                     +     '</div>'
                     +   '</div>'
-                    +   '<div class="weui-form-preview__bd mystore-auction-preview-bd" style="text-align: center;">'
+                    +   '<div class="weui-form-preview__bd mystore-auction-preview-bd" style="text-align: center;" onclick="toAuctionDetail(' + auctionList[i].id + '' + ')">'
                     +     '<div class="weui-form-preview__item">'
                     +       '<img class="mystore-auction-img" src="' + hostPath + auctionList[i].logoPath + '" style="height: 120px;width: ' + 120 /auctionList[i].height * auctionList[i].width + 'px;">'
                     +     '</div>'
@@ -147,6 +161,7 @@
                     +'</div>'
               $("#auctionDiv").append(str);
             }
+
             loadUser();
           } else {
             $("#auctionNoDataDiv").show();
@@ -160,7 +175,6 @@
   
   function loadItems(attribute) {
     $('#loadingToast').show();
-    var wxid = localStorage.getItem("openId");
     $.ajax({
       url: '/weixin/auctionItem/ajaxGetAuctionItems.do?wxid=' + wxid + "&attribute=" + attribute,
       type: 'post',
@@ -178,7 +192,7 @@
               $("#auctionItemData").empty();
               for(var i = 0; i < auctionItemList.length; i ++) {
                 var str = '';
-                str += '<a href="javascript:;" class="weui-grid" style="position: initial;">'
+                str += '<a href="javascript:;" class="weui-grid" style="position: initial;" onclick="toAuctionItemDetail(\'' + auctionItemList[i].id + '\', \'' + attribute + '\')">'
                       +   '<div class="mystore-auctionitem-div">'
                       +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
                       +       '<img src="' + hostPath + auctionItemList[i].logoPath + '" alt="">'
@@ -201,7 +215,7 @@
               $("#mySaleData").empty();
               for(var i = 0; i < salesList.length; i ++) {
                 var str = '';
-                str += '<a href="javascript:;" class="weui-grid" style="position: initial;">'
+                str += '<a href="javascript:;" class="weui-grid" style="position: initial;" onclick="toAuctionItemDetail(\'' + salesList[i].id + '\', \'' + attribute + '\')">'
                     +   '<div class="mystore-auctionitem-div">'
                     +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
                     +       '<img src="' + hostPath + salesList[i].logoPath + '" alt="">'
@@ -224,7 +238,7 @@
               $("#nonSaleData").empty();
               for(var i = 0; i < noSaleList.length; i ++) {
                 var str = '';
-                str += '<a href="javascript:;" class="weui-grid" style="position: initial;">'
+                str += '<a href="javascript:;" class="weui-grid" style="position: initial;" onclick="toAuctionItemDetail(\'' + noSaleList[i].id + '\', \'' + attribute + '\')">'
                     +   '<div class="mystore-auctionitem-div">'
                     +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
                     +       '<img src="' + hostPath + noSaleList[i].logoPath + '" alt="">'
@@ -256,7 +270,7 @@
 
   //加载个人信息数据
   function loadUser(){
-    var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ localStorage.getItem("openId");
+    var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ wxid;
     $.ajax({
       url: url,
       type: 'post',
@@ -269,6 +283,9 @@
         $("#headImg").attr("src", data.avatarUrl);
         $(".headimg").attr("src", data.avatarUrl);
         $(".headtext").html(data.nickName);
+        if(!isSelf) {
+          $("#titleName").text(data.nickName + "的店铺");
+        }
       }
     })
   }

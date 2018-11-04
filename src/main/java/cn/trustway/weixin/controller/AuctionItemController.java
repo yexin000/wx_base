@@ -320,6 +320,7 @@ public class AuctionItemController extends BaseController {
         auctionItem.setEndTime(itemUpload.getEndTime());
         auctionItem.setRate(DEFUALT_RATE);
         auctionItem.setBusinessId(0);
+        auctionItem.setStatus("1");
         if(ATTRIBUTE_GOODS.equals(auctionItem.getAttribute()) || ATTRIBUTE_NO_SALE.equals(auctionItem.getAttribute())) {
             auctionItem.setAuctionId(0);
         }
