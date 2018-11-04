@@ -115,6 +115,16 @@ public class Auction extends BaseBean {
      */
     private String wxid;
 
+    /**
+     * 创建人名字 V2
+     */
+    private String wxName;
+
+    /**
+     * 创建人头像 V2
+     */
+    private String path;
+
     public Integer getId() {
         return id;
     }
@@ -305,5 +315,21 @@ public class Auction extends BaseBean {
 
     public void setWxid(String wxid) {
         this.wxid = wxid;
+    }
+
+    public String getWxName() {
+        return wxName;
+    }
+
+    public void setWxName(String wxName) {
+        this.wxName = wxName;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

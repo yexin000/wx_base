@@ -138,6 +138,7 @@
         select
             <include refid="Auction_Base_Column_List" />,
             su1.nickname as creatorName,su2.nickname as modifierName, b.name as businessName,
+            wu.nickname as wxName, wu.avatarUrl path,
             (select count(1) from t_con_item_res r where r.conid=t.id and r.contype='1') as picCount,
             (select path from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as logopath,
             (select width from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as width,
@@ -147,6 +148,7 @@
         left join sys_user su1 on t.creator=su1.id
         left join sys_user su2 on t.modifier=su2.id
         left join t_e_business b on t.businessid=b.id
+        left join weixin_user wu on wu.wxid=t.wxid
         left join wx_code c on c.code = t.type
         where 1=1 and t.status != '0'
         <trim suffixOverrides=",">

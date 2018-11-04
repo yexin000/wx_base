@@ -34,9 +34,9 @@ function loadIndexAuctionItem(){
                     if(price <= 0) {
                         price = dataList[i].startPrice;
                     }
-                    str += '<a href="javascript:toAuctionItemDetail(\''+dataList[i].id+'\',\'' + dataList[i].attribute + '\');" class="weui-grid" style="position: initial;padding: 10px 0px;">'
+                    str += '<a href="javascript:toAuctionItemDetail(\''+dataList[i].id+'\',\'' + dataList[i].attribute + '\');" class="weui-grid1" style="position: initial;padding: 10px 0px; ">'
                         +   '<div class="mystore-auctionitem-div">'
-                        +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
+                        +     '<div class="weui-grid__icon" style="width: 90%;height: 180px;">'
                         +       '<img src="' + coverImage + '" alt="">'
                         +     '</div>'
                         +     '<p class="weui-grid__label auctionitem-auctionitem-label">名称:' + dataList[i].name + '</p>'
@@ -61,5 +61,5 @@ function loadIndexAuctionItem(){
 
 
 function loadMore(){
-    loadBusinessAuctionItem();
+    loadIndexAuctionItem();
 }

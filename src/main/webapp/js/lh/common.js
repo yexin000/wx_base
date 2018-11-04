@@ -69,6 +69,15 @@ function toAuctionItemV5()
     window.location.href = '../../html/lh/auctionItemV5List.html';
 }
 
+/**
+ * 去专场拍卖
+ * @param
+ */
+function toAuctionList()
+{
+    window.location.href = '../../html/lh/auctionList.html';
+}
+
 
 /**
  * 去v5特区留言板
