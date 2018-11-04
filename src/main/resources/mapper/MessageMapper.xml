@@ -59,8 +59,14 @@
             <if test="status != null and status != ''">
                 and t.status = #{status}
             </if>
+            <if test="parentId != null ">
+                and t.parentId = #{parentId}
+            </if>
             <if test="status != null and status != ''">
                 and t.v5id = #{v5Id}
+            </if>
+            <if test="toWxid != null and toWxid != ''">
+                and t.towxid = #{toWxid}
             </if>
         </trim>
     </select>
@@ -85,6 +91,9 @@
             <if test="v5Id != null and v5Id != ''">
                 and t.v5id = #{v5Id}
             </if>
+            <if test="toWxid != null and toWxid != ''">
+                and t.towxid = #{toWxid}
+            </if>
         </trim>
 
         order by t.createtime asc
@@ -107,11 +116,10 @@
         where
         t.parentId IS NOT NULL
         <trim suffixOverrides=",">
-
             <if test="parentId != null ">
                 and t.parentId = #{parentId}
             </if>
         </trim>
-        order by t.createtime desc
+        order by t.createtime asc
     </select>
 </mapper>

@@ -6,11 +6,13 @@ $(function(){
 //加载消息
 function loadMyMessage(){
     $('#loadingToast').show();
+    var messageModel = {}
+    messageModel.toWxid = localStorage.getItem("openId");
     var url= '/weixin/message/ajaxDataList.do';
     $.ajax({
         url: url,
         type: 'post',
-        data: {} ,
+        data: JSON.stringify(messageModel) ,
         dataType: 'JSON',
         contentType : "application/json;charset=utf-8",
         cache: false,

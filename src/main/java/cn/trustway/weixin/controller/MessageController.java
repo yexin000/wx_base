@@ -70,8 +70,7 @@ public class MessageController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
-    public void ajaxDataList(HttpServletResponse response) throws Exception {
-        MessageModel model = new MessageModel();
+    public void ajaxDataList(@RequestBody MessageModel model ,HttpServletResponse response) throws Exception {
         queryDataList(model, response);
     }
 
@@ -129,7 +128,7 @@ public class MessageController extends BaseController {
         //当前V5所有子消息
         MessageModel model = new MessageModel();
         model.setV5Id(id);
-        model.setRows(200);
+        model.setRows(500);
         List<Message> messageList = messageService.queryByList(model);
 
         //如果查不到，那么新建一条消息 TODO

@@ -4,6 +4,11 @@ $(function(){
     loadMyMessage(id);
 })
 
+$("#sendMessage").click(function () {
+    sendMessage();
+});
+
+
 //加载消息
 function loadMyMessage(id){
     $('#loadingToast').show();
@@ -78,8 +83,50 @@ function loadMyMessage(id){
                 });
 
             }
+            $("#dataDiv").empty();
             $("#dataDiv").append(str);
             pageId++;
+        }
+    })
+}
+
+
+
+//发送消息
+function sendMessage(){
+    var messageNote = $("#messageNote").val();
+    if(!messageNote){
+        $("#msgLabel").html("请输入消息");
+        $("#msgDialog").show();
+        return;
+    }
+    $('#loadingToast').show();
+    var id = getParam("id");
+    var messageModel = {};
+    messageModel.parentId = id;
+    messageModel.messagenote = messageNote;
+    messageModel.messagetype = 2;
+    messageModel.status = 0;
+    messageModel.wxid = localStorage.getItem('openId');
+    messageModel.toWxid = '0';
+    var url= '/weixin/message/save.do';
+    $.ajax({
+        url: url,
+        type: 'post',
+        data:JSON.stringify(messageModel) ,
+        contentType : "application/json;charset=utf-8",
+        dataType: 'JSON',
+        cache: false,
+        success:function(data){
+            $('#loadingToast').hide();
+            if(data.success == false){
+                $("#msgLabel").html("发送失败");
+                $("#msgDialog").show();
+            }else{
+                //跳转订单详情列表
+                loadMyMessage(id);
+                $("#messageNote").val("");
+            }
         }
     })
 }
