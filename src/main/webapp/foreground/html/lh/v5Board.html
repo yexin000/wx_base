@@ -19,7 +19,7 @@
 	<a href="javascript:history.back(-1)" class="header-back"></a>
 	<h1>留言板</h1>
 </header>
-<div style="margin-top: 0.47rem;" id="dataDiv">
+<div style="margin-top: 0.47rem;padding-bottom: 0.38rem;" id="dataDiv">
 
 </div>
 <div id="loadingToast" style="opacity: 1; display: none;">
@@ -29,6 +29,23 @@
 		<p class="weui-toast__content">数据加载中</p>
 	</div>
 </div>
+<div class="js_dialog" id="msgDialog" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__bd" id="msgLabel"></div>
+        <div class="weui-dialog__ft">
+            <a onclick="$('#msgDialog').hide();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+        </div>
+    </div>
+</div>
+
+<footer class="footer-message">
+    <div style="margin-top: 0.04rem;">
+        <input type="text" style="width: 80%;height: 0.22rem;vertical-align: top;" id="messageNote">
+        <button style="border-radius: 5px;vertical-align: top;width: 0.5rem;  height: 0.22rem; border: none; background-color: #5DD9EB; color: #fff;" id="sendMessage">发送</button>
+    </div>
+</footer>
+
 <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>
