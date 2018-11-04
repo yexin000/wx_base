@@ -143,6 +143,12 @@ function loadItemData(id){
             }
             $("#favStatus").val(dataObj.isFavorite);
 
+            if(dataObj.uploadWxid != null && dataObj.uploadWxid != "0") {
+              $("#storeBtn").click(function () {
+                window.location.href = "../../html/lh/myStore.html?wxid=" + dataObj.uploadWxid;
+              })
+            }
+
             loadAuctionItemBid(id);
         }
     })

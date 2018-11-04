@@ -64,7 +64,7 @@ public class AuctionItem extends BaseBean {
     /**
      *状态：0-删除，1-未审核，2-审核未通过，3-正常(审核通过)
      */
-    private String status;
+    private String status = "3";
     /**
      *是否在首页显示：0-否，1-是
      */

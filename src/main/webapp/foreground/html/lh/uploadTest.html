@@ -100,17 +100,11 @@
 						</div>
 					</div>
 					<div class="weui-cell">
-						<div class="weui-cell__hd"><label class="weui-label">介绍</label></div>
-						<div class="weui-cell__bd">
-							<input class="weui-input" type="text" placeholder="请输入介绍" id="description" name="description">
-						</div>
-					</div>
-					<div class="weui-cell">
 						<div class="weui-cell__hd">
-							<label class="weui-label"  id="priceLabel">起拍价</label>
+							<label class="weui-label" id="priceLabel">起拍价</label>
 						</div>
 						<div class="weui-cell__bd">
-							<input id="startPrice" name="startPrice" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入起拍价">
+							<input id="startPrice" name="startPrice" class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入">
 						</div>
 					</div>
 					<div class="weui-cell auctionAttr">
@@ -129,11 +123,11 @@
 							<input id="stock" name="stock" class="weui-input" type="number" value="1">
 						</div>
 					</div>
-					<div class="weui-cells__title">详情</div>
+					<div class="weui-cells__title">介绍</div>
 					<div class="weui-cells weui-cells_form">
 						<div class="weui-cell">
 							<div class="weui-cell__bd">
-								<textarea id="detail" name="detail" class="weui-textarea" placeholder="请输入详情" rows="3"></textarea>
+								<textarea id="description" name="description" class="weui-textarea" placeholder="请输入介绍" rows="3"></textarea>
 								<div class="weui-textarea-counter"></div>
 							</div>
 						</div>
@@ -216,6 +210,7 @@
     } else if ("1" == attr) {
       $("#titleName").text("创建商品");
     } else if ("2" == attr) {
+
       $("#titleName").text("创建非卖品");
     }
 
@@ -314,7 +309,6 @@
     'description' : "介绍",
     'startPrice' : "起拍价",
     'addPrice' : "加价幅度",
-    'detail' : "详情",
     'stock' : "库存"
   };
 
@@ -362,7 +356,6 @@
     params.description = $("#description").val();
     params.startPrice = $("#startPrice").val();
     params.addPrice = $("#addPrice").val();
-    params.detail = $("#detail").val();
     params.status = "1";
     params.auctionStatus = "0";
     params.stock = $("#stock").val();
@@ -374,7 +367,7 @@
         isPamramsRight = false;
         $("#tipLabel").html("请输入正确的" + propertyName[key]);
         $('#tipDialog').show();
-        break;
+        return;
       }
     }
 
@@ -528,11 +521,17 @@
       $("#priceLabel").html("起拍价");
       $(".businessAttr").hide();
 
-    } else if(attr == "1" || attr == "2") {
+    } else if(attr == "1") {
       $(".auctionAttr").hide();
       $("#priceLabel").html("价格");
+      propertyName["startPrice"] = "价格";
       $(".businessAttr").show();
-    }
+    } else if(attr == "2") {
+      $(".auctionAttr").hide();
+      $("#priceLabel").html("估价");
+      propertyName["startPrice"] = "估价";
+      $(".businessAttr").show();
+		}
   }
 </script>
 </body>

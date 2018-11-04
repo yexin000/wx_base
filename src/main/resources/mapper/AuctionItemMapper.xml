@@ -47,7 +47,7 @@
 		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId,standard,age,degree,
 		  businessId,attribute,uploadwxid,stock)
         values(null,#{name},#{type},#{description},#{startTime},#{endTime},#{startPrice},
-            #{curPrice},#{finalPrice},#{addPrice},#{depositPrice},#{rate}, #{detail}, '3',
+            #{curPrice},#{finalPrice},#{addPrice},#{depositPrice},#{rate}, #{detail}, #{status},
             #{isShow},'0',#{auctionId},#{standard},#{age},#{degree},#{businessId},#{attribute},#{uploadWxid},#{stock});
     </insert>
 

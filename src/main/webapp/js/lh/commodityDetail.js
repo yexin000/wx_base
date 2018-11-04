@@ -89,12 +89,23 @@ function loadItemData(id){
             }
             $("#detailLabel").html(detail); //详情
 
+            if(dataObj.attribute == "2") {
+              $("#bidBtn").css("background", "rgb(213, 213, 214)")
+              $("#bidBtn").unbind();
+            }
+
             if(dataObj.isFavorite == "1") {
                 $("#favBtn").html("取消收藏");
             } else {
                 $("#favBtn").html("收藏");
             }
             $("#favStatus").val(dataObj.isFavorite);
+
+          if(dataObj.uploadWxid != null && dataObj.uploadWxid != "0") {
+            $("#storeBtn").click(function () {
+              window.location.href = "../../html/lh/myStore.html?wxid=" + dataObj.uploadWxid;
+            })
+          }
         }
     })
 }
