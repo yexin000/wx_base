@@ -65,6 +65,11 @@ public class Message extends BaseBean {
      */
     String toPath;
 
+    /**
+     *V5ID
+     */
+    Integer v5Id;
+
 
     public Integer getId() {
         return id;
@@ -160,5 +165,13 @@ public class Message extends BaseBean {
 
     public void setToPath(String toPath) {
         this.toPath = toPath;
+    }
+
+    public Integer getV5Id() {
+        return v5Id;
+    }
+
+    public void setV5Id(Integer v5Id) {
+        this.v5Id = v5Id;
     }
 }

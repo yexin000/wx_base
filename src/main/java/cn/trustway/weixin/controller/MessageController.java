@@ -10,10 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,8 +70,7 @@ public class MessageController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
-    public void ajaxDataList(HttpServletResponse response) throws Exception {
-        MessageModel model = new MessageModel();
+    public void ajaxDataList(@RequestBody MessageModel model ,HttpServletResponse response) throws Exception {
         queryDataList(model, response);
     }
 
@@ -132,7 +128,10 @@ public class MessageController extends BaseController {
         //当前V5所有子消息
         MessageModel model = new MessageModel();
         model.setV5Id(id);
+        model.setRows(500);
         List<Message> messageList = messageService.queryByList(model);
+
+        //如果查不到，那么新建一条消息 TODO
         context.put("messageList",messageList);
         context.put(SUCCESS, true);
         HtmlUtil.writerJson(response, context);
@@ -148,7 +147,7 @@ public class MessageController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/save")
-    public void save(Message bean, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void save(@RequestBody Message bean, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer id = bean.getId();
         if(id != null && id > 0) {
             messageService.update(bean);
