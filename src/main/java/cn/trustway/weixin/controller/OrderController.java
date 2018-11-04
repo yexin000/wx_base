@@ -374,4 +374,28 @@ public class OrderController extends BaseController {
     }
 
 
+
+
+    /**
+     * 查询我的报表数据
+     */
+
+    @RequestMapping("/ajaxGetReport")
+    public void ajaxGetReport(@RequestBody OrderModel orderModel,  HttpServletResponse response) throws Exception {
+        // 设置页面数据
+        Map<String, Object> context = getRootMap();
+        Order bean = orderService.queryById(orderModel.getId());
+        if (bean == null) {
+            sendFailureMessage(response, "没有找到对应的记录!");
+            return;
+        }
+
+        context.put(SUCCESS, true);
+        context.put("data", bean);
+        HtmlUtil.writerJson(response, context);
+    }
+
+
+
+
 }

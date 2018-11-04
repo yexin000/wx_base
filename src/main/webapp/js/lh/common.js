@@ -145,6 +145,14 @@ function toOrderDetail(orderId) {
 }
 
 /**
+ * 去店铺报表
+ * @param
+ */
+function toMyReport() {
+    window.location.href = '../../html/lh/myReport.html';
+}
+
+/**
  * 去活动列表
  * @param id
  */
