@@ -32,12 +32,12 @@ function loadMyMessage(id){
                 str+='          <p style="display: inline-block;vertical-align: top;margin-left: 0.1rem;">';
                 str+='          <img src="'+   data1.path +'" style="width: 0.3rem;height: 0.3rem;">';
                 str+='          </p>';
-                str+='          <p style=" width:2.35rem; display: inline-block;word-wrap:break-word;vertical-align: top;">';
+                str+='          <p style=" width:2.35rem; display: inline-block;word-wrap:break-word;vertical-align: top; min-height: 0.3rem;text-align:left;">';
                 str+=               firstMessage;
                 str+='          </p>';
             }else{
                 //发给别人的
-                str+='          <p style=" width:2.35rem; display: inline-block;margin-left: 0.28rem;vertical-align: top;">';
+                str+='          <p style=" width:2.35rem; display: inline-block;margin-left: 0.28rem;vertical-align: top;min-height: 0.3rem;text-align:right;">';
                 str+=               '<span style="float: right;width:2.4rem; word-wrap:break-word;">'+firstMessage +'</span>';
                 str+='          </p>';
                 str+='           <p style=" display: inline-block;float: right;vertical-align: top;margin-right: 0.1rem;">';
@@ -61,12 +61,12 @@ function loadMyMessage(id){
                         str+='          <p style="display: inline-block;vertical-align: top;margin-right: 0.1rem">';
                         str+='          <img src="'+   obj.path+'" style="width: 0.3rem;height: 0.3rem;">';
                         str+='          </p>';
-                        str+='          <p style=" width:2.35rem; display: inline-block;word-wrap:break-word;vertical-align: top;">';
+                        str+='          <p style=" width:2.35rem; display: inline-block;word-wrap:break-word;vertical-align: top; min-height: 0.3rem;text-align:left;">';
                         str+=               obj.messagenote;
                         str+='          </p>';
                     }else{
                         //发给别人的
-                        str+='          <p style=" width:2.35rem; display: inline-block;margin-left: 0.28rem;vertical-align: top;">';
+                        str+='          <p style=" width:2.35rem; display: inline-block;margin-left: 0.28rem;vertical-align: top;min-height: 0.3rem;text-align:right;">';
                         str+=               '<span style="float: right;width:2.4rem; word-wrap:break-word;">'+obj.messagenote +'</span>';
                         str+='          </p>';
                         str+='           <p style=" display: inline-block;float: right;vertical-align: top;margin-right: 0.1rem;">';

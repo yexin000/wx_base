@@ -119,6 +119,27 @@ public class MessageController extends BaseController {
     }
 
     /**
+     * 根据ID查找记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/getByV5Id")
+    public void getByV5Id(Integer id,String wxid, HttpServletResponse response) throws Exception {
+        Map<String, Object> context = getRootMap();
+        //当前V5所有子消息
+        MessageModel model = new MessageModel();
+        model.setV5Id(id);
+        List<Message> messageList = messageService.queryByList(model);
+        context.put("messageList",messageList);
+        context.put(SUCCESS, true);
+        HtmlUtil.writerJson(response, context);
+    }
+
+
+    /**
      * 添加或修改数据
      *
      * @param bean

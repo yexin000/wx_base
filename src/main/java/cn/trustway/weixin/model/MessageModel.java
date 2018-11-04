@@ -45,6 +45,12 @@ public class MessageModel extends BaseModel {
      */
     Date createtime;
 
+    /**
+     *v5商品id
+     */
+    Integer v5Id;
+
+
 
     public Integer getId() {
         return id;
@@ -108,5 +114,13 @@ public class MessageModel extends BaseModel {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    public Integer getV5Id() {
+        return v5Id;
+    }
+
+    public void setV5Id(Integer v5Id) {
+        this.v5Id = v5Id;
     }
 }

@@ -58,14 +58,20 @@
             <if test="status != null and status != ''">
                 and t.status = #{status}
             </if>
+            <if test="status != null and status != ''">
+                and t.v5id = #{v5Id}
+            </if>
         </trim>
     </select>
 
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-            <include refid="Message_Base_Column_List" />
+            <include refid="Message_Base_Column_List" /> ,wu.nickname as nickname , wu.avatarUrl as path ,
+        wu1.nickname as tonickname , wu1.avatarUrl as topath
         from t_e_message t
+        left join weixin_user wu on t.wxid  =  wu.wxid
+        left join weixin_user wu1 on t.towxid = wu1.wxid
         where
         t.parentId IS  NULL
         <trim suffixOverrides=",">
@@ -75,9 +81,12 @@
             <if test="parentId != null ">
                 and t.parentId = #{parentId}
             </if>
+            <if test="v5Id != null and v5Id != ''">
+                and t.v5id = #{v5Id}
+            </if>
         </trim>
 
-        order by t.createtime desc
+        order by t.createtime asc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
             ${pager.orderCondition}
         </if>

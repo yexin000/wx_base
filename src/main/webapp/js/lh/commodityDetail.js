@@ -8,6 +8,9 @@ $(function(){
     $("#bidBtnV5").click(function () {
         toV5Purchase();
     });
+    $("#js-board").click(function () {
+        toAuctionItemV5Board(id);
+    });
 
 
 
