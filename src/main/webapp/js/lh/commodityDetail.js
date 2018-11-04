@@ -1,6 +1,6 @@
 $(function(){
     var id = getParam("id");
-
+    var type = getParam("type");
     var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ localStorage.getItem("openId");
     $.ajax({
         url: url,
@@ -11,34 +11,33 @@ $(function(){
         cache: false,
         success:function(data){
             var data = data.data;
-            if(data.vipGrade == 5){
-
-                loadItemData(id);
-                $("#bidBtn").click(function () {
-                    toPurchase();
-                });
-                $("#bidBtnV5").click(function () {
-                    toV5Purchase();
-                });
-                $("#js-board").click(function () {
-                    toAuctionItemV5Board(id);
-                });
-
-                $("#favBtn").click(function () {
-                    $('#loadingToast').show();
-                    var favStatus = $("#favStatus").val();
-                    if(favStatus == "0") {
-                        favorite();
-                    } else {
-                        cancleFavorite();
-                    }
-
-                });
-
-            }else{
-                $("#msgLabel2").html("您的VIP等级不足，无法查看详情");
-                $("#msgDialog2").show();
+            if(type == 3){
+                if(data.vipGrade != 5 ){
+                    $("#msgLabel2").html("您的VIP等级不足，无法查看详情");
+                    $("#msgDialog2").show();
+                }
             }
+            loadItemData(id);
+            $("#bidBtn").click(function () {
+                toPurchase();
+            });
+            $("#bidBtnV5").click(function () {
+                toV5Purchase();
+            });
+            $("#js-board").click(function () {
+                toAuctionItemV5Board(id);
+            });
+
+            $("#favBtn").click(function () {
+                $('#loadingToast').show();
+                var favStatus = $("#favStatus").val();
+                if(favStatus == "0") {
+                    favorite();
+                } else {
+                    cancleFavorite();
+                }
+            });
+
         }
     })
 

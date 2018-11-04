@@ -206,7 +206,7 @@ function toAuctionItemDetail(id,type)
     if(type == "0"){
         window.location.href = '../../html/lh/auctionItemDetail.html?id='+id;
     }else if(type == 3){
-        window.location.href = '../../html/lh/commodityV5Detail.html?id='+id;
+        window.location.href = '../../html/lh/commodityV5Detail.html?id='+id+'&type=3';
     }else{
         window.location.href = '../../html/lh/commodityDetail.html?id='+id;
     }
