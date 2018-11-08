@@ -17,11 +17,18 @@ public interface BlacklistDao<T> extends BaseDao<T> {
   List<T> queryBackgroundByList(BlacklistModel model);
 
   /**
-   * 后台查询黑名单总数
+   * 查询后台黑名单总数
    * @param model
    * @return
    */
   int queryBackgroundByCount(BlacklistModel model);
+
+  /**
+   * 查询小程序黑名单总数
+   * @param model
+   * @return
+   */
+  int queryForegroundByCount(BlacklistModel model);
 
   /**
    * 后台移除黑名单

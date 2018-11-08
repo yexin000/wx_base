@@ -119,7 +119,7 @@ public class BlacklistController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
-    public void ajaxDataList(@RequestBody BlacklistModel model, HttpServletResponse response) throws Exception {
+    public void ajaxDataList(BlacklistModel model, HttpServletResponse response) throws Exception {
         queryDataList(model, response);
     }
 
@@ -132,7 +132,7 @@ public class BlacklistController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxAddBlacklist", method = RequestMethod.POST)
-    public void ajaxAddBlacklist(@RequestBody Blacklist bean, HttpServletResponse response) throws Exception {
+    public void ajaxAddBlacklist(Blacklist bean, HttpServletResponse response) throws Exception {
         String wxid = bean.getCreatorid();
         if(StringUtils.isBlank(wxid)) {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "添加失败，用户信息有误");
@@ -158,7 +158,7 @@ public class BlacklistController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/ajaxRemoveBlacklist", method = RequestMethod.POST)
-    public void ajaxRemoveBlacklist(@RequestBody Blacklist bean, HttpServletResponse response) throws Exception {
+    public void ajaxRemoveBlacklist(Blacklist bean, HttpServletResponse response) throws Exception {
         String wxid = bean.getCreatorid();
         if(StringUtils.isBlank(wxid)) {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "移除失败，用户信息有误");

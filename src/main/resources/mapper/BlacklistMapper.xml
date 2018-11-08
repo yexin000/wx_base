@@ -48,7 +48,21 @@
 
   <!-- 删除记录 -->
   <update id="delete" parameterType="Object">
-      delete from t_e_blacklist where id = #{id}
+      delete from t_e_blacklist where 1=1
+      <trim suffixOverrides=",">
+        <if test="id != null and id != 0">
+          and id = #{id}
+        </if>
+        <if test="creatorid != null and creatorid != ''">
+          and creatorid = #{creatorid}
+        </if>
+        <if test="type != null and type != ''">
+          and type = #{type}
+        </if>
+        <if test="blackid != null and blackid != ''">
+          and blackid = #{blackid}
+        </if>
+      </trim>
   </update>
 
   <!-- 后台删除记录 -->
@@ -75,8 +89,22 @@
     </trim>
   </select>
 
+  <!-- 查询小程序黑名单记录总是 -->
+  <select id="queryForegroundByCount" resultType="java.lang.Integer"
+          parameterType="Object">
+    select
+    count(1)
+    from t_e_blacklist t
+    where 1=1 and t.type='0'
+    <if test="creatorid != null and creatorid != ''">
+      and creatorid = #{creatorid}
+    </if>
+    <if test="blackid != null and blackid != ''">
+      and blackid = #{blackid}
+    </if>
+  </select>
 
-  <!-- 后台查询记录总数 -->
+  <!-- 查询后台黑名单记录总数 -->
   <select id="queryBackgroundByCount" resultType="java.lang.Integer"
           parameterType="Object">
     <if test="status == 1">
@@ -145,12 +173,16 @@
   <!-- 分页查询记录列表 -->
   <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
     select
-    <include refid="Blacklist_Base_Column_List" />
+    <include refid="Blacklist_Base_Column_List" />,u.nickname,u.avatarUrl
     from t_e_blacklist t
+    LEFT JOIN weixin_user u on t.blackid = u.wxid
     where 1=1
     <trim suffixOverrides=",">
       <if test="creatorid != null and creatorid != ''">
         and t.creatorid = #{creatorid}
+      </if>
+      <if test="type != null and type != ''">
+        and t.type = #{type}
       </if>
     </trim>
     order by t.createtime desc

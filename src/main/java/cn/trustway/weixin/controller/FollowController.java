@@ -3,6 +3,7 @@ package cn.trustway.weixin.controller;
 import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.ActivityModel;
+import cn.trustway.weixin.model.BlacklistModel;
 import cn.trustway.weixin.model.FollowModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
@@ -37,9 +38,14 @@ public class FollowController extends BaseController {
     @Autowired(required = false)
     private FollowService<Follow> followService;
 
-
     @Autowired(required = false)
     private ItemResService<ItemRes> itemResService;
+
+    @Autowired
+    private WeixinUserService<WeixinUser> weixinUserService;
+
+    @Autowired
+    private BlacklistService<Blacklist> blacklistService;
 
     /**
      * 首页
@@ -79,6 +85,45 @@ public class FollowController extends BaseController {
     public void ajaxDataList(HttpServletResponse response) throws Exception {
         FollowModel model = new FollowModel();
         queryDataList(model, response);
+    }
+
+    /**
+     * 查询wxid用户是否关注followWxId用户,wxid用户是否添加followWxId用户为黑名单
+     * @param wxid
+     * @param followWxId
+     */
+    @RequestMapping(value = "/ajaxIsFollow", method = RequestMethod.POST)
+    public void ajaxIsFollow(String wxid, String followWxId, HttpServletResponse response) throws Exception {
+        if(StringUtils.isEmpty(wxid) || StringUtils.isEmpty(followWxId)) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "查询失败，用户信息有误");
+        }
+        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
+        if(null == user) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "查询失败，用户信息有误");
+            return;
+        }
+
+        WeixinUser followUser = weixinUserService.queryWeixinUser(followWxId);
+        if(null == followUser) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "查询失败，用户信息有误");
+            return;
+        }
+
+        FollowModel model = new FollowModel();
+        model.setFollowType(1);
+        model.setFollowId(followUser.getId());
+        model.setWxid(wxid);
+        Integer followCount = followService.queryByCount(model);
+
+        BlacklistModel bModel = new BlacklistModel();
+        bModel.setBlackid(followWxId);
+        bModel.setCreatorid(wxid);
+        Integer blackCount = blacklistService.queryForegroundByCount(bModel);
+
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("isFollow", followCount > 0);
+        jsonMap.put("isBlacklist", blackCount > 0);
+        HtmlUtil.writerJson(response, jsonMap);
     }
 
     /**
@@ -155,6 +200,84 @@ public class FollowController extends BaseController {
     public void save(Follow bean, HttpServletRequest request, HttpServletResponse response) throws Exception {
         followService.add(bean);
         sendSuccessMessage(response, "保存成功~");
+    }
+
+    /**
+     * 前端添加关注
+     *
+     * @param bean
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxFollowSave")
+    public void ajaxFollowSave(Follow bean, HttpServletResponse response) throws Exception {
+        if(null == bean) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_FOLLOW_ERROR, "关注失败");
+            return;
+        }
+        String wxid = bean.getWxid();
+        if(StringUtils.isEmpty(wxid) || StringUtils.isEmpty(bean.getFollowWxId())) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "关注失败，用户信息有误");
+            return;
+        }
+
+        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
+        if(null == user) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "关注失败，用户信息有误");
+            return;
+        }
+
+        // 关注用户，验证并设置被关注用户信息
+        if(1 == bean.getFollowType()) {
+            WeixinUser followUser = weixinUserService.queryWeixinUser(bean.getFollowWxId());
+            if(null == followUser) {
+                sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "关注失败，用户信息有误");
+                return;
+            }
+            bean.setFollowId(followUser.getId());
+        }
+
+        followService.add(bean);
+        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "关注成功");
+    }
+
+    /**
+     * 前端取消关注
+     *
+     * @param bean
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxFollowDel")
+    public void ajaxFollowDel(Follow bean, HttpServletResponse response) throws Exception {
+        if(null == bean) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_FOLLOW_ERROR, "取消关注失败");
+            return;
+        }
+        String wxid = bean.getWxid();
+        if(StringUtils.isEmpty(wxid) || StringUtils.isEmpty(bean.getFollowWxId())) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "取消关注失败，用户信息有误");
+            return;
+        }
+
+        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
+        if(null == user) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "取消关注失败，用户信息有误");
+            return;
+        }
+
+        // 关注用户，验证并设置被关注用户信息
+        if(1 == bean.getFollowType()) {
+            WeixinUser followUser = weixinUserService.queryWeixinUser(bean.getFollowWxId());
+            if(null == followUser) {
+                sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "取消关注失败，用户信息有误");
+                return;
+            }
+            bean.setFollowId(followUser.getId());
+        }
+
+        followService.delete(bean);
+        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "取消关注成功");
     }
 
     /**

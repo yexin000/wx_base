@@ -33,6 +33,8 @@ public class Blacklist extends BaseBean {
      */
     private String nickname;
 
+    private String avatarUrl;
+
     private String status;
 
     public Integer getId() {
@@ -89,5 +91,13 @@ public class Blacklist extends BaseBean {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }

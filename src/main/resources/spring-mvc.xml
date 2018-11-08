@@ -86,10 +86,11 @@
 					<value>cn.trustway.weixin.controller.QrCodeController</value>
 					<value>cn.trustway.weixin.controller.FollowController</value>
 					<value>cn.trustway.weixin.controller.MessageController</value>
-          			<value>cn.trustway.weixin.controller.IntegralMallController</value>
+					<value>cn.trustway.weixin.controller.IntegralMallController</value>
 					<value>cn.trustway.weixin.controller.ExchangeRecodeController</value>
 					<value>cn.trustway.weixin.controller.AuctionItemV5Controller</value>
 					<value>cn.trustway.weixin.controller.BigTransactionlController</value>
+					<value>cn.trustway.weixin.controller.BlacklistController</value>
 					<value>/templateMsg/bidOverTemplateMsg.do</value>
 					<value>/templateMsg/rechargeTemplateMsg.do</value>
 					<value>/business/ajaxBusinessJoin.do</value>

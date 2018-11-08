@@ -19,7 +19,7 @@
 <body style="background-color: white;">
 <header class="header-hs ">
   <a href="javaScript:history.go(-1)" class="header-back"></a>
-  <h1>个人资料</h1>
+  <h1 id="titleName">个人资料</h1>
 </header>
 <div class="container mt-050" id="container">
   <div class="page list js_show" style="background-color: white;">
@@ -39,8 +39,6 @@
           <div class="weui-cell__bd">
             <p class="color-999999">关注：&nbsp;&nbsp;&nbsp;&nbsp;<font class="font-18 color-black" id="myFollowNum">0</font></p>
           </div>
-          <div class="weui-cell__ft">
-          </div>
         </a>
       </div>
       <div class="weui-cell">
@@ -57,7 +55,21 @@
   </div>
 </div>
 
+<footer class="myinfo-footer m-hidden" id="footDiv">
+  <input type="hidden" id="followStatus" value="0">
+  <input type="hidden" id="blacklistStatus" value="0">
+  <a id="followBtn" class="myinfo-footer-btn">关注</a>
+  <a id="messageBtn" class="myinfo-footer-btn">留言</a>
+  <a id="blacklistBtn" class="myinfo-footer-btn">加入黑名单</a>
+</footer>
 
+<div id="loadingToast" style="opacity: 1; display: none;">
+  <div class="weui-mask_transparent"></div>
+  <div class="weui-toast">
+    <i class="weui-loading weui-icon_toast"></i>
+    <p class="weui-toast__content">数据加载中</p>
+  </div>
+</div>
 <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>

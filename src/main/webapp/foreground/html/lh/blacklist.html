@@ -32,37 +32,13 @@
       <div class="weui-flex__item">操作</div>
     </div>
   </div>
-  <div class="page__bd page__bd_spacing mt-010">
-    <div class="weui-flex">
-      <div class="weui-flex__item border-bottom-grey">
-        <div class="potrait" id="headImage" onclick="javascript:toMyInfo()">
-          <img src="https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEIWUficQ4kM9ibGdyG9SgfXHqflySjmOf86zYZhBz1ploNorfoVULp9gfeXW0GJiaC2vp2D773Gvliacw/132" id="headImg" alt="">
-        </div>
-      </div>
-      <div class="weui-flex__item border-bottom-grey" style="padding-top: 8px;">明天不下雨</div>
-      <div class="weui-flex__item border-bottom-grey color-999999" style="padding-top: 8px;">取消</div>
-    </div>
+  <div id="dataDiv">
   </div>
-  <div class="page__bd page__bd_spacing mt-010">
-    <div class="weui-flex">
-      <div class="weui-flex__item border-bottom-grey">
-        <div class="potrait" id="headImage" onclick="javascript:toMyInfo()">
-          <img src="https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEIWUficQ4kM9ibGdyG9SgfXHqflySjmOf86zYZhBz1ploNorfoVULp9gfeXW0GJiaC2vp2D773Gvliacw/132" id="headImg" alt="">
-        </div>
-      </div>
-      <div class="weui-flex__item border-bottom-grey" style="padding-top: 8px;">吴山居小白</div>
-      <div class="weui-flex__item border-bottom-grey color-999999" style="padding-top: 8px;">取消</div>
-    </div>
-  </div>
-  <div class="page__bd page__bd_spacing mt-010">
-    <div class="weui-flex">
-      <div class="weui-flex__item border-bottom-grey">
-        <div class="potrait" id="headImage" onclick="javascript:toMyInfo()">
-          <img src="https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEIWUficQ4kM9ibGdyG9SgfXHqflySjmOf86zYZhBz1ploNorfoVULp9gfeXW0GJiaC2vp2D773Gvliacw/132" id="headImg" alt="">
-        </div>
-      </div>
-      <div class="weui-flex__item border-bottom-grey" style="padding-top: 8px;">新月声声慢</div>
-      <div class="weui-flex__item border-bottom-grey color-999999" style="padding-top: 8px;">取消</div>
+  <div id="loadingToast" style="opacity: 1; display: none;">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast">
+      <i class="weui-loading weui-icon_toast"></i>
+      <p class="weui-toast__content">数据加载中</p>
     </div>
   </div>
 </div>
@@ -70,7 +46,66 @@
 <script type="text/javascript" src="../../../js/lh/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../../../js/lh/layout.js"></script>
 <script type="text/javascript" src="../../../js/lh/common.js"></script>
-<script type="text/javascript" src="../../../js/lh/myInfo.js?v=1.0"></script>
+
+<script type="text/javascript">
+  $(function(){
+    loadBlackList();
+  })
+  
+  function loadBlackList() {
+    $('#loadingToast').show();
+    var params = {};
+    params.creatorid = localStorage.getItem("openId");
+    params.type = "0";
+    params.rows = 200;
+    params.page = 1;
+    var url = '/weixin/blacklist/ajaxDataList.do'
+    $.ajax({
+      url: url,
+      type: 'post',
+      data: params,
+      dataType: 'JSON',
+      contentType: "application/json;charset=utf-8",
+      cache: false,
+      success: function (data) {
+        $('#loadingToast').hide();
+        $("#dataDiv").empty();
+        if(data && data.rows && data.rows.length > 0) {
+          for(var i = 0; i < data.rows.length; i ++) {
+            var str = '';
+            str += '<div class="page__bd page__bd_spacing mt-010">'
+                +   '<div class="weui-flex">'
+                +     '<div class="weui-flex__item border-bottom-grey">'
+                +       '<div class="potrait" id="headImage">'
+                +         '<img src="' + data.rows[i].avatarUrl + '" id="headImg" alt="">'
+                +       '</div>'
+                +     '</div>'
+                +     '<div class="weui-flex__item border-bottom-grey" style="padding-top: 8px;">' + data.rows[i].nickname + '</div>'
+                +     '<div class="weui-flex__item border-bottom-grey color-999999" style="padding-top: 8px;" onclick="delBlackList(\'' + data.rows[i].blackid + '\')">取消</div>'
+                +   '</div>'
+                + '</div>'
+
+            $("#dataDiv").append(str);
+          }
+        }
+      }
+    })
+  }
+  
+  function delBlackList(blackid) {
+    var blacklistBean = {};
+    blacklistBean.type = "0";
+    blacklistBean.creatorid = localStorage.getItem("openId");
+    blacklistBean.blackid = blackid;
+    var url= '/weixin/blacklist/ajaxRemoveBlacklist.do';
+    $.post(url,blacklistBean,function(data){
+      $('#loadingToast').hide();
+      showToast(data.msg, function () {
+      });
+      loadBlackList();
+    });
+  }
+</script>
 </body>
 </html>
 

@@ -119,6 +119,8 @@ public class AppInitConstants {
 		public static final String HTTP_NO_BUSINESS_JOIN_ERROR = "10017";
 		// 未找到商家竞拍会
 		public static final String HTTP_NO_BUSINESS_AUCTIONS_ERROR = "10018";
+		// 关注失败
+		public static final String HTTP_FOLLOW_ERROR = "10019";
 	}
 
 	/**
@@ -130,7 +132,7 @@ public class AppInitConstants {
 				.getRequiredWebApplicationContext(servletContext);
 		wxCodeService = (WxCodeService) ctx.getBean("wxCodeService");
 	}
-	
+
 	/**
 	 * 初始化函数
 	 */
@@ -139,7 +141,7 @@ public class AppInitConstants {
 		getWeixinParam();
 		logger.info("加载微信配置结束！");
 	}
-	
+
 	private void getWeixinParam() {
 		// 获取properties
 		Properties prop = new Properties();

@@ -32,6 +32,10 @@ public class BlacklistService<T> extends BaseService<T> {
         return dao.queryBackgroundByCount(model);
     }
 
+    public int queryForegroundByCount(BlacklistModel model) {
+        return dao.queryForegroundByCount(model);
+    }
+
     public void deleteByModel(BlacklistModel model) {
         dao.deleteByModel(model);
     }

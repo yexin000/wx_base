@@ -72,9 +72,9 @@ input::-webkit-input-placeholder {
 
 
 .hhyuan{border-radius: 0.075rem;width: 0.15rem;
-padding-left:0.04rem ;
-padding-right: 0.04rem;
-height: 0.15rem;background-color: #C53434;color: #fff;margin-left: 0.1rem;text-align: center;margin-left: 0.37rem;line-height: 0.16rem; }
+    padding-left:0.04rem ;
+    padding-right: 0.04rem;
+    height: 0.15rem;background-color: #C53434;color: #fff;margin-left: 0.1rem;text-align: center;margin-left: 0.37rem;line-height: 0.16rem; }
 
 .mystore-header{padding:0 0.1rem;color: #fff; margin-top: 0.42rem;height: 1.1rem; background-color: #363636;}
 .mystore-potrait{width: 0.56rem;height: 0.56rem;border-radius: 50%;background-color: rgba(255,255,255,0.6);padding:0.025rem;line-height: 1.5rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;text-align: center;margin: auto;}
@@ -222,4 +222,27 @@ height: 0.15rem;background-color: #C53434;color: #fff;margin-left: 0.1rem;text-a
     width: 16px;
     margin-right: 4px;
     background: url(../../images/lh/icon-article.png) no-repeat center;
+}
+
+.myinfo-footer {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: black;
+    width: 100%;
+    height: 0.4rem;
+    z-index: 1004;
+    zoom: 1;
+    border-top: 1px solid white;
+}
+
+.myinfo-footer-btn {
+    color: white;
+    background: #d0a642;
+    font-size: 0.135rem;
+    float: right;
+    width: 1.6rem;
+    text-align: center;
+    line-height: 0.4rem;
 }
