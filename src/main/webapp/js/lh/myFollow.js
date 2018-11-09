@@ -5,17 +5,9 @@ $(function(){
     var id = getParam("id");
     //加载用户详情
     loadUser(id);
-    //加载关注商品
+    //加载关注数据
     loadMyFollowListData();
 
-    $("#joinOnBtn").click(function () {
-
-    });
-
-    //去报名列表
-    $("#dataDiv").click(function () {
-        window.location.href = '../../html/lh/activityJoinList.html?id='+id;
-    });
 })
 
 //加载个人信息数据
@@ -31,7 +23,9 @@ function loadUser(){
         success:function(data){
             var data = data.data;
             $("#user").html(data.nickName);
-            $("#headImg").attr("src",   data.avatarUrl);
+            $("#followUser").html( data.myFollowNum);
+            $("#followAuction").html( data.myFollowAuctionNum);
+            $("#followAuctionItem").html( data.myFollowAuctionItemNum);
         }
     })
 }

@@ -119,41 +119,36 @@
             contentType : "application/json;charset=utf-8",
     		cache: false,
     		success:function(data){
-    			var dataList = data.rows;
-                if(dataList.length> 0)
-                {
-                	 var str = '';
-                    $.each(dataList,function(i,obj){
-                        var status = obj.status;
-                        var label = "";
-                        if(status == "1") {
-                            label = obj.starttime + "开始，敬请期待";
-                        } else if(status == "2") {
-                            label = obj.starttime + "开始，火热进行中";
-                        } else if(status == "3") {
-                            label = obj.endtime + "已结束";
-                        }
-                        if(obj.logoPath == null || obj.logoPath == '') {
-                            obj.logoPath = "foreground/images/no-image.jpg";
-                        }
+                var auctionList = data.rows;
 
-                        str+='<div class="posr2" onclick="toAuctionDetail('+obj.id+')">';
-                        str+='	<div class="left"  >';
-                        var loadClass = '';
-                        if(parseInt(obj.width) > parseInt(obj.height * 1.8)){
-                            loadClass = 'width';
-                        }else{
-                            loadClass = 'length';
-                        }
-                        str+=' 		<img src="' +  hostPath +  obj.logoPath +  '" alt=""  class="'+loadClass+'" >';
-                        str+='	</div>';
-                        str+='<p style="padding-top: 1.4rem; font-size:18px;font-weight:bold; margin-left: 0.04rem;">'+obj.name+'</p>';
-                        str+='<p style="margin-left: 0.04rem;"> '+label+'</p>';
-                        str+='</div>';
-                    });
+                if(auctionList.length > 0) {
+                    $("#auctionNoDataDiv").hide();
+                    $(".mystore-auction-preview").remove();
+                    for(var i = 0; i < auctionList.length; i ++) {
+                        var str = '';
+                        str += '<div class="weui-form-preview mystore-auction-preview">'
+                            +   '<div class="weui-form-preview__hd mystore-auction-preview-hd">'
+                            +     '<div class="weui-form-preview__item">'
+                            +       '<i class="mystore-vip-icon"></i>'
+                            +       '<em class="weui-form-preview__value">专场名称  ' + auctionList[i].name + '</em>'
+                            +     '</div>'
+                            +   '</div>'
+                            +   '<div class="weui-form-preview__bd mystore-auction-preview-bd" style="text-align: center;" onclick="toAuctionDetail(' + auctionList[i].id + '' + ')">'
+                            +     '<div class="weui-form-preview__item">'
+                            +       '<img class="mystore-auction-img" src="' + hostPath + auctionList[i].logoPath + '" style="height: 120px;width: ' + 120 /auctionList[i].height * auctionList[i].width + 'px;">'
+                            +     '</div>'
+                            +   '</div>'
+                            +   '<div class="weui-cell" style="background-color: black;">'
+                            +     '<div class="weui-cell__hd"><img class="headimg mystore-auction-headimg" src="'+auctionList[i].path+'"></div>'
+                            +     '<div class="weui-cell__bd"><p class="headtext mystore-auction-headtext">  '+auctionList[i].wxName+' </p></div>'
+                            +     '<div class="weui-cell__hd"><img src="/weixin/images/lh/mystore-fav-icon.png" class="mystore-auction-favicon"></div>'
+                            +     '<div class="weui-cell__ft">0</div>'
+                            +   '</div>'
+                            +'</div>'
+                        $("#dataDiv").append(str);
+                    }
                 }
-                $("#dataDiv").append(str);
-
+               // $("#dataDiv").append(str);
     		}
     	})
     }

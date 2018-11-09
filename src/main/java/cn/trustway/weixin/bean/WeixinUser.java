@@ -79,6 +79,18 @@ public class WeixinUser extends BaseBean {
 	 */
 	private Integer myFollowNum;
 
+
+	/**
+	 * 关注展览数
+	 */
+	private Integer myFollowAuctionNum;
+
+	/**
+	 * 关注展品数
+	 */
+	private Integer myFollowAuctionItemNum;
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -205,5 +217,21 @@ public class WeixinUser extends BaseBean {
 
 	public void setMyFollowNum(Integer myFollowNum) {
 		this.myFollowNum = myFollowNum;
+	}
+
+	public Integer getMyFollowAuctionNum() {
+		return myFollowAuctionNum;
+	}
+
+	public void setMyFollowAuctionNum(Integer myFollowAuctionNum) {
+		this.myFollowAuctionNum = myFollowAuctionNum;
+	}
+
+	public Integer getMyFollowAuctionItemNum() {
+		return myFollowAuctionItemNum;
+	}
+
+	public void setMyFollowAuctionItemNum(Integer myFollowAuctionItemNum) {
+		this.myFollowAuctionItemNum = myFollowAuctionItemNum;
 	}
 }

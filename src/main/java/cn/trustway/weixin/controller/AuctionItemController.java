@@ -419,26 +419,7 @@ public class AuctionItemController extends BaseController {
             sendFailure(response,"-1", "没有找到对应的记录!");
             return;
         }
-        /**
-         *
-        //如果有拍卖会id，那么要考虑到拍卖会是否开始，否则继续
-        if(null != bean.getAuctionId()){
-            Auction auction = auctionService.queryById(bean.getAuctionId());
-            if(null != auction  ){
-                //已经开始的拍卖会才能卖
-                if("0".equals(auction.getStatus())){
-                    sendFailure(response, AppInitConstants.HttpCode.HTTP_PURCHASE_FAIL, "拍卖会信息错误!");
-                    return;
-                }else if("1".equals(auction.getStatus())){
-                    sendFailure(response, AppInitConstants.HttpCode.HTTP_PURCHASE_NOSTART_FAIL, "拍卖会未开始!");
-                    return;
-                }else if("3".equals(auction.getStatus())){
-                    sendFailure(response, AppInitConstants.HttpCode.HTTP_PURCHASE_TIMEOUT_FAIL, "拍卖会已结束!");
-                    return;
-                }
-            }
-        }
-         */
+
         //判断库存是否还有
         if(bean.getStock() < 1)
         {

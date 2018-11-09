@@ -12,7 +12,7 @@ public class Order extends BaseBean {
      */
     private Integer id;
     /**
-     * 订单类型:1-竞拍,2-买卖,3-充值,4-报名活动
+     * 订单类型:1-竞拍,2-买卖,3-充值,4-报名活动,5鉴定支付
      */
     private String orderType;
     /**

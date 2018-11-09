@@ -126,7 +126,7 @@ function loadData()
                         if(obj.attribute != '0') {
                           endTime = '';
                         }
-                        str += '<a href="javascript:toAuctionItemDetail('+obj.id+','+obj.attribute+');" class="weui-grid" style="position: initial;padding: 10px 0px;">'
+                        str += '<a href="javascript:toAuctionItemDetail('+obj.id+','+obj.attribute+');" class="weui-grid1" style="position: initial;padding: 10px 0px;">'
                             +       '<div class="mystore-auctionitem-div">'
                             +           '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
                             +               '<img src="' + coverImage + '" alt="">'

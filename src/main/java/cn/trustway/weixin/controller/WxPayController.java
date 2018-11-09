@@ -1,14 +1,8 @@
 package cn.trustway.weixin.controller;
 
-import cn.trustway.weixin.bean.Activity;
-import cn.trustway.weixin.bean.MoneyStream;
-import cn.trustway.weixin.bean.Order;
-import cn.trustway.weixin.bean.WeixinUser;
+import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.common.AppInitConstants;
-import cn.trustway.weixin.service.ActivityService;
-import cn.trustway.weixin.service.MoneyStreamService;
-import cn.trustway.weixin.service.OrderService;
-import cn.trustway.weixin.service.WeixinUserService;
+import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.HttpClientUtil;
 import cn.trustway.weixin.util.MD5;
@@ -52,6 +46,10 @@ public class WxPayController extends BaseController {
 
     @Autowired(required = false)
     private ActivityService<Activity> activityService;
+
+    @Autowired
+    private IdentifyService<Identify> identifyService;
+
     /**
      * 微信支付统一下单
      *
@@ -170,6 +168,7 @@ public class WxPayController extends BaseController {
     }
 
     /**
+     * 微信支付成功-- 异步回调
      * @param request
      * @param response
      */
@@ -197,7 +196,7 @@ public class WxPayController extends BaseController {
                 log.info("微信回调返回商户订单号：" + outTradeNo);
                 //访问DB
                 Order order = orderService.queryById(orderId);
-                System.out.println(">>>>>>>>>>>>>>>"+order.getId()+"正在处理回调，回调之前的订单状态为:"+order.getStatus());
+
                 if("3".equals(order.getStatus())){
                     //已经支付过的订单
                     writeMessageToResponse(response, "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>");
@@ -220,6 +219,9 @@ public class WxPayController extends BaseController {
                     activityService.addJoin(params);
                 }else if("5".equals(order.getOrderType())){
                     //鉴定订单，只要支付成功，修改状态就ok了。
+                    Identify identify = identifyService.queryById(order.getItemId());
+                    identify.setStatus("2");//已付款，待鉴定
+                    identifyService.updateBySelective(identify);
                 }
             }
         } catch (IOException e) {

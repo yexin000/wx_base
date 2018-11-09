@@ -20,13 +20,19 @@
 	<h1>我的关注</h1>
 </header>
 <!-- 头部 -->
-<div style="margin-top: 0.46rem;height:1.1rem;background-color: #fff"  >
-	<img src="" id="headImg" style="border-radius: 50%;width: 0.8rem;height: 0.8rem;margin-top: 0.15rem" >
-	<span id="user"></span>
+<div style="margin-top: 0.46rem;background:url(../../../images/lh/bgimg.jpg)no-repeat;width:100%;"  >
+	<img src="" id="headImg" style="border-radius: 50%;width: 0.8rem;height: 0.8rem;margin-top: 0.15rem;display: inline-block;vertical-align:text-top;" >
+	<div style="display: inline-block;vertical-align:text-top;margin-top: 0.2rem;">
+		<span id="user" style="color: #f0f0f0;font-size: 0.14rem;"></span>  </br>
+		<span  style="color: #f0f0f0">关注的用户：<label id="followUser"></label></span></br>
+		<span  style="color: #f0f0f0">关注的专场：<label id="followAuction"></label></span></br>
+		<span  style="color: #f0f0f0">关注的商品：<label id="followAuctionItem"></label></span>
+	</div>
+
 </div>
 
 <div style="margin-top: 0.1rem;background-color: #FFFFFF;min-height: 1rem;" id="dataListDiv1" >
-	<p>关注用户 </p>
+	<p>关注用户 <span style="float: right;margin-right: 0.1rem;">查看更多</span>  </p>
 </div>
 
 <div style="margin-top: 0.1rem;background-color: #FFFFFF;min-height: 1rem;" id="dataListDiv2"  >
