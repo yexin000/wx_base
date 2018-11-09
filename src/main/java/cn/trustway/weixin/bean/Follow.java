@@ -54,6 +54,40 @@ public class Follow extends BaseBean {
      */
     private Date createTime;
 
+    /**
+     *会展创建人名称
+     */
+    private String createAuctionName;
+
+
+    /**
+     *会展创建人头像
+     */
+    private String createAuctionPath;
+
+    /**
+     *结束时间
+     */
+    private Date endTime;
+
+    /**
+     * 展品创建人
+     */
+    private String itemCreator;
+
+
+    /**
+     * 展品创建人头像
+     */
+    private String itemCreatorPath;
+
+    /**
+     * 价格
+     */
+    private Double price;
+
+    private List<ItemRes> resList;
+
     public Integer getId() {
         return id;
     }
@@ -124,5 +158,61 @@ public class Follow extends BaseBean {
 
     public void setFollowWxId(String followWxId) {
         this.followWxId = followWxId;
+    }
+
+    public String getCreateAuctionName() {
+        return createAuctionName;
+    }
+
+    public void setCreateAuctionName(String createAuctionName) {
+        this.createAuctionName = createAuctionName;
+    }
+
+    public String getCreateAuctionPath() {
+        return createAuctionPath;
+    }
+
+    public void setCreateAuctionPath(String createAuctionPath) {
+        this.createAuctionPath = createAuctionPath;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getItemCreator() {
+        return itemCreator;
+    }
+
+    public void setItemCreator(String itemCreator) {
+        this.itemCreator = itemCreator;
+    }
+
+    public String getItemCreatorPath() {
+        return itemCreatorPath;
+    }
+
+    public void setItemCreatorPath(String itemCreatorPath) {
+        this.itemCreatorPath = itemCreatorPath;
+    }
+
+    public List<ItemRes> getResList() {
+        return resList;
+    }
+
+    public void setResList(List<ItemRes> resList) {
+        this.resList = resList;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

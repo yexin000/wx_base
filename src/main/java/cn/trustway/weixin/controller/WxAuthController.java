@@ -185,14 +185,14 @@ public class WxAuthController extends BaseController {
 
 
         FollowModel followAuctionModel = new FollowModel();
-        myFollowModel.setWxid(wxid);
-        followModel.setFollowType(3);
+        followAuctionModel.setWxid(wxid);
+        followAuctionModel.setFollowType(3);
         int followAuctionNum = followService.queryByCount(followAuctionModel);
         bean.setMyFollowAuctionNum(followAuctionNum);
 
         FollowModel followAuctionItemModel = new FollowModel();
-        myFollowModel.setWxid(wxid);
-        followModel.setFollowType(2);
+        followAuctionItemModel.setWxid(wxid);
+        followAuctionItemModel.setFollowType(2);
         int followAuctionItemNum = followService.queryByCount(followAuctionItemModel);
         bean.setMyFollowAuctionItemNum(followAuctionItemNum);
 

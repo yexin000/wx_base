@@ -76,3 +76,13 @@ function loadMyFollowListData(){
     })
 }
 
+
+$("#more1").click(function () {
+    window.location.href = '../../html/lh/myFollowUser.html?';
+});
+$("#more2").click(function () {
+    window.location.href = '../../html/lh/myFollowAuction.html';
+});
+$("#more3").click(function () {
+    window.location.href = '../../html/lh/myFollowAuctionItem.html';
+});

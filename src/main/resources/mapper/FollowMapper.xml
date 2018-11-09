@@ -129,4 +129,75 @@
     </select>
 
 
+    <!-- 分页查询记录列表 -->
+    <select id="queryUserByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Follow_Base_Column_List" /> ,wu.nickname as followName , wu.avatarurl as path
+        from t_e_follow t
+        left join weixin_user wu on wu.id = t.followid
+        where 1=1
+        <trim suffixOverrides=",">
+                and t.followtype = 1
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
+        </trim>
+        order by t.createtime desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryAuctionByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Follow_Base_Column_List" /> ,tea.name as followName , wu.nickname as createAuctionName, wu.avatarurl as createAuctionPath
+        from t_e_follow t
+        left join t_e_auction tea on tea.id = t.followid
+        left join weixin_user wu on wu.wxid = tea.wxid
+        where 1=1
+        <trim suffixOverrides=",">
+            and t.followtype = 3
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
+        </trim>
+        order by t.createtime desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryAuctionItemByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Follow_Base_Column_List" /> ,teau.name as followName , teau.endTime , teau.startprice as price, wu.nickname as itemCreator, wu.avatarurl as itemCreatorPath
+        from t_e_follow t
+        left join t_e_auction_item teau on teau.id = t.followid
+        left join weixin_user wu on wu.wxid = teau.uploadwxid
+        where 1=1
+        <trim suffixOverrides=",">
+            and t.followtype = 2
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
+        </trim>
+        order by t.createtime desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+
+
+
 </mapper>

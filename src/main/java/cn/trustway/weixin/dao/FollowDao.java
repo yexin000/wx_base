@@ -1,6 +1,7 @@
 package cn.trustway.weixin.dao;
 
 import cn.trustway.weixin.bean.Follow;
+import cn.trustway.weixin.model.FollowModel;
 
 import java.util.List;
 import java.util.Map;
@@ -42,5 +43,25 @@ public interface FollowDao<T> extends BaseDao<T> {
      * @return
      */
     List<Follow> queryFollowAuctionByList(Map<String, Object> params);
+
+
+    /**
+     * 查询我关注的更多用户
+     * @return
+     */
+    List<Follow> queryUserByList(FollowModel followModel);
+
+
+    /**
+     * 查询我关注的更多展览
+     * @return
+     */
+    List<Follow> queryAuctionByList(FollowModel followModel);
+
+    /**
+     * 查询我关注的更多拍品
+     * @return
+     */
+    List<Follow> queryAuctionItemByList(FollowModel followModel);
 
 }

@@ -5,6 +5,7 @@ import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.ActivityModel;
 import cn.trustway.weixin.model.BlacklistModel;
 import cn.trustway.weixin.model.FollowModel;
+import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.apache.commons.lang.StringUtils;
@@ -86,6 +87,56 @@ public class FollowController extends BaseController {
         FollowModel model = new FollowModel();
         queryDataList(model, response);
     }
+
+
+    /**
+     * 前端数据列表查询
+     *
+     * @param
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/ajaxUserDataList", method = RequestMethod.POST)
+    public void ajaxUserDataList(String wxid,HttpServletResponse response) throws Exception {
+        FollowModel model = new FollowModel();
+        model.setWxid(wxid);
+        model.setFollowType(1);
+        queryUserDataList(model, response);
+    }
+
+    /**
+     * 前端数据列表查询
+     *
+     * @param
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/ajaxAuctionDataList", method = RequestMethod.POST)
+    public void ajaxAuctionDataList(String wxid,HttpServletResponse response) throws Exception {
+        FollowModel model = new FollowModel();
+        model.setWxid(wxid);
+        model.setFollowType(3);
+        queryAuctionDataList(model, response);
+    }
+
+    /**
+     * 前端数据列表查询
+     *
+     * @param
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/ajaxAuctionItemDataList", method = RequestMethod.POST)
+    public void ajaxAuctionItemDataList(String wxid,HttpServletResponse response) throws Exception {
+        FollowModel model = new FollowModel();
+        model.setWxid(wxid);
+        model.setFollowType(2);
+        queryAuctionItemDataList(model, response);
+    }
+
 
     /**
      * 查询wxid用户是否关注followWxId用户,wxid用户是否添加followWxId用户为黑名单
@@ -187,6 +238,52 @@ public class FollowController extends BaseController {
         HtmlUtil.writerJson(response, jsonMap);
     }
 
+    private void queryUserDataList(FollowModel model, HttpServletResponse response) throws Exception {
+        List<Follow> dataList = followService.queryUserByList(model);
+        // 设置页面数据
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("total", followService.queryByCount(model));
+        jsonMap.put("rows", dataList);
+        HtmlUtil.writerJson(response, jsonMap);
+    }
+
+    private void queryAuctionDataList(FollowModel model, HttpServletResponse response) throws Exception {
+        List<Follow> dataList = followService.queryAuctionByList(model);
+        // 设置页面数据
+        //需要查询第一张图
+        if(null != dataList && dataList.size()>0){
+            for(Follow follow : dataList){
+                Map<String, Object> imgParams = new HashMap<>();
+                imgParams.put("conid",follow.getFollowId());
+                ItemRes ir = itemResService.queryByConId(imgParams);
+                if(null != ir){
+                    follow.setPath(ir.getPath());
+                }
+            }
+        }
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("total", followService.queryByCount(model));
+        jsonMap.put("rows", dataList);
+        HtmlUtil.writerJson(response, jsonMap);
+    }
+
+    private void queryAuctionItemDataList(FollowModel model, HttpServletResponse response) throws Exception {
+        List<Follow> dataList = followService.queryAuctionItemByList(model);
+        // 设置页面数据
+        if(null != dataList && dataList.size()>0){
+            for(Follow follow : dataList){
+                ItemResModel resModel  = new ItemResModel();
+                resModel.setConid(follow.getFollowId());
+                resModel.setConType("2");
+                List<ItemRes> resDataList = itemResService.queryByList(resModel);
+                follow.setResList(resDataList);
+            }
+        }
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("total", followService.queryByCount(model));
+        jsonMap.put("rows", dataList);
+        HtmlUtil.writerJson(response, jsonMap);
+    }
 
     /**
      * 关注
