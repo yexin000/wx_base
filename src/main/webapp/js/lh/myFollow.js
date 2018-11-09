@@ -23,6 +23,7 @@ function loadUser(){
         success:function(data){
             var data = data.data;
             $("#user").html(data.nickName);
+            $("#headImg").attr("src", data.avatarUrl);
             $("#followUser").html( data.myFollowNum);
             $("#followAuction").html( data.myFollowAuctionNum);
             $("#followAuctionItem").html( data.myFollowAuctionItemNum);
