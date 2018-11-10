@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.ExpectedDao">
+    <!-- Result Map -->
+    <resultMap id="ExpectedBaseResultMap" type="cn.trustway.weixin.bean.Expected">
+        <result column="id" property="id" />
+        <result column="commodityId" property="commodityId" />
+        <result column="price" property="price" />
+        <result column="wxid" property="wxid" />
+        <result column="createtime" property="createtime" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <!-- sys_menu table all fields -->
+    <sql id="Expected_Base_Column_List">
+		t.id,t.commodityId,t.wxid,t.createtime,t.status,t.price
+	</sql>
+
+    <!-- 插入记录 -->
+    <insert id="add" parameterType="Object">
+        insert into
+        t_e_expected(id,commodityId,wxid,createtime,status,price)
+        values(null,#{commodityId},#{wxid} ,now(),#{status},#{price} );
+    </insert>
+
+    <!-- 根据id，修改记录 -->
+    <update id="update" parameterType="Object">
+		update t_e_expected set
+		status=#{status}
+		where id=#{id}
+	</update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateBySelective" parameterType="Object">
+        update t_e_expected set
+        <trim suffixOverrides=",">
+            <if test="status != null and status != '' ">
+                status=#{status},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <update id="delete" parameterType="Object">
+        update t_e_expected set status = '0' where id = #{id}
+    </update>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById" resultMap="ExpectedBaseResultMap" parameterType="Object">
+        select
+          <include refid="Expected_Base_Column_List" />
+        from t_e_expected t
+        where t.id = #{id}
+    </select>
+
+    <!-- 根据id查询报名记录 -->
+    <select id="queryJoinById" resultType="java.lang.Integer" parameterType="Object">
+        select count(1) from t_e_expected teaj where teaj.commodityId = #{id} and wx_id = #{wxid}
+    </select>
+
+    <!-- 记录总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(1) from t_e_expected t
+        where 1=1 and t.status != 0
+        <trim suffixOverrides=",">
+            <if test="status != null and status != ''">
+                and t.status = #{status}
+            </if>
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
+            <if test="commodityId != null and commodityId != ''">
+                and t.commodityId = #{commodityId}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryByList" resultMap="ExpectedBaseResultMap" parameterType="Object">
+        select
+            <include refid="Expected_Base_Column_List" /> , wu.nickname as nickName , wu.avatarurl as path , teai.uploadwxid
+        from t_e_expected t
+        left join weixin_user wu on wu.wxid = t.wxid
+        left join t_e_auction_item teai on teai.id = t.commodityId
+        where 1=1 and t.status !=  0
+        <trim suffixOverrides=",">
+            <if test="status != null and status != ''">
+                and t.status = #{status}
+            </if>
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
+            <if test="commodityId != null and commodityId != ''">
+                and t.commodityId = #{commodityId}
+            </if>
+        </trim>
+        order by t.createtime desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+
+
+</mapper>

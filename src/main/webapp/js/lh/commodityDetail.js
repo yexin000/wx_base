@@ -1,5 +1,5 @@
+var id = getParam("id");
 $(function(){
-    var id = getParam("id");
     var type = getParam("type");
     var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ localStorage.getItem("openId");
     $.ajax({
@@ -288,6 +288,13 @@ $("#shareBtn").click(function () {
         wx.miniProgram.navigateTo({ url: shareUrl });
     }
 });
+
+
+$("#estimatePrice").click(function () {
+    window.location.href = '../../html/lh/estimatePrice.html?id='+id;
+});
+
+
 
 function goBack() {
     var lastUrl = document.referrer;

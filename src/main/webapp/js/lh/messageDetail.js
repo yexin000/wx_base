@@ -35,7 +35,12 @@ function loadMyMessage(id){
             str+='      <div>';
             if(localStorage.getItem("openId")  == data1.toWxid){
                 str+='          <p style="display: inline-block;vertical-align: top;margin-left: 0.1rem;">';
-                str+='          <img src="'+   data1.path +'" style="width: 0.3rem;height: 0.3rem;">';
+                if(data1.path){
+                    str+='          <img src="'+  data1.path +'" style="width: 0.3rem;height: 0.3rem;">';
+                }else{
+                    str+='          <img src="../../../images/lh/portrait2.png" style="width: 0.3rem;height: 0.3rem;">';
+                }
+
                 str+='          </p>';
                 str+='          <p style=" width:2.35rem; display: inline-block;word-wrap:break-word;vertical-align: top; min-height: 0.3rem;text-align:left;">';
                 str+=               firstMessage;
