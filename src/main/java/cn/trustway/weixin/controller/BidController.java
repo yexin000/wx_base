@@ -2,11 +2,14 @@ package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.AuctionItem;
 import cn.trustway.weixin.bean.BidBean;
+import cn.trustway.weixin.bean.Blacklist;
 import cn.trustway.weixin.bean.WeixinUser;
 import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.BidModel;
+import cn.trustway.weixin.model.BlacklistModel;
 import cn.trustway.weixin.service.AuctionItemService;
 import cn.trustway.weixin.service.BidService;
+import cn.trustway.weixin.service.BlacklistService;
 import cn.trustway.weixin.service.WeixinUserService;
 import cn.trustway.weixin.util.DateUtil;
 import cn.trustway.weixin.util.HtmlUtil;
@@ -44,6 +47,9 @@ public class BidController extends BaseController {
 
     @Autowired
     private WeixinUserService<WeixinUser> weixinUserService;
+
+    @Autowired
+    private BlacklistService<Blacklist> blacklistService;
 
     /**
      * 首页
@@ -86,6 +92,16 @@ public class BidController extends BaseController {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_ERROR, "出价失败，商品信息有误");
             return;
         }
+
+        BlacklistModel bModel = new BlacklistModel();
+        bModel.setBlackid(wxid);
+        bModel.setCreatorid(auctionItem.getUploadWxid());
+        Integer blackCount = blacklistService.queryForegroundByCount(bModel);
+        if(blackCount > 0) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_ERROR, "出价失败，已被商家加入黑名单");
+            return;
+        }
+
         bean.setAuctionItemName(auctionItem.getAuctionName());
         //判断当前是否在竞拍时间中
         Date now = new Date();

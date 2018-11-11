@@ -204,8 +204,8 @@ function toActivityDetail(actId) {
  * 去用户详情
  * @param id
  */
-function toUserInfo(wxId) {
-    window.location.href = '../../html/lh/myInfo.html?wxId='+wxId;
+function toUserInfo(wxid) {
+    window.location.href = '../../html/lh/myInfo.html?wxid='+wxid;
 }
 
 /**

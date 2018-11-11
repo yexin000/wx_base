@@ -175,7 +175,7 @@ function loadAuctionItemBid(id){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     str+='<div class="bid" style="color: white;">';
-                    str+='	<div class="biddiv1">';
+                    str+='	<div class="biddiv1" onclick="toUserInfo(\'' + obj.wxid + '\')">';
                     str+=' 		<img src="'  + obj.avatarUrl + '" class="bidimg">';
                     str+='	      <span class="biddiv1span">'+ obj.wxUserName+'</span>';
                     str+='  </div>';

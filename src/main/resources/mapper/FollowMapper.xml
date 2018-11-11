@@ -132,7 +132,7 @@
     <!-- 分页查询记录列表 -->
     <select id="queryUserByList" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="Follow_Base_Column_List" /> ,wu.nickname as followName , wu.avatarurl as path
+        <include refid="Follow_Base_Column_List" /> ,wu.nickname as followName , wu.avatarurl as path, wu.wxid as followwxId
         from t_e_follow t
         left join weixin_user wu on wu.id = t.followid
         where 1=1

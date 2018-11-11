@@ -52,7 +52,7 @@ function loadMyFollowListData(){
             var str2 = '';
             var str3 = '';
             $.each(dataList1,function(i,obj){
-                str1+='<div style="height: 0.6rem;width: 0.6rem;margin-top: 0.1rem;display: inline-block;margin-left: 0.1rem;" onclick="toUserInfo('+obj.followWxId+')">';
+                str1+='<div style="height: 0.6rem;width: 0.6rem;margin-top: 0.1rem;display: inline-block;margin-left: 0.1rem;" onclick="toUserInfo(\''+obj.followWxId+'\')">';
                 //因为头像都是微信过来的，所以不需要拼地址
                 str1+='       <img src="' +  obj.path +  '" style="width: 100%;">';
                 str1+='   </div>';
