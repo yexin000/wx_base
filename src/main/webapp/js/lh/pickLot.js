@@ -35,18 +35,19 @@ function loadIndexAuctionItem(){
                         price = dataList[i].startPrice;
                     }
                     str += '<a href="javascript:toAuctionItemDetail(\''+dataList[i].id+'\',\'' + dataList[i].attribute + '\');" class="weui-grid1" style="position: initial;padding: 10px 0px; ">'
-                        +   '<div class="mystore-auctionitem-div">'
-                        +     '<div class="weui-grid__icon" style="width: 90%;height: 180px;">'
-                        +       '<img src="' + coverImage + '" alt="">'
-                        +     '</div>'
-                        +     '<p class="weui-grid__label auctionitem-auctionitem-label">名称:' + dataList[i].name + '</p>'
-                        +     '<p class="weui-grid__label auctionitem-auctionitem-label">作者:' + dataList[i].uploader + '</p>'
-                        +     '<p class="weui-grid__label auctionitem-auctionitem-label">价格:' + price + '</p>'
-                        +     '<p class="weui-grid__label auctionitem-auctionitem-label">结束时间:' + dataList[i].endTime + '</p>'
-                        +   '</div>'
-                        +'</a>';
-                    $("#auctionItemData").append(str);
+                    str +=  '<div class="mystore-auctionitem-div">'
+                    str +=     '<div   style="width: 90%;height: 180px;overflow: hidden;border: 1px solid yellow; border-radius: 3px;">'
+                    str +=       '<img src="' + coverImage + '" alt="" style="width: 100%;overflow: hidden;">'
+                    str +=     '</div>'
+                    str +=     '<p class="weui-grid__label auctionitem-auctionitem-label">名称:' + dataList[i].name + '</p>'
+                    str +=     '<p class="weui-grid__label auctionitem-auctionitem-label">作者:' + dataList[i].uploader + '</p>'
+                    str +=     '<p class="weui-grid__label auctionitem-auctionitem-label">价格:' + price + '</p>'
+                    str +=     '<p class="weui-grid__label auctionitem-auctionitem-label">结束时间:' + dataList[i].endTime + '</p>'
+                    str +=   '</div>'
+                    str +='</a>';
+
                 });
+                $("#auctionItemData").append(str);
             }
 
             if(datalength <= (pageId * 10)){

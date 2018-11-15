@@ -127,12 +127,12 @@ function toBusinessDetail(id)
 }
 
 /**
-* 去商家详情
+* 去消息详情
 * @param id
 */
-function toMessageDetail(id)
+function toMessageDetail(id,wxid)
 {
-    window.location.href = '../../html/lh/messageDetail.html?id='+id;
+    window.location.href = '../../html/lh/messageDetail.html?id='+id+'&wxid='+wxid;
 }
 
 
@@ -267,6 +267,13 @@ function toMyStore() {
  */
 function toMyReturn() {
     window.location.href = '/weixin/foreground/html/lh/myReturn.html';
+}
+
+/**
+ * 我去的地址
+ */
+function toMyAddress() {
+    window.location.href = '/weixin/foreground/html/lh/address.html';
 }
 
 

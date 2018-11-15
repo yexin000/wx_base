@@ -1,7 +1,13 @@
 var pageId = 1;
+var wxid = getParam("wxid");
 $(function(){
     var id = getParam("id");
-    loadMyMessage(id);
+    if(wxid){
+        loadManMessage(id);
+    }else{
+        loadMyMessage(id);
+    }
+
 })
 
 $("#sendMessage").click(function () {
@@ -113,7 +119,12 @@ function sendMessage(){
     messageModel.messagetype = 2;
     messageModel.status = 0;
     messageModel.wxid = localStorage.getItem('openId');
-    messageModel.toWxid = '0';
+    if(wxid){
+        messageModel.toWxid = wxid;
+    }else{
+        messageModel.toWxid = '0';
+    }
+
     var url= '/weixin/message/save.do';
     $.ajax({
         url: url,

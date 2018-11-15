@@ -4,6 +4,7 @@
         loadindexBanner();
         loadindexAuction();
         loadindexAuctionItem();
+        loadIndexActivity();
         //  记得从小程序回调请求里面获取wxid，存到localStorage
         if(getParam("openId"))
         {
@@ -30,28 +31,30 @@
             })
         }
 
-        var p=0,t=0;
-        $(window).scroll(function(){
-            var p=$(document).scrollTop();
-            //console.log($(document).height());
-            if(t < p){
-            	//页面下滑动距离超过整体高度10%,隐藏搜索框
-            	if(p>$(document).height()*0.1){
-                $(".header-index-top").css({"top":"-0.44rem"});
-            	}
-                $(".header-msg").css({"background-image":"url(images/msg_n2.png)"});
-                $(".header-room img").attr("src","images/room2.png");
-                //页面下滑动距离超过800,显示回到顶部按钮
-                if(p>800){
-                	$("#backtop").css("right","0");
-                }
-            }else{//页面上滑动则显示搜索框。隐藏:回到顶部按钮
-               	$(".header-index-top").css({"top":"0", "background-image":"linear-gradient(180deg,rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.2) 80%,rgba(0,0,0,0) 100%)",});
-                $("#backtop").css("right","-20%");
-            }      
-            setTimeout(function(){t = p;},0);
-        });
    })
+
+
+//加载第一条活动标题
+function loadIndexActivity(){
+    $('#loadingToast').show();
+    var url= '/weixin/activity/ajaxDataList.do';
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: {} ,
+        dataType: 'JSON',
+        contentType : "application/json;charset=utf-8",
+        cache: false,
+        success:function(data){
+            $('#loadingToast').hide();
+            var dataList = data.rows;
+            if(dataList.length> 0)
+            {
+                $("#pmd").html(dataList[0].name);
+            }
+        }
+    })
+}
 
 
     //加载首页轮播图数据

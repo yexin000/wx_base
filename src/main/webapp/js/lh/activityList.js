@@ -3,7 +3,7 @@ $(function(){
     loadActivity();
 })
 
-//加载收货地址
+//加活动
 function loadActivity(){
     $('#loadingToast').show();
     var url= '/weixin/activity/ajaxDataList.do';

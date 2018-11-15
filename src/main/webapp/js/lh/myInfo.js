@@ -72,6 +72,10 @@ $(function(){
       });
     }
   })
+
+    $("#messageBtn").click(function () {
+        toMessageDetail(0,getParam("wxid"));
+    })
 })
 
 //加载个人信息数据
