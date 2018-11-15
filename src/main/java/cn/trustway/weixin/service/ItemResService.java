@@ -35,4 +35,12 @@ public class ItemResService<T> extends BaseService<T> {
         return getDao().queryByConId(params);
     }
 
+    /**
+     * 根据关联id和关联类型删除关联关系
+     * @param params
+     */
+    public void deleteByConidAndContype(Map<String, Object> params) {
+        getDao().deleteByConidAndContype(params);
+    }
+
 }

@@ -74,7 +74,20 @@ $(function(){
   })
 
     $("#messageBtn").click(function () {
-        toMessageDetail(0,getParam("wxid"));
+      $('#loadingToast').show();
+      // 查询对方将自己是否加入黑名单
+      var url= '/weixin/follow/ajaxIsFollow.do?wxid='+wxid+'&followWxId='+localStorage.getItem("openId");
+      $.post(url,{},function(data){
+        $('#loadingToast').hide();
+
+        if(data.isBlacklist == true) {
+          showToast("已被对方加为黑名单", function () {
+          });
+        } else {
+          toMessageDetail(0,getParam("wxid"));
+        }
+
+      });
     })
 })
 

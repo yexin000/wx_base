@@ -51,6 +51,14 @@
             </div>
         </div>
     </form>
+    <form  id="portraitform" method="post" enctype="multipart/form-data" action="uploadLogo.do" style="display: none">
+        <input type="file" accept="image/*" name="headImg" id="edit-portrait">
+        <input type="hidden" id="activityid" name="activityid">
+        <input type="submit">
+    </form>
+    <div id="dlg">
+        <img id="simg" width="460px" height="280px"/>
+    </div>
 </div>
 <div id="describe-win" class="easyui-dialog" title="活动内容" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:250px;">
     <form id="describeForm" class="ui-form" method="post">

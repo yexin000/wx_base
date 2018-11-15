@@ -17,4 +17,6 @@ public interface ItemResDao<T> extends BaseDao<T> {
      * @return
      */
     ItemRes queryByConId (Map<String, Object> params);
+
+    void deleteByConidAndContype(Map<String, Object> params);
 }

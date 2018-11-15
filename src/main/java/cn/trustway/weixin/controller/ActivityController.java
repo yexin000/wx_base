@@ -189,35 +189,6 @@ public class ActivityController extends BaseController {
     }
 
     /**
-     * 上传封面
-     *
-     * @param headImg
-     * @param request
-     * @param response
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value="/uploadLogo",method=RequestMethod.POST)
-    @ResponseBody
-    public void uploadLogo(@RequestParam(required = false)MultipartFile headImg, @RequestParam String businessid,
-                           HttpServletRequest request, HttpServletResponse response) throws Exception{
-        Map<String, Object> uploadResult = fileUploadService.uploadFile(headImg, request, response);
-        boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
-        if(uploadFlag) {
-            Activity bean = activityService.queryById(businessid);
-            if (bean == null) {
-                sendFailureMessage(response, "没有找到对应的记录!");
-                return;
-            } else {
-
-                sendSuccessMessage(response, "上传成功");
-            }
-        } else {
-            sendFailureMessage(response, "上传失败");
-        }
-    }
-
-    /**
      * 报名接口
      * @param activityId
      * @param response
@@ -276,5 +247,51 @@ public class ActivityController extends BaseController {
         orderLog.setStatus(newOrder.getStatus());
         orderLogService.add(orderLog);
         return order;
+    }
+
+    /**
+     * 上传图片
+     *
+     * @param headImg
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/uploadLogo",method=RequestMethod.POST)
+    @ResponseBody
+    public void uploadLogo(@RequestParam(required = false)MultipartFile headImg, @RequestParam String activityid,
+                           HttpServletRequest request, HttpServletResponse response) throws Exception{
+        Map<String, Object> uploadResult = fileUploadService.uploadFile(headImg, request, response);
+        boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
+        if(uploadFlag) {
+            ActivityModel model = new ActivityModel();
+            model.setId(Integer.parseInt(activityid));
+            Activity bean = activityService.queryById(model);
+            if (bean == null) {
+                sendFailureMessage(response, "没有找到对应的记录!");
+                return;
+            } else {
+                // 删除原有图片关联
+                Map<String, Object> params = new HashMap<>();
+                params.put("conid", bean.getId());
+                params.put("contype", "3");
+                itemResService.deleteByConidAndContype(params);
+
+                // 添加图片关联
+                ItemRes itemImage = new ItemRes();
+                itemImage.setConid(bean.getId());
+                itemImage.setPath(uploadResult.get(MSG).toString());
+                itemImage.setType("1");
+                itemImage.setConType("3");
+                itemImage.setIdx(0);
+                itemImage.setHeight(Integer.parseInt(uploadResult.get("height").toString()));
+                itemImage.setWidth(Integer.parseInt(uploadResult.get("width").toString()));
+                itemResService.add(itemImage);
+                sendSuccessMessage(response, "上传成功");
+            }
+        } else {
+            sendFailureMessage(response, "上传失败");
+        }
     }
 }

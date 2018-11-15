@@ -401,8 +401,8 @@
       }
 
       if($("#auctions").val() != '0') {
-        if (startTime <= auctionStartTime || startTime >= auctionEndTime
-            || endTime <= auctionStartTime || endTime >= auctionEndTime) {
+        if (startTime < auctionStartTime || startTime > auctionEndTime
+            || endTime < auctionStartTime || endTime > auctionEndTime) {
           $("#tipLabel").html("拍卖开始和结束时间必须在拍卖专场时间内");
           $('#tipDialog').show();
           return

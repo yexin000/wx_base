@@ -65,8 +65,13 @@
 
     <!-- 删除记录 -->
     <update id="delete" parameterType="Object">
-		delete from t_con_item_res where id = #{id}
-	</update>
+      delete from t_con_item_res where id = #{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <update id="deleteByConidAndContype" parameterType="Object">
+      delete from t_con_item_res where conid = #{conid} and contype = #{contype}
+    </update>
 
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">

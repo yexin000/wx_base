@@ -102,6 +102,13 @@ public class BidController extends BaseController {
             return;
         }
 
+        bModel.setStatus("1");
+        Integer backgroundBlackCount = blacklistService.queryBackgroundByCount(bModel);
+        if(backgroundBlackCount > 0) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_ITEM_ERROR, "出价失败，已被系统加入黑名单");
+            return;
+        }
+
         bean.setAuctionItemName(auctionItem.getAuctionName());
         //判断当前是否在竞拍时间中
         Date now = new Date();

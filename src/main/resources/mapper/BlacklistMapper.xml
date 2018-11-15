@@ -89,7 +89,7 @@
     </trim>
   </select>
 
-  <!-- 查询小程序黑名单记录总是 -->
+  <!-- 查询小程序黑名单记录总数 -->
   <select id="queryForegroundByCount" resultType="java.lang.Integer"
           parameterType="Object">
     select
@@ -114,6 +114,9 @@
       where 1=1 and t.blackid = u.wxid and t.type='1'
       <if test="nickname != null and nickname != ''">
         and u.nickname like CONCAT('%', #{nickname}, '%')
+      </if>
+      <if test="blackid != null and blackid != ''">
+        and t.blackid = #{blackid}
       </if>
     </if>
     <if test="status == null or status != 1">

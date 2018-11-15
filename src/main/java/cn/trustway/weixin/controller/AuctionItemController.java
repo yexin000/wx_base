@@ -3,6 +3,7 @@ package cn.trustway.weixin.controller;
 import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.AuctionItemModel;
+import cn.trustway.weixin.model.BlacklistModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
@@ -56,6 +57,9 @@ public class AuctionItemController extends BaseController {
 
     @Autowired
     UserAddrService<UserAddr> userAddrService;
+
+    @Autowired
+    private BlacklistService<Blacklist> blacklistService;
 
     /**
      * 默认手续费比率6%
@@ -417,6 +421,22 @@ public class AuctionItemController extends BaseController {
         AuctionItem bean = auctionItemService.queryById(id);
         if (bean == null) {
             sendFailure(response,"-1", "没有找到对应的记录!");
+            return;
+        }
+
+        BlacklistModel bModel = new BlacklistModel();
+        bModel.setBlackid(wxid);
+        bModel.setCreatorid(bean.getUploadWxid());
+        Integer blackCount = blacklistService.queryForegroundByCount(bModel);
+        if(blackCount > 0) {
+            sendFailureMessage(response, "购买失败，已被商家加入黑名单");
+            return;
+        }
+
+        bModel.setStatus("1");
+        Integer backgroundBlackCount = blacklistService.queryBackgroundByCount(bModel);
+        if(backgroundBlackCount > 0) {
+            sendFailureMessage(response, "购买失败，已被系统加入黑名单");
             return;
         }
 

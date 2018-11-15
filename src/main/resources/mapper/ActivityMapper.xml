@@ -137,7 +137,7 @@
     <select id="queryByList" resultMap="ActivityBaseResultMap" parameterType="Object">
         select
             <include refid="Activity_Base_Column_List" />,
-        (select tcir.path from  t_con_item_res tcir where tcir.conid = t.id and tcir.type = '3' limit 0,1) as activityBg
+        (select tcir.path from  t_con_item_res tcir where tcir.conid = t.id and tcir.contype = '3' order by tcir.idx limit 1) as activityBg
         from t_e_activity t
         where 1=1 and t.status != '0'
         <trim suffixOverrides=",">
