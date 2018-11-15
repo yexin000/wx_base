@@ -1,6 +1,7 @@
 package cn.trustway.weixin.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 拍品模型
@@ -120,6 +121,8 @@ public class AuctionItemModel extends BaseModel {
      * 是否v5商品推荐
      */
     private String isV5Show;
+
+    private List<String> attributes;
 
     public Integer getId() {
         return id;
@@ -327,5 +330,13 @@ public class AuctionItemModel extends BaseModel {
 
     public void setIsV5Show(String isV5Show) {
         this.isV5Show = isV5Show;
+    }
+
+    public List<String> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(List<String> attributes) {
+        this.attributes = attributes;
     }
 }

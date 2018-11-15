@@ -52,10 +52,11 @@
             </div>
             <div class="fitem">
                 <label>性质:</label>
-                <select class="easyui-combobox" name="attribute" id="attributes" data-options="required:true" style="width: 60px;">
-                    <option value="" selected="selected">请选择</option>
+                <select class="easyui-combobox" name="attribute" id="attributes" data-options="required:true" style="width: 80px;">
+                    <option value="">请选择</option>
                     <option value="0">拍卖品</option>
                     <option value="1">商品</option>
+                    <option value="3" selected="selected">V5商品</option>
                 </select>
             </div>
             <div class="fitem">
@@ -63,41 +64,48 @@
                 <select class="easyui-combobox" name="type" id="types" data-options="required:true" style="width: 156px;">
                 </select>
             </div>
-            <div class="fitem">
+            <div class="fitem auction-item-div">
                 <label>开始拍卖时间:</label>
-                <input type="text" name="startTime" editable="false" class="easyui-datetimebox" data-options="required:true">
+                <input type="text" id="startTime" name="startTime" editable="false" class="easyui-datetimebox" data-options="required:true">
             </div>
-            <div class="fitem">
+            <div class="fitem auction-item-div">
                 <label>结束拍卖时间:</label>
-                <input type="text" name="endTime" editable="false" class="easyui-datetimebox" data-options="required:true">
+                <input type="text" id="endTime" name="endTime" editable="false" class="easyui-datetimebox" data-options="required:true">
             </div>
             <div class="fitem">
-                <label>起拍价格:</label>
-                <input class="easyui-validatebox" type="text" name="startPrice" data-options="required:true">
+                <label id="priceText">起拍价格:</label>
+                <input class="easyui-validatebox" type="text" name="startPrice" value="0" data-options="required:true">
             </div>
-            <div class="fitem">
+            <div class="fitem auction-item-div">
                 <label>最低加价:</label>
                 <input class="easyui-validatebox" type="text" name="addPrice" value="0" data-options="required:true">
             </div>
-            <div class="fitem">
+            <div class="fitem auction-item-div">
                 <label>手续费比率:</label>
                 <input class="easyui-validatebox" type="text" name="rate" data-options="required:true" value="6">
             </div>
-            <div class="fitem">
+            <div class="fitem auction-item-div">
                 <label>首页展示:</label>
                 <select class="easyui-combobox" name="isShow" id="isshows" data-options="required:true">
                     <option value="0" selected="selected">否</option>
                     <option value="1">是</option>
                 </select>
             </div>
-            <div class="fitem">
+            <div class="fitem auction-item-div">
                 <label>是否轮播:</label>
                 <select class="easyui-combobox" name="isShowBanner" id="isShowBanners" data-options="required:true">
                     <option value="0" selected="selected">否</option>
                     <option value="1">是</option>
                 </select>
             </div>
-            <div class="fitem">
+            <div class="fitem v5-item-div">
+                <label>是否V5轮播:</label>
+                <select class="easyui-combobox" name="isV5Show" id="isV5Show" data-options="required:true">
+                    <option value="0" selected="selected">否</option>
+                    <option value="1">是</option>
+                </select>
+            </div>
+            <div class="fitem auction-item-div">
                 <label>拍卖会:</label>
                 <select class="easyui-combobox" name="auctionId" id="auctionids" data-options="required:true" style="width: 156px;">
                 </select>

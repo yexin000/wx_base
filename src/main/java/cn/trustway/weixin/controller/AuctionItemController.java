@@ -193,10 +193,15 @@ public class AuctionItemController extends BaseController {
         Integer id = bean.getId();
         Integer auctionId = bean.getAuctionId();
         Auction auction = auctionService.queryById(auctionId);
-        bean.setBusinessId(auction.getBusinessid());
+        if(null != auction) {
+            bean.setBusinessId(auction.getBusinessid());
+        }
+
         if(id != null && id > 0) {
             auctionItemService.updateBySelective(bean);
         } else {
+            bean.setUploadWxid("0");
+            bean.setStock(1);
             auctionItemService.add(bean);
         }
         sendSuccessMessage(response, "保存成功~");

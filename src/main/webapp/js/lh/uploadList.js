@@ -43,9 +43,9 @@ function loadMyUpload(){
                     }
 
                     if(obj.status == '3') {
-                        str+='<tr onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')"  >';
+                        str+='<tr onclick="toAuctionItemDetail('+obj.id+','+obj.attribute+')" style="background-color: white;">';
                     } else {
-                        str+='<tr onclick="$(\'#tipDialog\').show();" style="border-bottom: 1px solid #808080;">';
+                        str+='<tr onclick="$(\'#tipDialog\').show();" style="border-bottom: 1px solid #808080;background-color: white;">';
                     }
                     str+='  <td class="pro-item-M">' ;
                     str+='  <div class="itemDiv">' ;

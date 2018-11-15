@@ -96,6 +96,7 @@ function loadData()
         AuctionItemModel.name =  $("#shoppingName").val();
         AuctionItemModel.status = "3";
         AuctionItemModel.page = pageId;
+        AuctionItemModel.attributes = ['0', '1'];
         var url= '/weixin/auctionItem/ajaxDataList.do';
         $.ajax({
             url: url,

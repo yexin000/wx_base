@@ -161,6 +161,11 @@ public class AuctionItem extends BaseBean {
      */
     private Integer height;
 
+    /**
+     * 是否V5轮播
+     */
+    private String isV5Show = "0";
+
     public Integer getBusinessId() {
         return businessId;
     }
@@ -439,5 +444,13 @@ public class AuctionItem extends BaseBean {
 
     public void setUploader(String uploader) {
         this.uploader = uploader;
+    }
+
+    public String getIsV5Show() {
+        return isV5Show;
+    }
+
+    public void setIsV5Show(String isV5Show) {
+        this.isV5Show = isV5Show;
     }
 }

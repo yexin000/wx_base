@@ -18,9 +18,28 @@ WeiXin.auctionItem = function(){
                     $('#isshows').combobox('select',$('#isshows').combobox('getValue'));
                     $('#isShowBanners').combobox('select',$('#isShowBanners').combobox('getValue'));
                     $('#attributes').combobox('select',$('#attributes').combobox('getValue'));
+                    $('#attributes').combobox({disabled:true});
+                    $('#attributes').combobox('setValue', $('#attributes option')[3].value);
+                    $(".auction-item-div").hide();
+                    $("#priceText").text("价格:");
+                    $("#startTime").datetimebox('setValue',new Date().format("yyyy-MM-dd hh:mm:ss"));
+                    $("#endTime").datetimebox('setValue',new Date().format("yyyy-MM-dd hh:mm:ss"));
                 },
                 edit:function(){
                     _box.handler.edit(function(result){
+                        if(result.data.attribute == 0) {
+                          $(".auction-item-div").show();
+                          $(".v5-item-div").hide();
+                          $("#priceText").text("起拍价格:");
+                        } else {
+                          $(".auction-item-div").hide();
+                          if(result.data.attribute == 3) {
+                              $(".v5-item-div").show();
+                          } else {
+                              $(".v5-item-div").hide();
+                          }
+                          $("#priceText").text("价格:");
+                        }
                     });
                 }
             },
@@ -34,6 +53,8 @@ WeiXin.auctionItem = function(){
                         formatter:function(value,row,index){
                             if(value == 1){
                                 return "商品";
+                            } else if(value == 3) {
+                                return "V5商品";
                             } else {
                                 return "拍卖品";
                             }

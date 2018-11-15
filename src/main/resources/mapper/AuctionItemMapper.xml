@@ -37,7 +37,7 @@
     <sql id="AuctionItem_Base_Column_List">
 		t.id,t.name,t.type,t.description,t.startTime,t.endTime,t.startPrice,t.curPrice,t.finalPrice,t.businessId,
 		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId,
-		t.isshowbanner,t.stock,t.standard,t.age,t.degree,t.attribute,t.uploadwxid
+		t.isshowbanner,t.stock,t.standard,t.age,t.degree,t.attribute,t.uploadwxid,t.isV5Show
 	</sql>
 
     <!-- 插入记录 -->
@@ -45,10 +45,10 @@
         insert into
         t_e_auction_item(id,name,type,description,startTime,endTime,startPrice,curPrice,finalPrice,
 		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId,standard,age,degree,
-		  businessId,attribute,uploadwxid,stock)
+		  businessId,attribute,uploadwxid,stock, isV5Show)
         values(null,#{name},#{type},#{description},#{startTime},#{endTime},#{startPrice},
             #{curPrice},#{finalPrice},#{addPrice},#{depositPrice},#{rate}, #{detail}, #{status},
-            #{isShow},'0',#{auctionId},#{standard},#{age},#{degree},#{businessId},#{attribute},#{uploadWxid},#{stock});
+            #{isShow},'0',#{auctionId},#{standard},#{age},#{degree},#{businessId},#{attribute},#{uploadWxid},#{stock}, #{isV5Show});
     </insert>
 
     <!-- 根据id，修改记录 -->
@@ -142,6 +142,9 @@
             </if>
             <if test="uploadWxid != null and uploadWxid != '' ">
                 uploadWxid=#{uploadWxid},
+            </if>
+            <if test="isV5Show != null and isV5Show != '' ">
+                isV5Show=#{isV5Show},
             </if>
         </trim>
         where id=#{id}
@@ -244,6 +247,12 @@
             </if>
             <if test="attribute != null and attribute != ''">
                 and t.attribute = #{attribute}
+            </if>
+            <if test="attributes != null and attributes.size() > 0">
+                and t.attribute in
+                <foreach collection="attributes" index="index" item="attribute" open="(" separator="," close=")">
+                    #{attribute}
+                </foreach>
             </if>
             <if test="isV5 != null and isV5 != ''">
                 and t.isV5 = #{isV5}

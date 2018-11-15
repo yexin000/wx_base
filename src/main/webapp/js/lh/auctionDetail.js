@@ -57,7 +57,6 @@ function loadAuctionItem(){
     var AuctionItemModel = {};
     AuctionItemModel.auctionId = auctionId;
     AuctionItemModel.attribute = '0';
-    0
     AuctionItemModel.page = pageId;
     var url= '/weixin/auctionItem/ajaxDataList.do';
     $.ajax({
