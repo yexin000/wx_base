@@ -1,6 +1,7 @@
 package cn.trustway.weixin.dao;
 
 import cn.trustway.weixin.bean.ActivityJoinUser;
+import cn.trustway.weixin.model.MessageModel;
 
 import java.util.List;
 import java.util.Map;
@@ -30,4 +31,11 @@ public interface MessageDao<T> extends BaseDao<T> {
      * @return
      */
     List<T> queryParentByList(Map<String, Object> params);
+
+    /**
+     * 查询聊天内容
+     * @return
+     */
+    List<T> queryUserByList(MessageModel params);
+
 }

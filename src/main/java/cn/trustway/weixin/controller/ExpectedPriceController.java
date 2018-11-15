@@ -196,9 +196,13 @@ public class ExpectedPriceController extends BaseController {
         message.setMessagetype(1);
         message.setStatus(0);
         messageService.add(message);
+        message.setParentId(message.getId());
+        messageService.updateBySelective(message);
+
+
 
         //修改状态
-        expected.setStatus(3);
+        expected.setStatus(2);
         expectedService.update(expected);
 
         context.put(SUCCESS, true);

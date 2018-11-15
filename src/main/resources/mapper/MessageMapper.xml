@@ -22,7 +22,7 @@
 	</sql>
 
     <!-- 插入记录 -->
-    <insert id="add" parameterType="Object">
+    <insert id="add" parameterType="Object" useGeneratedKeys="true" keyProperty="id" >
         insert into
         t_e_message(id,parentId,v5Id,messagenote,messagetype,status,wxid,toWxid, createtime )
         values(null,#{parentId},#{v5Id},#{messagenote},#{messagetype},#{status},#{wxid},#{toWxid},now() );
@@ -37,6 +37,20 @@
     <update id="delete" parameterType="Object">
 		update t_e_message set status = '0' where id = #{id}
 	</update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateBySelective" parameterType="Object">
+        update t_e_message set
+        <trim suffixOverrides=",">
+            <if test="parentId != null  ">
+                parentId=#{parentId},
+            </if>
+            <if test="status != null  ">
+                status=#{status},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
 
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
@@ -54,7 +68,7 @@
     <select id="queryByCount" resultType="java.lang.Integer"
             parameterType="Object">
         select count(1) from t_e_message t
-        where   t.status != '0'
+        where   1 =1
         <trim suffixOverrides=",">
             <if test="status != null and status != ''">
                 and t.status = #{status}
@@ -79,8 +93,7 @@
         from t_e_message t
         left join weixin_user wu on t.wxid  =  wu.wxid
         left join weixin_user wu1 on t.towxid = wu1.wxid
-        where
-        t.parentId IS  NULL
+        where 1=1
         <trim suffixOverrides=",">
             <if test="status != null  ">
                 and t.status = #{status}
@@ -94,8 +107,45 @@
             <if test="toWxid != null and toWxid != ''">
                 and t.towxid = #{toWxid}
             </if>
+            <if test="messagetype != null and messagetype != ''">
+                and t.messagetype = #{messagetype}
+            </if>
         </trim>
+        order by t.createtime asc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
 
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryUserByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Message_Base_Column_List" /> ,wu.nickname as nickname , wu.avatarUrl as path ,
+        wu1.nickname as tonickname , wu1.avatarUrl as topath
+        from t_e_message t
+        left join weixin_user wu on t.wxid  =  wu.wxid
+        left join weixin_user wu1 on t.towxid = wu1.wxid
+        where     t.wxid != '0'
+        <trim suffixOverrides=",">
+            <if test="status != null  ">
+                and t.status = #{status}
+            </if>
+            <if test="parentId != null ">
+                and t.parentId = #{parentId}
+            </if>
+            <if test="v5Id != null and v5Id != ''">
+                and t.v5id = #{v5Id}
+            </if>
+            <if test="toWxid != null and toWxid != ''">
+                and t.towxid = #{toWxid}  or  t.wxid = #{toWxid}
+            </if>
+
+        </trim>
+        group by t.parentId
         order by t.createtime asc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
             ${pager.orderCondition}
@@ -118,6 +168,12 @@
         <trim suffixOverrides=",">
             <if test="parentId != null ">
                 and t.parentId = #{parentId}
+            </if>
+            <if test="wxid != null ">
+                and t.wxid = #{wxid}
+            </if>
+            <if test="toWxid != null ">
+                and t.toWxid = #{toWxid}
             </if>
         </trim>
         order by t.createtime asc

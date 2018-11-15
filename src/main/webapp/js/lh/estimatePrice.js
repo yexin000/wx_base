@@ -3,7 +3,7 @@ $(function(){
     loadPriceData(id);
 })
 
-//加载活动数据
+//加载出价
 function loadPriceData(id){
     $('#loadingToast').show();
     var params = {};
@@ -36,10 +36,17 @@ function loadPriceData(id){
                 }else if(obj.status =='4'){
                     statusNote = '已完成';
                 }
-                str+='     <span style="font-size: 0.14rem;position: absolute; ;margin-left: 0.1rem">'+obj.nickName+':'+obj.price+'<label>('+statusNote+')</label>'+'</span>';
+                str+='     <span style="font-size: 0.14rem;position: absolute; ;margin-left: 0.1rem">'+obj.nickName+' 出价:'+obj.price+'元<label>('+statusNote+')</label>'+'</span>';
                 //如果是创建者，这里显示确定交易
                 if(isMe){
-                    str+='     <span style="float: right;margin-right: 0.1rem;border: 1px solid black;border-radius: 5px;padding: 0.02rem;" onclick="toPurchase('+obj.id+')">确定</span>';
+                    if(obj.status == 2){
+                        str+='     <span style="float: right;margin-right: 0.1rem;border: 1px solid black;border-radius: 5px;padding: 0.02rem;"  >已同意</span>';
+                    }else if(obj.status == 3){
+                        str+='     <span style="float: right;margin-right: 0.1rem;border: 1px solid black;border-radius: 5px;padding: 0.02rem;"  >交易完成</span>';
+                    }else{
+                        str+='     <span style="float: right;margin-right: 0.1rem;border: 1px solid black;border-radius: 5px;padding: 0.02rem;" onclick="toPurchase('+obj.id+')">同意</span>';
+                    }
+
                 }
                 str+='   </div>';
                 str+='</div>';

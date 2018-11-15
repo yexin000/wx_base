@@ -71,7 +71,11 @@ public class MessageController extends BaseController {
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
     public void ajaxDataList(@RequestBody MessageModel model ,HttpServletResponse response) throws Exception {
-        queryDataList(model, response);
+        if( model.getMessagetype() == 2){
+            queryUserDataList(model, response);
+        }else{
+            queryDataList(model, response);
+        }
     }
 
 
@@ -84,6 +88,15 @@ public class MessageController extends BaseController {
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
     }
+    private void queryUserDataList(MessageModel model, HttpServletResponse response) throws Exception {
+        List<Message> dataList = messageService.queryUserByList(model);
+        // 设置页面数据
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("total", messageService.queryByCount(model));
+        jsonMap.put("rows", dataList);
+        HtmlUtil.writerJson(response, jsonMap);
+    }
+
 
     /**
      * 根据ID查找记录
@@ -94,23 +107,33 @@ public class MessageController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/getId")
-    public void getId(Integer id,String wxid, HttpServletResponse response) throws Exception {
+    public void getId(Integer id,String wxid ,String toWxid, HttpServletResponse response) throws Exception {
         Map<String, Object> context = getRootMap();
-        Message bean = messageService.queryById(id);
-        if (bean == null) {
-            sendFailureMessage(response, "没有找到对应的记录!");
-            return;
+        Message bean = null;
+
+        //创建聊天
+        if(null == id){
+            //查询用户消息
+            Map<String, Object> maps = new HashMap<>();
+            maps.put("wxid",wxid);
+            maps.put("toWxid",toWxid);
+            List<Message> messageList = messageService.queryParentByList(maps);
+            context.put("messageList",messageList);
+        }else{
+            //系统对话模式
+            bean = messageService.queryById(id);
+            if (bean == null) {
+                sendFailureMessage(response, "没有找到对应的记录!");
+                return;
+            }
+            context.put("data", bean);
+            //当前主消息下面子消息
+            Map<String, Object> maps = new HashMap<>();
+            maps.put("parentId",id);
+            List<Message> messageList = messageService.queryParentByList(maps);
+            context.put("messageList",messageList);
         }
-        context.put("data", bean);
-
-
-        //当前主消息下面子消息
-        Map<String, Object> maps = new HashMap<>();
-        maps.put("parentId",id);
-        List<Message> messageList = messageService.queryParentByList(maps);
-        context.put("messageList",messageList);
         context.put(SUCCESS, true);
-
         HtmlUtil.writerJson(response, context);
     }
 
@@ -149,12 +172,18 @@ public class MessageController extends BaseController {
     @RequestMapping("/save")
     public void save(@RequestBody Message bean, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer id = bean.getId();
+        Integer pId = bean.getParentId();
         if(id != null && id > 0) {
             messageService.update(bean);
         } else {
             messageService.add(bean);
+            //当新建聊天时触发
+            if(pId == 0){
+                bean.setParentId(bean.getId());
+                messageService.updateBySelective(bean);
+            }
         }
-        sendSuccessMessage(response, "保存成功~");
+        sendSuccessMessage(response, bean.getParentId()+"");
     }
 
     /**
