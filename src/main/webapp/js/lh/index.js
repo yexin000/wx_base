@@ -63,6 +63,7 @@ function loadIndexActivity(){
         var AuctionItemModel = {};
         AuctionItemModel.isShowBanner = '1';
         AuctionItemModel.status = '3';
+        AuctionItemModel.attributes = ['0', '1'];
         var url= '/weixin/auctionItem/ajaxDataList.do';
         $.ajax({
             url: url,
@@ -161,6 +162,7 @@ function loadIndexActivity(){
         var AuctionItemModel = {};
         AuctionItemModel.isShow = '1';
         AuctionItemModel.status = '3';
+        AuctionItemModel.attributes = ['0', '1'];
         var url= '/weixin/auctionItem/ajaxDataList.do';
         $.ajax({
             url: url,
