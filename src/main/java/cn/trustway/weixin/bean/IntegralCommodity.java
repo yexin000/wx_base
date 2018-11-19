@@ -22,7 +22,7 @@ public class IntegralCommodity extends BaseBean {
     /**
      *描述
      */
-    private String describe;
+    private String describes;
 
     /**
      *消耗积分
@@ -65,14 +65,6 @@ public class IntegralCommodity extends BaseBean {
         this.name = name;
     }
 
-    public String getDescribe() {
-        return describe;
-    }
-
-    public void setDescribe(String describe) {
-        this.describe = describe;
-    }
-
     public Integer getConsumeintegral() {
         return consumeintegral;
     }
@@ -111,5 +103,13 @@ public class IntegralCommodity extends BaseBean {
 
     public void setEndtime(Date endtime) {
         this.endtime = endtime;
+    }
+
+    public String getDescribes() {
+        return describes;
+    }
+
+    public void setDescribes(String describes) {
+        this.describes = describes;
     }
 }

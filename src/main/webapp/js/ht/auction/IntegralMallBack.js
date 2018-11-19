@@ -1,6 +1,6 @@
 $package('WeiXin.activity');
 
-WeiXin.activity = function(){
+WeiXin.integral = function(){
     var _box = null;
     var Grid = $('#data-list');
     var _this = {
@@ -28,33 +28,17 @@ WeiXin.activity = function(){
                 url:'dataList.do',
                 columns:[[
                     {field:'id',checkbox:true},
-                    {field:'name',title:'活动名称',width:120,align:'center',sortable:true},
-                    {field:'money',title:'活动金额',align:'center',width:120,sortable:true},
-                    {field:'starttime',title:'开始时间',width:150,align:'center',sortable:true},
+                    {field:'name',title:'商品名称',width:120,align:'center',sortable:true},
+                    {field:'consumeintegral',title:'商品积分',align:'center',width:120,sortable:true},
+                    {field:'stock',title:'商品库存',align:'center',width:120,sortable:true},
                     {field:'endtime',title:'结束时间',width:120,align:'center',sortable:true},
-                    {field:'description',title:'活动内容',width:280,align:'center',sortable:true},
-                    {field:'status',title:'活动状态',width:80,align:'center',sortable:true,
-                        formatter:function(value,row,index){
-                            if(value == 0){
-                                return "删除";
-                            }else if(value == 1){
-                                return "正常";
-                            }else if(value == 2){
-                                return "未开始";
-                            }else if(value == 3){
-                                return "已开始";
-                            }else if(value == 4){
-                                return "已结束";
-                            }
-                        }
-                    },
                     {field:'opts',title:'操作',width:220,align:'left',formatter:function(value,row,index){
                             var html ="<a href='#' onclick='WeiXin.activity.uploadLogo("+row.id+")'>上传图片</a>";
                             if(null != row.activityBg && "" != row.activityBg) {
-                              var viewHtml = "  <a href='#' onclick='WeiXin.activity.showImage(\""+ urls.msUrl + "/"+ row.activityBg +"\")'>查看图片</a>";
+                              var viewHtml = "  <a href='#' onclick='WeiXin.integral.showImage(\""+ urls.msUrl + "/"+ row.activityBg +"\")'>查看图片</a>";
                               html += viewHtml
                             }
-                            html +="  <a href='#' onclick='WeiXin.activity.showDescribe("+row.id+")'>查看活动内容</a>";
+                            html +="  <a href='#' onclick='WeiXin.integral.showDescribe("+row.id+")'>查看商品内容</a>";
                             return html;
                         }
                     }
@@ -93,7 +77,7 @@ WeiXin.activity = function(){
                       success:function(result){
                         WeiXin.closeProgress();
                         WeiXin.alert('提示',result.msg);
-                        WeiXin.activity.refresh();
+                        WeiXin.integral.refresh();
                       }
                     });
                   }
@@ -110,8 +94,8 @@ WeiXin.activity = function(){
           });
 
         },
-        uploadLogo:function (activityid){
-            $("#activityid").val(activityid);
+        uploadLogo:function (integralid){
+            $("#integralid").val(integralid);
             $("#edit-portrait").click();
         },
         showImage : function (imgUrl) {
@@ -126,5 +110,5 @@ WeiXin.activity = function(){
 }();
 
 $(function(){
-    WeiXin.activity.init();
+    WeiXin.integral.init();
 });

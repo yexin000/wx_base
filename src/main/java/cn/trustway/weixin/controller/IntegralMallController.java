@@ -2,6 +2,7 @@ package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.common.AppInitConstants;
+import cn.trustway.weixin.model.ActivityModel;
 import cn.trustway.weixin.model.IntegralMallModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.model.MessageModel;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +44,10 @@ public class IntegralMallController extends BaseController {
     private WeixinUserService<WeixinUser> weixinUserService;
     @Autowired(required = false)
     private ExchangeRecodeService<ExchangeRecode> exchangeRecodeService;
+
+
+    @Autowired
+    private FileUploadService fileUploadService;
     /**
      * 首页
      *
@@ -109,7 +117,7 @@ public class IntegralMallController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/getId")
-    public void getId(Integer id,String wxid, HttpServletResponse response) throws Exception {
+    public void getId(Integer id , HttpServletResponse response) throws Exception {
         Map<String, Object> context = getRootMap();
         IntegralCommodity bean = integralMallService.queryById(id);
         if (bean == null) {
@@ -231,4 +239,50 @@ public class IntegralMallController extends BaseController {
         HtmlUtil.writerJson(response, context);
     }
 
+
+    /**
+     * 上传图片
+     *
+     * @param headImg
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/uploadLogo",method=RequestMethod.POST)
+    @ResponseBody
+    public void uploadLogo(@RequestParam(required = false)MultipartFile headImg, @RequestParam String integralid,
+                           HttpServletRequest request, HttpServletResponse response) throws Exception{
+        Map<String, Object> uploadResult = fileUploadService.uploadFile(headImg, request, response);
+        boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
+        if(uploadFlag) {
+            IntegralMallModel model = new IntegralMallModel();
+            model.setId(Integer.parseInt(integralid));
+            IntegralCommodity bean = integralMallService.queryById(model);
+            if (bean == null) {
+                sendFailureMessage(response, "没有找到对应的记录!");
+                return;
+            } else {
+                // 删除原有图片关联
+                Map<String, Object> params = new HashMap<>();
+                params.put("conid", bean.getId());
+                params.put("contype", "5");
+                itemResService.deleteByConidAndContype(params);
+
+                // 添加图片关联
+                ItemRes itemImage = new ItemRes();
+                itemImage.setConid(bean.getId());
+                itemImage.setPath(uploadResult.get(MSG).toString());
+                itemImage.setType("1");
+                itemImage.setConType("5");
+                itemImage.setIdx(0);
+                itemImage.setHeight(Integer.parseInt(uploadResult.get("height").toString()));
+                itemImage.setWidth(Integer.parseInt(uploadResult.get("width").toString()));
+                itemResService.add(itemImage);
+                sendSuccessMessage(response, "上传成功");
+            }
+        } else {
+            sendFailureMessage(response, "上传失败");
+        }
+    }
 }

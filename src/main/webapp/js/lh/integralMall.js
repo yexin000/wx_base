@@ -47,7 +47,7 @@ function loadIntegralMall(){
 
                     str+='  <td class="pro-item-H">';
                     str+='      <h2>'+obj.name+'</h2>';
-                    str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.describe+' </span></p>';
+                    str+='      <p class="ppp"><span>商品介绍:</span>  <span> '+obj.describes+' </span></p>';
                     str+='      <p><span>消耗积分: </span><span style="overflow:hidden;  "> '+obj.consumeintegral +'<span></p>';
                     str+='      <p><span>商品库存: </span><span style="overflow:hidden;  "> '+obj.stock +'<span></p>';
                     str+='  </td>';
@@ -56,7 +56,7 @@ function loadIntegralMall(){
                 });
                 //加载上拉加载按钮
                  $("#loadMore").remove();
-                str +='<a href="javascript:loadActivity();" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading"> 点击加载更多</a>';
+                str +='<a href="javascript:loadIntegralMall();" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading"> 点击加载更多</a>';
             }
             $(".pro-item").append(str);
             if(datalength <= (pageId * 10)){

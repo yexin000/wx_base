@@ -7,7 +7,7 @@
     <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.IntegralCommodity">
         <result column="id" property="id" />
         <result column="name" property="name" />
-        <result column="describe" property="describe" />
+        <result column="describes" property="describes" />
         <result column="consumeintegral" property="consumeintegral" />
         <result column="stock" property="stock" />
         <result column="createtime" property="createtime" />
@@ -16,13 +16,13 @@
 
     <!-- sys_menu table all fields -->
     <sql id="IntegralCommodity_Base_Column_List">
-		t.id,t.name,t.describe,t.consumeintegral,t.createtime,t.stock,t.endtime
+		t.id,t.name,t.describes,t.consumeintegral,t.createtime,t.stock,t.endtime
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_integral_commodity(id,name,describe,consumeintegral,stock,createtime )
+        t_e_integral_commodity(id,name,describes,consumeintegral,stock,createtime )
         values(null,#{name},#{describe},#{consumeintegral},#{stock},now() );
     </insert>
 
