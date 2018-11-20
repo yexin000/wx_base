@@ -184,7 +184,7 @@
             (select width from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as width,
             (select height from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as height
         from t_e_auction t
-        where 1=2
+        where (1=2
         <if test="wxid != null and wxid != ''">
             or t.wxid = #{wxid}
         </if>
@@ -196,7 +196,7 @@
             <foreach collection="auctionIds" index="index" item="id" open="(" separator="," close=")">
                 #{id}
             </foreach>
-        </if>
+        </if>) and t.status !='0'
         order by t.starttime desc
     </select>
 </mapper>

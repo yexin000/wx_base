@@ -27,10 +27,16 @@ WeiXin.auctionItem = function(){
                 },
                 edit:function(){
                     _box.handler.edit(function(result){
+                        $('#attributes').combobox({disabled:true});
                         if(result.data.attribute == 0) {
                           $(".auction-item-div").show();
                           $(".v5-item-div").hide();
                           $("#priceText").text("起拍价格:");
+                        } else if(result.data.attribute == 1) {
+                          $(".auction-item-div").hide();
+                          $("#isShowBannerDiv").show();
+                          $(".v5-item-div").hide();
+                          $("#priceText").text("价格:");
                         } else {
                           $(".auction-item-div").hide();
                           if(result.data.attribute == 3) {

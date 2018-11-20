@@ -92,6 +92,7 @@
 					<value>cn.trustway.weixin.controller.BigTransactionlController</value>
 					<value>cn.trustway.weixin.controller.BlacklistController</value>
 					<value>cn.trustway.weixin.controller.ExpectedPriceController</value>
+					<value>cn.trustway.weixin.controller.FabulousController</value>
 					<value>/templateMsg/bidOverTemplateMsg.do</value>
 					<value>/templateMsg/rechargeTemplateMsg.do</value>
 					<value>/business/ajaxBusinessJoin.do</value>

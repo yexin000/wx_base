@@ -204,7 +204,11 @@
               }
               $("#auctions").append(options);
             }
-          }
+          } else {
+            $("#auctions").empty();
+            $("#auctionTimeShow").html("");
+            $("#auctions").append('<option value="0" startAttr="" endAttr="" >官方拍卖会</option>');
+					}
         }
       })
     } else if ("1" == attr) {

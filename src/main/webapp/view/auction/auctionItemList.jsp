@@ -91,7 +91,7 @@
                     <option value="1">是</option>
                 </select>
             </div>
-            <div class="fitem auction-item-div">
+            <div class="fitem auction-item-div" id="isShowBannerDiv">
                 <label>是否轮播:</label>
                 <select class="easyui-combobox" name="isShowBanner" id="isShowBanners" data-options="required:true">
                     <option value="0" selected="selected">否</option>
@@ -112,11 +112,7 @@
             </div>
             <div class="fitem">
                 <label>介绍描述:</label>
-                <input class="easyui-validatebox" type="text" name="description" data-options="required:true">
-            </div>
-            <div class="fitem">
-                <label>拍品详情:</label>
-                <textarea rows="3" name="detail" class="easyui-validatebox" data-options="required:true" style="width: 157px;"></textarea>
+                <textarea rows="3" name="description" class="easyui-validatebox" style="width: 157px;"></textarea>
             </div>
         </div>
     </form>
