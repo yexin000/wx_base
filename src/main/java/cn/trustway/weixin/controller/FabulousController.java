@@ -32,7 +32,7 @@ public class FabulousController extends BaseController {
   @RequestMapping(value = "/ajaxAddFabulous", method = RequestMethod.POST)
   public void ajaxAddFabulous(Fabulous bean, HttpServletResponse response) throws Exception {
     fabulousService.add(bean);
-    sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "收藏成功");
+    sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "点赞成功");
   }
 
   /**
@@ -46,6 +46,6 @@ public class FabulousController extends BaseController {
   @RequestMapping(value = "/ajaxDelFabulous", method = RequestMethod.POST)
   public void ajaxDelFabulous(Fabulous bean, HttpServletResponse response) throws Exception {
     fabulousService.delete(bean);
-    sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "取消收藏成功");
+    sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "取消点赞成功");
   }
 }
