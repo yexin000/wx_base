@@ -69,7 +69,7 @@ public class IntegralMallController extends BaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/dataList", method = RequestMethod.GET)
+    @RequestMapping(value = "/dataList", method = RequestMethod.POST)
     public void dataList(IntegralMallModel model, HttpServletResponse response) throws Exception {
         queryDataList(model, response);
     }
