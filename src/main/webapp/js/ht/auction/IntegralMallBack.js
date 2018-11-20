@@ -33,11 +33,8 @@ WeiXin.integral = function(){
                     {field:'stock',title:'商品库存',align:'center',width:120,sortable:true},
                     {field:'endtime',title:'结束时间',width:120,align:'center',sortable:true},
                     {field:'opts',title:'操作',width:220,align:'left',formatter:function(value,row,index){
-                            var html ="<a href='#' onclick='WeiXin.activity.uploadLogo("+row.id+")'>上传图片</a>";
-                            if(null != row.activityBg && "" != row.activityBg) {
-                              var viewHtml = "  <a href='#' onclick='WeiXin.integral.showImage(\""+ urls.msUrl + "/"+ row.activityBg +"\")'>查看图片</a>";
-                              html += viewHtml
-                            }
+                            var html ="<a href='#' onclick='WeiXin.integral.uploadLogo("+row.id+")'>上传图片</a>";
+
                             html +="  <a href='#' onclick='WeiXin.integral.showDescribe("+row.id+")'>查看商品内容</a>";
                             return html;
                         }

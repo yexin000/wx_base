@@ -58,7 +58,7 @@ public class IntegralMallController extends BaseController {
     @RequestMapping("/list")
     public ModelAndView list(IntegralMallModel model, HttpServletRequest request) throws Exception {
         Map<String, Object> context = getRootMap();
-        return forword("auction/integralMall", context);
+        return forword("auction/IntegralMall", context);
     }
 
     /**
@@ -69,7 +69,7 @@ public class IntegralMallController extends BaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/dataList", method = RequestMethod.POST)
+    @RequestMapping(value = "/dataList", method = RequestMethod.GET)
     public void dataList(IntegralMallModel model, HttpServletResponse response) throws Exception {
         queryDataList(model, response);
     }
