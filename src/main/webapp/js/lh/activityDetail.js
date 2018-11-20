@@ -44,7 +44,7 @@ function loadActivityData(id){
             var dataObj = data.data;
             itemName = dataObj.name;
             //处理活动基本信息
-            $("#activityDescription").html(dataObj.describe); //拍品详情
+            $("#activityDescription").html(dataObj.description); //活动详情
             if(dataObj.isJoin == '1'){
                 $("#joinOnBtn").html("已报名")
             }
