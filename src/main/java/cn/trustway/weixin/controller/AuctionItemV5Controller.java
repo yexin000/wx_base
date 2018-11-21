@@ -102,7 +102,7 @@ public class AuctionItemV5Controller extends BaseController {
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
     public void ajaxDataList(@RequestBody AuctionItemModel model, HttpServletResponse response) throws Exception {
         //主数据
-        model.setIsV5("1");
+        model.setAttribute("3");
         List<AuctionItem> dataList = auctionItemService.queryByList(model);
 
         for(AuctionItem ai : dataList){

@@ -57,7 +57,8 @@ function loadBusinessAuctionItem(id){
     $('#loadingToast').show();
     $("#loadMore").hide();
     var AuctionItemModel = {};
-    AuctionItemModel.businessId = id;
+    //AuctionItemModel.businessId = id;
+    AuctionItemModel.uploadWxid = localStorage.getItem("openId");
     var url= '/weixin/auctionItem/ajaxDataList.do';
     $.ajax({
         url: url,
@@ -122,7 +123,8 @@ function loadBusinessAuctionItem(id){
 function loadindexAuction(id){
     $("#loadMore").hide();
     var AuctionModel = {};
-    AuctionModel.businessid = id;
+    //AuctionModel.businessid = id;
+    AuctionModel.wxid = localStorage.getItem("openId");
     var url= '/weixin/auction/ajaxDataList.do';
     $.ajax({
         url: url,

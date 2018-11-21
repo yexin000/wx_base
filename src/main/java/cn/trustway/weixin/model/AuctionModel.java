@@ -66,6 +66,11 @@ public class AuctionModel extends BaseModel {
      */
     String isShow;
 
+    /**
+     *微信
+     */
+    String wxid;
+
 
     public Integer getId() {
         return id;
@@ -177,5 +182,13 @@ public class AuctionModel extends BaseModel {
 
     public void setIsShow(String isShow) {
         this.isShow = isShow;
+    }
+
+    public String getWxid() {
+        return wxid;
+    }
+
+    public void setWxid(String wxid) {
+        this.wxid = wxid;
     }
 }

@@ -165,6 +165,9 @@
             <if test="businessid != null and businessid != ''">
                 and t.businessid = #{businessid}
             </if>
+            <if test="wxid != null and wxid != ''">
+                and t.wxid = #{wxid}
+            </if>
 
         </trim>
 

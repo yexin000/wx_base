@@ -178,7 +178,7 @@ public class MessageController extends BaseController {
         } else {
             messageService.add(bean);
             //当新建聊天时触发
-            if(pId == 0){
+            if(pId == null || pId == 0){
                 bean.setParentId(bean.getId());
                 messageService.updateBySelective(bean);
             }
