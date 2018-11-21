@@ -49,6 +49,8 @@ a{color:#888;}
 /*带搜索导航栏样式*/
 .header-hs{height: 0.44rem;background: #fff;padding:0 0.1rem;line-height: 0.44rem;position: fixed;top: 0;left: 0;width: 100%;z-index:1001;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;border-bottom: 1px solid #808080;}
 .header-back{float: left;height: 0.3rem;width:0.2rem;background: url(../../images/lh/Left_Arrow.png) left center no-repeat;display: inline-block;margin-top: 0.05rem;background-size: 0.12rem}
+.header-dianzan-uncheck{float: right;height: 0.4rem;width:0.4rem;background: url(../../images/lh/dianzan_uncheck.png) center no-repeat;display: inline-block;margin-top: 0.05rem;background-size: 0.18rem}
+.header-dianzan-checked{float: right;height: 0.4rem;width:0.4rem;background: url(../../images/lh/dianzan_checked.png) center no-repeat;display: inline-block;margin-top: 0.05rem;background-size: 0.18rem}
 .header-msg{float: right;height: 0.3rem;width:0.24rem;  background-repeat:no-repeat;background-position:right center;display: inline-block;background-size: contain;margin-top: 0.05rem;}
 .header-search{margin:0.07rem 0.1rem;background: #eff1f3;border-radius: 0.05rem;height: 0.3rem;line-height: 0.3rem;padding:0 0.05rem;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 .header-search a{display: inline-block; margin-left: 0.1rem;margin-right: 0.05rem;width: 0.15rem;height: 0.15rem;background-size: cover; vertical-align: sub;}

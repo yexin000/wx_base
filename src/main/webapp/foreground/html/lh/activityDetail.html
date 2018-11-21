@@ -18,11 +18,12 @@
 <header class="header-hs ">
 	<a href="activityList.html" class="header-back"></a>
 	<h1>活动详情</h1>
+	<a id="dianzan-btn" class="header-dianzan-uncheck"></a>
 </header>
 <div style="margin-top: 0.53rem;height:0.3rem;background-color: #fff" id="dataDiv">
-    <span style="font-size: 0.13rem;padding: 0.05rem;color: black;position: absolute" >已报名</span>
-    <div style="float: right;padding-right: 0.2rem;padding-top:0.05rem;" id="dataListDiv">
-    </div>
+	<span style="font-size: 0.13rem;padding: 0.05rem;color: black;position: absolute" >已报名</span>
+	<div style="float: right;padding-right: 0.2rem;padding-top:0.05rem;" id="dataListDiv">
+	</div>
 </div>
 
 <div style="margin-top: 0.1rem;background-color: #FFFFFF;min-height: 2rem;" id="activityDescription">
@@ -31,9 +32,8 @@
 
 <!-- 活动详情结束 -->
 <footer style="position: fixed;  bottom: 0; left: 0;  background: #fff; width: 100%;  height: 0.4rem; z-index: 1004;zoom: 1;border-top: 1px solid #808080;" id="footDiv">
-    <input type="hidden" id="favStatus"  >
-    <a href="#" id="shareBtn" style="color: #000;    font-size: 0.1rem;  float: left;  width: 0.73rem;  text-align: center;  line-height: 0.4rem;">分享</a>
-    <a id="joinOnBtn" style="color: #fff;   background: #c1272d; font-size: 0.135rem;  float: right;  width: 1.7rem;  text-align: center;  line-height: 0.4rem;">报名</a>
+	<input type="hidden" id="favStatus">
+	<a id="joinOnBtn" style="color: #fff;   background: #c1272d; font-size: 0.135rem;  float: right;  width: 100%;  text-align: center;  line-height: 0.4rem;">报名</a>
 </footer>
 
 <div id="loadingToast" style="opacity: 1; display: none;">

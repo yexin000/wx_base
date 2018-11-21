@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.trustway.weixin.dao.ActivityDao">
     <!-- Result Map -->
     <resultMap id="ActivityBaseResultMap" type="cn.trustway.weixin.bean.Activity">
@@ -107,7 +107,7 @@
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="ActivityBaseResultMap" parameterType="Object">
         select
-          <include refid="Activity_Base_Column_List" />
+        <include refid="Activity_Base_Column_List" />
         from t_e_activity t
         where t.id = #{id}
     </select>
@@ -136,8 +136,9 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="ActivityBaseResultMap" parameterType="Object">
         select
-            <include refid="Activity_Base_Column_List" />,
-        (select tcir.path from  t_con_item_res tcir where tcir.conid = t.id and tcir.contype = '3' order by tcir.idx limit 1) as activityBg
+        <include refid="Activity_Base_Column_List" />,
+        (select tcir.path from  t_con_item_res tcir where tcir.conid = t.id and tcir.contype = '3' order by tcir.idx limit 1) as activityBg,
+        (select count(1) from t_e_fabulous f where f.fabulousid=t.id and f.fabuloustype='3') as fabulousNum
         from t_e_activity t
         where 1=1 and t.status != '0'
         <trim suffixOverrides=",">
@@ -160,13 +161,13 @@
     <!-- 查询报名记录列表 -->
     <select id="queryJoinListById" resultMap="BaseResulJointMap" parameterType="Object">
         select
-          t.id,wu.wxid ,wu.avatarUrl,wu.nickname as name
+        t.id,wu.wxid ,wu.avatarUrl,wu.nickname as name
         from t_e_activity_join t
         left join weixin_user wu on wu.wxid = t.wx_id
         where  t.activityId = #{id} and t.status = '1'
         order by t.createtime desc
         <if test="limit != null and limit != ''">
-           limit 0 , #{limit}
+            limit 0 , #{limit}
         </if>
     </select>
 
@@ -174,7 +175,7 @@
 
     <select id="queryByJoinActivity" resultMap="ActivityBaseResultMap" parameterType="Object">
         select
-          <include refid="Activity_Base_Column_List" />
+        <include refid="Activity_Base_Column_List" />
         from t_e_activity t
         left join t_e_activity_join t2 on t.id = t2.activityId
         where  t.id = #{activityId}

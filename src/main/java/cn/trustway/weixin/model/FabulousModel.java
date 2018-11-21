@@ -1,14 +1,8 @@
-package cn.trustway.weixin.bean;
+package cn.trustway.weixin.model;
 
 import java.util.Date;
 
-/**
- * 用户点赞Bean
- *
- * @author yexin
- *
- */
-public class Fabulous extends BaseBean {
+public class FabulousModel extends BaseModel {
   /**
    * 主键-id
    */

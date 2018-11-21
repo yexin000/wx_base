@@ -125,6 +125,16 @@ public class Auction extends BaseBean {
      */
     private String path;
 
+    /**
+     * 点赞数
+     */
+    private Integer fabulousNum;
+
+    /**
+     * 是否点赞
+     */
+    private String isFabulous;
+
     public Integer getId() {
         return id;
     }
@@ -331,5 +341,21 @@ public class Auction extends BaseBean {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public Integer getFabulousNum() {
+        return fabulousNum;
+    }
+
+    public void setFabulousNum(Integer fabulousNum) {
+        this.fabulousNum = fabulousNum;
+    }
+
+    public String getIsFabulous() {
+        return isFabulous;
+    }
+
+    public void setIsFabulous(String isFabulous) {
+        this.isFabulous = isFabulous;
     }
 }

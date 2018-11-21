@@ -4,6 +4,7 @@ import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.ActivityModel;
 import cn.trustway.weixin.model.AuctionModel;
+import cn.trustway.weixin.model.FabulousModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
@@ -49,6 +50,8 @@ public class ActivityController extends BaseController {
     @Autowired
     OrderLogService<OrderLog> orderLogService;
 
+    @Autowired
+    FabulousService<Fabulous> fabulousService;
 
     /**
      * 首页
@@ -147,8 +150,18 @@ public class ActivityController extends BaseController {
             //未报名
             bean.setIsJoin("0");
         }
-        //查询最新报名的三个人
-        
+        // 是否点赞
+        FabulousModel fabulousModel = new FabulousModel();
+        fabulousModel.setFabulousId(id);
+        fabulousModel.setWxid(wxid);
+        fabulousModel.setFabulousType("3");
+        Integer fabulousCount = fabulousService.queryByCount(fabulousModel);
+        if(fabulousCount > 0) {
+            bean.setIsFabulous("1");
+        } else {
+            bean.setIsFabulous("0");
+        }
+
         context.put(SUCCESS, true);
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);
@@ -215,7 +228,7 @@ public class ActivityController extends BaseController {
             Order order = null ;
             //报名(支付才能成功)
             try {
-                 order = createOrderByActivity(new BigDecimal(activity.getMoney()),wxid,activityId);
+                order = createOrderByActivity(new BigDecimal(activity.getMoney()),wxid,activityId);
             }catch (Exception e){
                 e.printStackTrace();
             }
