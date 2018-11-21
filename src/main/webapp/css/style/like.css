@@ -70,7 +70,7 @@
 .cf{*zoom:1;}
 .cf:after{
 	display: table;
-	content: " ";		
+	content: " ";
 	clear: both;
 }
 .scrollItem{display: inline-block;width:0.4rem;height:0.24rem; padding-top:0.11rem; }
@@ -154,7 +154,7 @@
 }
 
 .mystore-auction-favicon {
-	width:10px;
+	width:20px;
 	margin-right:5px;
 	display:block;
 }

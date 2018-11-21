@@ -38,6 +38,9 @@ public class WxPayController extends BaseController {
     @Autowired
     OrderService<Order> orderService;
 
+    @Autowired(required = false)
+    private AuctionItemService<AuctionItem> auctionItemService;
+
     @Autowired
     private WeixinUserService<WeixinUser> weixinUserService;
 
@@ -49,6 +52,9 @@ public class WxPayController extends BaseController {
 
     @Autowired
     private IdentifyService<Identify> identifyService;
+
+    @Autowired(required = false)
+    private MessageService<Message> messageService;
 
     /**
      * 微信支付统一下单
@@ -144,8 +150,8 @@ public class WxPayController extends BaseController {
                 jsonMap.put("package", "prepay_id=" + map.get("prepay_id"));
                 jsonMap.put("prepay_id", map.get("prepay_id"));
                 String signString = "appId=" + AppInitConstants.XCX_APP_ID + "&nonceStr=" + jsonMap.get("nonceStr")
-                        + "&package=prepay_id=" + map.get("prepay_id") + "&signType=MD5&timeStamp=" + jsonMap.get("timeStamp")
-                        + "&key=" + AppInitConstants.XCX_MCHKEY;
+                    + "&package=prepay_id=" + map.get("prepay_id") + "&signType=MD5&timeStamp=" + jsonMap.get("timeStamp")
+                    + "&key=" + AppInitConstants.XCX_MCHKEY;
                 jsonMap.put("paySign", MD5.md532(signString).toUpperCase());
                 jsonMap.put("orderId", orderId);
                 jsonMap.put("amount", amount);
@@ -270,6 +276,17 @@ public class WxPayController extends BaseController {
                     order.setPayTime(new Date());
                     order.setStatus("3");
                     orderService.updateBySelective(order);
+
+                    //保存一条站内通知
+                    Message message = new Message();
+                    message.setWxid("0");
+                    message.setToWxid(auctionItemService.queryById(order.getItemId()).getUploadWxid());
+                    message.setMessagenote("您有新的订单待处理");
+                    message.setMessagetype(1);
+                    message.setStatus(0);
+                    messageService.add(message);
+                    message.setParentId(message.getId());
+                    messageService.updateBySelective(message);
 
                     //生成充值流水
                     MoneyStream bean = new MoneyStream();

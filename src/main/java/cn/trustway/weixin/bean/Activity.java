@@ -69,6 +69,16 @@ public class Activity extends BaseBean {
      */
     private String isJoin ;
 
+    /**
+     * 是否点赞
+     */
+    private String isFabulous;
+
+    /**
+     * 点赞数量
+     */
+    private String fabulousNum;
+
     public Integer getId() {
         return id;
     }
@@ -179,5 +189,21 @@ public class Activity extends BaseBean {
 
     public void setActivityBg(String activityBg) {
         this.activityBg = activityBg;
+    }
+
+    public String getIsFabulous() {
+        return isFabulous;
+    }
+
+    public void setIsFabulous(String isFabulous) {
+        this.isFabulous = isFabulous;
+    }
+
+    public String getFabulousNum() {
+        return fabulousNum;
+    }
+
+    public void setFabulousNum(String fabulousNum) {
+        this.fabulousNum = fabulousNum;
     }
 }

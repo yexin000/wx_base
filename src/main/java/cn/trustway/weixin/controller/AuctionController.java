@@ -196,7 +196,7 @@ public class AuctionController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/ajaxGetJoinAuctions")
-    public void ajaxGetJoinAuctions(String wxid, HttpServletResponse response) throws Exception {
+    public void ajaxGetJoinAuctions(String wxid, String fabulousWxid, HttpServletResponse response) throws Exception {
         if(StringUtils.isEmpty(wxid)) {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "查询失败，用户信息有误");
             return;
@@ -208,6 +208,7 @@ public class AuctionController extends BaseController {
         }
         Map<String, Object> params = new HashMap<>();
         params.put("wxid", wxid);
+        params.put("fabulousWxid", fabulousWxid);
         List<Auction> joinAuctions = auctionService.queryByJoinAuction(params);
         if(CollectionUtils.isNotEmpty(joinAuctions)) {
             Map<String, Object> context = getRootMap();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.trustway.weixin.dao.AuctionDao">
     <!-- Result Map -->
     <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.Auction">
@@ -101,8 +101,8 @@
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
-          <include refid="Auction_Base_Column_List" />
-          ,su1.nickname as creatorName,su2.nickname as modifierName, b.name as businessName,
+        <include refid="Auction_Base_Column_List" />
+        ,su1.nickname as creatorName,su2.nickname as modifierName, b.name as businessName,
         (select count(1) from t_con_item_res r where r.conid=t.id and r.contype='1') as picCount
         from t_e_auction t
         LEFT JOIN sys_user su1 on t.creator=su1.id
@@ -136,14 +136,14 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-            <include refid="Auction_Base_Column_List" />,
-            su1.nickname as creatorName,su2.nickname as modifierName, b.name as businessName,
-            wu.nickname as wxName, wu.avatarUrl path,
-            (select count(1) from t_con_item_res r where r.conid=t.id and r.contype='1') as picCount,
-            (select path from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as logopath,
-            (select width from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as width,
-            (select height from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as height,
-            c.name as typeName
+        <include refid="Auction_Base_Column_List" />,
+        su1.nickname as creatorName,su2.nickname as modifierName, b.name as businessName,
+        wu.nickname as wxName, wu.avatarUrl path,
+        (select count(1) from t_con_item_res r where r.conid=t.id and r.contype='1') as picCount,
+        (select path from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as logopath,
+        (select width from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as width,
+        (select height from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as height,
+        c.name as typeName
         from t_e_auction t
         left join sys_user su1 on t.creator=su1.id
         left join sys_user su2 on t.modifier=su2.id
@@ -179,11 +179,18 @@
 
     <select id="queryByJoinAuction" resultMap="BaseResultMap" parameterType="Object">
         select
-          <include refid="Auction_Base_Column_List" />,
-            (select path from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as logopath,
-            (select width from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as width,
-            (select height from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as height
+        <include refid="Auction_Base_Column_List" />,
+        (select path from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as logopath,
+        (select width from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as width,
+        (select height from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as height,
+        (select count(1) from t_e_fabulous f where f.fabulousid=t.id and f.fabuloustype='2') as fabulousNum
+        <if test="fabulousWxid != null and fabulousWxid != ''">
+            ,case when f.wxid is not null then '1' else '0' end as isFabulous
+        </if>
         from t_e_auction t
+        <if test="fabulousWxid != null and fabulousWxid != ''">
+            left join t_e_fabulous f on f.fabulousid=t.id and f.fabuloustype='2' and f.wxid=#{fabulousWxid}
+        </if>
         where (1=2
         <if test="wxid != null and wxid != ''">
             or t.wxid = #{wxid}

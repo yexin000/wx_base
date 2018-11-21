@@ -72,6 +72,12 @@
       <if test="wxid != null and wxid != ''">
         and t.wxid = #{wxid}
       </if>
+      <if test="fabulousId != null and fabulousId != ''">
+        and t.fabulousid = #{fabulousId}
+      </if>
+      <if test="fabulousType != null and fabulousType != ''">
+        and t.fabuloustype = #{fabulousType}
+      </if>
     </trim>
   </select>
 
