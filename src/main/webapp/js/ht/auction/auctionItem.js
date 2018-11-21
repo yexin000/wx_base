@@ -137,6 +137,7 @@ WeiXin.auctionItem = function(){
             _box = new YDataGrid(_this.config);
             _box.init();
             _this.initSelect();
+            $("#dialog-div").show();
         },
         initSelect:function() {
             $.post("/weixin/auction/dataList.do",{rows:100},function(data){
