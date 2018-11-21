@@ -40,6 +40,7 @@
 </div>
 
 <!-- Edit Win&From -->
+<div id="dialog-div" style="display: none;">
 <div id="edit-win" class="easyui-dialog" title="编辑菜单" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:380px;">
     <form id="editForm" class="ui-form" method="post">
         <!-- 隐藏文本框 -->
@@ -121,6 +122,7 @@
         <input class="hidden" name="conName" id="conName">
         <input class="hidden" name="conType" id="conType" value="2">
     </form>
+</div>
 </div>
 <script type="text/javascript" src="${msUrl}/js/ht/auction/auctionItem.js"></script>
 </body>
