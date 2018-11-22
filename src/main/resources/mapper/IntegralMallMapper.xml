@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.trustway.weixin.dao.IntegralMallDao">
     <!-- Result Map -->
     <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.IntegralCommodity">
@@ -12,6 +12,7 @@
         <result column="stock" property="stock" />
         <result column="createtime" property="createtime" />
         <result column="endtime" property="endtime" />
+        <result column="picCount" property="picCount" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
@@ -22,8 +23,8 @@
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_integral_commodity(id,name,describes,consumeintegral,stock,createtime )
-        values(null,#{name},#{describe},#{consumeintegral},#{stock},now() );
+        t_e_integral_commodity(id,name,describes,consumeintegral,stock,endtime,createtime )
+        values(null,#{name},#{describes},#{consumeintegral},#{stock},#{endtime},now() );
     </insert>
 
     <!-- 根据id，修改记录 -->
@@ -35,23 +36,34 @@
 
     <!-- 修改记录，只修改只不为空的字段 -->
     <update id="updateBySelective" parameterType="Object">
-        update t_e_integral_commodity set
-        name=#{name}
+        update t_e_integral_commodity set id=#{id}
+        <if test="name != null and name != '' ">
+            ,name=#{name}
+        </if>
         <if test="stock != null and stock != '' ">
             ,stock=#{stock}
+        </if>
+        <if test="consumeintegral != null and consumeintegral != '' ">
+            ,consumeintegral=#{consumeintegral}
+        </if>
+        <if test="describes != null and describes != '' ">
+            ,describes=#{describes}
+        </if>
+        <if test="endtime != null and endtime != '' ">
+            ,endtime=#{endtime}
         </if>
         where id=#{id}
     </update>
 
     <!-- 删除记录 -->
-    <update id="delete" parameterType="Object">
-		update t_e_integral_commodity set status = '0' where id = #{id}
-	</update>
+    <delete id="delete" parameterType="Object">
+      delete from t_e_integral_commodity where id = #{id}
+    </delete>
 
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
-          <include refid="IntegralCommodity_Base_Column_List" />
+        <include refid="IntegralCommodity_Base_Column_List" />
         from t_e_integral_commodity t
         where t.id = #{id}
     </select>
@@ -72,7 +84,8 @@
     <!-- 分页查询记录列表 -->
     <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
         select
-            <include refid="IntegralCommodity_Base_Column_List" />
+        <include refid="IntegralCommodity_Base_Column_List" />
+        ,(select count(1) from t_con_item_res r where r.conid=t.id and r.contype='5') as picCount
         from t_e_integral_commodity t
         where 1=1
         <trim suffixOverrides=",">

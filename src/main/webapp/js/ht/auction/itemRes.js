@@ -57,6 +57,8 @@ WeiXin.itemRes = function(){
                                 $("#orgForm").attr("action", urls.msUrl + "/auction/list.do");
                             } else if(conType == '2') {
                                 $("#orgForm").attr("action", urls.msUrl + "/auctionItem/list.do");
+                            } else if(conType == '5') {
+                              $("#orgForm").attr("action", urls.msUrl + "/integralMall/list.do");
                             }
                             $("#orgForm").submit();
                         }

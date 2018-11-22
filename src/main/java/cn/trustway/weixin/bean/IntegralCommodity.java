@@ -49,6 +49,8 @@ public class IntegralCommodity extends BaseBean {
      */
     private List<ItemRes> resList;
 
+    private Integer picCount;
+
     public Integer getId() {
         return id;
     }
@@ -111,5 +113,13 @@ public class IntegralCommodity extends BaseBean {
 
     public void setDescribes(String describes) {
         this.describes = describes;
+    }
+
+    public Integer getPicCount() {
+        return picCount;
+    }
+
+    public void setPicCount(Integer picCount) {
+        this.picCount = picCount;
     }
 }

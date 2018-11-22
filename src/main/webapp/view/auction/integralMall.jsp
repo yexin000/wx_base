@@ -23,6 +23,7 @@
 </div>
 
 <!-- Edit Win&From -->
+<div id="dialog-div" style="display: none;">
 <div id="edit-win" class="easyui-dialog" title="编辑菜单" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:320px;">
     <form id="editForm" class="ui-form" method="post">
         <!-- 隐藏文本框 -->
@@ -45,18 +46,28 @@
                 <label>结束时间:</label>
                 <input type="text" name="endtime" editable="false" class="easyui-datetimebox" data-options="required:true">
             </div>
+            <div class="fitem">
+                <label>商品描述:</label>
+                <textarea rows="3" name="describes" class="easyui-validatebox" style="width: 157px;"></textarea>
+            </div>
         </div>
     </form>
-    <form  id="portraitform" method="post" enctype="multipart/form-data" action="uploadLogo.do" style="display: none">
-        <input type="file" accept="image/*" name="headImg" id="edit-portrait">
-        <input type="hidden" id="integralid" name="integralid">
-        <input type="submit">
-    </form>
-    <div id="dlg">
-        <img id="simg" width="460px" height="280px"/>
+    <div id="describe-win" class="easyui-dialog" title="活动内容" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:250px;">
+        <form id="describeForm" class="ui-form" method="post">
+            <div class="ui-edit">
+                <div class="fitem">
+                    <textarea rows="7" id="describeDlg" class="easyui-validatebox" data-options="required:true" style="width: 350px;height:180px;"></textarea>
+                </div>
+            </div>
+        </form>
     </div>
+    <form id="resForm" class="ui-form" method="post" action="/weixin/itemRes/list.do">
+        <input class="hidden" name="conid" id="conid">
+        <input class="hidden" name="conName" id="conName">
+        <input class="hidden" name="conType" id="conType" value="5">
+    </form>
 </div>
-
-<script type="text/javascript" src="${msUrl}/js/ht/auction/IntegralMallBack.js"></script>
+</div>
+<script type="text/javascript" src="${msUrl}/js/ht/auction/integralMall.js"></script>
 </body>
 </html>

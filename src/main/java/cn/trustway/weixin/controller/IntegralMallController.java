@@ -58,7 +58,7 @@ public class IntegralMallController extends BaseController {
     @RequestMapping("/list")
     public ModelAndView list(IntegralMallModel model, HttpServletRequest request) throws Exception {
         Map<String, Object> context = getRootMap();
-        return forword("auction/IntegralMall", context);
+        return forword("auction/integralMall", context);
     }
 
     /**
@@ -149,7 +149,7 @@ public class IntegralMallController extends BaseController {
     public void save(IntegralCommodity bean, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Integer id = bean.getId();
         if(id != null && id > 0) {
-            integralMallService.update(bean);
+            integralMallService.updateBySelective(bean);
         } else {
             integralMallService.add(bean);
         }
