@@ -26,7 +26,7 @@ function loadActivity(){
           str+='   <div style="border-top-left-radius: 3%;border-top-right-radius: 3%;height:1.23rem;  overflow: hidden;background-image:url('+hostPath + obj.activityBg+');background-repeat: no-repeat;background-size: 100% 100%;">';
           str+='      <span style="color: #FFFFFF;float: right">点赞:'+obj.fabulousNum+'</span>';
           str+='   </div>';
-          str+='   <div style="text-align: center;background-color: #2D2D2D">';
+          str+='   <div style="text-align: center;background-color: #2D2D2D;overflow: hidden;width: 100%;">';
           str+='       <span style="font-size: 0.16rem; margin-top: 0.03rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;color: #C8AE56 ">'+obj.name+'</span>';
           str+='   </div>';
           str+='</div>';

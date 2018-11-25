@@ -149,20 +149,20 @@ function zhifu(orderId){
     dataType: 'JSON',
     cache: false,
     success: function (result) {
-      if(result.code == "0") {
-        var data = result.data;
-        var timeStamp = data.timeStamp;
-        var nonceStr = data.nonceStr;
-        var package = data.package;
-        var prepay_id = data.prepay_id;
-        var paySign = data.paySign;
-        var orderId = data.orderId;
-        var itemId = data.itemId;
-        var params = "?timeStamp=" +timeStamp+ "&nonceStr=" + nonceStr
-            + "&prepay_id="+prepay_id+"&paySign=" + paySign
-            + "&orderId=" + orderId  + "&itemId="+itemId;
-        var path = '/pages/wxpay/wxpayActivity' + params;
-        wx.miniProgram.navigateTo({ url: path });
+        if(result.code == "0") {
+            var data = result.data;
+            var timeStamp = data.timeStamp;
+            var nonceStr = data.nonceStr;
+            var package = data.package;
+            var prepay_id = data.prepay_id;
+            var paySign = data.paySign;
+            var orderId = data.orderId;
+            var amount = data.amount;
+            var params = "?timeStamp=" +timeStamp+ "&nonceStr=" + nonceStr
+                + "&prepay_id="+prepay_id+"&paySign=" + paySign
+                + "&orderId=" + orderId + "&amount=" + amount;
+            var path = '/pages/wxpay/wxpayRec' + params;
+            wx.miniProgram.navigateTo({ url: path });
       } else {
         showToast("调用微信支付失败", function () {
           history.back(-1);

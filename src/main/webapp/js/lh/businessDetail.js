@@ -1,6 +1,7 @@
 var selectType = 1;
 var pageId = 1;
 var id = 0 ;
+var businessWxid = '0';
 $(function(){
     $("#business-tit li").click(function(){
         $(".pro-item").empty();
@@ -34,7 +35,9 @@ function loadfindData(id){
             if(dataObj.logoPath == null || dataObj.logoPath == '') {
                 dataObj.logoPath = "foreground/images/no-image.jpg";
             }
-
+            if(dataObj.wxid){
+                businessWxid = dataObj.wxid;
+            }
             var loadClass = '';
             if(parseInt(dataObj.width) > parseInt(dataObj.height * 1.8)){
                 loadClass = 'width';
@@ -58,7 +61,7 @@ function loadBusinessAuctionItem(id){
     $("#loadMore").hide();
     var AuctionItemModel = {};
     //AuctionItemModel.businessId = id;
-    AuctionItemModel.uploadWxid = localStorage.getItem("openId");
+    AuctionItemModel.uploadWxid = businessWxid;
     var url= '/weixin/auctionItem/ajaxDataList.do';
     $.ajax({
         url: url,
@@ -124,7 +127,7 @@ function loadindexAuction(id){
     $("#loadMore").hide();
     var AuctionModel = {};
     //AuctionModel.businessid = id;
-    AuctionModel.wxid = localStorage.getItem("openId");
+    AuctionModel.wxid = businessWxid;
     var url= '/weixin/auction/ajaxDataList.do';
     $.ajax({
         url: url,
