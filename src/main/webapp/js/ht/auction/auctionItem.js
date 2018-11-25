@@ -28,6 +28,7 @@ WeiXin.auctionItem = function(){
                 edit:function(){
                     _box.handler.edit(function(result){
                         $('#attributes').combobox({disabled:true});
+                        $('#attributes').combobox('setValue', result.data.attribute);
                         if(result.data.attribute == 0) {
                           $(".auction-item-div").show();
                           $(".v5-item-div").hide();
@@ -36,6 +37,9 @@ WeiXin.auctionItem = function(){
                           $(".auction-item-div").hide();
                           $("#isShowBannerDiv").show();
                           $(".v5-item-div").hide();
+                          $("#priceText").text("价格:");
+                        } else if(result.data.attribute == 2) {
+                          $(".auction-item-div").hide();
                           $("#priceText").text("价格:");
                         } else {
                           $(".auction-item-div").hide();
@@ -61,6 +65,8 @@ WeiXin.auctionItem = function(){
                                 return "商品";
                             } else if(value == 3) {
                                 return "V5商品";
+                            }  else if(value == 2) {
+                              return "非卖品";
                             } else {
                                 return "拍卖品";
                             }

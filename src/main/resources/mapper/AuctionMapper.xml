@@ -143,13 +143,20 @@
         (select path from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as logopath,
         (select width from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as width,
         (select height from t_con_item_res where t.id=conid and contype='1' order by idx asc limit 1) as height,
+        (select count(1) from t_e_fabulous f where f.fabulousid=t.id and f.fabuloustype='2') as fabulousNum,
         c.name as typeName
+        <if test="fabulousWxid != null and fabulousWxid != ''">
+            ,case when f.wxid is not null then '1' else '0' end as isFabulous
+        </if>
         from t_e_auction t
         left join sys_user su1 on t.creator=su1.id
         left join sys_user su2 on t.modifier=su2.id
         left join t_e_business b on t.businessid=b.id
         left join weixin_user wu on wu.wxid=t.wxid
         left join wx_code c on c.code = t.type
+        <if test="fabulousWxid != null and fabulousWxid != ''">
+            left join t_e_fabulous f on f.fabulousid=t.id and f.fabuloustype='2' and f.wxid=#{fabulousWxid}
+        </if>
         where 1=1 and t.status != '0'
         <trim suffixOverrides=",">
             <if test="name != null and name != ''">
@@ -168,7 +175,6 @@
             <if test="wxid != null and wxid != ''">
                 and t.wxid = #{wxid}
             </if>
-
         </trim>
 
         order by t.modifytime desc

@@ -35,4 +35,6 @@ public interface AuctionItemDao<T> extends BaseDao<T> {
      * @return
      */
     List<T> queryByWxid(Map<String, Object> params);
+
+    void changeItemOnsale(T t);
 }

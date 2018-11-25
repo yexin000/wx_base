@@ -124,6 +124,11 @@ public class AuctionItemModel extends BaseModel {
 
     private List<String> attributes;
 
+    /**
+     * 是否上架：0-否,1-是
+     */
+    private String isOnsale;
+
     public Integer getId() {
         return id;
     }
@@ -338,5 +343,13 @@ public class AuctionItemModel extends BaseModel {
 
     public void setAttributes(List<String> attributes) {
         this.attributes = attributes;
+    }
+
+    public String getIsOnsale() {
+        return isOnsale;
+    }
+
+    public void setIsOnsale(String isOnsale) {
+        this.isOnsale = isOnsale;
     }
 }

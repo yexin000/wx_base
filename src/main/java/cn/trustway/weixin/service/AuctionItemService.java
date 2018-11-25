@@ -43,4 +43,8 @@ public class AuctionItemService<T> extends BaseService<T> {
     public List<T> queryByWxid(Map<String, Object> params) {
         return getDao().queryByWxid(params);
     }
+
+    public void changeItemOnsale(T t) {
+        getDao().changeItemOnsale(t);
+    }
 }

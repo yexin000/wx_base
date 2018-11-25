@@ -12,65 +12,69 @@ public class AuctionModel extends BaseModel {
     /**
      *主键-id
      */
-    Integer id;
+    private Integer id;
     /**
      *拍卖会名称
      */
-    String name;
+    private String name;
     /**
      *开始时间
      */
-    Date starttime;
+    private Date starttime;
     /**
      *结束时间
      */
-    Date endtime;
+    private Date endtime;
     /**
      *创建时间
      */
-    Date createtime;
+    private Date createtime;
     /**
      *创建人
      */
-    Integer creator;
+    private Integer creator;
     /**
      *修改时间
      */
-    Date modifytime;
+    private Date modifytime;
     /**
      *修改人
      */
-    Integer modifier;
+    private Integer modifier;
     /**
      *商家id
      */
-    Integer businessid;
+    private Integer businessid;
     /**
      *描述说明
      */
-    String description;
+    private String description;
     /**
      *状态：0-删除，1-正常, 2-已开始, 3-已结束
      */
-    String status;
+    private String status;
     /**
      *浏览数目
      */
-    Integer viewnum;
+    private Integer viewnum;
     /**
      *拍卖会类型：待定
      */
-    String type;
+    private String type;
     /**
      *是否在首页显示
      */
-    String isShow;
+    private String isShow;
 
     /**
      *微信
      */
-    String wxid;
+    private String wxid;
 
+    /**
+     * 点赞wxid，查询是否点赞
+     */
+    private String fabulousWxid;
 
     public Integer getId() {
         return id;
@@ -190,5 +194,13 @@ public class AuctionModel extends BaseModel {
 
     public void setWxid(String wxid) {
         this.wxid = wxid;
+    }
+
+    public String getFabulousWxid() {
+        return fabulousWxid;
+    }
+
+    public void setFabulousWxid(String fabulousWxid) {
+        this.fabulousWxid = fabulousWxid;
     }
 }

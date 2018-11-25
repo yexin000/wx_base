@@ -31,13 +31,14 @@
         <result column="degree" property="degree" />
         <result column="attribute" property="attribute" />
         <result column="uploadwxid" property="uploadWxid" />
+        <result column="isonsale" property="isOnsale" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="AuctionItem_Base_Column_List">
 		t.id,t.name,t.type,t.description,t.startTime,t.endTime,t.startPrice,t.curPrice,t.finalPrice,t.businessId,
 		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId,
-		t.isshowbanner,t.stock,t.standard,t.age,t.degree,t.attribute,t.uploadwxid,t.isV5Show
+		t.isshowbanner,t.stock,t.standard,t.age,t.degree,t.attribute,t.uploadwxid,t.isV5Show,t.isOnsale
 	</sql>
 
     <!-- 插入记录 -->
@@ -260,6 +261,9 @@
             <if test="isV5Show != null and isV5Show != ''">
                 and t.isV5Show = #{isV5Show}
             </if>
+            <if test="isOnsale != null and isOnsale != ''">
+                and t.isOnsale = #{isOnsale}
+            </if>
         </trim>
         order by t.id desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
@@ -301,6 +305,10 @@
 
     <update id="updateByItemStatus" parameterType="Object">
         update t_e_auction_item set status = #{status} where id=#{id}
+    </update>
+
+    <update id="changeItemOnsale" parameterType="Object">
+        update t_e_auction_item set isOnsale = #{isOnsale} where id=#{id}
     </update>
 
     <select id="queryByWxid" resultMap="BaseResultMap" parameterType="Object">

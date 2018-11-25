@@ -64,6 +64,7 @@ function loadIndexActivity(){
         AuctionItemModel.isShowBanner = '1';
         AuctionItemModel.status = '3';
         AuctionItemModel.attributes = ['0', '1'];
+        AuctionItemModel.isOnsale = "1";
         var url= '/weixin/auctionItem/ajaxDataList.do';
         $.ajax({
             url: url,
@@ -113,16 +114,16 @@ function loadIndexActivity(){
     function loadindexAuction(){
         var AuctionModel = {};
         AuctionModel.isShow = '1';
-    	var url= '/weixin/auction/ajaxDataList.do';
-
-    	$.ajax({
-    		url: url,
-    		type: 'post',
-    		data: JSON.stringify(AuctionModel) ,
-    		dataType: 'JSON',
-            contentType : "application/json;charset=utf-8",
-    		cache: false,
-    		success:function(data){
+        AuctionModel.fabulousWxid = localStorage.getItem("openId");
+    	  var url= '/weixin/auction/ajaxDataList.do';
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: JSON.stringify(AuctionModel) ,
+            dataType: 'JSON',
+                contentType : "application/json;charset=utf-8",
+            cache: false,
+            success:function(data){
                 var auctionList = data.rows;
 
                 if(auctionList.length > 0) {
@@ -130,6 +131,10 @@ function loadIndexActivity(){
                     $(".mystore-auction-preview").remove();
                     for(var i = 0; i < auctionList.length; i ++) {
                         var str = '';
+                        var fabulousImage = "/weixin/images/lh/mystore-unfav-icon.png";
+                        if(auctionList[i].isFabulous == 1) {
+                            fabulousImage = "/weixin/images/lh/mystore-fav-icon.png";
+                        }
                         str += '<div class="weui-form-preview mystore-auction-preview">'
                             +   '<div class="weui-form-preview__hd mystore-auction-preview-hd">'
                             +     '<div class="weui-form-preview__item">'
@@ -137,24 +142,23 @@ function loadIndexActivity(){
                             +       '<em class="weui-form-preview__value">专场名称  ' + auctionList[i].name + '</em>'
                             +     '</div>'
                             +   '</div>'
-                            +   '<div class="weui-form-preview__bd mystore-auction-preview-bd" style="text-align: center;" onclick="toAuctionDetail(' + auctionList[i].id + '' + ')">'
+                            +   '<div class="weui-form-preview__bd mystore-auction-preview-bd" style="text-align: center;">'
                             +     '<div class="weui-form-preview__item">'
-                            +       '<img class="mystore-auction-img" src="' + hostPath + auctionList[i].logoPath + '" style="height: 120px;width: ' + 120 /auctionList[i].height * auctionList[i].width + 'px;">'
+                            +       '<img class="mystore-auction-img" src="' + hostPath + auctionList[i].logoPath + '" onclick="toAuctionDetail(' + auctionList[i].id + '' + ')" style="height: 120px;width: ' + 120 /auctionList[i].height * auctionList[i].width + 'px;">'
                             +     '</div>'
                             +   '</div>'
                             +   '<div class="weui-cell" style="background-color: black;">'
                             +     '<div class="weui-cell__hd"><img class="headimg mystore-auction-headimg" src="'+auctionList[i].path+'"></div>'
                             +     '<div class="weui-cell__bd"><p class="headtext mystore-auction-headtext">  '+auctionList[i].wxName+' </p></div>'
-                            +     '<div class="weui-cell__hd"><img src="/weixin/images/lh/mystore-fav-icon.png" class="mystore-auction-favicon"></div>'
-                            +     '<div class="weui-cell__ft">0</div>'
+                            +     '<div class="weui-cell__hd"><img src="' + fabulousImage + '" id="fabulousImage' + auctionList[i].id + '" data-isfabulous="' + auctionList[i].isFabulous + '" class="mystore-auction-favicon" onclick="javascript:fabulousChange(\'' + auctionList[i].id + '\')"></div>'
+                            +     '<div class="weui-cell__ft" style="font-size: 14px;" id="fabulousNum' + auctionList[i].id + '">' + auctionList[i].fabulousNum + '</div>'
                             +   '</div>'
                             +'</div>'
                         $("#dataDiv").append(str);
                     }
                 }
-               // $("#dataDiv").append(str);
-    		}
-    	})
+            }
+        })
     }
 
     //加载首页会展项数据
@@ -205,3 +209,33 @@ function loadIndexActivity(){
             }
         })
     }
+
+function fabulousChange(auctionid) {
+  var fabulousBean = {};
+  fabulousBean.fabulousId = auctionid;
+  fabulousBean.fabulousType = "2";
+  fabulousBean.wxid = localStorage.getItem("openId");
+  $('#loadingToast').show();
+  var isFabulous = $("#fabulousImage" + auctionid).data("isfabulous");
+  if(isFabulous == "1") {
+    var url= '/weixin/fabulous/ajaxDelFabulous.do';
+    $.post(url,fabulousBean,function(data){
+      $('#loadingToast').hide();
+      showToast(data.msg, function () {
+      });
+      $("#fabulousImage" + auctionid).data("isfabulous", "0");
+      $("#fabulousImage" + auctionid).attr("src", "/weixin/images/lh/mystore-unfav-icon.png");
+      $("#fabulousNum" + auctionid).html(parseInt($("#fabulousNum" + auctionid).html()) - 1);
+    });
+  } else {
+    var url= '/weixin/fabulous/ajaxAddFabulous.do';
+    $.post(url,fabulousBean,function(data){
+      $('#loadingToast').hide();
+      showToast(data.msg, function () {
+      });
+      $("#fabulousImage" + auctionid).data("isfabulous", "1")
+      $("#fabulousImage" + auctionid).attr("src", "/weixin/images/lh/mystore-fav-icon.png");
+      $("#fabulousNum" + auctionid).html(parseInt($("#fabulousNum" + auctionid).html()) + 1);
+    });
+  }
+}

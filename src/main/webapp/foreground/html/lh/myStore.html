@@ -226,15 +226,28 @@
               $("#auctionItemData").empty();
               for(var i = 0; i < auctionItemList.length; i ++) {
                 var str = '';
-                str += '<a href="javascript:;" class="weui-grid" style="position: initial;" onclick="toAuctionItemDetail(\'' + auctionItemList[i].id + '\', \'' + attribute + '\')">'
+                var onsaleDiv = '';
+                if(isSelf) {
+                  if(auctionItemList[i].isOnsale == 0) {
+                    onsaleDiv = '<div class="mystore-auctionitem-onsale" id="auctionItem' + auctionItemList[i].id + '" data-isonsale="' + auctionItemList[i].isOnsale + '" onclick="javascript:onSaleChange(\'' + auctionItemList[i].id + '\')">上架</div>'
+                  } else {
+                    onsaleDiv = '<div class="mystore-auctionitem-onsale" id="auctionItem' + auctionItemList[i].id + '" data-isonsale="' + auctionItemList[i].isOnsale + '" onclick="javascript:onSaleChange(\'' + auctionItemList[i].id + '\')">下架</div>'
+                  }
+                } else {
+                  if(auctionItemList[i].isOnsale == 0) {
+                    continue;
+                  }
+                }
+                str += '<a href="javascript:;" class="weui-grid" style="position: initial;">'
                     +   '<div class="mystore-auctionitem-div">'
                     +     '<div class="weui-grid__icons" style="width: 90%;height: 150px;overflow: hidden">'
-                    +       '<img src="' + hostPath + auctionItemList[i].logoPath + '" alt="" style="width: 100%;overflow: hidden">'
+                    +       '<img src="' + hostPath + auctionItemList[i].logoPath + '" alt="" style="width: 100%;overflow: hidden" onclick="toAuctionItemDetail(\'' + auctionItemList[i].id + '\', \'' + attribute + '\')">'
                     +     '</div>'
                     +     '<p class="weui-grid__label mystore-auctionitem-label">名称:' + auctionItemList[i].name + '</p>'
                     +     '<p class="weui-grid__label mystore-auctionitem-des">介绍: ' + auctionItemList[i].description + '</p>'
                     +     '<p class="weui-grid__label mystore-auctionitem-label">库存: ' + auctionItemList[i].stock + '件　　　　　　</p>'
-                    +     '<p class="weui-grid__label mystore-auctionitem-label">价格: ' + auctionItemList[i].startPrice + '</p>'
+                    +     '<p class="weui-grid__label mystore-auctionitem-label" style="width: 65%;">价格: ' + auctionItemList[i].startPrice + '</p>'
+                    +     onsaleDiv
                     +   '</div>'
                     + '</a>'
                 $("#auctionItemData").append(str);
@@ -249,15 +262,28 @@
               $("#mySaleData").empty();
               for(var i = 0; i < salesList.length; i ++) {
                 var str = '';
-                str += '<a href="javascript:;" class="weui-grid" style="position: initial;" onclick="toAuctionItemDetail(\'' + salesList[i].id + '\', \'' + attribute + '\')">'
+                var onsaleDiv = '';
+                if(isSelf) {
+                  if(salesList[i].isOnsale == 0) {
+                    onsaleDiv = '<div class="mystore-auctionitem-onsale" id="auctionItem' + salesList[i].id + '" data-isonsale="' + salesList[i].isOnsale + '" onclick="javascript:onSaleChange(\'' + salesList[i].id + '\')">上架</div>'
+                  } else {
+                    onsaleDiv = '<div class="mystore-auctionitem-onsale" id="auctionItem' + salesList[i].id + '" data-isonsale="' + salesList[i].isOnsale + '" onclick="javascript:onSaleChange(\'' + salesList[i].id + '\')">下架</div>'
+                  }
+                } else {
+                  if(salesList[i].isOnsale == 0) {
+                    continue;
+                  }
+                }
+                str += '<a href="javascript:;" class="weui-grid" style="position: initial;">'
                     +   '<div class="mystore-auctionitem-div">'
                     +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
-                    +       '<img src="' + hostPath + salesList[i].logoPath + '" alt="">'
+                    +       '<img src="' + hostPath + salesList[i].logoPath + '" alt="" onclick="toAuctionItemDetail(\'' + salesList[i].id + '\', \'' + attribute + '\')">'
                     +     '</div>'
                     +     '<p class="weui-grid__label mystore-auctionitem-label">名称:' + salesList[i].name + '</p>'
                     +     '<p class="weui-grid__label mystore-auctionitem-des">介绍: ' + salesList[i].description + '</p>'
                     +     '<p class="weui-grid__label mystore-auctionitem-label">库存: ' + salesList[i].stock + '件　　　　　　</p>'
-                    +     '<p class="weui-grid__label mystore-auctionitem-label">价格: ' + salesList[i].startPrice + '</p>'
+                    +     '<p class="weui-grid__label mystore-auctionitem-label" style="width: 65%;">价格: ' + salesList[i].startPrice + '</p>'
+                    +     onsaleDiv
                     +   '</div>'
                     + '</a>'
                 $("#mySaleData").append(str);
@@ -322,6 +348,30 @@
         }
       }
     })
+  }
+  
+  function onSaleChange(itemId) {
+    var bean = {};
+    bean.id = itemId;
+    $('#loadingToast').show();
+    var isOnsale = $("#auctionItem" + itemId).data("isonsale");
+    if(isOnsale == "1") {
+      bean.isOnsale = "0";
+    } else {
+      bean.isOnsale = "1";
+    }
+    var url= '/weixin/auctionItem/ajaxChangeItemOnsale.do';
+    $.post(url,bean,function(data){
+      $('#loadingToast').hide();
+      showToast(data.msg, function () {
+      });
+      $("#auctionItem" + itemId).data("isonsale", bean.isOnsale);
+      if(isOnsale == "1") {
+        $("#auctionItem" + itemId).text("上架");
+      } else {
+        $("#auctionItem" + itemId).text("下架");
+      }
+    });
   }
 </script>
 </body>

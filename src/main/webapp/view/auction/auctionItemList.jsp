@@ -17,6 +17,8 @@
                 <option value="" selected="selected">全部</option>
                 <option value="0">拍卖品</option>
                 <option value="1">商品</option>
+                <option value="2">非卖品</option>
+                <option value="3">V5商品</option>
             </select>
             <label class="ui-label">类型:</label>
             <select class="easyui-combobox" name="type" id="querytypes" data-options="required:true" style="width: 100px;">

@@ -23,7 +23,11 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static oracle.net.aso.C00.s;
 
 /**
  * 拍品功能页面控制类
@@ -325,8 +329,11 @@ public class AuctionItemController extends BaseController {
         BeanUtils.copyProperties(itemUpload, auctionItem);
         auctionItem.setUploadWxid(itemUpload.getWxid());
         auctionItem.setStartTime(new Date());
+        System.out.println(new Date());
         auctionItem.setStartTime(itemUpload.getStartTime());
+        System.out.println(itemUpload.getStartTime());
         auctionItem.setEndTime(itemUpload.getEndTime());
+        System.out.println(itemUpload.getEndTime());
         auctionItem.setRate(DEFUALT_RATE);
         auctionItem.setBusinessId(0);
         auctionItem.setStatus("1");
@@ -515,5 +522,19 @@ public class AuctionItemController extends BaseController {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_NO_BUSINESS_AUCTIONS_ERROR, "未找到拍卖品信息");
             return;
         }
+    }
+
+    /**
+     * 前端用户上/下架商品
+     *
+     * @param bean
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/ajaxChangeItemOnsale", method = RequestMethod.POST)
+    public void ajaxChangeItemOnsale(AuctionItem bean, HttpServletResponse response) throws Exception {
+        auctionItemService.changeItemOnsale(bean);
+        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "操作成功");
     }
 }

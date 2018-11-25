@@ -126,6 +126,7 @@
         AuctionItemModel.status = '3';
         AuctionItemModel.page = curPage;
         AuctionItemModel.rows = rows;
+        AuctionItemModel.isOnsale = "1";
         var url= '/weixin/auctionItem/ajaxDataList.do';
         $.ajax({
           url: url,

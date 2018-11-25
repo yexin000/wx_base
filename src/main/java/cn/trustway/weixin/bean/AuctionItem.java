@@ -166,6 +166,11 @@ public class AuctionItem extends BaseBean {
      */
     private String isV5Show = "0";
 
+    /**
+     * 是否上架：0-否,1-是
+     */
+    private String isOnsale;
+
     public Integer getBusinessId() {
         return businessId;
     }
@@ -452,5 +457,13 @@ public class AuctionItem extends BaseBean {
 
     public void setIsV5Show(String isV5Show) {
         this.isV5Show = isV5Show;
+    }
+
+    public String getIsOnsale() {
+        return isOnsale;
+    }
+
+    public void setIsOnsale(String isOnsale) {
+        this.isOnsale = isOnsale;
     }
 }
