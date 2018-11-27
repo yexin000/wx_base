@@ -21,6 +21,20 @@
         * { padding:0; margin:0;}
         ul { width:100%; border-top:1px solid #ddd; border-left:1px solid #ddd; }
         ul li { list-style:none; width:33.3%;  float:left; border-right:1px solid #ddd; border-bottom:1px solid #ddd; float:left;}
+
+        .notice {
+            width:18px;
+            height:18px;
+            line-height:18px;
+            font-size:6px;
+            color:#fff;
+            text-align:center;
+            background-color:#f00;
+            border-radius:50%;
+            position:absolute;
+            right:10px;
+            top:5px;
+        }
     </style>
 </head>
 <body>
@@ -86,6 +100,7 @@
         <a href="javascript:;" class="weui-grid" style="width: 100%;position: initial;">
             <div class="weui-grid__icon">
                 <img src="/weixin/images/lh/icon-message.png" alt="">
+                <div class="notice" style="display: none">1</div>
             </div>
             <p class="weui-grid__label">消息通知</p>
         </a>
@@ -147,6 +162,15 @@
                 <img src="/weixin/images/lh/icon-message.png" alt="">
             </div>
             <p class="weui-grid__label">联系客服</p>
+        </a>
+    </li>
+
+    <li onclick="window.location.href='businessJoin.html'" style="height: 120px;padding-left: 0;">
+        <a href="javascript:;" class="weui-grid" style="width: 100%;position: initial;">
+            <div class="weui-grid__icon">
+                <img src="/weixin/images/lh/icon-problem.png" alt="">
+            </div>
+            <p class="weui-grid__label">申请商家</p>
         </a>
     </li>
 

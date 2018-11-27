@@ -284,28 +284,33 @@ public class OrderController extends BaseController {
             if(StringUtils.isNotEmpty(myIntegralStr)){
                 myCountIntegral = Integer.parseInt(myCountIntegralStr);
             }
-            int orderIntegral =   newOrder.getOrderMoney().intValue();
+            int orderIntegral =  Integer.parseInt(newOrder.getOrderMoney()+"");
+            if(orderIntegral <= 0){
+                orderIntegral = 0;
+            }
             myIntegral = myIntegral + orderIntegral;
             myCountIntegral = myCountIntegral + orderIntegral;
             wu.setIntegral(myIntegral+"");
             wu.setCountIntegral(myCountIntegral+"");
-
+            String v5Lv = wu.getVipGrade();
             //交易完成，当积分达到一定限度，升级vip等级
-            if(  myCountIntegral > 1 && myCountIntegral <5000){
-                //1级
-                wu.setVipGrade("1");
-            }else if(myCountIntegral >= 5000 && myCountIntegral <20000){
-                //2
-                wu.setVipGrade("2");
-            }else if(myCountIntegral >= 20000 && myCountIntegral <50000){
-                //3
-                wu.setVipGrade("3");
-            }else if(myCountIntegral >= 50000 && myCountIntegral <100000){
-                //4
-                wu.setVipGrade("4");
-            }else if(myCountIntegral >= 100000){
-                //5
-                wu.setVipGrade("5");
+            if(!"5".equals(v5Lv)){
+                if(  myCountIntegral > 1 && myCountIntegral <5000){
+                    //1级
+                    wu.setVipGrade("1");
+                }else if(myCountIntegral >= 5000 && myCountIntegral <20000){
+                    //2
+                    wu.setVipGrade("2");
+                }else if(myCountIntegral >= 20000 && myCountIntegral <50000){
+                    //3
+                    wu.setVipGrade("3");
+                }else if(myCountIntegral >= 50000 && myCountIntegral <100000){
+                    //4
+                    wu.setVipGrade("4");
+                }else if(myCountIntegral >= 100000){
+                    //5
+                    wu.setVipGrade("5");
+                }
             }
             orderService.updateBySelective(order);
             weixinUserService.updateBySelective(wu);

@@ -3,12 +3,10 @@ package cn.trustway.weixin.controller;
 import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.model.FollowModel;
 import cn.trustway.weixin.model.ItemResModel;
+import cn.trustway.weixin.model.MessageModel;
 import cn.trustway.weixin.pojo.WxSession;
 import cn.trustway.weixin.redis.RedisUtil;
-import cn.trustway.weixin.service.FollowService;
-import cn.trustway.weixin.service.MiddleManService;
-import cn.trustway.weixin.service.WeixinUserService;
-import cn.trustway.weixin.service.WxAuthService;
+import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.AES;
 import cn.trustway.weixin.util.HtmlUtil;
 import net.sf.json.JSONObject;
@@ -50,6 +48,9 @@ public class WxAuthController extends BaseController {
 
     @Autowired
     private FollowService<Follow> followService;
+
+    @Autowired(required = false)
+    private MessageService<Message> messageService;
 
     /**
      * 小程序授权登陆后解析用户数据，将用户数据写入数据库，并返回首页地址
@@ -196,7 +197,11 @@ public class WxAuthController extends BaseController {
         int followAuctionItemNum = followService.queryByCount(followAuctionItemModel);
         bean.setMyFollowAuctionItemNum(followAuctionItemNum);
 
-
+        //查询我的消息
+        MessageModel msgModel = new MessageModel();
+        msgModel.setToWxid(wxid);
+        msgModel.setStatus(0);
+        bean.setMsgCount(messageService.queryByCount(msgModel));
         context.put(SUCCESS, true);
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);

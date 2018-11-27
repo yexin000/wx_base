@@ -29,6 +29,12 @@ function loadUser(){
         cache: false,
         success:function(data){
             var data = data.data;
+            if(data.msgCount && data.msgCount > 0){
+                $(".notice").show();
+                $(".notice").html(data.msgCount);
+            }else{
+                $(".notice").hide();
+            }
             $("#user").html(data.nickName);
             $("#headImg").attr("src",   data.avatarUrl);
             $("#balance").html(data.balance);

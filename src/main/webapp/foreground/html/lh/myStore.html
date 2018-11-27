@@ -241,7 +241,7 @@
                 str += '<a href="javascript:;" class="weui-grid" style="position: initial;">'
                     +   '<div class="mystore-auctionitem-div">'
                     +     '<div class="weui-grid__icons" style="width: 90%;height: 150px;overflow: hidden">'
-                    +       '<img src="' + hostPath + auctionItemList[i].logoPath + '" alt="" style="width: 100%;overflow: hidden" onclick="toAuctionItemDetail(\'' + auctionItemList[i].id + '\', \'' + attribute + '\')">'
+                    +       '<img src="' + hostPath + auctionItemList[i].logoPath + '" alt=""  onclick="toAuctionItemDetail(\'' + auctionItemList[i].id + '\', \'' + attribute + '\')">'
                     +     '</div>'
                     +     '<p class="weui-grid__label mystore-auctionitem-label">名称:' + auctionItemList[i].name + '</p>'
                     +     '<p class="weui-grid__label mystore-auctionitem-des">介绍: ' + auctionItemList[i].description + '</p>'
@@ -276,7 +276,7 @@
                 }
                 str += '<a href="javascript:;" class="weui-grid" style="position: initial;">'
                     +   '<div class="mystore-auctionitem-div">'
-                    +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
+                    +     '<div class="weui-grid__icons" style="width: 90%;height: 150px;overflow: hidden">'
                     +       '<img src="' + hostPath + salesList[i].logoPath + '" alt="" onclick="toAuctionItemDetail(\'' + salesList[i].id + '\', \'' + attribute + '\')">'
                     +     '</div>'
                     +     '<p class="weui-grid__label mystore-auctionitem-label">名称:' + salesList[i].name + '</p>'
@@ -300,7 +300,7 @@
                 var str = '';
                 str += '<a href="javascript:;" class="weui-grid" style="position: initial;" onclick="toAuctionItemDetail(\'' + noSaleList[i].id + '\', \'' + attribute + '\')">'
                     +   '<div class="mystore-auctionitem-div">'
-                    +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
+                    +     '<div class="weui-grid__icons" style="width: 90%;height: 150px;overflow: hidden">'
                     +       '<img src="' + hostPath + noSaleList[i].logoPath + '" alt="">'
                     +     '</div>'
                     +     '<p class="weui-grid__label mystore-auctionitem-label">名称:' + noSaleList[i].name + '</p>'

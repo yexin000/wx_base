@@ -90,6 +90,11 @@ public class WeixinUser extends BaseBean {
 	 */
 	private Integer myFollowAuctionItemNum;
 
+	/**
+	 * 未读消息数量
+	 */
+	private Integer msgCount;
+
 
 	public Integer getId() {
 		return id;
@@ -233,5 +238,13 @@ public class WeixinUser extends BaseBean {
 
 	public void setMyFollowAuctionItemNum(Integer myFollowAuctionItemNum) {
 		this.myFollowAuctionItemNum = myFollowAuctionItemNum;
+	}
+
+	public Integer getMsgCount() {
+		return msgCount;
+	}
+
+	public void setMsgCount(Integer msgCount) {
+		this.msgCount = msgCount;
 	}
 }

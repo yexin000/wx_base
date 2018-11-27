@@ -114,10 +114,15 @@ function loadOrderDetail(id){
         $("#hasAddress").hide();
         $("#notHasAddress").show();
       }
+
+
       var auction = data.auctionItem;
       $("#itemName").val(auction.auctionName);
       $("#itemImg").attr("src" , hostPath + auction.resList[0].path);
       $("#description").html(auction.description);
+        $('#commodityDetail').bind("click", function(){
+            toAuctionItemDetail(auction.id,auction.attribute);
+        }) ;
 
       var order =  data.data;
       $("#orderMoney").html(order.orderMoney);
@@ -172,6 +177,11 @@ function loadOrderDetail(id){
         }
 
 
+      }else if(order.status == '5'){
+          $("#payBtn").text("已完成");
+          $("#payBtn").css("background", "#d5d5d6");
+          $("#payBtn").unbind()
+          statuName = '订单已完成';
       }else{
         $("#payBtn").text("已删除");
         $("#payBtn").css("background", "#d5d5d6");

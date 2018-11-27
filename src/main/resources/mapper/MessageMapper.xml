@@ -50,6 +50,9 @@
             </if>
         </trim>
         where id=#{id}
+        <if test="toWxid != null and toWxid != '' ">
+          and  toWxid=#{toWxid}
+        </if>
     </update>
 
     <!-- 根据id查询记录 -->
@@ -70,14 +73,11 @@
         select count(1) from t_e_message t
         where   1 =1
         <trim suffixOverrides=",">
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 and t.status = #{status}
             </if>
             <if test="parentId != null ">
                 and t.parentId = #{parentId}
-            </if>
-            <if test="status != null and status != ''">
-                and t.v5id = #{v5Id}
             </if>
             <if test="toWxid != null and toWxid != ''">
                 and t.towxid = #{toWxid}

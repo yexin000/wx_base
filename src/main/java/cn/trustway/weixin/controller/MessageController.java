@@ -17,10 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 消息功能页面控制类
@@ -110,14 +107,14 @@ public class MessageController extends BaseController {
     public void getId(Integer id,String wxid ,String toWxid, HttpServletResponse response) throws Exception {
         Map<String, Object> context = getRootMap();
         Message bean = null;
-
+        List<Message> messageList = null;
         //创建聊天
         if(null == id){
             //查询用户消息
             Map<String, Object> maps = new HashMap<>();
             maps.put("wxid",wxid);
             maps.put("toWxid",toWxid);
-            List<Message> messageList = messageService.queryParentByList(maps);
+            messageList = messageService.queryParentByList(maps);
             context.put("messageList",messageList);
         }else{
             //系统对话模式
@@ -130,8 +127,20 @@ public class MessageController extends BaseController {
             //当前主消息下面子消息
             Map<String, Object> maps = new HashMap<>();
             maps.put("parentId",id);
-            List<Message> messageList = messageService.queryParentByList(maps);
+            messageList = messageService.queryParentByList(maps);
             context.put("messageList",messageList);
+        }
+        if(StringUtils.isNotEmpty(toWxid)){
+            Message updateMessage = new Message();
+            updateMessage.setStatus(1);
+            updateMessage.setToWxid(wxid);
+            //消息只要是接收方打开，那么全部设置成已读
+            for (Message m : messageList){
+                if(m.getToWxid().equals(wxid)){
+                    updateMessage.setParentId(m.getParentId());
+                }
+            }
+            messageService.updateBySelective(updateMessage);
         }
         context.put(SUCCESS, true);
         HtmlUtil.writerJson(response, context);
