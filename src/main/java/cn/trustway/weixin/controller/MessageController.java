@@ -130,7 +130,7 @@ public class MessageController extends BaseController {
             messageList = messageService.queryParentByList(maps);
             context.put("messageList",messageList);
         }
-        if(StringUtils.isNotEmpty(toWxid)){
+        if(StringUtils.isNotEmpty(toWxid) || "undefined".equals(toWxid)){
             Message updateMessage = new Message();
             updateMessage.setStatus(1);
             updateMessage.setToWxid(wxid);
