@@ -134,8 +134,8 @@ function loadAuctionItem(type1, type2,isRefByType){
           }
           str += '<a href="javascript:toAuctionItemDetail('+obj.id+','+obj.attribute+');" class="weui-grid1" style="position: initial;padding: 10px 0px;">'
               +       '<div class="mystore-auctionitem-div">'
-              +           '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
-              +               '<img src="' + coverImage + '" alt="">'
+              +           '<div class="weui-grid__icons" style="width: 90%;height: 150px; overflow: hidden">'
+              +               '<img src="' + coverImage + '" alt="" >'
               +           '</div>'
               +           '<p class="weui-grid__label auctionitem-auctionitem-label">名称:' + obj.name + '</p>'
               +           '<p class="weui-grid__label auctionitem-auctionitem-label">作者:' + obj.uploader + '</p>'
