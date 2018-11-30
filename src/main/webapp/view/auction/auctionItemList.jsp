@@ -88,7 +88,7 @@
                 <input class="easyui-validatebox" type="text" name="rate" data-options="required:true" value="6">
             </div>
             <div class="fitem auction-item-div">
-                <label>首页展示:</label>
+                <label>推荐商品:</label>
                 <select class="easyui-combobox" name="isShow" id="isshows" data-options="required:true">
                     <option value="0" selected="selected">否</option>
                     <option value="1">是</option>

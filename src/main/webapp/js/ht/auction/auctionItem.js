@@ -91,7 +91,7 @@ WeiXin.auctionItem = function(){
                             }
                         }
                     },
-                    {field:'isShow',title:'首页显示',width:60,align:'center',sortable:true,
+                    {field:'isShow',title:'推荐商品',width:60,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){
                                 return "是";
