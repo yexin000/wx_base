@@ -43,88 +43,88 @@
 
 <!-- Edit Win&From -->
 <div id="dialog-div" style="display: none;">
-<div id="edit-win" class="easyui-dialog" title="编辑菜单" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:380px;">
-    <form id="editForm" class="ui-form" method="post">
-        <!-- 隐藏文本框 -->
-        <input class="hidden" name="id">
-        <div class="ui-edit">
-            <div class="ftitle">商品信息</div>
-            <div class="fitem">
-                <label>商品名称:</label>
-                <input class="easyui-validatebox" type="text" name="name" data-options="required:true">
+    <div id="edit-win" class="easyui-dialog" title="编辑菜单" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:380px;">
+        <form id="editForm" class="ui-form" method="post">
+            <!-- 隐藏文本框 -->
+            <input class="hidden" name="id">
+            <div class="ui-edit">
+                <div class="ftitle">商品信息</div>
+                <div class="fitem">
+                    <label>商品名称:</label>
+                    <input class="easyui-validatebox" type="text" name="name" data-options="required:true">
+                </div>
+                <div class="fitem">
+                    <label>性质:</label>
+                    <select class="easyui-combobox" name="attribute" id="attributes" data-options="required:true" style="width: 80px;">
+                        <option value="">请选择</option>
+                        <option value="0">拍卖品</option>
+                        <option value="1">商品</option>
+                        <option value="3" selected="selected">V5商品</option>
+                    </select>
+                </div>
+                <div class="fitem">
+                    <label>类型:</label>
+                    <select class="easyui-combobox" name="type" id="types" data-options="required:true" style="width: 156px;">
+                    </select>
+                </div>
+                <div class="fitem auction-item-div">
+                    <label>开始拍卖时间:</label>
+                    <input type="text" id="startTime" name="startTime" editable="false" class="easyui-datetimebox" data-options="required:true">
+                </div>
+                <div class="fitem auction-item-div">
+                    <label>结束拍卖时间:</label>
+                    <input type="text" id="endTime" name="endTime" editable="false" class="easyui-datetimebox" data-options="required:true">
+                </div>
+                <div class="fitem">
+                    <label id="priceText">起拍价格:</label>
+                    <input class="easyui-validatebox" type="text" name="startPrice" value="0" data-options="required:true">
+                </div>
+                <div class="fitem auction-item-div">
+                    <label>最低加价:</label>
+                    <input class="easyui-validatebox" type="text" name="addPrice" value="0" data-options="required:true">
+                </div>
+                <div class="fitem auction-item-div">
+                    <label>手续费比率:</label>
+                    <input class="easyui-validatebox" type="text" name="rate" data-options="required:true" value="6">
+                </div>
+                <div class="fitem auction-item-div" id="isshowsDiv">
+                    <label>推荐商品:</label>
+                    <select class="easyui-combobox" name="isShow" id="isshows" data-options="required:true">
+                        <option value="0" selected="selected">否</option>
+                        <option value="1">是</option>
+                    </select>
+                </div>
+                <div class="fitem auction-item-div" id="isShowBannerDiv">
+                    <label>是否轮播:</label>
+                    <select class="easyui-combobox" name="isShowBanner" id="isShowBanners" data-options="required:true">
+                        <option value="0" selected="selected">否</option>
+                        <option value="1">是</option>
+                    </select>
+                </div>
+                <div class="fitem v5-item-div">
+                    <label>是否V5轮播:</label>
+                    <select class="easyui-combobox" name="isV5Show" id="isV5Show" data-options="required:true">
+                        <option value="0" selected="selected">否</option>
+                        <option value="1">是</option>
+                    </select>
+                </div>
+                <div class="fitem auction-item-div">
+                    <label>拍卖会:</label>
+                    <select class="easyui-combobox" name="auctionId" id="auctionids" data-options="required:true" style="width: 156px;">
+                    </select>
+                </div>
+                <div class="fitem">
+                    <label>介绍描述:</label>
+                    <textarea rows="3" name="description" class="easyui-validatebox" style="width: 157px;"></textarea>
+                </div>
             </div>
-            <div class="fitem">
-                <label>性质:</label>
-                <select class="easyui-combobox" name="attribute" id="attributes" data-options="required:true" style="width: 80px;">
-                    <option value="">请选择</option>
-                    <option value="0">拍卖品</option>
-                    <option value="1">商品</option>
-                    <option value="3" selected="selected">V5商品</option>
-                </select>
-            </div>
-            <div class="fitem">
-                <label>类型:</label>
-                <select class="easyui-combobox" name="type" id="types" data-options="required:true" style="width: 156px;">
-                </select>
-            </div>
-            <div class="fitem auction-item-div">
-                <label>开始拍卖时间:</label>
-                <input type="text" id="startTime" name="startTime" editable="false" class="easyui-datetimebox" data-options="required:true">
-            </div>
-            <div class="fitem auction-item-div">
-                <label>结束拍卖时间:</label>
-                <input type="text" id="endTime" name="endTime" editable="false" class="easyui-datetimebox" data-options="required:true">
-            </div>
-            <div class="fitem">
-                <label id="priceText">起拍价格:</label>
-                <input class="easyui-validatebox" type="text" name="startPrice" value="0" data-options="required:true">
-            </div>
-            <div class="fitem auction-item-div">
-                <label>最低加价:</label>
-                <input class="easyui-validatebox" type="text" name="addPrice" value="0" data-options="required:true">
-            </div>
-            <div class="fitem auction-item-div">
-                <label>手续费比率:</label>
-                <input class="easyui-validatebox" type="text" name="rate" data-options="required:true" value="6">
-            </div>
-            <div class="fitem auction-item-div">
-                <label>推荐商品:</label>
-                <select class="easyui-combobox" name="isShow" id="isshows" data-options="required:true">
-                    <option value="0" selected="selected">否</option>
-                    <option value="1">是</option>
-                </select>
-            </div>
-            <div class="fitem auction-item-div" id="isShowBannerDiv">
-                <label>是否轮播:</label>
-                <select class="easyui-combobox" name="isShowBanner" id="isShowBanners" data-options="required:true">
-                    <option value="0" selected="selected">否</option>
-                    <option value="1">是</option>
-                </select>
-            </div>
-            <div class="fitem v5-item-div">
-                <label>是否V5轮播:</label>
-                <select class="easyui-combobox" name="isV5Show" id="isV5Show" data-options="required:true">
-                    <option value="0" selected="selected">否</option>
-                    <option value="1">是</option>
-                </select>
-            </div>
-            <div class="fitem auction-item-div">
-                <label>拍卖会:</label>
-                <select class="easyui-combobox" name="auctionId" id="auctionids" data-options="required:true" style="width: 156px;">
-                </select>
-            </div>
-            <div class="fitem">
-                <label>介绍描述:</label>
-                <textarea rows="3" name="description" class="easyui-validatebox" style="width: 157px;"></textarea>
-            </div>
-        </div>
-    </form>
-    <form id="resForm" class="ui-form" method="post" action="/weixin/itemRes/list.do">
-        <input class="hidden" name="conid" id="conid">
-        <input class="hidden" name="conName" id="conName">
-        <input class="hidden" name="conType" id="conType" value="2">
-    </form>
-</div>
+        </form>
+        <form id="resForm" class="ui-form" method="post" action="/weixin/itemRes/list.do">
+            <input class="hidden" name="conid" id="conid">
+            <input class="hidden" name="conName" id="conName">
+            <input class="hidden" name="conType" id="conType" value="2">
+        </form>
+    </div>
 </div>
 <script type="text/javascript" src="${msUrl}/js/ht/auction/auctionItem.js"></script>
 </body>
