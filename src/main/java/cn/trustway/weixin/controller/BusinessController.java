@@ -264,7 +264,7 @@ public class BusinessController extends BaseController {
     @RequestMapping("/ajaxBusinessJoin")
     public void ajaxBusinessJoin(Business businessUpload, @RequestParam MultipartFile[] itemImages,
                                       HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if(null == businessUpload) {
+        if(null == businessUpload || itemImages.length != 1) {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_BUSINESS_JOIN_ERROR, "申请失败");
             return;
         }
@@ -279,15 +279,8 @@ public class BusinessController extends BaseController {
             return;
         }
         businessUpload.setIsShow("0");
-        if(businessUpload.getId() != null && businessUpload.getId() > 0) {
-            businessService.updateBySelective(businessUpload);
-        } else {
-            businessService.add(businessUpload);
-        }
-
-        sendSuccessMessage(response, "申请成功");
         // 上传商家图片
-        /*MultipartFile businessPic = itemImages[0];
+        MultipartFile businessPic = itemImages[0];
         Map<String, Object> uploadResult = fileUploadService.uploadFile(businessPic, request, response);
         boolean uploadFlag = Boolean.valueOf(uploadResult.get(SUCCESS).toString());
         if(uploadFlag) {
@@ -295,12 +288,16 @@ public class BusinessController extends BaseController {
             businessUpload.setWidth(Integer.parseInt(uploadResult.get("width").toString()));
             businessUpload.setHeight(Integer.parseInt(uploadResult.get("height").toString()));
             //设置宽高  uploadResult.getWidth
-
+            if(businessUpload.getId() != null && businessUpload.getId() > 0) {
+                businessService.updateBySelective(businessUpload);
+            } else {
+                businessService.add(businessUpload);
+            }
 
             sendSuccessMessage(response, "申请成功");
         } else {
             sendFailureMessage(response, "申请失败");
-        }*/
+        }
     }
 
     /**
