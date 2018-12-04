@@ -107,7 +107,7 @@
     <script type="text/javascript" src="../../../js/lh/common.js"></script>
     <script type="text/javascript">
       var curPage = 1;
-      var rows = 6;
+      var rows = 10;
       $(function(){
         loadAuctionItems();
         $(".auctionitem-search-btn").click(function () {
@@ -140,30 +140,29 @@
             var dataList = data.rows;
             var total = data.total;
             if(dataList.length> 0) {
-              for(var i = 0; i < dataList.length; i ++) {
                 var str = "";
+                for(var i = 0; i < dataList.length; i ++) {
                 var coverImage = '/weixin/foreground/images/no-image.jpg';
                 if(dataList[i].resList != null && dataList[i].resList.length > 0) {
                   coverImage = hostPath + dataList[i].resList[0].path;
                 }
-
                 var price = dataList[i].curPrice;
                 if(price <= 0) {
                   price = dataList[i].startPrice;
                 }
-                str += '<a href="javascript:toAuctionItemDetail(\''+dataList[i].id+'\',\'' + dataList[i].attribute + '\');" class="weui-grid" style="position: initial;padding: 10px 0px;">'
-                      +   '<div class="mystore-auctionitem-div">'
-                      +     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
-                      +       '<img src="' + coverImage + '" alt="">'
-                      +     '</div>'
-                      +     '<p class="weui-grid__label auctionitem-auctionitem-label">名称:' + dataList[i].name + '</p>'
-                      +     '<p class="weui-grid__label auctionitem-auctionitem-label">作者:' + dataList[i].uploader + '</p>'
-                      +     '<p class="weui-grid__label auctionitem-auctionitem-label">价格:' + price + '</p>'
-                      +     '<p class="weui-grid__label auctionitem-auctionitem-label">结束时间:' + dataList[i].endTime + '</p>'
-                      +   '</div>'
-                      +'</a>';
-                $("#auctionItemData").append(str);
-              }
+                str += '<a href="javascript:toAuctionItemDetail(\''+dataList[i].id+'\',\'' + dataList[i].attribute + '\');" class="weui-grid" style="position: initial;padding: 10px 0px;">';
+                    str +=  '<div class="mystore-auctionitem-div">'
+                    str +=     '<div class="weui-grid__icon" style="width: 90%;height: 150px;">'
+                    str +=      '<img src="' + coverImage + '" alt="">'
+                    str +=    '</div>'
+                    str +=     '<p class="weui-grid__label auctionitem-auctionitem-label">名称:' + dataList[i].name + '</p>'
+                    str +=    '<p class="weui-grid__label auctionitem-auctionitem-label">作者:' + dataList[i].uploader + '</p>'
+                    str +=    '<p class="weui-grid__label auctionitem-auctionitem-label">价格:' + price + '</p>'
+                    str +=    '<p class="weui-grid__label auctionitem-auctionitem-label">结束时间:' + dataList[i].endTime + '</p>'
+                    str +=  '</div>'
+                    str +='</a>';
+                }
+               $("#auctionItemData").append(str);
               if(total > curPage * rows) {
                 $("#auctionItemDiv").append('<a href="javascript:$(\'#loadMore\').remove();loadAuctionItems(\''+ name + '\');" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading" style="background-color: #363636;color: white;"> 点击加载更多</a>');
               }

@@ -1,22 +1,22 @@
-var selectType = 1;
+var selectType = 2;
 var pageId = 1;
 var id = 0 ;
 var businessWxid = '0';
 $(function(){
+    id = getParam("id");
+    loadfindData(id);
     $("#business-tit li").click(function(){
         $(".pro-item").empty();
         pageId = 1;
         $(this).addClass("cur").siblings().removeClass("cur");
         selectType = $(this).attr("selectType");
-       if(selectType == '1'){
-           loadindexAuction(id);
-       }else{
-           loadBusinessAuctionItem(id);
-       }
+        if(selectType == '1'){
+            loadindexAuction(id);
+        }else{
+            loadBusinessAuctionItem(id);
+        }
     })
-    id = getParam("id");
-    loadfindData(id);
-    $('li').eq(0).click();
+    //$('li').eq(0).click();
 })
 
 //加载商家数据
@@ -50,6 +50,13 @@ function loadfindData(id){
 
             $("#businessName").html( dataObj.name);
             $("#dataDiv").append(dataObj);
+
+            if(selectType == '1'){
+                loadindexAuction(id);
+            }else{
+                loadBusinessAuctionItem(id);
+            }
+
         }
     })
 }
@@ -74,9 +81,9 @@ function loadBusinessAuctionItem(id){
             $('#loadingToast').hide();
             var dataList = data.rows;
             var datalength = data.total;
+            debugger
             if(dataList.length> 0)
             {
-                $("#shoppingCount").html(dataList.length);
                 var str = '';
                 $.each(dataList,function(i,obj){
                     var coverimg = '';
@@ -111,6 +118,7 @@ function loadBusinessAuctionItem(id){
                 });
             }
             $(".pro-item").append(str);
+            $("#shoppingCount").html(datalength);
             if(datalength <= (pageId * 10)){
                 $("#loadMore").hide();
             }else{

@@ -38,7 +38,12 @@ function loadMyMessage(id,wxid){
                         if(localStorage.getItem("openId")  == obj.toWxid){
                             //发给自己的
                             str+='          <p style="display: inline-block;vertical-align: top;margin-left: 0.1rem">';
-                            str+='          <img src="'+   obj.path+'" style="width: 0.3rem;height: 0.3rem;">';
+                            if(obj.path){
+                                str+='          <img src="'+   obj.path+'" style="width: 0.3rem;height: 0.3rem;">';
+                            }else{
+                                str+='          <img src="../../../images/lh/portrait2.png" style="width: 0.3rem;height: 0.3rem;">';
+                            }
+
                             str+='          </p>';
                             str+='          <p style=" width:2.35rem; display: inline-block;word-wrap:break-word;vertical-align: top; min-height: 0.3rem;text-align:left;">';
                             str+=               obj.messagenote;
