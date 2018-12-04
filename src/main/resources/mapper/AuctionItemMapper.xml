@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.trustway.weixin.dao.AuctionItemDao">
     <!-- Result Map -->
     <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.AuctionItem">
@@ -199,11 +199,20 @@
             <if test="attribute != null and attribute != ''">
                 and t.attribute = #{attribute}
             </if>
+            <if test="attributes != null and attributes.size() > 0">
+                and t.attribute in
+                <foreach collection="attributes" index="index" item="attribute" open="(" separator="," close=")">
+                    #{attribute}
+                </foreach>
+            </if>
             <if test="isV5 != null and isV5 != ''">
                 and t.isV5 = #{isV5}
             </if>
             <if test="isV5Show != null and isV5Show != ''">
                 and t.isV5Show = #{isV5Show}
+            </if>
+            <if test="isOnsale != null and isOnsale != ''">
+                and t.isOnsale = #{isOnsale}
             </if>
         </trim>
     </select>
@@ -320,12 +329,12 @@
         from t_e_auction_item t
         where t.status != '0'
         <trim suffixOverrides=",">
-        <if test="wxid != null and wxid != ''">
-            and t.uploadWxid = #{wxid}
-        </if>
-        <if test="attribute != null and attribute != ''">
-            and t.attribute = #{attribute}
-        </if>
+            <if test="wxid != null and wxid != ''">
+                and t.uploadWxid = #{wxid}
+            </if>
+            <if test="attribute != null and attribute != ''">
+                and t.attribute = #{attribute}
+            </if>
         </trim>
         order by t.id desc
     </select>
