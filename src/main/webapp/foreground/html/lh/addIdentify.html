@@ -69,8 +69,8 @@
   <div class="weui-mask">
     <div class="weui-dialog">
       <div class="weui-dialog__bd" id="tipLabel"></div>
-      <div class="weui-dialog__ft">
-        <a onclick="$('#tipDialog').hide();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+      <div class="weui-dialog__ft" onclick="$('#tipDialog').hide();">
+        <a class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
       </div>
     </div>
   </div>
@@ -90,6 +90,8 @@
 
 <script type="text/javascript">
   $(function(){
+    $("#tipLabel").html("鉴定商品上传后需要支付38元的鉴定费才能鉴定");
+    $('#tipDialog').show();
     $("#showTooltips").click(function () {
       submitUpload();
     });
@@ -225,9 +227,11 @@
                   contentType: false,
                   success:function(result){
                     $('#loadingToast').hide();
-                    $("#tipLabel").html(result.msg);
-                    $('#tipDialog').show();
-                    window.location.href = "../../html/lh/myIdentify.html";
+                    //$("#tipLabel").html(result.msg);
+                    //$('#tipDialog').show();
+                    // 鉴定支付：跳转订单详情
+                    toOrderDetail(data.data.id);
+                    //window.location.href = "../../html/lh/myIdentify.html";
                   }
                 });
               } else {

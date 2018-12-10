@@ -14,6 +14,7 @@
                 <option value="" selected="selected">全部</option>
                 <option value="0">未鉴定</option>
                 <option value="1">已鉴定</option>
+                <option value="-1">未支付</option>
             </select>
         </p>
         <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>

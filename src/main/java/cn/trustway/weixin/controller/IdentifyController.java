@@ -176,7 +176,7 @@ public class IdentifyController extends BaseController {
         // 插入鉴定信息
         Identify identifyItem = new Identify();
         BeanUtils.copyProperties(itemUpload, identifyItem);
-        identifyItem.setStatus("0");
+        identifyItem.setStatus("-1");
         identifyService.add(identifyItem);
 
         if (null != identifyItem.getId() && identifyItem.getId() > 0 ) {
@@ -205,6 +205,12 @@ public class IdentifyController extends BaseController {
             }
         }
 
-        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "上传成功");
+        // 鉴定支付：新增订单返回订单对象到前端
+
+        Map<String, Object> context = getRootMap();
+        context.put(SUCCESS, true);
+        //context.put("data", order);
+        HtmlUtil.writerJson(response, context);
+        //sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "上传成功");
     }
 }

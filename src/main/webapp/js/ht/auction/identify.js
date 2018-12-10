@@ -26,6 +26,8 @@ WeiXin.identify = function(){
             formatter:function(value,row,index){
               if(value == 1){
                 return "已鉴定";
+              } else if(value == -1) {
+                return "未支付";
               } else {
                 return "鉴定中";
               }
