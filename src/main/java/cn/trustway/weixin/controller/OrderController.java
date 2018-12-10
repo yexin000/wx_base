@@ -53,6 +53,9 @@ public class OrderController extends BaseController {
     @Autowired
     private WeixinUserService<WeixinUser> weixinUserService;
 
+    @Autowired
+    private MessageService<Message> messageService;
+
     /**
      * 首页
      *
@@ -400,7 +403,21 @@ public class OrderController extends BaseController {
         HtmlUtil.writerJson(response, context);
     }
 
-
-
-
+    /**
+     * 发送通知
+     * @param message
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("/sendMessage")
+    public void sendMessage(Message message, HttpServletResponse response) throws Exception {
+        message.setParentId(0);
+        message.setMessagetype(1);
+        message.setStatus(0);
+        message.setWxid("0");
+        messageService.add(message);
+        message.setParentId(message.getId());
+        messageService.updateBySelective(message);
+        sendSuccessMessage(response, "发送通知成功");
+    }
 }

@@ -49,7 +49,7 @@
                 status=#{status},
             </if>
         </trim>
-        where parentId=#{parentId}
+        where id=#{id}
         <if test="toWxid != null and toWxid != '' ">
           and  toWxid=#{toWxid}
         </if>

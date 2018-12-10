@@ -39,6 +39,18 @@
     </form>
 </div>
 
+<div id="message-win" class="easyui-dialog" title="发送通知" data-options="closed:true,iconCls:'',modal:true"  style="width:400px;height:280px;">
+    <form id="messageForm" class="ui-form" method="post">
+        <input class="hidden" name="toWxid" id="msgWxid">
+        <div class="ui-edit">
+            <label>通知内容:</label>
+            <div class="fitem">
+                <textarea rows="5" name="messagenote" class="easyui-validatebox" data-options="required:true" style="width: 350px;height: 150px"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
 <script type="text/javascript" src="${msUrl}/js/ht/auction/order.js"></script>
 </body>
 </html>
