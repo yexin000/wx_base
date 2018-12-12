@@ -72,7 +72,7 @@
 					<value>/order/ajaxGetLogistics.do</value>
 					<value>/order/rechargeOrder.do</value>
 					<value>/order/updateOrderLogistics.do</value>
-                    <value>/order/confirmationOfOrder.do</value>
+					<value>/order/confirmationOfOrder.do</value>
 					<value>/favorite/ajaxDataList.do</value>
 					<value>/favorite/ajaxAddFavorite.do</value>
 					<value>/favorite/ajaxDelFavorite.do</value>
@@ -94,6 +94,7 @@
 					<value>cn.trustway.weixin.controller.BlacklistController</value>
 					<value>cn.trustway.weixin.controller.ExpectedPriceController</value>
 					<value>cn.trustway.weixin.controller.FabulousController</value>
+					<value>cn.trustway.weixin.controller.TextMessageController</value>
 					<value>/templateMsg/bidOverTemplateMsg.do</value>
 					<value>/templateMsg/rechargeTemplateMsg.do</value>
 					<value>/business/ajaxBusinessJoin.do</value>

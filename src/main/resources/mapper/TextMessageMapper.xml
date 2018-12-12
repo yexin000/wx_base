@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.trustway.weixin.dao.TextMessageDao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="cn.trustway.weixin.bean.TextMessage">
+        <result column="id" property="id" />
+        <result column="phonenum" property="phoneNum" />
+        <result column="content" property="content" />
+        <result column="type" property="type" />
+        <result column="createtime" property="createTime" />
+        <result column="verifycode" property="verifyCode" />
+    </resultMap>
+
+    <!-- sys_menu table all fields -->
+    <sql id="TextMessage_Base_Column_List">
+        t.id,t.phonenum,t.content,t.type,t.createtime,t.verifycode
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="add" parameterType="Object" useGeneratedKeys="true" keyProperty="id" >
+        insert into
+        t_e_text_message(id,phonenum,content,type,createtime,verifycode)
+        values(null,#{phoneNum},#{content},#{type},now(),#{verifyCode});
+    </insert>
+
+    <!-- 根据id，修改记录 -->
+    <update id="update" parameterType="Object">
+        update t_e_text_message set phonenum=#{phoneNum},content=#{content},type=#{type} where id=#{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <update id="delete" parameterType="Object">
+        delete from t_e_text_message where id = #{id}
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateBySelective" parameterType="Object">
+        update t_e_text_message set
+        <trim suffixOverrides=",">
+            <if test="phoneNum != null and phoneNum !=''">
+                phonenum=#{phoneNum},
+            </if>
+            <if test="content != null and  content != ''">
+                content=#{content},
+            </if>
+            <if test="type != null and  type != ''">
+                type=#{type},
+            </if>
+            <if test="verifyCode != null and  verifyCode != ''">
+                verifycode=#{verifyCode},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="TextMessage_Base_Column_List" />
+        from t_e_text_message t
+        where t.id = #{id}
+    </select>
+
+    <!-- 根据手机号和验证码验证 -->
+    <select id="getValidMessageByCode" resultMap="BaseResultMap" parameterType="Object">
+        select
+            <include refid="TextMessage_Base_Column_List" />
+        FROM
+            t_e_text_message t
+        WHERE
+            t.phonenum = #{phoneNum}
+            AND t.verifycode = #{verifyCode}
+            AND t.type = '0'
+            AND createtime >= DATE_SUB(NOW(), INTERVAL 3 MINUTE);
+    </select>
+
+    <!-- 记录总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(1) from t_e_text_message t
+        where 1 =1
+        <trim suffixOverrides=",">
+            <if test="phoneNum != null and phoneNum !=''">
+                and phonenum=#{phoneNum}
+            </if>
+            <if test="content != null and  content != ''">
+                and content=#{content}
+            </if>
+            <if test="type != null and  type != ''">
+                and type=#{type}
+            </if>
+            <if test="verifyCode != null and  verifyCode != ''">
+                and verifycode=#{verifyCode}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="TextMessage_Base_Column_List" />
+        from t_e_text_message t
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="phoneNum != null and phoneNum !=''">
+                and t.phonenum=#{phoneNum}
+            </if>
+            <if test="content != null and  content != ''">
+                and t.content=#{content}
+            </if>
+            <if test="type != null and  type != ''">
+                and t.type=#{type}
+            </if>
+            <if test="verifyCode != null and  verifyCode != ''">
+                and verifycode=#{verifyCode}
+            </if>
+        </trim>
+        order by t.createtime asc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+</mapper>
