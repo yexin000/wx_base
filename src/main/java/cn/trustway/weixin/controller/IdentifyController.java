@@ -5,9 +5,7 @@ import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.IdentifyModel;
 import cn.trustway.weixin.model.ItemResModel;
-import cn.trustway.weixin.service.IdentifyService;
-import cn.trustway.weixin.service.ItemResService;
-import cn.trustway.weixin.service.WeixinUserService;
+import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
 import net.sf.json.JSONArray;
 import org.apache.commons.collections.CollectionUtils;
@@ -22,10 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * 用户鉴定控制类
@@ -42,6 +38,11 @@ public class IdentifyController extends BaseController {
     @Autowired
     private ItemResService<ItemRes> itemResService;
 
+    @Autowired
+    OrderService<Order> orderService;
+
+    @Autowired
+    OrderLogService<OrderLog> orderLogService;
     /**
      * 首页
      *
@@ -207,10 +208,40 @@ public class IdentifyController extends BaseController {
 
         // 鉴定支付：新增订单返回订单对象到前端
 
+        Order order = null ;
+        //鉴定(支付才能成功)
+        try {
+            order = createOrderByIdentify(new BigDecimal("38"),wxid,identifyItem.getId());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         Map<String, Object> context = getRootMap();
         context.put(SUCCESS, true);
-        //context.put("data", order);
+        context.put("data", order);
         HtmlUtil.writerJson(response, context);
         //sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "上传成功");
+    }
+
+    private Order createOrderByIdentify(BigDecimal price,String wxid,int actId) throws Exception{
+        // 生成订单
+        Date currentTime = new Date();
+        Order order = new Order();
+        order.setOrderType("5");
+        order.setOrderMoney(price.doubleValue());
+        order.setWxid(wxid);
+        order.setItemId(actId);
+        order.setActId(actId);
+        order.setCreateTime(currentTime);
+        orderService.add(order);
+        // 写入订单日志
+        Order newOrder = orderService.queryById(order.getId());
+        OrderLog orderLog = new OrderLog();
+        BeanUtils.copyProperties(newOrder, orderLog);
+        orderLog.setOrderId(newOrder.getId());
+        orderLog.setCreateTime(newOrder.getCreateTime());
+        orderLog.setStatus(newOrder.getStatus());
+        orderLogService.add(orderLog);
+        return order;
     }
 }
