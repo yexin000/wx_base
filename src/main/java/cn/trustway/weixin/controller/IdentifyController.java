@@ -218,7 +218,7 @@ public class IdentifyController extends BaseController {
 
         Map<String, Object> context = getRootMap();
         context.put(SUCCESS, true);
-        context.put("data", order);
+        context.put("order", order);
         HtmlUtil.writerJson(response, context);
         //sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "上传成功");
     }
