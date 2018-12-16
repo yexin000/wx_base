@@ -60,4 +60,10 @@ public interface WeixinUserDao<T> extends BaseDao<T> {
 	 */
 	public void updateByExtracting(WeixinUser weixinUser);
 
+	/**
+	 * 更新用户手机号
+	 * @param weixinUser
+	 */
+	void updatePhonenumByWxid(WeixinUser weixinUser);
+
 }

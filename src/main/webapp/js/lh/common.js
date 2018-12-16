@@ -243,6 +243,20 @@ function showToast(msg, callback) {
         $("#toast").remove();
         callback();
     }, 1000);
+}
+
+function showTextToast(msg, callback) {
+  var toast = $('<div id="textToast" style="opacity: 1; ">' +
+      '<div class="weui-mask_transparent"></div>' +
+      '<div class="weui-toast">' +
+      '<p class="weui-toast__content" style="margin-top: 35%;">' + msg + '</p>' +
+      '</div>' +
+      '</div>');
+  $("body").append(toast);
+  setTimeout(function () {
+    $("#textToast").remove();
+    callback();
+  }, 1000);
 
 }
 
@@ -304,6 +318,86 @@ Date.prototype.format = function(fmt) {
         }
     }
     return fmt;
+}
+
+var InterValObj; //timer变量，控制时间
+var count = 60; //间隔函数，1秒执行
+var curCount;//当前剩余秒数
+function sendCodeMessage() {
+  var phoneNum = $("#phoneInput").val();
+  if(checkPhone(phoneNum)) {
+    // 发送验证码短信
+    var params = {};
+    params.phoneNum = phoneNum;
+    $.ajax({
+      url: '/weixin/textMessage/sendVerifyMessage.do',
+      type: 'post',
+      data: JSON.stringify(params) ,
+      dataType: 'JSON',
+      contentType : "application/json;charset=utf-8",
+      cache: false,
+      success:function(data){
+        showTextToast("短信已发送", function () {});
+      }
+    });
+
+    curCount = count;
+    $("#codeBtn").attr("disabled", true);
+    $("#codeBtn").css("color", "grey");
+    $("#codeBtn").text(curCount + "秒后重新获取");
+    InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+  } else {
+    showTextToast("请输入正确的手机号码", function () {
+    });
+  }
+}
+
+function SetRemainTime() {
+  if (curCount == 0) {
+    window.clearInterval(InterValObj);//停止计时器
+    $("#codeBtn").attr("disabled", false);//启用按钮
+    $("#codeBtn").css("color", "green");
+    $("#codeBtn").text("获取验证码");
+  }
+  else {
+    curCount--;
+    $("#codeBtn").text(curCount + "秒后重新获取");
+  }
+}
+
+function verifyPhoneNum() {
+  var phoneNum = $("#phoneInput").val();
+  var verifyCode = $("#codeInput").val();
+  if(verifyCode != null && verifyCode != "") {
+    // 验证手机号
+    var params = {};
+    params.phoneNum = phoneNum;
+    params.wxid = localStorage.getItem("openId");
+    params.verifyCode = verifyCode;
+    $.ajax({
+      url: '/weixin/textMessage/verifyMessage.do',
+      type: 'post',
+      data: JSON.stringify(params) ,
+      dataType: 'JSON',
+      contentType : "application/json;charset=utf-8",
+      cache: false,
+      success:function(data){
+        showTextToast("绑定成功", function () {});
+        $("#phoneDialog").hide();
+      }
+    });
+  } else {
+    showTextToast("请输入正确的验证码", function () {});
+  }
+}
+
+function checkPhone(phoneNum){
+  var phone = phoneNum;
+  if(!(/^[1][3,4,5,7,8][0-9]{9}$/.test(phone))){
+      return false;
+  } else {
+      return true;
+  }
 }
 
 

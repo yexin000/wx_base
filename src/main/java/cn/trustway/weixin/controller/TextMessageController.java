@@ -1,7 +1,10 @@
 package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.TextMessage;
+import cn.trustway.weixin.bean.WeixinUser;
 import cn.trustway.weixin.service.TextMessageService;
+import cn.trustway.weixin.service.WeixinUserService;
+import cn.trustway.weixin.util.http.AppClient;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +30,12 @@ public class TextMessageController extends BaseController {
      * 消息类型，0-短信验证码
      */
     public static final String MESSAGE_TYPE_VERIFY = "0";
-    public static final String MESSAGE_VERIFY_CONTENT = "您的短信验证码为%s,有效时间3分钟.【陇海拍卖】";
+    public static final String MESSAGE_VERIFY_CONTENT = "【百姓收藏】您的短信验证码为%s,有效时间3分钟.";
     @Autowired
     private TextMessageService<TextMessage> textMessageService;
+
+    @Autowired
+    private WeixinUserService<WeixinUser> weixinUserService;
 
     public static void main(String[] args) {
         System.out.println(String.format(MESSAGE_VERIFY_CONTENT, getVerifyCode()));
@@ -70,12 +76,12 @@ public class TextMessageController extends BaseController {
             return;
         }
 
-        // TODO 调用短信接口发送短信
-
         String verifyCode = getVerifyCode();
         bean.setType(MESSAGE_TYPE_VERIFY);
         bean.setContent(String.format(MESSAGE_VERIFY_CONTENT, verifyCode));
         bean.setVerifyCode(verifyCode);
+        // 调用短信接口发送短信
+        AppClient.sendChuanglanMessage(String.format(MESSAGE_VERIFY_CONTENT, verifyCode), bean.getPhoneNum());
         textMessageService.add(bean);
 
         sendSuccessMessage(response, "发送成功");
@@ -100,7 +106,11 @@ public class TextMessageController extends BaseController {
         }
 
         TextMessage textMessage = textMessageService.getValidMessageByCode(bean);
+
         if(textMessage != null) {
+            WeixinUser weixinUser = weixinUserService.queryWeixinUser(bean.getWxid());
+            weixinUser.setPhoneNum(bean.getPhoneNum());
+            weixinUserService.updatePhonenumByWxid(weixinUser);
             sendSuccessMessage(response, "验证成功");
         } else {
             sendFailureMessage(response, "验证失败");

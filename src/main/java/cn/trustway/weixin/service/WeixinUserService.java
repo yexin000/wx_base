@@ -93,6 +93,10 @@ public class WeixinUserService<T> extends BaseService<T> {
 		getDao().updateUserOperTime(wxid);
 	}
 
+	public void updatePhonenumByWxid(WeixinUser weixinUser) {
+		getDao().updatePhonenumByWxid(weixinUser);
+	}
+
 
 
 	/**

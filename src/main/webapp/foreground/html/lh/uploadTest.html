@@ -36,6 +36,28 @@
 		<p class="weui-toast__content">数据加载中</p>
 	</div>
 </div>
+<div class="js_dialog" id="phoneDialog" style="opacity: 1;display: none;">
+	<div class="weui-mask"></div>
+	<div class="weui-dialog">
+		<div class="weui-dialog__hd"><strong class="weui-dialog__title">绑定手机号码</strong></div>
+		<div class="weui-cell weui-cell_vcode">
+			<div class="weui-cell__bd">
+				<input id="phoneInput" class="weui-input" type="tel" placeholder="请输入手机号">
+			</div>
+			<div class="weui-cell__ft">
+				<button class="weui-vcode-btn" id="codeBtn" onclick="sendCodeMessage();">获取验证码</button>
+			</div>
+		</div>
+		<div class="weui-cell">
+			<div class="weui-cell__bd">
+				<input class="weui-input" id="codeInput" type="number" placeholder="请输入验证码">
+			</div>
+		</div>
+		<div class="weui-dialog__ft">
+			<a class="weui-dialog__btn weui-dialog__btn_primary" onclick="verifyPhoneNum();">确定</a>
+		</div>
+	</div>
+</div>
 <form id="uploadform" method="post" enctype="multipart/form-data" action="/weixin/auctionItem/ajaxUploadAuctionItem.do">
 	<input id="status" name="status" type="hidden" value="3">
 	<input id="auctionStatus" name="auctionStatus" type="hidden" value="0">
@@ -181,6 +203,22 @@
     var wxid = localStorage.getItem("openId");
     var attr = getParam("attr");
     $("#attribute").val(attr);
+    // 加载用户信息
+    var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ localStorage.getItem("openId");
+    $.ajax({
+      url: url,
+      type: 'post',
+      data: {} ,
+      dataType: 'JSON',
+      contentType : "application/json;charset=utf-8",
+      cache: false,
+      success:function(data){
+        var data = data.data;
+        if(data.phoneNum == null || data.phoneNum == "") {
+          $("#phoneDialog").show();
+        }
+      }
+    })
     if("0" == attr) {
       $("#titleName").text("创建拍卖品");
       // 查询商户下的拍卖会

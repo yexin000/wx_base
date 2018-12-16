@@ -67,6 +67,12 @@
 		where id=#{id}
 	</update>
 
+	<!-- 更新用户手机号 -->
+	<update id="updatePhonenumByWxid" parameterType="Object">
+		update weixin_user set phonenum=#{phoneNum}
+		where wxid=#{wxid}
+	</update>
+
 	<!-- 修改记录，只修改只不为空的字段 -->
 	<update id="updateBySelective" parameterType="Object">
 		update weixin_user set

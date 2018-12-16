@@ -33,6 +33,12 @@ public class TextMessage extends BaseBean {
      */
     private String verifyCode;
 
+    /**
+     * wxid
+     * @return
+     */
+    private String wxid;
+
     public String getContent() {
         return content;
     }
@@ -79,5 +85,13 @@ public class TextMessage extends BaseBean {
 
     public void setVerifyCode(String verifyCode) {
         this.verifyCode = verifyCode;
+    }
+
+    public String getWxid() {
+        return wxid;
+    }
+
+    public void setWxid(String wxid) {
+        this.wxid = wxid;
     }
 }
