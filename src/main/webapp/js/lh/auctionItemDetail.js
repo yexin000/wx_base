@@ -2,11 +2,30 @@ var topMoney = 0;//最高出价
 var addMoney = 0;//加价
 $(function(){
     var id = getParam("id");
+
     loadItemData(id);
     $("#bidBtn").click(function () {
-        topMoney = parseInt(topMoney + addMoney);
-        $("#bidMoney").val(topMoney);
-        $('#bidDialog').show();
+      $('#loadingToast').show();
+      var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ localStorage.getItem("openId");
+      $.ajax({
+        url: url,
+        type: 'post',
+        data: {} ,
+        dataType: 'JSON',
+        contentType : "application/json;charset=utf-8",
+        cache: false,
+        success:function(data){
+          $('#loadingToast').hide();
+          var data = data.data;
+          if(!data.phoneNum) {
+            $("#phoneDialog").show();
+          } else {
+            topMoney = parseInt(topMoney + addMoney);
+            $("#bidMoney").val(topMoney);
+            $('#bidDialog').show();
+          }
+        }
+      })
     });
 
     $("#favBtn").click(function () {
@@ -203,6 +222,7 @@ function loadAuctionItemBid(id){
 
 //出价
 function toBid(){
+
     var bidMoney = $("#bidMoney").val();
     if(bidMoney == null) {
         showToast("请输入竞拍金额", function () {

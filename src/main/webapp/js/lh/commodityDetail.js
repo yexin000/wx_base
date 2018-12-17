@@ -17,6 +17,8 @@ $(function(){
                     $("#msgDialog2").show();
                 }
             }
+            $("#phoneNum").val(data.phoneNum)
+
             loadItemData(id);
             $("#bidBtn").click(function () {
                 toPurchase();
@@ -165,24 +167,41 @@ function cancleFavorite(){
 //购买
 function toPurchase(){
     $('#loadingToast').show();
-    var id = getParam("id");
-    var url= '/weixin/auctionItem/purchase.do?id='+id+"&wxid="+localStorage.getItem('openId');
+    var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ localStorage.getItem("openId");
     $.ajax({
         url: url,
         type: 'post',
-        data:{},
-        contentType : "application/json;charset=utf-8",
+        data: {} ,
         dataType: 'JSON',
+        contentType : "application/json;charset=utf-8",
         cache: false,
         success:function(data){
-            $('#loadingToast').hide();
-            if(data.success == false){
-                $("#msgLabel").html(data.msg);
-                $("#msgDialog").show();
+            var data = data.data;
+            if(!data.phoneNum) {
+                $('#loadingToast').hide();
+                $("#phoneDialog").show();
             }else{
-                //生成订单
-                //跳转订单详情列表
-                toOrderDetail(data.data.id);
+                var id = getParam("id");
+                var url= '/weixin/auctionItem/purchase.do?id='+id+"&wxid="+localStorage.getItem('openId');
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data:{},
+                    contentType : "application/json;charset=utf-8",
+                    dataType: 'JSON',
+                    cache: false,
+                    success:function(data){
+                        $('#loadingToast').hide();
+                        if(data.success == false){
+                            $("#msgLabel").html(data.msg);
+                            $("#msgDialog").show();
+                        }else{
+                            //生成订单
+                            //跳转订单详情列表
+                            toOrderDetail(data.data.id);
+                        }
+                    }
+                })
             }
         }
     })
