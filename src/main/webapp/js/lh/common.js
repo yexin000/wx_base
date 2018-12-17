@@ -382,8 +382,13 @@ function verifyPhoneNum() {
       contentType : "application/json;charset=utf-8",
       cache: false,
       success:function(data){
-        showTextToast("绑定成功", function () {});
-        $("#phoneDialog").hide();
+          if(data.success == true) {
+              showTextToast("绑定成功", function () {});
+              $("#phoneDialog").hide();
+          } else {
+              showTextToast("验证失败", function () {});
+          }
+
       }
     });
   } else {
