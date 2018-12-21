@@ -99,6 +99,8 @@ public class AuctionTask {
                 // 无人出价
                 // 设置竞拍品为流拍
                 auctionItem.setAuctionStatus("3");
+                // 设置拍品下架
+                auctionItem.setIsOnsale("0");
                 auctionItemService.updateBySelective(auctionItem);
             }
         }

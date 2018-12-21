@@ -212,6 +212,16 @@ public class WxPayController extends BaseController {
                 order.setPayTime(new Date());
                 order.setStatus("3");
                 orderService.updateBySelective(order);
+                // 如果是购买商品，商品库存减一
+                if("2".equals(order.getOrderType())) {
+                    AuctionItem auctionItem = auctionItemService.queryById(order.getItemId());
+                    auctionItem.setStock(auctionItem.getStock() - 1);
+                    // 库存小于等于0，设置下架
+                    if(auctionItem.getStock() <= 0) {
+                        auctionItem.setIsOnsale("0");
+                    }
+                    auctionItemService.updateBySelective(auctionItem);
+                }
                 if("3".equals(order.getOrderType()))
                 {
                     //充值订单
@@ -226,7 +236,7 @@ public class WxPayController extends BaseController {
                 }else if("5".equals(order.getOrderType())){
                     //鉴定订单，只要支付成功，修改状态就ok了。
                     Identify identify = identifyService.queryById(order.getItemId());
-                    identify.setStatus("2");//已付款，待鉴定
+                    identify.setStatus("0");//已付款，待鉴定
                     identifyService.updateBySelective(identify);
                 }
             }
@@ -276,6 +286,17 @@ public class WxPayController extends BaseController {
                     order.setPayTime(new Date());
                     order.setStatus("3");
                     orderService.updateBySelective(order);
+
+                    // 如果是购买商品，商品库存减一
+                    if("2".equals(order.getOrderType())) {
+                        AuctionItem auctionItem = auctionItemService.queryById(order.getItemId());
+                        auctionItem.setStock(auctionItem.getStock() - 1);
+                        // 库存小于等于0，设置下架
+                        if(auctionItem.getStock() <= 0) {
+                            auctionItem.setIsOnsale("0");
+                        }
+                        auctionItemService.updateBySelective(auctionItem);
+                    }
 
                     //保存一条站内通知
                     Message message = new Message();

@@ -135,7 +135,7 @@
             <if test="businessId != null and businessId != '' ">
                 businessid=#{businessId},
             </if>
-            <if test="stock != null and stock != '' ">
+            <if test="stock != null">
                 stock=#{stock},
             </if>
             <if test="attribute != null and attribute != '' ">
@@ -146,6 +146,9 @@
             </if>
             <if test="isV5Show != null and isV5Show != '' ">
                 isV5Show=#{isV5Show},
+            </if>
+            <if test="isOnsale != null and isOnsale != '' ">
+                isOnsale=#{isOnsale},
             </if>
         </trim>
         where id=#{id}
