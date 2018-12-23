@@ -222,7 +222,6 @@ function toPurchaseV5(){
         cache: false,
         success:function(data){
             var data = data.data;
-            debugger
             if(data.vipGrade && data.vipGrade == 5) {
                 $("#msgLabel").html("已经满足条件");
                 $("#msgDialog").show();

@@ -242,6 +242,7 @@ public class WxPayController extends BaseController {
                     //鉴定订单，只要支付成功，修改状态就ok了。
                     WeixinUser wxuser = new WeixinUser();
                     wxuser.setWxid(order.getWxid());
+                    wxuser.setVipGrade("5");
                     weixinUserService.updateBySelective(wxuser);
                 }
             }

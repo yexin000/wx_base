@@ -54,6 +54,7 @@
 					<value>/auctionItem/ajaxDataList.do</value>
 					<value>/auctionItem/ajaxGetId.do</value>
 					<value>/auctionItem/purchase.do</value>
+					<value>/auctionItem/purchaseV5.do</value>
 					<value>/auctionItem/ajaxUploadAuctionItem.do</value>
 					<value>/auctionItem/ajaxMyJoinDataList.do</value>
 					<value>/auctionItem/ajaxGetAuctionItems.do</value>

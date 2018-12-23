@@ -511,7 +511,7 @@ public class AuctionItemController extends BaseController {
         order.setOrderMoney(1800d);
         order.setWxid( wxid);
         order.setItemId(1);
-        order.setAddressId("");
+        order.setAddressId("0");
         order.setCreateTime(currentTime);
         orderService.add(order);
 
