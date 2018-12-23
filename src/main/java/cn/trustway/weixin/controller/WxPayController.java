@@ -238,6 +238,11 @@ public class WxPayController extends BaseController {
                     Identify identify = identifyService.queryById(order.getItemId());
                     identify.setStatus("0");//已付款，待鉴定
                     identifyService.updateBySelective(identify);
+                }else if("6".equals(order.getOrderType())){
+                    //鉴定订单，只要支付成功，修改状态就ok了。
+                    WeixinUser wxuser = new WeixinUser();
+                    wxuser.setWxid(order.getWxid());
+                    weixinUserService.updateBySelective(wxuser);
                 }
             }
         } catch (IOException e) {

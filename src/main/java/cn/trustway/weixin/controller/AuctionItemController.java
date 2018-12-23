@@ -491,6 +491,44 @@ public class AuctionItemController extends BaseController {
         HtmlUtil.writerJson(response, context);
     }
 
+
+    /**
+     * 购买V5
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/purchaseV5")
+    public void purchaseV5( String wxid, HttpServletResponse response) throws Exception {
+        Map<String, Object> context = getRootMap();
+
+        // 生成订单
+        Date currentTime = new Date();
+        Order order = new Order();
+        order.setOrderType("6");
+        order.setOrderMoney(1800d);
+        order.setWxid( wxid);
+        order.setItemId(1);
+        order.setAddressId("");
+        order.setCreateTime(currentTime);
+        orderService.add(order);
+
+        // 写入订单日志
+        Order newOrder = orderService.queryById(order.getId());
+        OrderLog orderLog = new OrderLog();
+        BeanUtils.copyProperties(newOrder, orderLog);
+        orderLog.setOrderId(newOrder.getId());
+        orderLog.setCreateTime(newOrder.getCreateTime());
+        orderLog.setStatus(newOrder.getStatus());
+        orderLogService.add(orderLog);
+
+        context.put(SUCCESS, true);
+        context.put("data", order);
+        HtmlUtil.writerJson(response, context);
+    }
+
     /**
      * 查询用户下的拍卖品
      * @param wxid

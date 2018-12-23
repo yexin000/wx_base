@@ -110,6 +110,9 @@
 			<if test="countIntegral != null  and countIntegral != '' ">
 				countIntegral=#{countIntegral},
 			</if>
+			<if test="vipGrade != null  and vipGrade != '' ">
+				vipGrade=#{vipGrade},
+			</if>
 		</trim>
 		where wxid=#{wxid}
 	</update>
