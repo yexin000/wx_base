@@ -223,6 +223,7 @@ public class WxPayController extends BaseController {
                     TextMessage bean = new TextMessage();
                     bean.setContent("【百姓收藏】您的订单支付成功");
                     bean.setType(TextMessageController.MESSAGE_TYPE_NOTIFY);
+                    bean.setPhoneNum(payMan.getPhoneNum());
                     textMessageService.add(bean);
                     AppClient.sendChuanglanMessage("【百姓收藏】您的订单支付成功", payMan.getPhoneNum());
 
@@ -240,6 +241,7 @@ public class WxPayController extends BaseController {
                     TextMessage bean2 = new TextMessage();
                     bean2.setContent("【百姓收藏】您有新的订单待处理");
                     bean2.setType(TextMessageController.MESSAGE_TYPE_NOTIFY);
+                    bean.setPhoneNum(saleMan.getPhoneNum());
                     textMessageService.add(bean);
                     AppClient.sendChuanglanMessage("【百姓收藏】您有新的订单待处理", saleMan.getPhoneNum());
 
