@@ -2,7 +2,9 @@ package cn.trustway.weixin.quartz;
 
 
 import cn.trustway.weixin.bean.*;
+import cn.trustway.weixin.controller.TextMessageController;
 import cn.trustway.weixin.service.*;
+import cn.trustway.weixin.util.http.AppClient;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,15 @@ public class AuctionTask {
 
     @Autowired
     AuctionItemService<AuctionItem> auctionItemService;
+
+    @Autowired
+    private WeixinUserService<WeixinUser> weixinUserService;
+
+    @Autowired
+    private TextMessageService<TextMessage> textMessageService;
+
+    @Autowired(required = false)
+    private MessageService<Message> messageService;
 
     @Autowired
     BidService<BidBean> bidService;
@@ -95,6 +106,28 @@ public class AuctionTask {
                     auctionItem.setStock(auctionItem.getStock() - 1);
                 }
                 auctionItemService.updateBySelective(auctionItem);
+
+                // 发送短信  找到买家
+                WeixinUser payMan = weixinUserService.queryWeixinUser(bidBean.getWxid());  //买家
+                TextMessage bean = new TextMessage();
+                bean.setContent("【百姓收藏】您的出价已经成拍");
+                bean.setType(TextMessageController.MESSAGE_TYPE_NOTIFY);
+                textMessageService.add(bean);
+                AppClient.sendChuanglanMessage("【百姓收藏】您的出价已经成拍", payMan.getPhoneNum());
+
+                //保存一条站内通知
+                Message message = new Message();
+                message.setWxid("0");
+                message.setToWxid(auctionItemService.queryById(order.getItemId()).getUploadWxid());
+                message.setMessagenote("您有新的订单待处理");
+                message.setMessagetype(1);
+                message.setStatus(0);
+                messageService.add(message);
+                //当新建聊天时触发
+                message.setParentId(message.getId());
+                messageService.updateBySelective(message);
+
+
             } else {
                 // 无人出价
                 // 设置竞拍品为流拍
