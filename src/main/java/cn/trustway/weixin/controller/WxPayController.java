@@ -6,6 +6,7 @@ import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.HttpClientUtil;
 import cn.trustway.weixin.util.MD5;
+import cn.trustway.weixin.util.http.AppClient;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -55,6 +56,9 @@ public class WxPayController extends BaseController {
 
     @Autowired(required = false)
     private MessageService<Message> messageService;
+
+    @Autowired
+    private TextMessageService<TextMessage> textMessageService;
 
     /**
      * 微信支付统一下单
@@ -214,6 +218,15 @@ public class WxPayController extends BaseController {
                 orderService.updateBySelective(order);
                 // 如果是购买商品，商品库存减一
                 if("2".equals(order.getOrderType())) {
+                    // 发送短信  找到买家
+                    WeixinUser payMan = weixinUserService.queryWeixinUser(order.getWxid());  //买家
+                    TextMessage bean = new TextMessage();
+                    bean.setContent("【百姓收藏】您的订单支付成功");
+                    bean.setType(TextMessageController.MESSAGE_TYPE_NOTIFY);
+                    textMessageService.add(bean);
+                    AppClient.sendChuanglanMessage("【百姓收藏】您的订单支付成功", payMan.getPhoneNum());
+
+
                     AuctionItem auctionItem = auctionItemService.queryById(order.getItemId());
                     auctionItem.setStock(auctionItem.getStock() - 1);
                     // 库存小于等于0，设置下架
@@ -221,6 +234,15 @@ public class WxPayController extends BaseController {
                         auctionItem.setIsOnsale("0");
                     }
                     auctionItemService.updateBySelective(auctionItem);
+
+                    // 发送短信  找到卖家
+                    WeixinUser saleMan = weixinUserService.queryWeixinUser(auctionItem.getUploadWxid());  //买家
+                    TextMessage bean2 = new TextMessage();
+                    bean2.setContent("【百姓收藏】您有新的订单待处理");
+                    bean2.setType(TextMessageController.MESSAGE_TYPE_NOTIFY);
+                    textMessageService.add(bean);
+                    AppClient.sendChuanglanMessage("【百姓收藏】您有新的订单待处理", saleMan.getPhoneNum());
+
                 }
                 if("3".equals(order.getOrderType()))
                 {

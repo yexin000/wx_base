@@ -55,10 +55,10 @@ public class TextMessageController extends BaseController {
             return;
         }
         // TODO 调用短信接口发送短信
-
+        bean.setContent("【百姓收藏】您有新的订单待处理");
         bean.setType(MESSAGE_TYPE_NOTIFY);
         textMessageService.add(bean);
-
+        AppClient.sendChuanglanMessage("【百姓收藏】您有新的订单待处理", bean.getPhoneNum());
         sendSuccessMessage(response, "发送成功");
     }
 
