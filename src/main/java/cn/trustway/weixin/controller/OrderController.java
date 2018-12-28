@@ -287,7 +287,8 @@ public class OrderController extends BaseController {
             if(StringUtils.isNotEmpty(myIntegralStr)){
                 myCountIntegral = Integer.parseInt(myCountIntegralStr);
             }
-            int orderIntegral =  Integer.parseInt(newOrder.getOrderMoney()+"");
+            Float floatIntegral = Float.parseFloat(newOrder.getOrderMoney()+"");
+            int orderIntegral =  floatIntegral.intValue();
             if(orderIntegral <= 0){
                 orderIntegral = 0;
             }
