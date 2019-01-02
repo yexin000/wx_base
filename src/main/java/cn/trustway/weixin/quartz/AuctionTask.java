@@ -111,6 +111,7 @@ public class AuctionTask {
                 WeixinUser payMan = weixinUserService.queryWeixinUser(bidBean.getWxid());  //买家
                 TextMessage bean = new TextMessage();
                 bean.setContent("【百姓收藏】您的出价已经成拍");
+                bean.setPhoneNum(payMan.getPhoneNum());
                 bean.setType(TextMessageController.MESSAGE_TYPE_NOTIFY);
                 textMessageService.add(bean);
                 AppClient.sendChuanglanMessage("【百姓收藏】您的出价已经成拍", payMan.getPhoneNum());
