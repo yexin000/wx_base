@@ -217,6 +217,14 @@ function toMyExchange() {
 }
 
 
+/**
+ * 去兑换记录
+ * @param wxid
+ */
+function toV5Notes() {
+    window.location.href = '../../html/lh/V5Notes.html';
+}
+
 function toAuctionItemDetail(id,type)
 {
     //商品性质:0-拍卖品,1-商品,2-非卖品,3是v5商品
