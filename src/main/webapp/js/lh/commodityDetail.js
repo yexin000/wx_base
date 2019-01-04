@@ -207,49 +207,6 @@ function toPurchase(){
     })
 }
 
-
-
-//购买V5
-function toPurchaseV5(){
-    $('#loadingToast').show();
-    var url= '/weixin/wxAuth/ajaxGetId.do?wxid='+ localStorage.getItem("openId");
-    $.ajax({
-        url: url,
-        type: 'post',
-        data: {} ,
-        dataType: 'JSON',
-        contentType : "application/json;charset=utf-8",
-        cache: false,
-        success:function(data){
-            var data = data.data;
-            if(data.vipGrade && data.vipGrade == 5) {
-                $("#msgLabel").html("已经满足条件");
-                $("#msgDialog").show();
-            }else{
-                var url= '/weixin/auctionItem/purchaseV5.do?wxid='+localStorage.getItem('openId');
-                $.ajax({
-                    url: url,
-                    type: 'post',
-                    data:{},
-                    contentType : "application/json;charset=utf-8",
-                    dataType: 'JSON',
-                    cache: false,
-                    success:function(data){
-                        $('#loadingToast').hide();
-                        if(data.success == false){
-                            $("#msgLabel").html(data.msg);
-                            $("#msgDialog").show();
-                        }else{
-                            var order = data.data;
-                            v5Zhifu(order.id);
-                        }
-                    }
-                })
-            }
-        }
-    })
-}
-
 function v5Zhifu(orderId){
     var params = {};
     params.wxid = localStorage.getItem("openId");

@@ -481,10 +481,16 @@
     if($("#attribute").val() == 0) {
       var sDate = new Date($("#startTimeInput").val()).getTime();
       var eDate = new Date($("#endTimeInput").val()).getTime();
-      $("#startTime").val(new Date(sDate + offset_GMT * 60 * 1000).format("yyyy-MM-dd hh:mm:ss"));
-      $("#endTime").val(new Date(eDate + offset_GMT * 60 * 1000).format("yyyy-MM-dd hh:mm:ss"));
-      //new Date($("#startTimeInput").val()).format("yyyy-MM-dd hh:mm:ss"));
-      //$("#endTime").val(new Date($("#endTimeInput").val()).format("yyyy-MM-dd hh:mm:ss"));
+      var u = navigator.userAgent;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
+      if (isAndroid) {
+        $("#startTime").val(new Date(sDate).format("yyyy-MM-dd hh:mm:ss"));
+        $("#endTime").val(new Date(eDate).format("yyyy-MM-dd hh:mm:ss"));
+      } else {
+        $("#startTime").val(new Date(sDate + offset_GMT * 60 * 1000).format("yyyy-MM-dd hh:mm:ss"));
+        $("#endTime").val(new Date(eDate + offset_GMT * 60 * 1000).format("yyyy-MM-dd hh:mm:ss"));
+			}
+
     } else {
       $("#startTime").val(new Date().format("yyyy-MM-dd hh:mm:ss"));
       $("#endTime").val(new Date().format("yyyy-MM-dd hh:mm:ss"));

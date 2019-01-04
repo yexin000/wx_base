@@ -243,6 +243,22 @@ public class WxPayController extends BaseController {
                     bean.setPhoneNum(saleMan.getPhoneNum());
                     textMessageService.add(bean);
                     AppClient.sendChuanglanMessage("【百姓收藏】您有新的订单待处理", saleMan.getPhoneNum());
+                    // ------------------------------余额 ------------------------------------------------------
+                    if(null != order.getOrderMoney()){
+                        // 处理余额到卖家
+                        BigDecimal orderMoney = new BigDecimal(order.getOrderMoney());
+                        // 减去百分之6的平台手续费
+                        BigDecimal sxf = orderMoney.multiply(new BigDecimal("0.06"));
+                        // 卖家获取金额
+                        BigDecimal balance = orderMoney.subtract(sxf);
+                        BigDecimal myBalance = new BigDecimal("0");
+                        if(null != saleMan.getBalance()){
+                            myBalance = new BigDecimal(saleMan.getBalance());
+                        }
+                        myBalance = myBalance.add(balance);
+                        saleMan.setBalance(myBalance.doubleValue());
+                        weixinUserService.updateBySelective(saleMan);
+                    }
                 }
                 if("3".equals(order.getOrderType()))
                 {
