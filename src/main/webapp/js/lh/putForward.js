@@ -17,7 +17,7 @@ function submitRecharge() {
     var money = parseInt($("#rechargeMoney").val());
     if(money <100){
         //充值下限低于100
-        $("#iosDialog2").show();
+        $("#ios").show();
         return;
     }
 
@@ -48,4 +48,5 @@ function closeTip(){
     $("#iosDialog2").hide();
     $("#iosDialog3").hide();
     $("#iosDialog4").hide();
+    $("#ios").hide();
 }

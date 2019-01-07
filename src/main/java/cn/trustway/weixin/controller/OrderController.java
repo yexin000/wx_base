@@ -8,6 +8,7 @@ import cn.trustway.weixin.model.OrderModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
 import cn.trustway.weixin.util.LogisticsUtil;
+import cn.trustway.weixin.util.http.AppClient;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -316,10 +318,30 @@ public class OrderController extends BaseController {
                     wu.setVipGrade("5");
                 }
             }
+
+            // ------------------------------余额 ------------------------------------------------------
+            AuctionItem auctionItem = auctionItemService.queryById(order.getItemId());
+            if(null != auctionItem){
+                WeixinUser saleMan = weixinUserService.queryWeixinUser(auctionItem.getUploadWxid());  //买家
+                if(null != order.getOrderMoney()){
+                    // 处理余额到卖家
+                    BigDecimal orderMoney = new BigDecimal(order.getOrderMoney());
+                    // 减去百分之6的平台手续费
+                    BigDecimal sxf = orderMoney.multiply(new BigDecimal("0.06"));
+                    // 卖家获取金额
+                    BigDecimal balance = orderMoney.subtract(sxf);
+                    BigDecimal myBalance = new BigDecimal("0");
+                    if(null != saleMan.getBalance()){
+                        myBalance = new BigDecimal(saleMan.getBalance());
+                    }
+                    myBalance = myBalance.add(balance);
+                    saleMan.setBalance(myBalance.doubleValue());
+                    weixinUserService.updateBySelective(saleMan);
+                }
+            }
+            order.setSureTime(new Date());
             orderService.updateBySelective(order);
             weixinUserService.updateBySelective(wu);
-
-
             // 写入订单日志
             OrderLog orderLog = new OrderLog();
             BeanUtils.copyProperties(newOrder, orderLog);
@@ -390,15 +412,35 @@ public class OrderController extends BaseController {
      */
 
     @RequestMapping("/ajaxGetReport")
-    public void ajaxGetReport(@RequestBody OrderModel orderModel,  HttpServletResponse response) throws Exception {
+    public void ajaxGetReport(String wxid,  HttpServletResponse response) throws Exception {
         // 设置页面数据
         Map<String, Object> context = getRootMap();
-        Order bean = orderService.queryById(orderModel.getId());
-        if (bean == null) {
-            sendFailureMessage(response, "没有找到对应的记录!");
-            return;
+        Double tm = orderService.queryByFilmingTodayMoney(wxid);
+        Integer tn = orderService.queryByFilmingTodayNum(wxid);
+        Double tm1 =  orderService.queryByPaymentTodayMoney(wxid);
+        Integer tn1 = orderService.queryByPaymentTodayNum(wxid);
+        Double tm2 = orderService.queryByCollectionTodayMoney(wxid);
+        Integer tn2 = orderService.queryByCollectionTodayNum(wxid);
+        Report bean = new Report();
+        java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
+        if(null != tm){
+            bean.setFilmingTodayMoney(df.format(tm));
         }
-
+        if(null != tn){
+            bean.setFilmingTodayNum(tn.toString());
+        }
+        if(null != tm1){
+            bean.setPaymentTodayMoney(df.format(tm2));
+        }
+        if(null != tn1){
+            bean.setPaymentTodayNum(tn2.toString());
+        }
+        if(null != tm2){
+            bean.setCollectionTodayMoney(df.format(tm2));
+        }
+        if(null != tn2){
+            bean.setCollectionTodayNum(tn2.toString());
+        }
         context.put(SUCCESS, true);
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);

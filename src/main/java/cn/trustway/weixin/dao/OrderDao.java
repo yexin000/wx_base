@@ -23,4 +23,40 @@ public interface OrderDao<T> extends BaseDao<T> {
      * @return
      */
     List<T> queryMyOutOrderByList(OrderModel params);
+
+    /**
+     * 查询今日成拍金额
+     * @return
+     */
+    Double queryByFilmingTodayMoney(String wxid);
+
+    /**
+     * 查询成拍数量
+     * @return
+     */
+    Integer queryByFilmingTodayNum(String wxid);
+
+    /**
+     * 查询付款金额
+     * @return
+     */
+    Double queryByPaymentTodayMoney(String wxid);
+
+    /**
+     * 查询付款数量
+     * @return
+     */
+    Integer queryByPaymentTodayNum(String wxid);
+
+    /**
+     * 查询收款金额
+     * @return
+     */
+    Double queryByCollectionTodayMoney(String wxid);
+
+    /**
+     * 查询收款数量
+     * @return
+     */
+    Integer queryByCollectionTodayNum(String wxid);
 }

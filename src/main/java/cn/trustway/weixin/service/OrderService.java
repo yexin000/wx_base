@@ -31,6 +31,30 @@ public class OrderService<T> extends BaseService<T> {
         return getDao().queryInvalidOrderList();
     }
 
+    public Double queryByFilmingTodayMoney(String wxid) {
+        return getDao().queryByFilmingTodayMoney(wxid);
+    }
+
+    public Integer queryByFilmingTodayNum(String wxid) {
+        return getDao().queryByFilmingTodayNum(wxid);
+    }
+
+    public Double queryByPaymentTodayMoney(String wxid) {
+        return getDao().queryByPaymentTodayMoney(wxid);
+    }
+
+    public Integer queryByPaymentTodayNum(String wxid) {
+        return getDao().queryByPaymentTodayNum(wxid);
+    }
+
+    public Double queryByCollectionTodayMoney(String wxid) {
+        return getDao().queryByCollectionTodayMoney(wxid);
+    }
+
+    public Integer queryByCollectionTodayNum(String wxid) {
+        return getDao().queryByCollectionTodayNum(wxid);
+    }
+
     public List<T> queryMyOutOrderByList(OrderModel params) {
         return getDao().queryMyOutOrderByList(params);
     }
