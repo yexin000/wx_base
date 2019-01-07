@@ -226,7 +226,6 @@ function confirmationOfOrder (id){
 
 //新增地址
 function addAddress(){
-  alert($("#orderId").val())
   window.location.href = '../../html/lh/addressDetail.html?orderId='+$("#orderId").val();
 }
 
