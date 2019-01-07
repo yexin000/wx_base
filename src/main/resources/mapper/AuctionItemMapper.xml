@@ -330,7 +330,7 @@
         (select width from t_con_item_res where t.id=conid and contype='2' order by idx asc limit 1) as width,
         (select height from t_con_item_res where t.id=conid and contype='2' order by idx asc limit 1) as height
         from t_e_auction_item t
-        where t.status != '0'
+        where t.status != '0' and isonsale='1'
         <trim suffixOverrides=",">
             <if test="wxid != null and wxid != ''">
                 and t.uploadWxid = #{wxid}
