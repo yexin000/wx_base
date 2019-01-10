@@ -52,6 +52,9 @@ public class WxAuthController extends BaseController {
     @Autowired(required = false)
     private MessageService<Message> messageService;
 
+    @Autowired
+    UserAddrService<UserAddr> userAddrService;
+
     /**
      * 小程序授权登陆后解析用户数据，将用户数据写入数据库，并返回首页地址
      *
@@ -202,6 +205,16 @@ public class WxAuthController extends BaseController {
         msgModel.setToWxid(wxid);
         msgModel.setStatus(0);
         bean.setMsgCount(messageService.queryByCount(msgModel));
+
+        //需要收货地址
+        // 查询用户默认收货地址
+        UserAddr defaultAddr = userAddrService.getDefaultAddrByWxid(wxid);
+        if(null == defaultAddr) {
+            context.put("hasAddress", false);
+        }else{
+            context.put("hasAddress", true);
+        }
+
         context.put(SUCCESS, true);
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);

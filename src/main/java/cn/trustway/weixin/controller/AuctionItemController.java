@@ -276,6 +276,8 @@ public class AuctionItemController extends BaseController {
             bean.setIsFavorite("0");
         }
 
+
+
         context.put(SUCCESS, true);
         context.put("data", bean);
         HtmlUtil.writerJson(response, context);
