@@ -207,9 +207,11 @@ public class IntegralMallController extends BaseController {
         }else{
             //积分不足
             sendFailureMessage(response, "积分不足");
+            return;
         }
         if(myIntegeral < bean.getConsumeintegral()){
             sendFailureMessage(response, "积分不足");
+            return;
         }
 
         // 查询用户默认收货地址
