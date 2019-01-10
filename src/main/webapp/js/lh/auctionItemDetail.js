@@ -15,7 +15,12 @@ $(function(){
         contentType : "application/json;charset=utf-8",
         cache: false,
         success:function(data){
-          $('#loadingToast').hide();
+        $('#loadingToast').hide();
+        if(data.hasAddress == false){
+            $("#msgLabel").html("请创建一个收货地址");
+            $("#msgDialog").show();
+            return false;
+        }
           var data = data.data;
           if(!data.phoneNum) {
             $("#phoneDialog").show();

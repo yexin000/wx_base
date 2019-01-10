@@ -122,6 +122,11 @@ public class Order extends BaseBean {
      */
     private Integer isMyUpload;
 
+    /**
+     * 确认时间
+     */
+    private Date sureTime;
+
     public Integer getId() {
         return id;
     }
@@ -328,5 +333,13 @@ public class Order extends BaseBean {
 
     public void setIsMyUpload(Integer isMyUpload) {
         this.isMyUpload = isMyUpload;
+    }
+
+    public Date getSureTime() {
+        return sureTime;
+    }
+
+    public void setSureTime(Date sureTime) {
+        this.sureTime = sureTime;
     }
 }

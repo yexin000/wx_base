@@ -18,12 +18,13 @@
         <result column="addressid" property="addressId" />
         <result column="itemid" property="itemId" />
         <result column="updatetime" property="updateTime" />
+        <result column="suretime" property="suretime" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="Order_Base_Column_List">
         t.id, t.ordertype, t.ordermoney, t.createtime, t.paytime, t.invalidtime,
-        t.transactionid, t.prepayId, t.status, t.wxid, t.addressid, t.itemid, t.updatetime,t.wlgs,t.ydbh
+        t.transactionid, t.prepayId, t.status, t.wxid, t.addressid, t.itemid, t.updatetime,t.wlgs,t.ydbh,t.suretime
     </sql>
 
     <!-- 插入记录 -->
@@ -72,6 +73,9 @@
         </if>
         <if test="ydbh != null and ydbh != '' ">
             ,ydbh=#{ydbh}
+        </if>
+        <if test="sureTime != null and sureTime != '' ">
+            ,suretime=#{sureTime}
         </if>
         where id=#{id}
     </update>
@@ -174,5 +178,40 @@
         </if>
     </select>
 
+    <select id="queryByFilmingTodayMoney" resultType="java.lang.Double" parameterType="Object">
+       select  sum(teo.ordermoney) from t_e_order teo
+          left join t_e_auction_item teai on teo.itemid = teai.id and (teo.ordertype = 3 or teo.ordertype = 2)
+        where
+        teai.uploadwxid = #{wxid}
+        and teo.status =  5
+    </select>
+
+    <select id="queryByFilmingTodayNum" resultType="java.lang.Integer" parameterType="Object">
+       select count(0) from t_e_order teo
+          left join t_e_auction_item teai on teo.itemid = teai.id and (teo.ordertype = 3 or teo.ordertype = 2)
+        where
+        teai.uploadwxid = #{wxid}
+        and teo.status =  5
+    </select>
+
+    <select id="queryByPaymentTodayMoney" resultType="java.lang.Double" parameterType="Object">
+       select sum(teo.ordermoney) from t_e_order teo where to_days(teo.paytime) = to_days(now()) and wxid = #{wxid}
+    </select>
+
+    <select id="queryByPaymentTodayNum" resultType="java.lang.Integer" parameterType="Object">
+       select count(0) from t_e_order teo where to_days(teo.paytime) = to_days(now()) and wxid =  #{wxid}
+    </select>
+
+    <select id="queryByCollectionTodayMoney" resultType="java.lang.Double" parameterType="Object">
+       select  sum(teo.ordermoney)  from t_e_order teo
+        left join t_e_auction_item teai on teai.id = teo.itemid and (teo.ordertype = 3 or teo.ordertype = 2)
+        where to_days(teo.suretime) = to_days(now()) and teai.uploadwxid = #{wxid}
+    </select>
+
+    <select id="queryByCollectionTodayNum" resultType="java.lang.Integer" parameterType="Object">
+       select count(0) from t_e_order teo
+        left join t_e_auction_item teai on teai.id = teo.itemid and (teo.ordertype = 3 or teo.ordertype = 2)
+        where to_days(teo.suretime) = to_days(now()) and teai.uploadwxid = #{wxid}
+    </select>
 
 </mapper>
