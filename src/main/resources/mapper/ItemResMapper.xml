@@ -95,6 +95,9 @@
         else '' end) as conName
         from t_con_item_res t
         where t.conid=#{conid}
+        <if test="conType != null and conType != '' ">
+            and contype=#{conType}
+        </if>
         limit 0,1
     </select>
 

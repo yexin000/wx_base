@@ -198,6 +198,12 @@
         </if>
     </select>
 
-
+    <!-- 根据wxid和关注id查询关注信息 -->
+    <select id="queryByWxidAndFollowId" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Follow_Base_Column_List" />
+        from t_e_follow t
+        where t.wxid = #{wxid} and followid = #{followId} and followtype = #{followType}
+    </select>
 
 </mapper>

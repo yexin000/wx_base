@@ -135,6 +135,11 @@ public class Auction extends BaseBean {
      */
     private String isFabulous;
 
+    /**
+     * 是否点赞
+     */
+    private String isFollow;
+
     public Integer getId() {
         return id;
     }
@@ -357,5 +362,13 @@ public class Auction extends BaseBean {
 
     public void setIsFabulous(String isFabulous) {
         this.isFabulous = isFabulous;
+    }
+
+    public String getIsFollow() {
+        return isFollow;
+    }
+
+    public void setIsFollow(String isFollow) {
+        this.isFollow = isFollow;
     }
 }

@@ -113,16 +113,22 @@ function loadItemData(id){
               $("#bidBtn").unbind();
             }
 
-            if(dataObj.isFavorite == "1") {
-                $("#favBtn").html("取消收藏");
+            if(dataObj.isFollow == "1") {
+                $("#favBtn").text("取消关注");
             } else {
-                $("#favBtn").html("收藏");
+                $("#favBtn").text("关注");
             }
-            $("#favStatus").val(dataObj.isFavorite);
+            $("#favStatus").val(dataObj.isFollow);
 
-          if(dataObj.uploadWxid != null && dataObj.uploadWxid != "0") {
-            $("#storeBtn").click(function () {
-              window.location.href = "../../html/lh/myStore.html?wxid=" + dataObj.uploadWxid;
+            if(dataObj.isOnsale == '0') {
+                $("#bidBtn").text("商品已下架");
+                $("#bidBtn").css("background", "#d5d5d6");
+                $("#bidBtn").unbind();
+            }
+
+            if(dataObj.uploadWxid != null && dataObj.uploadWxid != "0") {
+                $("#storeBtn").click(function () {
+                window.location.href = "../../html/lh/myStore.html?wxid=" + dataObj.uploadWxid;
             })
           }
         }
@@ -133,16 +139,17 @@ function loadItemData(id){
 //收藏
 function favorite(){
     $('#loadingToast').show();
-    var params={}
-    params.wxid=localStorage.getItem("openId");
-    params.favType="1";
-    params.favId=getParam("id");
-    var url= '/weixin/favorite/ajaxAddFavorite.do';
-    $.post(url,params,function(data){
+    var followBean = {};
+    followBean.followType = "2";
+    followBean.wxid = localStorage.getItem("openId");
+    followBean.followId = getParam("id");
+    followBean.followWxId = localStorage.getItem("openId");
+    var url= '/weixin/follow/ajaxFollowSave.do';
+    $.post(url,followBean,function(data){
         $('#loadingToast').hide();
         showToast(data.msg, function () {
         });
-        $("#favBtn").html("取消收藏");
+        $("#favBtn").text("取消关注");
         $("#favStatus").val("1");
     });
 }
@@ -150,15 +157,17 @@ function favorite(){
 //取消收藏
 function cancleFavorite(){
     $('#loadingToast').show();
-    var params={};
-    params.favId=getParam("id");
-    params.wxid=localStorage.getItem("openId");
-    var url= '/weixin/favorite/ajaxDelFavorite.do';
-    $.post(url,params,function(data){
+    var followBean = {};
+    followBean.followType = "2";
+    followBean.wxid = localStorage.getItem("openId");
+    followBean.followId = getParam("id");
+    followBean.followWxId = localStorage.getItem("openId");
+    var url= '/weixin/follow/ajaxFollowDel.do';
+    $.post(url,followBean,function(data){
         $('#loadingToast').hide();
         showToast(data.msg, function () {
         });
-        $("#favBtn").html("收藏");
+        $("#favBtn").text("关注");
         $("#favStatus").val("0");
     });
 }

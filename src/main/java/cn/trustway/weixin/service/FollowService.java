@@ -36,7 +36,7 @@ public class FollowService<T> extends BaseService<T> {
     }
 
     /**
-     * 查询我是所有关注列表
+     * 查询我关注的用户列表
      * @param params
      * @return
      */
@@ -46,7 +46,7 @@ public class FollowService<T> extends BaseService<T> {
     }
 
     /**
-     * 查询我是所有关注列表
+     * 查询我关注的商品列表
      * @param params
      * @return
      */
@@ -56,7 +56,7 @@ public class FollowService<T> extends BaseService<T> {
     }
 
     /**
-     * 查询我是所有关注列表
+     * 查询我关注的拍卖会列表
      * @param params
      * @return
      */
@@ -104,5 +104,14 @@ public class FollowService<T> extends BaseService<T> {
      */
     public List<Follow> queryAuctionItemByList(FollowModel followModel) {
         return getDao().queryAuctionItemByList(followModel);
+    }
+
+    /**
+     * 根据wxid和关注id查询关注信息
+     * @param params
+     * @return
+     */
+    public Follow queryByWxidAndFollowId(Map<String, Object> params) {
+        return getDao().queryByWxidAndFollowId(params);
     }
 }

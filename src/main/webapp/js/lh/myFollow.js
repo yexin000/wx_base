@@ -81,8 +81,8 @@ $("#more1").click(function () {
     window.location.href = '../../html/lh/myFollowUser.html?';
 });
 $("#more2").click(function () {
-    window.location.href = '../../html/lh/myFollowAuction.html';
+    window.location.href = '../../html/lh/myFollowAuctionItem.html';
 });
 $("#more3").click(function () {
-    window.location.href = '../../html/lh/myFollowAuctionItem.html';
+    window.location.href = '../../html/lh/myFollowAuction.html';
 });

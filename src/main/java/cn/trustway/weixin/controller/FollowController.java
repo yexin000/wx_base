@@ -201,6 +201,7 @@ public class FollowController extends BaseController {
             for(Follow follow : dataList2){
                 Map<String, Object> imgParams = new HashMap<>();
                 imgParams.put("conid",follow.getFollowId());
+                imgParams.put("conType", "2");
                 ItemRes ir = itemResService.queryByConId(imgParams);
                 if(null != ir){
                     follow.setPath(ir.getPath());
@@ -215,6 +216,7 @@ public class FollowController extends BaseController {
             for(Follow follow : dataList3){
                 Map<String, Object> imgParams = new HashMap<>();
                 imgParams.put("conid",follow.getFollowId());
+                imgParams.put("conType", "1");
                 ItemRes ir = itemResService.queryByConId(imgParams);
                 if(null != ir){
                     follow.setPath(ir.getPath());
@@ -255,6 +257,7 @@ public class FollowController extends BaseController {
             for(Follow follow : dataList){
                 Map<String, Object> imgParams = new HashMap<>();
                 imgParams.put("conid",follow.getFollowId());
+                imgParams.put("conType", "1");
                 ItemRes ir = itemResService.queryByConId(imgParams);
                 if(null != ir){
                     follow.setPath(ir.getPath());

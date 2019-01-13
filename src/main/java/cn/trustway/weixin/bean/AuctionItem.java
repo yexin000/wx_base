@@ -171,6 +171,11 @@ public class AuctionItem extends BaseBean {
      */
     private String isOnsale;
 
+    /**
+     * 是否关注:0-否,1-是
+     */
+    private String isFollow;
+
     public Integer getBusinessId() {
         return businessId;
     }
@@ -465,5 +470,13 @@ public class AuctionItem extends BaseBean {
 
     public void setIsOnsale(String isOnsale) {
         this.isOnsale = isOnsale;
+    }
+
+    public String getIsFollow() {
+        return isFollow;
+    }
+
+    public void setIsFollow(String isFollow) {
+        this.isFollow = isFollow;
     }
 }

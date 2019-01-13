@@ -132,8 +132,12 @@ function loadIndexActivity(){
                     for(var i = 0; i < auctionList.length; i ++) {
                         var str = '';
                         var fabulousImage = "/weixin/images/lh/mystore-unfav-icon.png";
+                        var followAuctionImage = "/weixin/images/lh/mystore-unfollow-auction.png";
                         if(auctionList[i].isFabulous == 1) {
                             fabulousImage = "/weixin/images/lh/mystore-fav-icon.png";
+                        }
+                        if(auctionList[i].isFollow == 1) {
+                            followAuctionImage = "/weixin/images/lh/mystore-follow-auction.png";
                         }
                         str += '<div class="weui-form-preview mystore-auction-preview">'
                             +   '<div class="weui-form-preview__hd mystore-auction-preview-hd">'
@@ -150,6 +154,7 @@ function loadIndexActivity(){
                             +   '<div class="weui-cell" style="background-color: black;">'
                             +     '<div class="weui-cell__hd"><img class="headimg mystore-auction-headimg" src="'+auctionList[i].path+'"></div>'
                             +     '<div class="weui-cell__bd"><p class="headtext mystore-auction-headtext">  '+auctionList[i].wxName+' </p></div>'
+                            +     '<div class="weui-cell__hd"><img style="margin-right: 10px" src="' + followAuctionImage + '" id="followAuctionImage' + auctionList[i].id + '" data-isfollow="' + auctionList[i].isFollow + '" class="mystore-auction-favicon" onclick="javascript:followChange(\'' + auctionList[i].id + '\')"></div>'
                             +     '<div class="weui-cell__hd"><img src="' + fabulousImage + '" id="fabulousImage' + auctionList[i].id + '" data-isfabulous="' + auctionList[i].isFabulous + '" class="mystore-auction-favicon" onclick="javascript:fabulousChange(\'' + auctionList[i].id + '\')"></div>'
                             +     '<div class="weui-cell__ft" style="font-size: 14px;" id="fabulousNum' + auctionList[i].id + '">' + auctionList[i].fabulousNum + '</div>'
                             +   '</div>'
@@ -210,32 +215,62 @@ function loadIndexActivity(){
         })
     }
 
-function fabulousChange(auctionid) {
-  var fabulousBean = {};
-  fabulousBean.fabulousId = auctionid;
-  fabulousBean.fabulousType = "2";
-  fabulousBean.wxid = localStorage.getItem("openId");
-  $('#loadingToast').show();
-  var isFabulous = $("#fabulousImage" + auctionid).data("isfabulous");
-  if(isFabulous == "1") {
-    var url= '/weixin/fabulous/ajaxDelFabulous.do';
-    $.post(url,fabulousBean,function(data){
-      $('#loadingToast').hide();
-      showToast(data.msg, function () {
-      });
-      $("#fabulousImage" + auctionid).data("isfabulous", "0");
-      $("#fabulousImage" + auctionid).attr("src", "/weixin/images/lh/mystore-unfav-icon.png");
-      $("#fabulousNum" + auctionid).html(parseInt($("#fabulousNum" + auctionid).html()) - 1);
-    });
-  } else {
-    var url= '/weixin/fabulous/ajaxAddFabulous.do';
-    $.post(url,fabulousBean,function(data){
-      $('#loadingToast').hide();
-      showToast(data.msg, function () {
-      });
-      $("#fabulousImage" + auctionid).data("isfabulous", "1")
-      $("#fabulousImage" + auctionid).attr("src", "/weixin/images/lh/mystore-fav-icon.png");
-      $("#fabulousNum" + auctionid).html(parseInt($("#fabulousNum" + auctionid).html()) + 1);
-    });
-  }
-}
+    function followChange(auctionid) {
+      var isFollowed = $("#followAuctionImage" + auctionid).data("isfollow");
+      $('#loadingToast').show();
+      var followBean = {};
+      followBean.followType = "3";
+      followBean.wxid = localStorage.getItem("openId");
+      followBean.followId = auctionid;
+      followBean.followWxId = localStorage.getItem("openId");
+      // 已关注的情况下取消关注
+      if(isFollowed == "1") {
+        var url= '/weixin/follow/ajaxFollowDel.do';
+        $.post(url,followBean,function(data){
+          $('#loadingToast').hide();
+          showToast(data.msg, function () {
+          });
+          $("#followAuctionImage" + auctionid).data("isfollow", "0");
+          $("#followAuctionImage" + auctionid).attr("src", "/weixin/images/lh/mystore-unfollow-auction.png");
+        });
+      } else { // 未关注的情况下关注
+        var url= '/weixin/follow/ajaxFollowSave.do';
+        $.post(url,followBean,function(data){
+          $('#loadingToast').hide();
+          showToast(data.msg, function () {
+          });
+          $("#followAuctionImage" + auctionid).data("isfollow", "1");
+          $("#followAuctionImage" + auctionid).attr("src", "/weixin/images/lh/mystore-follow-auction.png");
+        });
+      }
+    }
+
+    function fabulousChange(auctionid) {
+      var fabulousBean = {};
+      fabulousBean.fabulousId = auctionid;
+      fabulousBean.fabulousType = "2";
+      fabulousBean.wxid = localStorage.getItem("openId");
+      $('#loadingToast').show();
+      var isFabulous = $("#fabulousImage" + auctionid).data("isfabulous");
+      if(isFabulous == "1") {
+        var url= '/weixin/fabulous/ajaxDelFabulous.do';
+        $.post(url,fabulousBean,function(data){
+          $('#loadingToast').hide();
+          showToast(data.msg, function () {
+          });
+          $("#fabulousImage" + auctionid).data("isfabulous", "0");
+          $("#fabulousImage" + auctionid).attr("src", "/weixin/images/lh/mystore-unfav-icon.png");
+          $("#fabulousNum" + auctionid).html(parseInt($("#fabulousNum" + auctionid).html()) - 1);
+        });
+      } else {
+        var url= '/weixin/fabulous/ajaxAddFabulous.do';
+        $.post(url,fabulousBean,function(data){
+          $('#loadingToast').hide();
+          showToast(data.msg, function () {
+          });
+          $("#fabulousImage" + auctionid).data("isfabulous", "1")
+          $("#fabulousImage" + auctionid).attr("src", "/weixin/images/lh/mystore-fav-icon.png");
+          $("#fabulousNum" + auctionid).html(parseInt($("#fabulousNum" + auctionid).html()) + 1);
+        });
+      }
+    }

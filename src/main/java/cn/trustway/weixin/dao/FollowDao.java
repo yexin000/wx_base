@@ -64,4 +64,10 @@ public interface FollowDao<T> extends BaseDao<T> {
      */
     List<Follow> queryAuctionItemByList(FollowModel followModel);
 
+    /**
+     * 根据wxid和关注id查询关注信息
+     * @param params
+     * @return
+     */
+    Follow queryByWxidAndFollowId(Map<String, Object> params);
 }

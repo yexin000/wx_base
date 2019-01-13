@@ -147,6 +147,7 @@
         c.name as typeName
         <if test="fabulousWxid != null and fabulousWxid != ''">
             ,case when f.wxid is not null then '1' else '0' end as isFabulous
+            ,case when ff.wxid is not null then '1' else '0' end as isFollow
         </if>
         from t_e_auction t
         left join sys_user su1 on t.creator=su1.id
@@ -156,6 +157,7 @@
         left join wx_code c on c.code = t.type
         <if test="fabulousWxid != null and fabulousWxid != ''">
             left join t_e_fabulous f on f.fabulousid=t.id and f.fabuloustype='2' and f.wxid=#{fabulousWxid}
+            left join t_e_follow ff on ff.followid=t.id and ff.followtype='3' and ff.wxid=#{fabulousWxid}
         </if>
         where 1=1 and t.status != '0'
         <trim suffixOverrides=",">
@@ -195,10 +197,12 @@
         (select count(1) from t_e_fabulous f where f.fabulousid=t.id and f.fabuloustype='2') as fabulousNum
         <if test="fabulousWxid != null and fabulousWxid != ''">
             ,case when f.wxid is not null then '1' else '0' end as isFabulous
+            ,case when ff.wxid is not null then '1' else '0' end as isFollow
         </if>
         from t_e_auction t
         <if test="fabulousWxid != null and fabulousWxid != ''">
             left join t_e_fabulous f on f.fabulousid=t.id and f.fabuloustype='2' and f.wxid=#{fabulousWxid}
+            left join t_e_follow ff on ff.followid=t.id and ff.followtype='3' and ff.wxid=#{fabulousWxid}
         </if>
         where (1=2
         <if test="wxid != null and wxid != ''">

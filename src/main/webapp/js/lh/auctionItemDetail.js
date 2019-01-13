@@ -37,29 +37,34 @@ $(function(){
         $('#loadingToast').show();
         var favStatus = $("#favStatus").val();
         if(favStatus == "0") {
-            var params={}
-            params.wxid=localStorage.getItem("openId");
-            params.favType="1";
-            params.favId=getParam("id");
-            $.post("/weixin/favorite/ajaxAddFavorite.do",params,function(data){
+            var followBean = {};
+            followBean.followType = "2";
+            followBean.wxid = localStorage.getItem("openId");
+            followBean.followId = getParam("id");
+            followBean.followWxId = localStorage.getItem("openId");
+            var url= '/weixin/follow/ajaxFollowSave.do';
+            $.post(url,followBean,function(data){
                 $('#loadingToast').hide();
                 showToast(data.msg, function () {
                 });
-                $("#favBtn").text("取消收藏");
-                $("#favStatus").val("1");
+              $("#favBtn").text("取消关注");
+              $("#favStatus").val("1");
             });
         } else {
-            // 取消收藏
-            var params={};
-            params.favId=getParam("id");
-            params.wxid=localStorage.getItem("openId");
-            $.post("/weixin/favorite/ajaxDelFavorite.do",params,function(data){
+            // 取消关注
+            var followBean = {};
+            followBean.followType = "2";
+            followBean.wxid = localStorage.getItem("openId");
+            followBean.followId = getParam("id");
+            followBean.followWxId = localStorage.getItem("openId");
+            var url= '/weixin/follow/ajaxFollowDel.do';
+            $.post(url,followBean,function(data){
                 $('#loadingToast').hide();
                 showToast(data.msg, function () {
                 });
-                $("#favBtn").text("+收藏");
+                $("#favBtn").text("关注");
                 $("#favStatus").val("0");
-            });
+          });
         }
 
     });
@@ -160,12 +165,12 @@ function loadItemData(id){
                 $("#detailLabel").html(detail); //详情
             }
 
-            if(dataObj.isFavorite == "1") {
-                $("#favBtn").text("取消收藏");
+            if(dataObj.isFollow == "1") {
+                $("#favBtn").text("取消关注");
             } else {
-                $("#favBtn").text("收藏");
+                $("#favBtn").text("关注");
             }
-            $("#favStatus").val(dataObj.isFavorite);
+            $("#favStatus").val(dataObj.isFollow);
 
             if(dataObj.uploadWxid != null && dataObj.uploadWxid != "0") {
               $("#storeBtn").click(function () {
