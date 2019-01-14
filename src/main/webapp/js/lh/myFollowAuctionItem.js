@@ -24,8 +24,8 @@ function loadMyFollowListData(){
             var datalength = data.total;
             if(dataList.length> 0)
             {
-                var str = '';
                 $.each(dataList,function(i,obj){
+                    var str = '';
                     var coverImage = '/weixin/foreground/images/no-image.jpg';
                     if(dataList[i].resList != null && dataList[i].resList.length > 0) {
                         coverImage = hostPath + dataList[i].resList[0].path;

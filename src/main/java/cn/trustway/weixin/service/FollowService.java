@@ -105,14 +105,4 @@ public class FollowService<T> extends BaseService<T> {
     public List<Follow> queryAuctionItemByList(FollowModel followModel) {
         return getDao().queryAuctionItemByList(followModel);
     }
-
-    /**
-     * 查询关注展览的所有人
-     * @param params
-     * @return
-     */
-    public List<Follow> queryToAuctionUserByList(Map<String, Object> params ) {
-        return getDao().queryToAuctionUserByList(params);
-    }
-
 }

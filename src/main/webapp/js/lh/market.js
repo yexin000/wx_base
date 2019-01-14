@@ -100,7 +100,7 @@ function loadAuctionItem(type1, type2,isRefByType){
   AuctionItemModel.name =  $("#shoppingName").val();
   AuctionItemModel.status = "3";
   AuctionItemModel.page = pageId;
-  AuctionItemModel.attributes = ['0', '1'];
+  AuctionItemModel.attributes = ['1'];
   AuctionItemModel.isOnsale = "1";
   var url= '/weixin/auctionItem/ajaxDataList.do';
   $.ajax({

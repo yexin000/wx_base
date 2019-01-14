@@ -65,6 +65,9 @@ public class AuctionItemController extends BaseController {
     @Autowired
     private BlacklistService<Blacklist> blacklistService;
 
+    @Autowired
+    private FollowService<Follow> followService;
+
     /**
      * 默认手续费比率6%
      */
@@ -276,7 +279,21 @@ public class AuctionItemController extends BaseController {
             bean.setIsFavorite("0");
         }
 
-
+        // 查询是否关注
+        if(StringUtils.isNotBlank(wxid)) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("wxid", wxid);
+            params.put("followId", id);
+            params.put("followType", "2");
+            Follow follow = followService.queryByWxidAndFollowId(params);
+            if(null != follow) {
+                bean.setIsFollow("1");
+            } else {
+                bean.setIsFollow("0");
+            }
+        } else {
+            bean.setIsFollow("0");
+        }
 
         context.put(SUCCESS, true);
         context.put("data", bean);
