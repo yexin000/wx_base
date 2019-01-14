@@ -35,6 +35,12 @@ public class FollowModel extends BaseModel {
      */
     private Date createTime;
 
+    /**
+     *被关注id
+     */
+    private Integer toFollowId;
+
+
     public Integer getId() {
         return id;
     }
@@ -73,5 +79,13 @@ public class FollowModel extends BaseModel {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getToFollowId() {
+        return toFollowId;
+    }
+
+    public void setToFollowId(Integer toFollowId) {
+        this.toFollowId = toFollowId;
     }
 }

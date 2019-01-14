@@ -23,4 +23,7 @@ public interface AuctionDao<T> extends BaseDao<T> {
     void updateAuctionEnd();
 
     List<T> queryByJoinAuction(Map<String, Object> params);
+
+    List<Integer> queryByAuctionStartList();
+
 }

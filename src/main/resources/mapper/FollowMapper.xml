@@ -129,6 +129,23 @@
     </select>
 
 
+    <!-- 分页查询关注用户记录列表 -->
+    <select id="queryToAuctionUserByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+         t.id,  t.followid, t.wxid, wu.phonenum , tea.starttime
+          from  weixin_user wu
+        left join t_e_follow t on t.wxid = wu.wxid
+        left join t_e_auction tea on t.followid = tea.id
+        where
+        t.followtype = 3
+        <if test="ids != null and ids.length > 0">
+            and   t.followid IN
+            <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
     <!-- 分页查询记录列表 -->
     <select id="queryUserByList" resultMap="BaseResultMap" parameterType="Object">
         select

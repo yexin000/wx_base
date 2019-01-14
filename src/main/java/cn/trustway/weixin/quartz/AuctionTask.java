@@ -3,9 +3,11 @@ package cn.trustway.weixin.quartz;
 
 import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.controller.TextMessageController;
+import cn.trustway.weixin.model.FollowModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.http.AppClient;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -13,8 +15,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 竞拍会定时任务
@@ -48,6 +53,9 @@ public class AuctionTask {
     @Autowired
     OrderLogService<OrderLog> orderLogService;
 
+    @Autowired(required = false)
+    private FollowService<Follow> followService;
+
     /**
      * 竞拍会状态监控定时任务
      * @throws Exception
@@ -55,6 +63,44 @@ public class AuctionTask {
     @Scheduled(cron = "0/30 * * * * ? ")
     @Transactional
     public void auctionStatusTask() throws Exception {
+        // 找到即将开始的拍卖会
+        List<Integer> idList = auctionService.queryByAuctionStartList();
+        // TODO发送站内通知
+        if(null != idList && idList.size() > 0){
+            Map<String,Object> map = new HashMap<>();
+            map.put("ids",idList);
+            List<Follow> followList = followService.queryToAuctionUserByList(map);
+            if(null != followList && followList.size() > 0){
+                for(Follow follow : followList){
+                    if(StringUtils.isNotEmpty(follow.getPhoneNum())){
+                        if(null != follow.getStartTime() && StringUtils.isNotEmpty(follow.getStartTime().toString())){
+                            // 发送短信  找到买家
+                            String[] strNow = new SimpleDateFormat("yyyy-MM-dd").format(follow.getStartTime()).toString().split("-");
+                            String context = "您在百姓收藏关注的展览已于"+ Integer.parseInt(strNow[0]) + "年" +  Integer.parseInt(strNow[1]) + "月" +
+                                    Integer.parseInt(strNow[2]) + "日开拍，请及时参与。";
+                            AppClient.sendChuanglanMessage(context, follow.getPhoneNum());
+                            TextMessage bean = new TextMessage();
+                            bean.setContent(context);
+                            bean.setPhoneNum(follow.getPhoneNum());
+                            bean.setType(TextMessageController.MESSAGE_TYPE_NOTIFY);
+                            textMessageService.add(bean);
+
+                            //保存一条站内通知
+                            Message message = new Message();
+                            message.setWxid("0");
+                            message.setToWxid(follow.getWxid());
+                            message.setMessagenote("您有关注的拍卖会即将开始，请及时参加");
+                            message.setMessagetype(1);
+                            message.setStatus(0);
+                            messageService.add(message);
+                            //当新建聊天时触发
+                            message.setParentId(message.getId());
+                            messageService.updateBySelective(message);
+                        }
+                    }
+                }
+            }
+        }
         // 设置开始时间超出当前时间的正常的竞拍会为已开始
         auctionService.updateAuctionStart();
 
@@ -88,8 +134,11 @@ public class AuctionTask {
                 order.setWxid(bidBean.getWxid());
                 order.setItemId(bidBean.getAuctionItemId());
                 order.setCreateTime(currentTime);
+                // 加入买家地址
+                if(StringUtils.isNotEmpty(bidBean.getAddressId())){
+                    order.setAddressId(bidBean.getAddressId());
+                }
                 orderService.add(order);
-
                 // 写入订单日志
                 Order newOrder = orderService.queryById(order.getId());
                 OrderLog orderLog = new OrderLog();

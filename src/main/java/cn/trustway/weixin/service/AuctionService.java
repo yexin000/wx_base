@@ -42,4 +42,9 @@ public class AuctionService<T> extends BaseService<T> {
     public List<T> queryByJoinAuction(Map<String, Object> params) {
         return getDao().queryByJoinAuction(params);
     }
+
+    public List<Integer> queryByAuctionStartList() {
+        return getDao().queryByAuctionStartList();
+    }
+
 }

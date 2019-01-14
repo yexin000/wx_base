@@ -91,9 +91,10 @@
     <!-- 根据竞拍品id查询最高出价记录(领先记录) -->
     <select id="queryBidByItemId" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="Bid_Base_Column_List" />
+        <include refid="Bid_Base_Column_List" /> , teua.id addressid
         from
             t_e_bid t
+        left join t_e_user_addr teua on teua.wxid = t.wxid and isdefault = 1
         where
             t.auctionitemid = #{auctionItemId}
         and status = '1'

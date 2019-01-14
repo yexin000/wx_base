@@ -49,6 +49,11 @@ public class BidBean extends BaseBean {
      */
     private String strDate;
 
+    /**
+     * 地址
+     */
+    private String addressId;
+
     public Integer getId() {
         return id;
     }
@@ -127,5 +132,13 @@ public class BidBean extends BaseBean {
 
     public void setStrDate(String strDate) {
         this.strDate = strDate;
+    }
+
+    public String getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 }

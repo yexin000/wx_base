@@ -48,6 +48,12 @@
 		where id=#{id}
 	</update>
 
+
+    <!-- 根据id查询记录 -->
+    <select id="queryByAuctionStartList" resultType="java.lang.Integer" parameterType="Object">
+        select t.id from t_e_auction t   where status='1' and starttime &lt; now()
+    </select>
+
     <!-- 设置开始时间超出当前时间的正常的拍卖会为已开始 -->
     <update id="updateAuctionStart" parameterType="Object">
 		update t_e_auction set status='2'

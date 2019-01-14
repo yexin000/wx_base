@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 竞拍会Bean
+ * 关注Bean
  *
  * @author dingjia
  *
@@ -87,6 +87,16 @@ public class Follow extends BaseBean {
     private Double price;
 
     private List<ItemRes> resList;
+
+    /**
+     * 手机号（关注的人）
+     */
+    private String phoneNum;
+
+    /**
+     * 开始时间
+     */
+    private Date startTime;
 
     public Integer getId() {
         return id;
@@ -214,5 +224,21 @@ public class Follow extends BaseBean {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 }
