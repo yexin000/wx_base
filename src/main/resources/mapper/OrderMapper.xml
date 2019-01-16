@@ -18,7 +18,7 @@
         <result column="addressid" property="addressId" />
         <result column="itemid" property="itemId" />
         <result column="updatetime" property="updateTime" />
-        <result column="suretime" property="suretime" />
+        <result column="suretime" property="sureTime" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
