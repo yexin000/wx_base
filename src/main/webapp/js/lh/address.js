@@ -20,6 +20,7 @@ function loadAddress(){
             var datalength = data.total;
             if(dataList.length> 0)
             {
+                $("#dataDiv").empty();
                 var str = '';
                 $.each(dataList,function(i,obj){
                     str+='<div style="padding-top: 0.2rem;border-bottom: 1px solid #808080">';
@@ -37,19 +38,23 @@ function loadAddress(){
                     }
                     str+=' &nbsp;默认地址</span>';
                     str+='    <span style="float: right" onclick="editAddr(\'' + obj.id + '\');"> <img src="../../../images/lh/update-lh.png" style="width: 14px;height: 14px;"> 修改&nbsp;</span>';
-                    str+='    <span style="float: right;padding-right: 0.12rem;" onclick="deleteAddress('+obj.id+')"> <img src="../../../images/lh/delete-lh.png" style="width: 14px;height: 14px;"> 删除</span>';
+                    if(obj.isDefault == '1') {
+                        str += '    <span style="float: right;padding-right: 0.12rem;" onclick="deleteDefaultAddress()"> <img src="../../../images/lh/delete-lh.png" style="width: 14px;height: 14px;"> 删除</span>';
+                    } else {
+                        str+='    <span style="float: right;padding-right: 0.12rem;" onclick="deleteAddress('+obj.id+')"> <img src="../../../images/lh/delete-lh.png" style="width: 14px;height: 14px;"> 删除</span>';
+                    }
                     str+='   </p>';
                     str+='</div>';
                 });
                 //加载上拉加载按钮
-                 $("#loadMore").remove();
-                str +='<a href="javascript:loadAddress();" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading"> 点击加载更多</a>';
-            }
-            $("#dataDiv").append(str);
-            if(datalength <= (pageId * 10)){
                 $("#loadMore").remove();
+                str +='<a href="javascript:loadAddress();" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading"> 点击加载更多</a>';
+                $("#dataDiv").append(str);
+                if(datalength <= (pageId * 10)){
+                    $("#loadMore").remove();
+                }
+                pageId++;
             }
-            pageId++;
         }
     })
 }
@@ -66,7 +71,14 @@ function setDefaultAddr(id, wxid) {
         $('#loadingToast').hide();
         showToast(data.msg, function () {
         });
+        pageId = 1;
         loadAddress();
+    });
+}
+
+// 默认地址不能被删除
+function deleteDefaultAddress() {
+    showToast('默认地址不能删除', function () {
     });
 }
 
@@ -81,6 +93,7 @@ function deleteAddress(id){
         contentType : "application/json;charset=utf-8",
         cache: false,
         success:function(data){
+            pageId = 1;
             loadAddress();
             var dataList = data.rows;
         }
