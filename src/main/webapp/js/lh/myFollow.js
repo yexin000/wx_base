@@ -22,6 +22,9 @@ function loadUser(){
         cache: false,
         success:function(data){
             var data = data.data;
+            $('#headImg').bind("click", function(){
+                toUserInfo(data.wxid);
+            });
             $("#user").html(data.nickName);
             $("#headImg").attr("src", data.avatarUrl);
             $("#followUser").html( data.myFollowNum);
@@ -78,7 +81,7 @@ function loadMyFollowListData(){
 
 
 $("#more1").click(function () {
-    window.location.href = '../../html/lh/myFollowUser.html?';
+    window.location.href = '../../html/lh/myFollowUser.html';
 });
 $("#more2").click(function () {
     window.location.href = '../../html/lh/myFollowAuctionItem.html';

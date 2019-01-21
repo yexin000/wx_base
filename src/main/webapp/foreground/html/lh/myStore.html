@@ -409,6 +409,10 @@
         $("#headImg").attr("src", data.avatarUrl);
         $(".headimg").attr("src", data.avatarUrl);
         $(".headtext").html(data.nickName);
+        $("#headImage").bind("click",function(){
+            debugger
+          toUserInfo(data.wxid);
+        });
         if(!isSelf) {
           $("#titleName").text(data.nickName + "的店铺");
         }

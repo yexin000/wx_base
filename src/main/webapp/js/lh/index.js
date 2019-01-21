@@ -152,7 +152,7 @@ function loadIndexActivity(){
                             +     '</div>'
                             +   '</div>'
                             +   '<div class="weui-cell" style="background-color: black;">'
-                            +     '<div class="weui-cell__hd"><img class="headimg mystore-auction-headimg" src="'+auctionList[i].path+'"></div>'
+                            +     '<div class="weui-cell__hd" onclick="toUserInfo(\'' + auctionList[i].wxid + '\')"><img class="headimg mystore-auction-headimg" src="'+auctionList[i].path+'"></div>'
                             +     '<div class="weui-cell__bd"><p class="headtext mystore-auction-headtext">  '+auctionList[i].wxName+' </p></div>'
                             +     '<div class="weui-cell__hd"><img style="margin-right: 10px" src="' + followAuctionImage + '" id="followAuctionImage' + auctionList[i].id + '" data-isfollow="' + auctionList[i].isFollow + '" class="mystore-auction-favicon" onclick="javascript:followChange(\'' + auctionList[i].id + '\')"></div>'
                             +     '<div class="weui-cell__hd"><img src="' + fabulousImage + '" id="fabulousImage' + auctionList[i].id + '" data-isfabulous="' + auctionList[i].isFabulous + '" class="mystore-auction-favicon" onclick="javascript:fabulousChange(\'' + auctionList[i].id + '\')"></div>'

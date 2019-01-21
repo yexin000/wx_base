@@ -26,7 +26,7 @@
 
     <!-- sys_menu table all fields -->
     <sql id="Auction_Base_Column_List">
-		t.id,t.name,t.starttime,t.endtime,t.createtime,t.creator,t.modifytime,t.modifier,t.businessid,
+		t.id,t.wxid,t.name,t.starttime,t.endtime,t.createtime,t.creator,t.modifytime,t.modifier,t.businessid,
 		t.description,t.status,t.viewnum,t.type,t.isShow
 	</sql>
 

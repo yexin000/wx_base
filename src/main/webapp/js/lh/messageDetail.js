@@ -39,7 +39,7 @@ function loadMyMessage(id,wxid){
                             //发给自己的
                             str+='          <p style="display: inline-block;vertical-align: top;margin-left: 0.1rem">';
                             if(obj.path){
-                                str+='          <img src="'+   obj.path+'" style="width: 0.3rem;height: 0.3rem;">';
+                                str+='          <img onclick="toUserInfo(\''+wxid+'\')" src="'+   obj.path+'" style="width: 0.3rem;height: 0.3rem;">';
                             }else{
                                 str+='          <img src="../../../images/lh/portrait2.png" style="width: 0.3rem;height: 0.3rem;">';
                             }

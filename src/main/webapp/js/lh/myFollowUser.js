@@ -25,7 +25,7 @@ function loadMyFollowListData(){
             $.each(dataList,function(i,obj){
                 str+='<div style="height:0.5rem;margin-left: 1%;  margin-top: 0.05rem;border-bottom: #cccccc solid 1px" onclick="toUserInfo(\''+obj.followWxId+'\')">';
                 str+='   <div style=" width: 100%;padding-top: 0.05rem;">';
-                str+='     <img src="' +  obj.path +  '" style="border-radius: 50%;height:0.4rem;width: 0.4rem;"> ';
+                str+='     <img onclick="toUserInfo(\''+ obj.wxid +'\')" src="' +  obj.path +  '" style="border-radius: 50%;height:0.4rem;width: 0.4rem;"> ';
                 str+='     <span style="font-size: 0.2rem;position: absolute; margin-top: 0.05rem;margin-left: 0.1rem">'+obj.followName+'</span>';
                 str+='   </div>';
                 str+='</div>';

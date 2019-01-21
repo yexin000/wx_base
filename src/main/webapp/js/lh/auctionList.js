@@ -35,7 +35,7 @@ function loadAuctions() {
                             +     '</div>'
                             +   '</div>'
                             +   '<div class="weui-cell" style="background-color: black;">'
-                            +     '<div class="weui-cell__hd"><img class="headimg mystore-auction-headimg" src="'+auctionList[i].path+'"></div>'
+                            +     '<div class="weui-cell__hd" onclick="toUserInfo(\''+ auctionList[i].wxid + '\')"><img class="headimg mystore-auction-headimg" src="'+auctionList[i].path+'"></div>'
                             +     '<div class="weui-cell__bd"><p class="headtext mystore-auction-headtext">  '+auctionList[i].wxName+' </p></div>'
                             +     '<div class="weui-cell__hd"><img src="/weixin/images/lh/mystore-fav-icon.png" class="mystore-auction-favicon"></div>'
                             +     '<div class="weui-cell__ft">0</div>'

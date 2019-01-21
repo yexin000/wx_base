@@ -320,12 +320,12 @@ public class OrderController extends BaseController {
             }
 
             // ------------------------------余额 ------------------------------------------------------
-            AuctionItem auctionItem = auctionItemService.queryById(order.getItemId());
+            AuctionItem auctionItem = auctionItemService.queryById(newOrder.getItemId());
             if(null != auctionItem){
                 WeixinUser saleMan = weixinUserService.queryWeixinUser(auctionItem.getUploadWxid());  //买家
-                if(null != order.getOrderMoney()){
+                if(null != newOrder.getOrderMoney()){
                     // 处理余额到卖家
-                    BigDecimal orderMoney = new BigDecimal(order.getOrderMoney());
+                    BigDecimal orderMoney = new BigDecimal(newOrder.getOrderMoney());
                     // 减去百分之6的平台手续费
                     BigDecimal sxf = orderMoney.multiply(new BigDecimal("0.06"));
                     // 卖家获取金额
