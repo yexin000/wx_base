@@ -20,7 +20,7 @@
     <style type="text/css">
         * { padding:0; margin:0;}
         ul { width:100%; border-top:1px solid #ddd; border-left:1px solid #ddd; }
-        ul li { list-style:none; width:33.3%;  float:left; border-right:1px solid #ddd; border-bottom:1px solid #ddd; float:left;}
+        ul li { list-style:none; width:33.3%;  float:left; float:left;}
 
         .notice {
             width:18px;
@@ -34,6 +34,37 @@
             position:absolute;
             right:10px;
             top:5px;
+        }
+        .weui-grid:before {
+            content: " ";
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            height: 1px;
+            color: #D9D9D9;
+            border-top: none;
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            -webkit-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+        }
+        .weui-grid:after {
+            content: " ";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            height: 1px;
+            color: #D9D9D9;
+            border-bottom: none;
+            -webkit-transform-origin: 0 100%;
+            transform-origin: 0 100%;
+            -webkit-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+        }
+        .m-part li {
+            border-bottom:none;
         }
     </style>
 </head>
