@@ -13,6 +13,20 @@ $(function(){
     $("#uploadBtn").click(function () {
         submitUpload();
     });
+
+    $("#excellentBtn").click(function () {
+        $('#loadingToast').show();
+        var url= '/weixin/business/ajaxApplyExcellent.do?id='+$("#id").val();
+        $.post(url,{},function(data){
+            $('#loadingToast').hide();
+            showToast("申请成功", function () {
+            });
+            $("#excellentBtn").text("优质商户申请审核中");
+            $("#excellentBtn").css("background-color","gray");
+            $("#excellentBtn").unbind();
+        });
+    });
+
     $("#itemImages").empty();
 
     $("#itemImages").on("change", function () {
@@ -68,8 +82,19 @@ function loadBusinessJoin() {
                 $("#id").val(data.id);
                 $("#uploadBtn").html("修改信息");
                 $(".page__title").text("您已成功加入");
+                $("#excellentBtn").show();
+                if(data.isExcellent == '2') {
+                  $("#excellentBtn").text("您已成为优质商户");
+                  $("#excellentBtn").css("background-color","gray");
+                  $("#excellentBtn").unbind();
+                } else if(data.isExcellent == '1') {
+                  $("#excellentBtn").text("优质商户申请审核中");
+                  $("#excellentBtn").css("background-color","gray");
+                  $("#excellentBtn").unbind();
+                }
             } else {
                 $(".page__title").text("加入我们");
+                $("#excellentBtn").hide();
             }
         }
     })

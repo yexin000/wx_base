@@ -10,7 +10,9 @@ function loadbusinessData(){
     var bisinessModel = {};
     bisinessModel.auditStatus = '1';
     bisinessModel.status = '1';
+    bisinessModel.isExcellent = '2';
     bisinessModel.page = pageId;
+    bisinessModel.rows = 1000;
     var url= '/weixin/business/ajaxDataList.do';
     $.ajax({
         url: url,

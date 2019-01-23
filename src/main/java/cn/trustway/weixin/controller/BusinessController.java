@@ -322,6 +322,28 @@ public class BusinessController extends BaseController {
         }
     }
 
+
+    /**
+     * 根据ID审核记录
+     *
+     * @param id
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/auditExcellent")
+    public void auditExcellent(Integer id, String result, HttpServletResponse response) {
+        if (id != null && id > 0) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("id", id);
+            params.put("isExcellent", result);
+            businessService.updateByIsExcellent(params);
+            sendSuccessMessage(response, "审核成功");
+        } else {
+            sendFailureMessage(response, "审核失败");
+        }
+    }
+
     /**
      * 根据ID审核记录
      *
@@ -378,5 +400,17 @@ public class BusinessController extends BaseController {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_NO_BUSINESS_JOIN_ERROR, "未找到商家信息");
             return;
         }
+    }
+
+
+    /**
+     * 申请优质商户
+     * @param id
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("/ajaxApplyExcellent")
+    public void ajaxApplyExcellent(String id, HttpServletResponse response) {
+        businessService.applyExcellent(id);
     }
 }

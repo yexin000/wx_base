@@ -19,12 +19,13 @@
         <result column="auditstatus" property="auditStatus" />
         <result column="width" property="width" />
         <result column="height" property="height" />
+        <result column="isExcellent" property="isExcellent" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="Base_Column_List">
-		id,name,address,createTime,updateTime,telNum,logoPath,status,isShow,wxaccount,wxid,auditstatus,width,height
-	</sql>
+        id,name,address,createTime,updateTime,telNum,logoPath,status,isShow,wxaccount,wxid,auditstatus,width,height,isExcellent
+    </sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
@@ -107,6 +108,9 @@
             <if test="auditStatus != null and auditStatus != ''">
                 and auditstatus = #{auditStatus}
             </if>
+            <if test="isExcellent != null and isExcellent != ''">
+                and isExcellent = #{isExcellent}
+            </if>
         </trim>
     </select>
 
@@ -125,6 +129,9 @@
             </if>
             <if test="auditStatus != null and auditStatus != ''">
                 and auditstatus = #{auditStatus}
+            </if>
+            <if test="isExcellent != null and isExcellent != ''">
+                and isExcellent = #{isExcellent}
             </if>
         </trim>
         order by updatetime desc
@@ -146,4 +153,12 @@
         <include refid="Base_Column_List" />
         from t_e_business where wxid = #{wxid} and status = '1'
     </select>
+    
+    <update id="applyExcellent" parameterType="java.lang.String">
+        update t_e_business set isExcellent = '1' where id=#{id}
+    </update>
+
+    <update id="updateByIsExcellent" parameterType="java.util.Map">
+        update t_e_business set isExcellent = #{isExcellent} where id=#{id}
+    </update>
 </mapper>

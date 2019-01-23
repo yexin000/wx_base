@@ -31,8 +31,17 @@ WeiXin.business = function(){
                     {field:'name',title:'商家名称',width:120,align:'center',sortable:true},
                     {field:'address',title:'商家地址',align:'center',width:240,sortable:true},
                     {field:'createTime',title:'创建时间',width:150,align:'center',sortable:true},
-                    {field:'telNum',title:'商家电话',width:120,align:'center',sortable:true},
-                    {field:'wxAccount',title:'商家微信',width:120,align:'center',sortable:true},
+                    {field:'telNum',title:'商家电话',width:100,align:'center',sortable:true},
+                    {field:'wxAccount',title:'商家微信',width:100,align:'center',sortable:true},
+                    {field:'isExcellent',title:'优质商户',width:80,align:'center',sortable:true,
+                        formatter:function(value,row,index){
+                            if(value == 2){
+                                return "是";
+                            } else {
+                                return "否";
+                            }
+                        }
+                    },
                     {field:'isShow',title:'是否推荐',width:80,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){
@@ -42,14 +51,14 @@ WeiXin.business = function(){
                             }
                         }
                     },
-                    {field:'status',title:'状态',width:80,align:'center',sortable:true,
+                    {field:'status',title:'状态',width:60,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){
                                 return "正常";
                             }
                         }
                     },
-                    {field:'auditStatus',title:'审核状态',width:80,align:'center',sortable:true,
+                    {field:'auditStatus',title:'审核状态',width:60,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 0){
                                 return "未审核";
@@ -60,7 +69,7 @@ WeiXin.business = function(){
                             }
                         }
                     },
-                    {field:'opts',title:'操作',width:220,align:'left',formatter:function(value,row,index){
+                    {field:'opts',title:'操作',width:280,align:'left',formatter:function(value,row,index){
                             var html ="<a href='#' onclick='WeiXin.business.uploadLogo("+row.id+")'>上传封面</a>";
                             if(null != row.logoPath && "" != row.logoPath) {
                                 var viewHtml = "  <a href='#' onclick='WeiXin.business.showImage(\""+ urls.msUrl + "/"+ row.logoPath +"\")'>查看封面</a>";
@@ -70,6 +79,10 @@ WeiXin.business = function(){
                                 var auditHtml = " <a href='#' onclick='WeiXin.business.audit("+row.id+")'>审核通过 </a>"
                                 auditHtml += " <a href='#' onclick='WeiXin.business.auditDeny("+row.id+")'> 审核不通过</a>";
                                 html += auditHtml;
+                            } else if(row.auditStatus == 1 && row.isExcellent == 1) {
+                                var excellentHtml = " <a href='#' onclick='WeiXin.business.excellent("+row.id+")'>优质商户通过 </a>"
+                                excellentHtml += " <a href='#' onclick='WeiXin.business.excellentDeny("+row.id+")'> 优质商户不通过</a>";
+                                html += excellentHtml;
                             }
 
                             return html;
@@ -130,6 +143,40 @@ WeiXin.business = function(){
         },
         refresh : function () {
             _box.handler.refresh();
+        },
+        excellent : function(id) {
+          $.messager.confirm('提示','确定审核通过该商家成为优质商户?',function(r){
+            if (r){
+              WeiXin.progress();
+              WeiXin.auditForm('auditExcellent.do',{'id':id, 'result':'2'},function(result){
+                WeiXin.closeProgress();
+                if(result.success){
+                  WeiXin.alert('提示',result.msg);
+                }else{
+                  WeiXin.alert('提示',data.msg,'error');
+                }
+                var param = $("#searchForm").serializeObject();
+                Grid.datagrid('reload',param);
+              });
+            }
+          });
+        },
+        excellentDeny : function(id) {
+          $.messager.confirm('提示','确定审核驳回该商家成为优质商户?',function(r){
+            if (r){
+              WeiXin.progress();
+              WeiXin.auditForm('auditExcellent.do',{'id':id, 'result':'0'},function(result){
+                WeiXin.closeProgress();
+                if(result.success){
+                  WeiXin.alert('提示',result.msg);
+                }else{
+                  WeiXin.alert('提示',data.msg,'error');
+                }
+                var param = $("#searchForm").serializeObject();
+                Grid.datagrid('reload',param);
+              });
+            }
+          });
         },
         audit : function(id){
             $.messager.confirm('提示','确定审核通过该商家加入申请?',function(r){

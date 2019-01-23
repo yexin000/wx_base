@@ -36,4 +36,12 @@ public class BusinessService<T> extends BaseService<T> {
     public T queryByWxid(String wxid) {
         return getDao().queryByWxid(wxid);
     }
+
+    public void applyExcellent(String id){
+        getDao().applyExcellent(id);
+    }
+
+    public void updateByIsExcellent(Map<String, Object> params) {
+        getDao().updateByIsExcellent(params);
+    }
 }

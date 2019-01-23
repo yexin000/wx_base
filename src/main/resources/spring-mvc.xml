@@ -101,6 +101,7 @@
 					<value>/templateMsg/rechargeTemplateMsg.do</value>
 					<value>/business/ajaxBusinessJoin.do</value>
 					<value>/business/ajaxGetJoinBusiness.do</value>
+					<value>/business/ajaxApplyExcellent.do</value>
 					<value>/identify/ajaxDataList.do</value>
 					<value>/identify/ajaxGetId.do</value>
 					<value>/identify/ajaxUploadIdentify.do</value>

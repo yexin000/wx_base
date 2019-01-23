@@ -82,6 +82,11 @@ public class Business extends BaseBean {
      */
     private Integer height;
 
+    /**
+     * 是否优质商户：0-否，1-申请中，2-是
+     */
+    private String isExcellent;
+
     public Integer getId() {
         return id;
     }
@@ -208,5 +213,13 @@ public class Business extends BaseBean {
 
     public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public String getIsExcellent() {
+        return isExcellent;
+    }
+
+    public void setIsExcellent(String isExcellent) {
+        this.isExcellent = isExcellent;
     }
 }

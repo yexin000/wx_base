@@ -22,4 +22,8 @@ public interface BusinessDao<T> extends BaseDao<T> {
     void updateByBusinessStatus(Map<String, Object> params);
 
     T queryByWxid(String wxid);
+
+    void applyExcellent(String id);
+
+    void updateByIsExcellent(Map<String, Object> params);
 }

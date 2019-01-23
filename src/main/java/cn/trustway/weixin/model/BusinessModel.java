@@ -67,6 +67,11 @@ public class BusinessModel extends BaseModel {
      */
     private String auditStatus;
 
+    /**
+     * 是否优质商户：0-否，1-申请中，2-是
+     */
+    private String isExcellent;
+
     public Integer getId() {
         return id;
     }
@@ -169,5 +174,13 @@ public class BusinessModel extends BaseModel {
 
     public void setAuditStatus(String auditStatus) {
         this.auditStatus = auditStatus;
+    }
+
+    public String getIsExcellent() {
+        return isExcellent;
+    }
+
+    public void setIsExcellent(String isExcellent) {
+        this.isExcellent = isExcellent;
     }
 }
