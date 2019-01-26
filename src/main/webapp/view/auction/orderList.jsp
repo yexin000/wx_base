@@ -15,8 +15,12 @@
             <label class="ui-label">订单类型:</label>
             <select class="easyui-combobox" name="orderType" id="orderTypes" data-options="required:true">
                 <option value="" selected="selected">全部</option>
-                <option value="1">竞拍</option>
-                <option value="2">购买</option>
+                <option value="1">商品竞拍</option>
+                <option value="2">商品购买</option>
+                <option value="3">充值</option>
+                <option value="4">报名活动</option>
+                <option value="5">鉴定支付</option>
+                <option value="6">V5支付</option>
             </select>
         </p>
         <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>

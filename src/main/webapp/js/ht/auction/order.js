@@ -19,9 +19,17 @@ WeiXin.order = function(){
                     {field:'orderType',title:'订单类型',width:70,align:'center',sortable:true,
                         formatter:function(value,row,index){
                             if(value == 1){
-                                return "竞拍";
+                                return "商品竞拍";
                             } else if(value == 2){
-                                return "买卖";
+                                return "商品购买";
+                            } else if(value == 3) {
+                                return "充值";
+                            }  else if(value == 4) {
+                                return "报名活动";
+                            } else if(value == 5) {
+                                return "鉴定支付";
+                            } else if(value == 6) {
+                                return "V5支付";
                             }
                         }
                     },
@@ -39,15 +47,27 @@ WeiXin.order = function(){
                                 return "待支付";
                             } else if(value == 3){
                                 return "已支付";
+                            } else if(value == 4){
+                                return "已发货";
+                            } else if(value == 5){
+                                return "已完成";
+                            } else if(value == 6){
+                                return "退货中";
+                            } else if(value == 7){
+                                return "已退货";
                             }
                         }
                     },
                     {field:'payTime',title:'支付时间',width:120,align:'center',sortable:true},
-                    {field:'invalidTime',title:'失效时间',width:120,align:'center',sortable:true},
+                    {field:'ydbh',title:'运单编号',width:100,align:'center',sortable:true},
                     {field:'opts',title:'操作',width:120,align:'center',formatter:function(value,row,index){
                             var html ="";
                             var msgHtml = " <a href='#' onclick='WeiXin.order.sendMsg(\""+row.wxid+"\")'>发送通知</a>";
                             html += msgHtml;
+                            if(row.status == 4 && row.ydbh != null && row.ydbh != "") {
+                              var confirmHtml = " <a href='#' onclick='WeiXin.order.confirmOrder(\""+row.id+"\",\"" + row.wxid + "\")'> 确认订单</a>";
+                              html += confirmHtml;
+                            }
 
                             return html;
                         }
@@ -69,6 +89,24 @@ WeiXin.order = function(){
               ]
             });
             $("#message-win").dialog('open');
+        },
+
+        confirmOrder : function(orderId, wxid) {
+            $.messager.confirm('提示','确定完成此订单?',function(r){
+                if (r){
+                    WeiXin.progress();
+                    WeiXin.auditForm('confirmationOrder.do',{'id':orderId, 'wxid':wxid},function(result){
+                        WeiXin.closeProgress();
+                        if(result.success){
+                            WeiXin.alert('提示',"操作成功");
+                        }else{
+                            WeiXin.alert('提示',"操作失败",'error');
+                        }
+                        var param = $("#searchForm").serializeObject();
+                        Grid.datagrid('reload',param);
+                    });
+                }
+            });
         },
         sendMessage : function () {
             if($("#messageForm").form('validate')){

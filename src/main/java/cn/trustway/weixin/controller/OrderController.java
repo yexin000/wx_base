@@ -257,6 +257,19 @@ public class OrderController extends BaseController {
         HtmlUtil.writerJson(response, context);
     }
 
+    /**
+     * 后台确认订单
+     * @param wxid
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value = "/confirmationOrder", method = RequestMethod.POST)
+    public void confirmationOrder(Integer id, String wxid, HttpServletResponse response) throws Exception {
+        OrderModel orderModel = new OrderModel();
+        orderModel.setId(id);
+        orderModel.setWxid(wxid);
+        this.confirmationOfOrder(orderModel, response);
+    }
 
     /**
      * 确认订单
