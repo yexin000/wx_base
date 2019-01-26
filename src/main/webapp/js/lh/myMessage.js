@@ -86,12 +86,12 @@ function loadMyMessage(){
                 var str = '';
                 $.each(dataList,function(i,obj){
                     //需要传一个聊天对象
-                    if(obj.wxid == localStorage.getItem("openId")){
+                    //if(obj.wxid == localStorage.getItem("openId")){
                         str+='<div style="width: 99%;height: 0.62rem;border-bottom: 1px solid #EFEFEF" onclick="toMessageDetail(\''+ obj.id + '\' ,\''+ obj.toWxid +'\')">';
-                    }else{
+                    //}else{
                         //如果发送人是自己，那么对象是别人
-                        str+='<div style="width: 99%;height: 0.62rem;border-bottom: 1px solid #EFEFEF" onclick="toMessageDetail(\''+ obj.id + '\' ,\''+ obj.wxid +'\')">';
-                    }
+                       // str+='<div style="width: 99%;height: 0.62rem;border-bottom: 1px solid #EFEFEF" onclick="toMessageDetail(\''+ obj.id + '\' ,\''+ obj.wxid +'\')">';
+                    //}
                     //用户消息
                     str+='<p style="font-size: 0.14rem;margin-left: 0.1rem">用户留言：</p>  <p>';
                     str+=' <span class="messageList" style="margin-left: 0.2rem;"> '+obj.messagenote+'</span>';

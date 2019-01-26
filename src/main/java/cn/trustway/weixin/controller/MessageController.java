@@ -132,8 +132,9 @@ public class MessageController extends BaseController {
         }
         if(StringUtils.isNotEmpty(toWxid) || "undefined".equals(toWxid)){
             Message updateMessage = new Message();
+            updateMessage.setId(id);
             updateMessage.setStatus(1);
-            updateMessage.setToWxid(wxid);
+            updateMessage.setToWxid(toWxid);
             //消息只要是接收方打开，那么全部设置成已读
             for (Message m : messageList){
                 if(m.getToWxid().equals(wxid)){
