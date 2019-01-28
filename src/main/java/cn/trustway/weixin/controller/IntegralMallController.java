@@ -1,11 +1,9 @@
 package cn.trustway.weixin.controller;
 
 import cn.trustway.weixin.bean.*;
-import cn.trustway.weixin.common.AppInitConstants;
-import cn.trustway.weixin.model.ActivityModel;
 import cn.trustway.weixin.model.IntegralMallModel;
+import cn.trustway.weixin.model.IntegralMallRecordModel;
 import cn.trustway.weixin.model.ItemResModel;
-import cn.trustway.weixin.model.MessageModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
 import org.apache.commons.lang.StringUtils;
@@ -59,6 +57,54 @@ public class IntegralMallController extends BaseController {
     public ModelAndView list(IntegralMallModel model, HttpServletRequest request) throws Exception {
         Map<String, Object> context = getRootMap();
         return forword("auction/integralMall", context);
+    }
+
+    /**
+     * 积分兑换记录页
+     * @param model
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/recordList")
+    public ModelAndView recordList(IntegralMallRecordModel model, HttpServletRequest request) throws Exception {
+        Map<String, Object> context = getRootMap();
+        context.put("icId", model.getIcId());
+        return forword("auction/recordList", context);
+    }
+
+
+    /**
+     * 兑换记录数据列表
+     *
+     * @param model
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/recordDataList", method = RequestMethod.POST)
+    public void recordDataList(IntegralMallRecordModel model, HttpServletResponse response) throws Exception {
+        List<IntegralCommodityRecord> dataList = integralMallService.queryRecordByList(model);
+
+        // 设置页面数据
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("total", integralMallService.queryRecordByCount(model));
+        jsonMap.put("rows", dataList);
+        HtmlUtil.writerJson(response, jsonMap);
+    }
+
+    /**
+     * 确认兑换记录
+     * @param id
+     * @param response
+     */
+    @RequestMapping(value = "/recordAudit", method = RequestMethod.POST)
+    public void recordAudit(Integer id, HttpServletResponse response) {
+        IntegralMallRecordModel model = new IntegralMallRecordModel();
+        model.setId(id);
+        model.setStatus("1");
+        integralMallService.updateRecordStatus(model);
+        sendSuccessMessage(response, "操作成功");
     }
 
     /**

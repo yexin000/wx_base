@@ -35,7 +35,8 @@ WeiXin.integralMall = function(){
           {field:'opts',title:'操作',width:220,align:'left',formatter:function(value,row,index){
               var html ="<a href='#' onclick='WeiXin.integralMall.resManage(\""+row.id + "\"," + "\"" + row.name +"\")'>图片管理("+row.picCount+")</a>";
 
-              html +="  <a href='#' onclick='WeiXin.integralMall.showDescribe("+row.id+")'>查看介绍</a>";
+              html +="  <a href='#' onclick='WeiXin.integralMall.showDescribe("+row.id+")'> 查看介绍</a>";
+              html +="  <a href='#' onclick='WeiXin.integralMall.showRecord("+row.id+")'> 兑换记录</a>";
               return html;
             }
           }
@@ -55,6 +56,10 @@ WeiXin.integralMall = function(){
         $("#describeDlg").val(result.data.describes);
       });
 
+    },
+    showRecord : function(id) {
+      $("#icId").val(id);
+      $("#recordForm").submit();
     },
     refresh : function () {
       _box.handler.refresh();

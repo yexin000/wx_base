@@ -66,6 +66,9 @@
         <input class="hidden" name="conName" id="conName">
         <input class="hidden" name="conType" id="conType" value="5">
     </form>
+    <form id="recordForm" class="ui-form" method="post" action="/weixin/integralMall/recordList.do">
+        <input class="hidden" name="icId" id="icId">
+    </form>
 </div>
 </div>
 <script type="text/javascript" src="${msUrl}/js/ht/auction/integralMall.js"></script>

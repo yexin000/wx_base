@@ -15,10 +15,23 @@
         <result column="picCount" property="picCount" />
     </resultMap>
 
+    <resultMap id="RecordBaseResultMap" type="cn.trustway.weixin.bean.IntegralCommodityRecord">
+        <result column="id" property="id" />
+        <result column="icId" property="icId" />
+        <result column="wxid" property="wxid" />
+        <result column="status" property="status" />
+        <result column="num" property="num" />
+        <result column="createTime" property="createTime" />
+    </resultMap>
+
     <!-- sys_menu table all fields -->
     <sql id="IntegralCommodity_Base_Column_List">
-		t.id,t.name,t.describes,t.consumeintegral,t.createtime,t.stock,t.endtime
-	</sql>
+		  t.id,t.name,t.describes,t.consumeintegral,t.createtime,t.stock,t.endtime
+	  </sql>
+
+    <sql id="IntegralCommodityRecord_Base_Column_List">
+		  t.id,t.icId,t.wxid,t.status,t.num,t.createtime
+	  </sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
@@ -101,6 +114,41 @@
             ${pager.mysqlQueryCondition}
         </if>
     </select>
+    
+    <update id="updateRecordStatus" parameterType="Object">
+        update t_con_user_integralCommodity set status=#{status} where id=#{id}
+    </update>
 
+    <select id="queryRecordByList" resultMap="RecordBaseResultMap" parameterType="Object">
+        select
+        <include refid="IntegralCommodityRecord_Base_Column_List" />
+        ,ic.name as icName, u.nickname as wxidName
+        from t_con_user_integralCommodity t
+        left join t_e_integral_commodity ic on t.icid=ic.id
+        left join weixin_user u on u.wxid=t.wxid
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="icId != null and icId != ''">
+                and t.icId = #{icId}
+            </if>
+        </trim>
+        order by t.createtime desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
 
+    <select id="queryRecordByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(1) from t_con_user_integralCommodity t
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="icId != null and icId != ''">
+                and t.icId = #{icId}
+            </if>
+        </trim>
+    </select>
 </mapper>
