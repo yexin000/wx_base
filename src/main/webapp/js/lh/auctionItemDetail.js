@@ -139,7 +139,7 @@ function loadItemData(id){
                 $("#bidBtn").unbind();
             } else if(dataObj.auctionStatus == '1') {
                 //$("#timeLabel").text("正在竞拍:  " + dataObj.startTime + "至" + dataObj.endTime);
-                TimeDown('timeLabel',dataObj.startTime );
+                TimeDown('timeLabel',dataObj.endTime );
             } else {
                 $("#timeLabel").text("竞拍已结束");
                 $("#bidBtn").css("background", "#d5d5d6");

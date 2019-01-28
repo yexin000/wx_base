@@ -240,8 +240,8 @@ public class WxPayController extends BaseController {
                     TextMessage bean2 = new TextMessage();
                     bean2.setContent("【百姓收藏】您有新的订单待处理");
                     bean2.setType(TextMessageController.MESSAGE_TYPE_NOTIFY);
-                    bean.setPhoneNum(saleMan.getPhoneNum());
-                    textMessageService.add(bean);
+                    bean2.setPhoneNum(saleMan.getPhoneNum());
+                    textMessageService.add(bean2);
                     AppClient.sendChuanglanMessage("【百姓收藏】您有新的订单待处理", saleMan.getPhoneNum());
                 }
                 if("3".equals(order.getOrderType()))

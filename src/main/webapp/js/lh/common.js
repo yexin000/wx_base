@@ -380,7 +380,7 @@ function TimeDown(id, endDateStr) {
     //秒
     var seconds = modulo % 60;
     //输出到页面
-    document.getElementById(id).innerHTML = "倒计时:" + days + "天" + hours + "小时" + minutes + "分钟" + seconds + "秒";
+    document.getElementById(id).innerHTML = "距结拍:" + days + "天" + hours + "小时" + minutes + "分钟" + seconds + "秒";
     //延迟一秒执行自己
     setTimeout(function () {
         TimeDown(id, endDateStr);

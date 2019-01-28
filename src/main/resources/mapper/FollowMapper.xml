@@ -146,6 +146,22 @@
         </if>
     </select>
 
+    <!-- 分页查询关注我的记录列表 -->
+    <select id="queryToMeUserByList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        t.id,  t.followid, t.wxid, wu.phonenum
+        from  weixin_user wu
+        left join t_e_follow t on t.wxid = wu.wxid
+        where
+        t.followtype = 1
+        <trim suffixOverrides=",">
+            <if test="id != null and id != ''">
+                and t.followid = #{id}
+            </if>
+        </trim>
+    </select>
+
+
     <!-- 分页查询记录列表 -->
     <select id="queryUserByList" resultMap="BaseResultMap" parameterType="Object">
         select

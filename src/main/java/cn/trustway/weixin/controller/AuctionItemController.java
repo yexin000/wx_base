@@ -4,9 +4,11 @@ import cn.trustway.weixin.bean.*;
 import cn.trustway.weixin.common.AppInitConstants;
 import cn.trustway.weixin.model.AuctionItemModel;
 import cn.trustway.weixin.model.BlacklistModel;
+import cn.trustway.weixin.model.FollowModel;
 import cn.trustway.weixin.model.ItemResModel;
 import cn.trustway.weixin.service.*;
 import cn.trustway.weixin.util.HtmlUtil;
+import cn.trustway.weixin.util.http.AppClient;
 import net.sf.json.JSONArray;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -67,6 +69,8 @@ public class AuctionItemController extends BaseController {
 
     @Autowired
     private FollowService<Follow> followService;
+    @Autowired
+    private TextMessageService<TextMessage> textMessageService;
 
     /**
      * 默认手续费比率6%
@@ -210,13 +214,32 @@ public class AuctionItemController extends BaseController {
             bean.setUploadWxid("0");
             bean.setStock(1);
             auctionItemService.add(bean);
+            WeixinUser userBean = weixinUserService.queryWeixinUser(bean.getUploadWxid());
+            if (userBean == null) {
+                sendFailureMessage(response, "没有找到对应的记录!");
+                return;
+            }
+            Map<String, Object> params = new HashMap<>();
+            params.put("id", userBean.getId());
+            List<Follow> attMeList = followService.queryToMeUserByList(params);
+            if(CollectionUtils.isNotEmpty(attMeList)){
+                for(Follow f : attMeList){
+                    //通知
+                    TextMessage bean2 = new TextMessage();
+                    bean2.setContent("【百姓收藏】您关注的好友有新的商品上传，请及时查看");
+                    bean2.setType(TextMessageController.MESSAGE_TYPE_NOTIFY);
+                    bean2.setPhoneNum(f.getPhoneNum());
+                    textMessageService.add(bean2);
+                    AppClient.sendChuanglanMessage("【百姓收藏】您关注的好友有新的商品上传，请及时查看", f.getPhoneNum());
+                }
+            }
         }
         sendSuccessMessage(response, "保存成功~");
     }
 
     /**
      * 根据ID查找记录
-     *
+     *+
      * @param id
      * @param response
      * @return

@@ -71,6 +71,12 @@ public interface FollowDao<T> extends BaseDao<T> {
     List<Follow> queryToAuctionUserByList(Map<String, Object> params);
 
     /**
+     *  查询关注我的人
+     * @return
+     */
+    List<Follow> queryToMeUserByList(Map<String, Object> params);
+
+    /**
         * 根据wxid和关注id查询关注信息
      * @param params
      * @return

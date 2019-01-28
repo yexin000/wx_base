@@ -116,6 +116,15 @@ public class FollowService<T> extends BaseService<T> {
     }
 
     /**
+     * 查询关注我的所有人
+     * @param params
+     * @return
+     */
+    public List<Follow> queryToMeUserByList(Map<String, Object> params ) {
+        return getDao().queryToMeUserByList(params);
+    }
+
+    /**
         * 根据wxid和关注id查询关注信息
      * @param params
      * @return
