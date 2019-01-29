@@ -21,6 +21,15 @@ WeiXin.record = function(){
           {field:'wxidName',title:'兑换人',align:'center',width:120,sortable:true},
           {field:'num',title:'兑换数量',width:60,align:'center',sortable:true},
           {field:'createTime',title:'兑换时间',width:120,align:'center',sortable:true},
+          {field:'status',title:'状态',width:80,align:'center',sortable:true,
+              formatter:function(value,row,index){
+                  if(value == 1){
+                      return "已处理";
+                  } else {
+                      return "未处理";
+                  }
+              }
+          },
           {field:'opts',title:'操作',width:120,align:'left',formatter:function(value,row,index){
               var html = "";
               if(row.status == 0) {
