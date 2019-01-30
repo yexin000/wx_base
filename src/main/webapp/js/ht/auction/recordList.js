@@ -19,6 +19,7 @@ WeiXin.record = function(){
           {field:'id',checkbox:true},
           {field:'icName',title:'商品名称',align:'center',width:120,sortable:true},
           {field:'wxidName',title:'兑换人',align:'center',width:120,sortable:true},
+          {field:'address',title:'地址',align:'center',width:240,sortable:true},
           {field:'num',title:'兑换数量',width:60,align:'center',sortable:true},
           {field:'createTime',title:'兑换时间',width:120,align:'center',sortable:true},
           {field:'status',title:'状态',width:80,align:'center',sortable:true,

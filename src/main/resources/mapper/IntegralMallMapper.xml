@@ -122,10 +122,11 @@
     <select id="queryRecordByList" resultMap="RecordBaseResultMap" parameterType="Object">
         select
         <include refid="IntegralCommodityRecord_Base_Column_List" />
-        ,ic.name as icName, u.nickname as wxidName
+        ,ic.name as icName, u.nickname as wxidName, ua.address
         from t_con_user_integralCommodity t
         left join t_e_integral_commodity ic on t.icid=ic.id
         left join weixin_user u on u.wxid=t.wxid
+        left join t_e_user_addr ua on ua.wxid=u.wxid and ua.isdefault='1'
         where 1=1
         <trim suffixOverrides=",">
             <if test="icId != null and icId != ''">

@@ -30,6 +30,10 @@ public class IntegralCommodityRecord extends IntegralCommodity {
      * 创建时间
      */
     private Date createTime;
+    /**
+     * 兑换地址
+     */
+    private String address;
 
     public Integer getIcId() {
         return icId;
@@ -85,5 +89,13 @@ public class IntegralCommodityRecord extends IntegralCommodity {
 
     public void setIcName(String icName) {
         this.icName = icName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
