@@ -120,6 +120,88 @@
         </if>
     </select>
 
+    <!-- 记录总数 -->
+    <select id="queryGroupByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(*) from (   select count(1) from t_e_message t
+        where   1 =1
+        <trim suffixOverrides=",">
+            <if test="status != null">
+                and t.status = #{status}
+            </if>
+            <if test="parentId != null ">
+                and t.parentId = #{parentId}
+            </if>
+            <if test="toWxid != null and toWxid != ''">
+                and t.towxid = #{toWxid}
+            </if>
+            <if test="messagetype != null and messagetype != ''">
+                and t.messagetype = #{messagetype}
+            </if>
+        </trim>
+        group by t.parentId
+        ) as temp
+    </select>
+
+    <!-- 分页查询记录列表 -->
+    <select id="queryGroupByList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Message_Base_Column_List" /> ,wu.nickname as nickname , wu.avatarUrl as path ,
+        wu1.nickname as tonickname , wu1.avatarUrl as topath
+        from t_e_message t
+        left join weixin_user wu on t.wxid  =  wu.wxid
+        left join weixin_user wu1 on t.towxid = wu1.wxid
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="status != null  ">
+                and t.status = #{status}
+            </if>
+            <if test="parentId != null ">
+                and t.parentId = #{parentId}
+            </if>
+            <if test="v5Id != null and v5Id != ''">
+                and t.v5id = #{v5Id}
+            </if>
+            <if test="toWxid != null and toWxid != ''">
+                and t.towxid = #{toWxid}
+            </if>
+            <if test="messagetype != null and messagetype != ''">
+                and t.messagetype = #{messagetype}
+            </if>
+        </trim>
+        group by t.parentId
+        order by t.createtime asc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''">
+            ${pager.mysqlQueryCondition}
+        </if>
+    </select>
+
+
+    <!-- 记录总数 -->
+    <select id="queryUserByCount" resultType="java.lang.Integer"
+            parameterType="Object">
+        select count(*) from (  select count(1) from t_e_message t
+        where   1 =1
+        <trim suffixOverrides=",">
+            <if test="status != null">
+                and t.status = #{status}
+            </if>
+            <if test="parentId != null ">
+                and t.parentId = #{parentId}
+            </if>
+            <if test="toWxid != null and toWxid != ''">
+                and t.towxid = #{toWxid}
+            </if>
+            <if test="messagetype != null and messagetype != ''">
+                and t.messagetype = #{messagetype}
+            </if>
+        </trim>
+        group by t.parentId
+        ) as temp
+    </select>
 
     <!-- 分页查询记录列表 -->
     <select id="queryUserByList" resultMap="BaseResultMap" parameterType="Object">
@@ -142,6 +224,9 @@
             </if>
             <if test="toWxid != null and toWxid != ''">
                 and t.towxid = #{toWxid}  or  t.wxid = #{toWxid}
+            </if>
+            <if test="messagetype != null and messagetype != ''">
+                and t.messagetype = #{messagetype}
             </if>
 
         </trim>

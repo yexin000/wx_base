@@ -23,8 +23,25 @@ public interface MessageDao<T> extends BaseDao<T> {
     Integer  addMessage(Map<String, Object> params);
 
 
+    /**
+     * 查询数量
+     * @param model
+     * @return
+     */
+    public int queryGroupByCount(MessageModel model);
 
+    /**
+     * 查询数量
+     * @param model
+     * @return
+     */
+    public int queryUserByCount(MessageModel model);
 
+    /**
+     * 查询聊天内容
+     * @return
+     */
+    List<T> queryGroupByList(MessageModel params);
 
     /**
      * 查询聊天内容

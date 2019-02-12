@@ -49,7 +49,7 @@ function exchange (id){
                 });
                 return;
             } else {
-                showToast("兑换失败", function () {
+                showToast("兑换失败,"+result.msg, function () {
                     history.back(-1);
                 });
                 return;

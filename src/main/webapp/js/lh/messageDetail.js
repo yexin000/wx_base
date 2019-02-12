@@ -93,6 +93,14 @@ function sendMessage(){
         messageModel.toWxid = '0';
     }
 
+    if(wxid == localStorage.getItem('openId')){
+        if(!messageNote){
+            $("#msgLabel").html("无法和自己聊天");
+            $("#msgDialog").show();
+            return;
+        }
+    }
+
     var url= '/weixin/message/save.do';
     $.ajax({
         url: url,

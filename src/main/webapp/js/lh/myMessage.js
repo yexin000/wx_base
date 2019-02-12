@@ -102,7 +102,7 @@ function loadMyMessage(){
                 });
                 //加载上拉加载按钮
                 $("#loadMore").remove();
-                str +='<a href="javascript:loadActivity();" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading"> 点击加载更多</a>';
+                str +='<a href="javascript:loadMyMessage();" id="loadMore" class="weui-btn weui-btn_default weui-btn_loading"> 点击加载更多</a>';
             }
             $("#dataDiv").append(str);
             if(datalength <= (pageId * 10)){

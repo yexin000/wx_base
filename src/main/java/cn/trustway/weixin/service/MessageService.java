@@ -23,7 +23,17 @@ public class MessageService<T> extends BaseService<T> {
         return dao;
     }
 
+    public int queryGroupByCount(MessageModel model) throws Exception {
+        return getDao().queryGroupByCount(model);
+    }
 
+    public int queryUserByCount(MessageModel model) throws Exception {
+        return getDao().queryUserByCount(model);
+    }
+
+    public List<T> queryGroupByList(MessageModel model) {
+        return getDao().queryGroupByList(model);
+    }
 
     public List<T> queryParentByList(Map<String, Object> params) {
         return getDao().queryParentByList(params);

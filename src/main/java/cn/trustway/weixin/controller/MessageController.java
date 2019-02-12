@@ -78,10 +78,10 @@ public class MessageController extends BaseController {
 
 
     private void queryDataList(MessageModel model, HttpServletResponse response) throws Exception {
-        List<Message> dataList = messageService.queryByList(model);
+        List<Message> dataList = messageService.queryGroupByList(model);
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("total", messageService.queryByCount(model));
+        jsonMap.put("total", messageService.queryGroupByCount(model));
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
     }
@@ -89,7 +89,7 @@ public class MessageController extends BaseController {
         List<Message> dataList = messageService.queryUserByList(model);
         // 设置页面数据
         Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("total", messageService.queryByCount(model));
+        jsonMap.put("total", messageService.queryUserByCount(model));
         jsonMap.put("rows", dataList);
         HtmlUtil.writerJson(response, jsonMap);
     }
@@ -134,11 +134,13 @@ public class MessageController extends BaseController {
             Message updateMessage = new Message();
             updateMessage.setId(id);
             updateMessage.setStatus(1);
-            updateMessage.setToWxid(toWxid);
-            //消息只要是接收方打开，那么全部设置成已读
-            for (Message m : messageList){
-                if(m.getToWxid().equals(wxid)){
-                    updateMessage.setParentId(m.getParentId());
+            if(!"undefined".equals(toWxid)){
+                updateMessage.setToWxid(toWxid);
+                //消息只要是接收方打开，那么全部设置成已读
+                for (Message m : messageList){
+                    if(m.getToWxid().equals(wxid)){
+                        updateMessage.setParentId(m.getParentId());
+                    }
                 }
             }
             messageService.updateBySelective(updateMessage);
