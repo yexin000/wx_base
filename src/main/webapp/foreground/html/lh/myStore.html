@@ -410,7 +410,6 @@
         $(".headimg").attr("src", data.avatarUrl);
         $(".headtext").html(data.nickName);
         $("#headImage").bind("click",function(){
-            debugger
           toUserInfo(data.wxid);
         });
         if(!isSelf) {

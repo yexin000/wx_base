@@ -11,26 +11,29 @@
         <result column="money" property="money" />
         <result column="status" property="status" />
         <result column="wxaccount" property="wxAccount" />
+        <result column="phone" property="phone" />
+        <result column="bankName" property="bankName" />
+        <result column="cardNum" property="cardNum" />
         <result column="remark" property="remark" />
         <result column="createtime" property="createtime" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="Put_Forward_Base_Column_List">
-		t.id,t.putforwardno,t.wxid,t.status,t.money,t.wxaccount,t.remark,t.createtime
+		t.id,t.putforwardno,t.wxid,t.status,t.money,t.wxaccount,t.phone,t.bankName,t.cardNum,t.remark,t.createtime
 	</sql>
 
     <!-- 插入记录 -->
     <insert id="add" parameterType="Object">
         insert into
-        t_e_put_forward(id,putforwardno,wxid,status,money,wxaccount,remark,createtime )
-        values(null,#{putForwardNo},#{wxid},#{status},#{money},#{wxAccount},#{remark},#{createtime});
+        t_e_put_forward(id,putforwardno,wxid,status,money,wxaccount,phone,bankName,cardNum,remark,createtime )
+        values(null,#{putForwardNo},#{wxid},#{status},#{money},#{wxAccount},#{phone},#{bankName},#{cardNum},#{remark},#{createtime});
     </insert>
 
     <!-- 根据id，修改记录 -->
     <update id="update" parameterType="Object">
 		update t_e_put_forward set
-		putforwardno=#{putForwardNo},wxid=#{wxid},status=#{status},#{money},wxaccount=#{wxAccount},createtime=#{createtime} ,remark=#{remark}
+		putforwardno=#{putForwardNo},wxid=#{wxid},status=#{status},#{money},wxaccount=#{wxAccount},phone=#{phone},bankName=#{bankName},cardNum=#{cardNum},createtime=#{createtime} ,remark=#{remark}
 		where id=#{id}
 	</update>
 
@@ -43,6 +46,15 @@
             </if>
             <if test="wxaccount != null and wxaccount != '' ">
                 wxaccount=#{wxaccount},
+            </if>
+            <if test="phone != null and phone != '' ">
+                phone=#{phone},
+            </if>
+            <if test="bankName != null and bankName != '' ">
+                bankName=#{bankName},
+            </if>
+            <if test="cardNum != null and cardNum != '' ">
+                cardNum=#{cardNum},
             </if>
             <if test="remark != null and remark != '' ">
                 remark=#{remark},

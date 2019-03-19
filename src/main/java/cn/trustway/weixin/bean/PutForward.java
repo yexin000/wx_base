@@ -35,6 +35,21 @@ public class PutForward extends BaseBean  {
     private String wxAccount;
 
     /**
+     * 银行名称
+     */
+    private String bankName;
+
+    /**
+     * 卡号
+     */
+    private String cardNum;
+
+    /**
+     * 手机
+     */
+    private String phone;
+
+    /**
      * 创建时间
      */
     private Date createtime;
@@ -121,5 +136,29 @@ public class PutForward extends BaseBean  {
 
     public void setWxName(String wxName) {
         this.wxName = wxName;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getCardNum() {
+        return cardNum;
+    }
+
+    public void setCardNum(String cardNum) {
+        this.cardNum = cardNum;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

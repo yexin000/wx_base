@@ -32,13 +32,14 @@
         <result column="attribute" property="attribute" />
         <result column="uploadwxid" property="uploadWxid" />
         <result column="isonsale" property="isOnsale" />
+        <result column="itemNumber" property="itemNumber" />
     </resultMap>
 
     <!-- sys_menu table all fields -->
     <sql id="AuctionItem_Base_Column_List">
 		t.id,t.name,t.type,t.description,t.startTime,t.endTime,t.startPrice,t.curPrice,t.finalPrice,t.businessId,
 		t.addPrice,t.depositPrice,t.rate,t.detail,t.status,t.isShow,t.auctionStatus,t.auctionId,
-		t.isshowbanner,t.stock,t.standard,t.age,t.degree,t.attribute,t.uploadwxid,t.isV5Show,t.isOnsale
+		t.isshowbanner,t.stock,t.standard,t.age,t.degree,t.attribute,t.uploadwxid,t.isV5Show,t.isOnsale,t.itemNumber
 	</sql>
 
     <!-- 插入记录 -->
@@ -46,10 +47,10 @@
         insert into
         t_e_auction_item(id,name,type,description,startTime,endTime,startPrice,curPrice,finalPrice,
 		  addPrice,depositPrice,rate,detail,status,isShow,auctionStatus,auctionId,standard,age,degree,
-		  businessId,attribute,uploadwxid,stock, isV5Show)
+		  businessId,attribute,uploadwxid,stock, isV5Show,itemNumber)
         values(null,#{name},#{type},#{description},#{startTime},#{endTime},#{startPrice},
             #{curPrice},#{finalPrice},#{addPrice},#{depositPrice},#{rate}, #{detail}, #{status},
-            #{isShow},'0',#{auctionId},#{standard},#{age},#{degree},#{businessId},#{attribute},#{uploadWxid},#{stock}, #{isV5Show});
+            #{isShow},'0',#{auctionId},#{standard},#{age},#{degree},#{businessId},#{attribute},#{uploadWxid},#{stock}, #{isV5Show},#{itemNumber});
     </insert>
 
     <!-- 根据id，修改记录 -->
@@ -58,7 +59,7 @@
 		name=#{name},type=#{type},description=#{description},startTime=startTime,endTime=endTime,
         startPrice=#{startPrice},curPrice=#{curPrice},finalPrice=#{finalPrice},addPrice=#{addPrice},
         depositPrice=#{depositPrice},rate=#{rate},detail=#{detail},status=#{status},isShow=#{isShow},
-        auctionStatus=#{auctionStatus},auctionId=#{auctionId}
+        auctionStatus=#{auctionStatus},auctionId=#{auctionId} ,itemNumber=#{itemNumber}
 		where id=#{id}
 	</update>
 
@@ -74,6 +75,9 @@
         <trim suffixOverrides=",">
             <if test="name != null and name != '' ">
                 name=#{name},
+            </if>
+            <if test="itemNumber != null and itemNumber != '' ">
+                itemNumber=#{itemNumber},
             </if>
             <if test="type != null and type != '' ">
                 type=#{type},
@@ -181,6 +185,9 @@
             <if test="isShow != null and isShow != ''">
                 and t.isshow = #{isShow}
             </if>
+            <if test="itemNumber != null and itemNumber != ''">
+                and t.itemNumber = #{itemNumber}
+            </if>
             <if test="businessId != null and businessId != ''">
                 and t.businessId = #{businessId}
             </if>
@@ -236,6 +243,9 @@
         <trim suffixOverrides=",">
             <if test="name != null and name != ''">
                 and t.name like CONCAT('%', #{name}, '%')
+            </if>
+            <if test="itemNumber != null and itemNumber != ''">
+                and t.itemNumber = #{itemNumber}
             </if>
             <if test="isShow != null and isShow != ''">
                 and t.isshow = #{isShow}

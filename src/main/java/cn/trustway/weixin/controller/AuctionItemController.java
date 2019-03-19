@@ -129,6 +129,13 @@ public class AuctionItemController extends BaseController {
      */
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
     public void ajaxDataList(@RequestBody AuctionItemModel model, HttpServletResponse response) throws Exception {
+        if(StringUtils.isNotEmpty(model.getName())){
+            // huohaoteshuchuli
+            if(model.getName().startsWith("s100") && model.getName().length() > 4){
+                model.setItemNumber(model.getName());
+                model.setName("");
+            }
+        }
         //主数据
         List<AuctionItem> dataList = auctionItemService.queryByList(model);
 
@@ -231,6 +238,12 @@ public class AuctionItemController extends BaseController {
                     }
                 }
             }
+            //设置货号
+            if(null != bean && null != bean.getId()){
+                bean.setItemNumber("s100"+bean.getId());
+                auctionItemService.updateBySelective(bean);
+            }
+
         }
         sendSuccessMessage(response, "保存成功~");
     }
@@ -396,7 +409,30 @@ public class AuctionItemController extends BaseController {
                 itemResService.add(itemImage);
             }
         }
+        //设置货号
+        if(null != auctionItem && null != auctionItem.getId()){
+            auctionItem.setItemNumber("s100"+auctionItem.getId());
+            auctionItemService.updateBySelective(auctionItem);
+        }
 
+        //发送关注用户的消息
+        if(StringUtils.isNotEmpty(itemUpload.getAttribute()) &&
+                ("0".equals(itemUpload.getAttribute()) || "1".equals(itemUpload.getAttribute()))){
+            Map<String, Object> params = new HashMap<>();
+            params.put("id", itemUpload.getWxid());
+            List<Follow> attMeList = followService.queryToMeUserByList(params);
+            if(CollectionUtils.isNotEmpty(attMeList)){
+                for(Follow f : attMeList){
+                    //通知
+                    TextMessage bean2 = new TextMessage();
+                    bean2.setContent("【百姓收藏】您关注的好友有新的上传，请及时查看");
+                    bean2.setType(TextMessageController.MESSAGE_TYPE_NOTIFY);
+                    bean2.setPhoneNum(f.getPhoneNum());
+                    textMessageService.add(bean2);
+                    AppClient.sendChuanglanMessage("【百姓收藏】您关注的好友有新的商品上传，请及时查看", f.getPhoneNum());
+                }
+            }
+        }
         sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "上传成功");
     }
 

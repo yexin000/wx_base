@@ -129,6 +129,11 @@ public class AuctionItemModel extends BaseModel {
      */
     private String isOnsale;
 
+    /**
+     * 货号
+     */
+    private String itemNumber;
+
     public Integer getId() {
         return id;
     }
@@ -351,5 +356,13 @@ public class AuctionItemModel extends BaseModel {
 
     public void setIsOnsale(String isOnsale) {
         this.isOnsale = isOnsale;
+    }
+
+    public String getItemNumber() {
+        return itemNumber;
+    }
+
+    public void setItemNumber(String itemNumber) {
+        this.itemNumber = itemNumber;
     }
 }

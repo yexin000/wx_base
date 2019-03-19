@@ -111,7 +111,6 @@ function sendMessage(){
         cache: false,
         success:function(data){
             $('#loadingToast').hide();
-            debugger
             if(data.success == false){
                 $("#msgLabel").html("发送失败");
                 $("#msgDialog").show();

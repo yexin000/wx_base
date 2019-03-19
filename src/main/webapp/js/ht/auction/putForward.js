@@ -16,7 +16,9 @@ WeiXin.putForward = function(){
                     {field:'id',checkbox:true},
                     {field:'putForwardNo',title:'提现编号',width:150,align:'center',sortable:true},
                     {field:'wxName',title:'用户昵称',width:120,align:'center',sortable:true},
-                    {field:'wxAccount',title:'微信号',width:120,align:'center',sortable:true},
+                    {field:'bankName',title:'银行名称',width:120,align:'center',sortable:true},
+                    {field:'cardNum',title:'银行卡号',width:120,align:'center',sortable:true},
+                    {field:'phone',title:'预留手机',width:120,align:'center',sortable:true},
                     {field:'money',title:'流水金额',width:80,align:'center',sortable:true},
                     {field:'createtime',title:'创建时间',width:150,align:'center',sortable:true},
                     {field:'status',title:'受理状态',width:120,align:'center',formatter:function(value,row,index){

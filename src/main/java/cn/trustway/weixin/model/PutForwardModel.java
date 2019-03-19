@@ -33,6 +33,20 @@ public class PutForwardModel extends BaseModel {
      * 提现微信
      */
     private String wxName;
+    /**
+     * 手机
+     */
+    private String phone;
+
+    /**
+     * 银行名
+     */
+    private String bankName;
+
+    /**
+     * 卡号
+     */
+    private String cardNum;
 
 
     public Double getMoney() {
@@ -81,5 +95,29 @@ public class PutForwardModel extends BaseModel {
 
     public void setWxName(String wxName) {
         this.wxName = wxName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getCardNum() {
+        return cardNum;
+    }
+
+    public void setCardNum(String cardNum) {
+        this.cardNum = cardNum;
     }
 }

@@ -81,7 +81,6 @@ function loadBusinessAuctionItem(id){
             $('#loadingToast').hide();
             var dataList = data.rows;
             var datalength = data.total;
-            debugger
             if(dataList.length> 0)
             {
                 var str = '';

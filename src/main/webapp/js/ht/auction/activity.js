@@ -105,7 +105,6 @@ WeiXin.activity = function(){
         },
         showDescribe:function (id){
           WeiXin.getById('getId.do',{id : id},function(result){
-              debugger
             $("#describe-win").dialog('open');
             $("#describeDlg").val(result.data.description);
           });

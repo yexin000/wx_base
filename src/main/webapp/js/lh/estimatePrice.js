@@ -98,7 +98,6 @@ function toSave(){
 
 //购买
 function toPurchase(id){
-    debugger
     $('#loadingToast').show();
     var url= '/weixin/expected/purchase.do?id='+id+"&wxid="+localStorage.getItem('openId');
     $.ajax({

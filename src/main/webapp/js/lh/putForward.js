@@ -8,9 +8,12 @@ function submitRecharge() {
     var bean = {};
     bean.money = $("#rechargeMoney").val();
     bean.wxaccount = $("#whereabouts").val();
+    bean.bankName = $("#bankName").val();
+    bean.phone = $("#phone").val();
+    bean.cardNum = $("#cardNum").val();
     bean.wxid = localStorage.getItem("openId");
 
-    if(!$("#rechargeMoney").val() || !$("#whereabouts").val()){
+    if(!$("#rechargeMoney").val() || !$("#bankName").val() || !$("#phone").val()|| !$("#cardNum").val()){
         $("#iosDialog3").show();
         return;
     }

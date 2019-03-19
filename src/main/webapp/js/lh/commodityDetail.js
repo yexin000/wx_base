@@ -92,7 +92,14 @@ function loadItemData(id){
                 $(".bannerList").append(str);
                 bannerDW("banner1",3000,true,"red");
             }
-            $("#itemName").html(dataObj.name); //拍品名字
+            if(dataObj.itemNumber){
+                var $itemNuber = '<span style="font-size: 0.12rem;">货号:' + dataObj.itemNumber + '</span>'
+                $("#itemNames").html($itemNuber); //拍品货号
+            }else{
+                $("#itemNames").html('暂无货号信息'); //拍品货号
+            }
+
+            $("#itemName").html(dataObj.name  ); //拍品名字
             itemName = dataObj.name;
             $("#itemDescription").html(dataObj.description); //拍品详情
             $("#startprice").html(dataObj.startPrice); //起拍价格

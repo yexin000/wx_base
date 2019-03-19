@@ -15,7 +15,6 @@ function loadOrderDetail(){
         cache: false,
         success:function(data){
             $('#loadingToast').hide();
-            debugger
             if(data.data.collectionTodayMoney){
                 $("#collectionTodayMoney").html(data.data.collectionTodayMoney)
             }else{

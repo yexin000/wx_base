@@ -85,13 +85,13 @@ function loadMyMessage(){
             {
                 var str = '';
                 $.each(dataList,function(i,obj){
-                    //需要传一个聊天对象
-                    //if(obj.wxid == localStorage.getItem("openId")){
+                    // 如果当前聊天的发送对象是我，那么接收对象还是toWxid
+                    if(obj.wxid == localStorage.getItem("openId")){
                         str+='<div style="width: 99%;height: 0.62rem;border-bottom: 1px solid #EFEFEF" onclick="toMessageDetail(\''+ obj.id + '\' ,\''+ obj.toWxid +'\')">';
-                    //}else{
-                        //如果发送人是自己，那么对象是别人
-                       // str+='<div style="width: 99%;height: 0.62rem;border-bottom: 1px solid #EFEFEF" onclick="toMessageDetail(\''+ obj.id + '\' ,\''+ obj.wxid +'\')">';
-                    //}
+                    }else{
+                        //如果我是被接收对象，那么我的回复对象是该条消息的发送者 wxid
+                        str+='<div style="width: 99%;height: 0.62rem;border-bottom: 1px solid #EFEFEF" onclick="toMessageDetail(\''+ obj.id + '\' ,\''+ obj.wxid +'\')">';
+                    }
                     //用户消息
                     str+='<p style="font-size: 0.14rem;margin-left: 0.1rem">用户留言：</p>  <p>';
                     str+=' <span class="messageList" style="margin-left: 0.2rem;"> '+obj.messagenote+'</span>';

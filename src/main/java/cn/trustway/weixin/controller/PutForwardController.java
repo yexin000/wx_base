@@ -223,6 +223,9 @@ public class PutForwardController extends BaseController {
                 bean.setWxAccount(model.getWxaccount());
                 bean.setStatus(0);
                 bean.setPutForwardNo(createCode());
+                bean.setBankName(model.getBankName());
+                bean.setCardNum(model.getCardNum());
+                bean.setPhone(model.getPhone());
                 putForwardService.add(bean);
             }
         }
