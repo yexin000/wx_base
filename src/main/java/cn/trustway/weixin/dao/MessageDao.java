@@ -55,4 +55,10 @@ public interface MessageDao<T> extends BaseDao<T> {
      */
     List<T> queryUserByList(MessageModel params);
 
+
+    /**
+     * 更新选择的对象
+     * @param t
+     */
+    public void updateByParentIdSelective(T t);
 }

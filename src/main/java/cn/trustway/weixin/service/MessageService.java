@@ -31,6 +31,10 @@ public class MessageService<T> extends BaseService<T> {
         return getDao().queryUserByCount(model);
     }
 
+    public void updateByParentIdSelective(T t) {
+        getDao().updateByParentIdSelective(t);
+    }
+
     public List<T> queryGroupByList(MessageModel model) {
         return getDao().queryGroupByList(model);
     }

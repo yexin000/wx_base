@@ -55,6 +55,23 @@
         </if>
     </update>
 
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByParentIdSelective" parameterType="Object">
+        update t_e_message set
+        <trim suffixOverrides=",">
+            <if test="parentId != null  ">
+                parentId=#{parentId},
+            </if>
+            <if test="status != null  ">
+                status=#{status},
+            </if>
+        </trim>
+        where 1 = 1
+        <if test="parentId != null   ">
+            and  parentId=#{parentId}
+        </if>
+    </update>
+
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select

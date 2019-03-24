@@ -143,7 +143,7 @@ public class MessageController extends BaseController {
                     }
                 }
             }
-            messageService.updateBySelective(updateMessage);
+            messageService.updateByParentIdSelective(updateMessage);
         }
         context.put(SUCCESS, true);
         HtmlUtil.writerJson(response, context);

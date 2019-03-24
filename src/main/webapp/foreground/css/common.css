@@ -630,3 +630,31 @@ header h1>span{position:relative;}
 header h1>span:before{ content:''; position:absolute; left:-10px; right:-10px; top:-10px; bottom:-10px;}
 
 .cui-mask{position:fixed !important;}
+
+.span_position{
+
+	position:absolute;
+	border-radius:50%;
+	background-color:#ff2122;
+	color:#fff;
+	font-size:0.3rem;
+	width:0.4rem;
+	height:0.4rem;
+	line-height:0.4rem;
+	top:-0.1rem;
+	right:-0.3rem;
+	z-index:1;
+}
+
+.msg {
+	width:7px;
+	height:7px;
+	line-height:3px;
+	color:#fff;
+	text-align:center;
+	background-color:#f00;
+	border-radius:50%;
+	position:absolute;
+	right:10px;
+	top:5px;
+}

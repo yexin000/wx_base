@@ -350,3 +350,17 @@ a{color:#888;}
 .m-hidden{
     display: none;
 }
+
+.msg {
+    width:7px;
+    height:7px;
+    line-height:3px;
+    color:#fff;
+    text-align:center;
+    background-color:#f00;
+    border-radius:50%;
+    position:absolute;
+    right:10px;
+    top:5px;
+    display: none;
+}

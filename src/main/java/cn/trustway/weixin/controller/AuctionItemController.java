@@ -382,11 +382,8 @@ public class AuctionItemController extends BaseController {
         BeanUtils.copyProperties(itemUpload, auctionItem);
         auctionItem.setUploadWxid(itemUpload.getWxid());
         auctionItem.setStartTime(new Date());
-        System.out.println(new Date());
         auctionItem.setStartTime(itemUpload.getStartTime());
-        System.out.println(itemUpload.getStartTime());
         auctionItem.setEndTime(itemUpload.getEndTime());
-        System.out.println(itemUpload.getEndTime());
         auctionItem.setRate(DEFUALT_RATE);
         auctionItem.setBusinessId(0);
         auctionItem.setStatus("1");
@@ -419,7 +416,7 @@ public class AuctionItemController extends BaseController {
         if(StringUtils.isNotEmpty(itemUpload.getAttribute()) &&
                 ("0".equals(itemUpload.getAttribute()) || "1".equals(itemUpload.getAttribute()))){
             Map<String, Object> params = new HashMap<>();
-            params.put("id", itemUpload.getWxid());
+            params.put("id", user.getId());
             List<Follow> attMeList = followService.queryToMeUserByList(params);
             if(CollectionUtils.isNotEmpty(attMeList)){
                 for(Follow f : attMeList){
