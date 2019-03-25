@@ -121,6 +121,8 @@ public class AppInitConstants {
 		public static final String HTTP_NO_BUSINESS_AUCTIONS_ERROR = "10018";
 		// 关注失败
 		public static final String HTTP_FOLLOW_ERROR = "10019";
+		// 退货退款失败,订单有误
+		public static final String HTTP_REFUND_ORDER_ERROR = "10020";
 	}
 
 	/**
@@ -129,7 +131,7 @@ public class AppInitConstants {
 	@SuppressWarnings("unchecked")
 	public AppInitConstants(ServletContext servletContext) {
 		ApplicationContext ctx = WebApplicationContextUtils
-				.getRequiredWebApplicationContext(servletContext);
+			.getRequiredWebApplicationContext(servletContext);
 		wxCodeService = (WxCodeService) ctx.getBean("wxCodeService");
 	}
 

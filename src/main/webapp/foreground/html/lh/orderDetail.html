@@ -43,6 +43,30 @@
 </div>
 <!--END dialog1-->
 
+<!-- 买家退货确认提示 -->
+<div class="js_dialog" id="refundTip" style="opacity: 1; display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__hd"><strong class="weui-dialog__title">确认退货</strong></div>
+        <div class="weui-dialog__bd">
+            退货原因：<input id="refundInput" style="width: 60%;" class="weui-input" type="text" maxlength="50" placeholder="请输入">
+        </div>
+        <div class="weui-dialog__ft">
+            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" onclick="cancelRefund()">取消</a>
+            <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" onclick="confirmRefund()">确认</a>
+        </div>
+    </div>
+</div>
+
+<div class="js_dialog" id="msgDialog" style="display: none;">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__bd" id="msgLabel"></div>
+        <div class="weui-dialog__ft">
+            <a onclick="$('#msgDialog').hide();" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+        </div>
+    </div>
+</div>
 
 
 <section class="order-address" id="notHasAddress">
@@ -73,12 +97,13 @@
                     </span> <span   style="float: right;border: 1px solid #808080;padding: 0.03rem;border-radius:6px; " id="commodityDetail">查看详情</span>
                 </p>
             </td>
-            </tr>
+        </tr>
     </table>
-    <p>
-        <p style="margin-top: 0.16rem;line-height: 0.24rem;border-radius: 4%;width: 80%;margin-left: 10%; font-size: 18px;background-color: #2bae10;color: #FFFFFF;text-align: center;display: none" id="luruBtn" onclick="openAddLogistics()">录入发货信息</p>
+    <div class="pb5">
+        <p class="order-green-btn m-hidden" id="tuihuoBtn" onclick="refundGoods()">申请退货</p>
+        <p class="order-green-btn m-hidden" id="luruBtn" onclick="openAddLogistics()">录入发货信息</p>
         <p style="margin-top: 0.16rem;line-height: 0.24rem;border-radius: 4%;width: 80%;margin-left: 10%; font-size: 18px;background-color: #EEEEEE;color: #000000;text-align: center;display: none"  id="goLogisticsBtn" onclick="openLogistics()">查看物流</p>
-    </p>
+    </div>
 </div>
 <input type="hidden" id="orderId">
 <footer class="footer-sum">

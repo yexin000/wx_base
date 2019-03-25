@@ -39,6 +39,10 @@ public class Refund {
      * 退款人wxid
      */
     private String wxid;
+    /**
+     * 退货退款原因
+     */
+    private String reason;
 
     public Integer getId() {
         return id;
@@ -102,5 +106,13 @@ public class Refund {
 
     public void setWxid(String wxid) {
         this.wxid = wxid;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }

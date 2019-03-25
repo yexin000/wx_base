@@ -1,9 +1,6 @@
 var id = getParam("id");
 var isMyUpload = getParam("isMyUpload");
 $(function(){
-
-
-
   loadOrderDetail(id);
   $("#orderId").val(id);
   $("#payBtn").click(function(){
@@ -120,9 +117,9 @@ function loadOrderDetail(id){
       $("#itemName").val(auction.auctionName);
       $("#itemImg").attr("src" , hostPath + auction.resList[0].path);
       $("#description").html(auction.description);
-        $('#commodityDetail').bind("click", function(){
-            toAuctionItemDetail(auction.id,auction.attribute);
-        }) ;
+      $('#commodityDetail').bind("click", function(){
+        toAuctionItemDetail(auction.id,auction.attribute);
+      }) ;
 
       var order =  data.data;
       $("#orderMoney").html(order.orderMoney);
@@ -143,6 +140,11 @@ function loadOrderDetail(id){
         if(isMyUpload == 1){
           $("#luruBtn").show();
           $("#goLogisticsBtn").show();
+        } else {
+          // 买家申请退货
+          if(order.wxid == localStorage.getItem("openId")){
+            $("#tuihuoBtn").show();
+          }
         }
         statuName = '订单已支付';
       }else if(order.status == '4'){
@@ -175,13 +177,11 @@ function loadOrderDetail(id){
             $("#payBtn").unbind();
           }
         }
-
-
       }else if(order.status == '5'){
-          $("#payBtn").text("已完成");
-          $("#payBtn").css("background", "#d5d5d6");
-          $("#payBtn").unbind()
-          statuName = '订单已完成';
+        $("#payBtn").text("已完成");
+        $("#payBtn").css("background", "#d5d5d6");
+        $("#payBtn").unbind()
+        statuName = '订单已完成';
       }else{
         $("#payBtn").text("已删除");
         $("#payBtn").css("background", "#d5d5d6");
@@ -240,4 +240,48 @@ function openAddLogistics(){
 function openLogistics(){
   $("#luruBtn").show();
   window.location.href = '../../html/lh/logistics.html?orderId='+$("#orderId").val();
+}
+
+function refundGoods() {
+  $("#refundTip").show();
+}
+
+function cancelRefund() {
+  $("#refundTip").hide();
+}
+
+function confirmRefund() {
+  var refundReason = $("#refundInput").val();
+  if(refundReason != null && refundReason != "") {
+    // 请求退货申请后台
+    var id = getParam("id");
+    var refundBean = {};
+    refundBean.wxid = localStorage.getItem('openId');
+    refundBean.orderId = id;
+    refundBean.reason = refundReason;
+    var url= '/weixin/order/ajaxRefundOrder.do';
+    $("#refundTip").hide();
+    $('#loadingToast').show();
+    $.ajax({
+      url: url,
+      type: 'post',
+      data:JSON.stringify(refundBean),
+      contentType : "application/json;charset=utf-8",
+      dataType: 'JSON',
+      cache: false,
+      success:function(data){
+        $('#loadingToast').hide();
+        var code = data.code;
+        if(code == 0) {
+
+        } else {
+          $("#msgLabel").html(data.msg);
+          $("#msgDialog").show();
+        }
+      }
+    })
+  } else {
+    showToast("请输入退货原因", function () {
+    });
+  }
 }

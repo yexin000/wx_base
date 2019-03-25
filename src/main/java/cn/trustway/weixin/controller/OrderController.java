@@ -58,6 +58,50 @@ public class OrderController extends BaseController {
     @Autowired
     private MessageService<Message> messageService;
 
+    @Autowired
+    private RefundService<Refund> refundService;
+
+    /**
+     * 订单状态:删除
+     */
+    public static final String ORDER_STATUS_DELETE = "0";
+    /**
+     * 订单状态:失效
+     */
+    public static final String ORDER_STATUS_INVALID = "1";
+    /**
+     * 订单状态:待支付
+     */
+    public static final String ORDER_STATUS_NOTPAY = "2";
+    /**
+     * 订单状态:已支付
+     */
+    public static final String ORDER_STATUS_PAYED = "3";
+    /**
+     * 订单状态:已发货/待收货
+     */
+    public static final String ORDER_STATUS_SENDED = "4";
+    /**
+     * 订单状态:已完成
+     */
+    public static final String ORDER_STATUS_COMPLETED = "5";
+    /**
+     * 订单状态:退货中
+     */
+    public static final String ORDER_STATUS_REFUNDING = "6";
+    /**
+     * 订单状态:已退货
+     */
+    public static final String ORDER_STATUS_REFUNDED = "7";
+    /**
+     * 退款状态:0-未退款
+     */
+    public static final String REFUND_STATUS_NO = "0";
+    /**
+     * 退款状态:1-已退款
+     */
+    public static final String REFUND_STATUS_YES = "1";
+
     /**
      * 首页
      *
@@ -81,7 +125,7 @@ public class OrderController extends BaseController {
      */
     @RequestMapping("/dataList")
     public void dataList(OrderModel model, HttpServletResponse response)
-            throws Exception {
+        throws Exception {
         queryDataList(model, response, false);
     }
 
@@ -475,5 +519,53 @@ public class OrderController extends BaseController {
         message.setParentId(message.getId());
         messageService.updateBySelective(message);
         sendSuccessMessage(response, "发送通知成功");
+    }
+
+    /**
+     * 已支付订单申请退货退款
+     */
+    @RequestMapping("/ajaxRefundOrder")
+    public void ajaxRefundOrder(@RequestBody Refund refund,  HttpServletResponse response) throws Exception {
+        Map<String, Object> context = getRootMap();
+        String wxid = refund.getWxid();
+        if(StringUtils.isBlank(wxid)) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "退货退款失败,用户信息有误");
+            return;
+        }
+        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
+        if(null == user) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "退货退款失败,用户信息有误");
+            return;
+        }
+
+        if( null == refund.getOrderId() || refund.getOrderId() <= 0) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_REFUND_ORDER_ERROR, "退货退款失败,订单有误");
+            return;
+        }
+
+        Order order = orderService.queryById(refund.getOrderId());
+        if(null == order) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_REFUND_ORDER_ERROR, "退货退款失败,订单有误");
+            return;
+        }
+
+        // 订单状态为已支付或已发货才可以退货
+        if(!ORDER_STATUS_PAYED.equals(order.getStatus()) && !ORDER_STATUS_SENDED.equals(order.getStatus())) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_REFUND_ORDER_ERROR, "退货退款失败,订单有误");
+            return;
+        }
+
+        // 设置订单状态为退货中
+        order.setStatus(ORDER_STATUS_REFUNDING);
+        orderService.updateBySelective(order);
+
+        // 生成退货退款表数据
+        refund.setItemId(order.getItemId());
+        refund.setRefundMoney(order.getOrderMoney());
+        refund.setStatus(REFUND_STATUS_NO);
+        refundService.add(refund);
+
+        context.put(SUCCESS, true);
+        HtmlUtil.writerJson(response, context);
     }
 }
