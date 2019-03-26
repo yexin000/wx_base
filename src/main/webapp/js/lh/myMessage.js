@@ -93,7 +93,12 @@ function loadMyMessage(){
                         str+='<div style="width: 99%;height: 0.62rem;border-bottom: 1px solid #EFEFEF" onclick="toMessageDetail(\''+ obj.id + '\' ,\''+ obj.wxid +'\')">';
                     }
                     //用户消息
-                    str+='<p style="font-size: 0.14rem;margin-left: 0.1rem">用户留言：</p>  <p>';
+                    if(obj.wxid == localStorage.getItem('openId')){
+                        str+='<p style="font-size: 0.14rem;margin-left: 0.1rem">我发送的：</p>  <p>';
+                    }else{
+                        str+='<p style="font-size: 0.14rem;margin-left: 0.1rem">留言给我：</p>  <p>';
+                    }
+
                     str+=' <span class="messageList" style="margin-left: 0.2rem;"> '+obj.messagenote+'</span>';
                     str+=' </p>';
                     str+='<span style="margin-left: 0.1rem">'+obj.createtime+'</span>';

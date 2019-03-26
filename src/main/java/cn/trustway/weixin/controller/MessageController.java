@@ -69,6 +69,7 @@ public class MessageController extends BaseController {
     @RequestMapping(value = "/ajaxDataList", method = RequestMethod.POST)
     public void ajaxDataList(@RequestBody MessageModel model ,HttpServletResponse response) throws Exception {
         if( model.getMessagetype() == 2){
+            model.setWxid(model.getToWxid());
             queryUserDataList(model, response);
         }else{
             queryDataList(model, response);
@@ -117,7 +118,7 @@ public class MessageController extends BaseController {
             messageList = messageService.queryParentByList(maps);
             context.put("messageList",messageList);
         }else{
-            //系统对话模式
+            //加载聊天
             bean = messageService.queryById(id);
             if (bean == null) {
                 sendFailureMessage(response, "没有找到对应的记录!");
@@ -143,7 +144,9 @@ public class MessageController extends BaseController {
                     }
                 }
             }
-            messageService.updateByParentIdSelective(updateMessage);
+            if(wxid.equals(bean.getToWxid())){
+                messageService.updateByParentIdSelective(updateMessage);
+            }
         }
         context.put(SUCCESS, true);
         HtmlUtil.writerJson(response, context);
