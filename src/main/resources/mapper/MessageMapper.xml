@@ -240,7 +240,7 @@
                 and t.v5id = #{v5Id}
             </if>
             <if test="toWxid != null and toWxid != ''">
-                and t.towxid = #{toWxid}  or  t.wxid = #{toWxid}
+                and (t.towxid = #{toWxid}  or  t.wxid = #{toWxid})
             </if>
             <if test="messagetype != null and messagetype != ''">
                 and t.messagetype = #{messagetype}
@@ -248,7 +248,7 @@
 
         </trim>
         group by t.parentId
-        order by t.createtime asc
+        order by t.createtime desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
             ${pager.orderCondition}
         </if>
