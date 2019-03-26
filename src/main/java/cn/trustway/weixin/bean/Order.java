@@ -127,6 +127,20 @@ public class Order extends BaseBean {
      */
     private Date sureTime;
 
+    /**
+     * 退货退款原因
+     */
+    private String reason;
+
+    /**
+     * 买家确认收到款状态
+     */
+    private String buyerStatus;
+    /**
+     * 卖家确认收到货状态
+     */
+    private String sellerStatus;
+
     public Integer getId() {
         return id;
     }
@@ -341,5 +355,29 @@ public class Order extends BaseBean {
 
     public void setSureTime(Date sureTime) {
         this.sureTime = sureTime;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getBuyerStatus() {
+        return buyerStatus;
+    }
+
+    public void setBuyerStatus(String buyerStatus) {
+        this.buyerStatus = buyerStatus;
+    }
+
+    public String getSellerStatus() {
+        return sellerStatus;
+    }
+
+    public void setSellerStatus(String sellerStatus) {
+        this.sellerStatus = sellerStatus;
     }
 }

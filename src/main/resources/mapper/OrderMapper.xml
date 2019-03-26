@@ -88,8 +88,10 @@
     <!-- 根据id查询记录 -->
     <select id="queryById" resultMap="BaseResultMap" parameterType="Object">
         select
-        <include refid="Order_Base_Column_List" />
-        from t_e_order t where t.id = #{id} and t.status != '0'
+        <include refid="Order_Base_Column_List" /> ,r.reason, r.buyerstatus, r.sellerstatus
+        from t_e_order t
+        left join t_e_refund r on r.orderid=t.id
+        where t.id = #{id} and t.status != '0'
     </select>
 
     <!-- 记录总数 -->
@@ -168,7 +170,7 @@
         left join t_e_user_addr ua on t.addressid=ua.id
         left join t_e_business teb on item.businessId=teb.id
         where    t.itemid=item.id and t.wxid=wu.wxid
-        and t.status = 3  and item.uploadwxid = #{wxid}
+        and (t.status='3' or t.status='6')  and (item.uploadwxid=#{wxid} or t.wxid=#{wxid})
         order by t.createtime desc
         <if test="pager.orderCondition != null and pager.orderCondition != ''">
             ${pager.orderCondition}

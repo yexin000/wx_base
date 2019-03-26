@@ -144,9 +144,8 @@ public class OrderController extends BaseController {
 
     private void queryDataList(OrderModel model, HttpServletResponse response, boolean isQueryRes) throws Exception {
         List<Order> dataList = null ;
-        if(StringUtils.isNotEmpty(model.getStatus()) && "5".equals(model.getStatus())){
-            Map<String, Object> params = new HashMap<>();
-            params.put("wxid", model.getWxid());
+        if(StringUtils.isNotEmpty(model.getStatus())
+            && ("5".equals(model.getStatus()) || "6".equals(model.getStatus()))){
             dataList = orderService.queryMyOutOrderByList(model);
             for (Order o :dataList ){
                 o.setIsMyUpload(1);
@@ -526,7 +525,6 @@ public class OrderController extends BaseController {
      */
     @RequestMapping("/ajaxRefundOrder")
     public void ajaxRefundOrder(@RequestBody Refund refund,  HttpServletResponse response) throws Exception {
-        Map<String, Object> context = getRootMap();
         String wxid = refund.getWxid();
         if(StringUtils.isBlank(wxid)) {
             sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "退货退款失败,用户信息有误");
@@ -565,7 +563,56 @@ public class OrderController extends BaseController {
         refund.setStatus(REFUND_STATUS_NO);
         refundService.add(refund);
 
-        context.put(SUCCESS, true);
-        HtmlUtil.writerJson(response, context);
+        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "申请成功");
+    }
+
+    /**
+     * 修改确认收到状态
+     */
+    @RequestMapping("/ajaxRefundConfirm")
+    public void ajaxRefundConfirm(@RequestBody Refund refund,  HttpServletResponse response) throws Exception {
+        String wxid = refund.getWxid();
+        if(StringUtils.isBlank(wxid)) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "退货退款失败,用户信息有误");
+            return;
+        }
+        WeixinUser user = weixinUserService.queryWeixinUser(wxid);
+        if(null == user) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_URSER_ERROR, "退货退款失败,用户信息有误");
+            return;
+        }
+
+        if( null == refund.getOrderId() || refund.getOrderId() <= 0) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_REFUND_ORDER_ERROR, "操作失败,订单有误");
+            return;
+        }
+
+        Order order = orderService.queryById(refund.getOrderId());
+        if(null == order) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_REFUND_ORDER_ERROR, "操作失败,订单有误");
+            return;
+        }
+
+        // 订单状态为退货中才可以退货
+        if(!ORDER_STATUS_REFUNDING.equals(order.getStatus())) {
+            sendFailure(response, AppInitConstants.HttpCode.HTTP_REFUND_ORDER_ERROR, "操作失败,订单不在退货中");
+            return;
+        }
+
+        Refund newRefund = refundService.queryByOrderId(refund.getOrderId());
+        if(StringUtils.isNotEmpty(refund.getBuyerStatus())) {
+            newRefund.setBuyerStatus(refund.getBuyerStatus());
+        }
+        if(StringUtils.isNotEmpty(refund.getSellerStatus())) {
+            newRefund.setSellerStatus(refund.getSellerStatus());
+        }
+
+        if("1".equals(newRefund.getBuyerStatus()) && "1".equals(newRefund.getSellerStatus())) {
+            newRefund.setStatus("1");
+            order.setStatus(ORDER_STATUS_REFUNDED);
+            orderService.updateBySelective(order);
+        }
+        refundService.updateBySelective(newRefund);
+        sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "操作成功");
     }
 }

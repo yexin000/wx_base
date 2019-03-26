@@ -14,11 +14,13 @@
     <result column="status" property="status" />
     <result column="wxid" property="wxid" />
     <result column="reason" property="reason" />
+    <result column="buyerstatus" property="buyerStatus" />
+    <result column="sellerstatus" property="sellerStatus" />
   </resultMap>
 
   <!-- sys_menu table all fields -->
   <sql id="Refund_Base_Column_List">
-        t.id,t.orderid,t.refundmoney,t.itemid,t.createtime,t.updatetime,t.status,t.wxid,t.reason
+        t.id,t.orderid,t.refundmoney,t.itemid,t.createtime,t.updatetime,t.status,t.wxid,t.reason,t.buyerstatus,t.sellerstatus
     </sql>
 
   <!-- 插入记录 -->
@@ -56,6 +58,12 @@
     <if test="status != null and status != '' ">
       ,status=#{status}
     </if>
+    <if test="buyerStatus != null and buyerStatus != '' ">
+      ,buyerstatus=#{buyerStatus}
+    </if>
+    <if test="sellerStatus != null and sellerStatus != '' ">
+      ,sellerstatus=#{sellerStatus}
+    </if>
     where id=#{id}
   </update>
 
@@ -71,9 +79,16 @@
     from t_e_refund t where t.id = #{id}
   </select>
 
+  <!-- 根据订单id查询记录 -->
+  <select id="queryByOrderId" resultMap="BaseResultMap" parameterType="Object">
+    select
+    <include refid="Refund_Base_Column_List" />
+    from t_e_refund t where t.orderid = #{orderId} order by id desc limit 1
+  </select>
+
   <!-- 记录总数 -->
   <select id="queryByCount" resultType="java.lang.Integer"
-        parameterType="Object">
+          parameterType="Object">
     select count(1) from t_e_refund
     where 1=1
     <trim suffixOverrides=",">

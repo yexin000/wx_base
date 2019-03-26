@@ -39,11 +39,11 @@
 <!--END dialog2-->
 
 <div id="loadingToast" style="opacity: 1; display: none;">
-    <div class="weui-mask_transparent"></div>
-    <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">数据加载中</p>
-    </div>
+	<div class="weui-mask_transparent"></div>
+	<div class="weui-toast">
+		<i class="weui-loading weui-icon_toast"></i>
+		<p class="weui-toast__content">数据加载中</p>
+	</div>
 </div>
 
 <ul id="order-tit">
@@ -52,6 +52,7 @@
 	<li status="3">待发货</li>
 	<li status="4">待收货</li>
 	<li status="5">待处理</li>
+	<li status="7">已退款</li>
 </ul>
 <table class="pro-item" style="border-collapse:separate; border-spacing:8px;background-color: #fff">
 
@@ -64,11 +65,11 @@
 <script type="text/javascript" src="../../../js/lh/order.js"></script>
 
 <script>
-    $(function(){
-        $("#order-tit li").click(function(){
-            $(this).addClass("cur").siblings().removeClass("cur");
-        })
-    });
+  $(function(){
+    $("#order-tit li").click(function(){
+      $(this).addClass("cur").siblings().removeClass("cur");
+    })
+  });
 </script>
 </body>
 </html>

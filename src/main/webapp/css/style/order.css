@@ -1,6 +1,6 @@
 @charset "utf-8";
 #order-tit{height: 0.42rem;line-height: 0.42rem;font-size: 0.12rem;border-bottom: 1px solid #dcdcdc;margin-top: 0.44rem;background: #fff}
-#order-tit li{width: 20%;text-align: center;float: left;}
+#order-tit li{width: 16%;text-align: center;float: left;}
 #order-tit li.cur{color: #fc4747;border-bottom: 2px solid #fc4747}
 
 #tradingCenter-tit{height: 0.42rem;line-height: 0.42rem;font-size: 0.12rem;border-bottom: 1px solid #dcdcdc;margin-top: 0.44rem;background: #fff}
@@ -113,5 +113,9 @@
 .messageList{display:-moz-inline-box; display:inline-block; word-wrap: break-word;width: 90%;height: 0.2rem; margin-left:0.2rem; overflow: hidden; text-overflow: ellipsis;  -o-text-overflow: ellipsis;  white-space:nowrap;}
 .order-green-btn {
   margin-top: 0.16rem;line-height: 0.24rem;border-radius: 4%;width: 80%;margin-left: 10%; font-size: 18px;background-color: #2bae10;color: #FFFFFF;text-align: center;
+}
+
+.order-refund-tip {
+  margin-left: 5%;margin-right: 5%;font-weight: bolder;margin-top: 0.1rem;
 }
 

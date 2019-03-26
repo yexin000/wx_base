@@ -43,6 +43,14 @@ public class Refund {
      * 退货退款原因
      */
     private String reason;
+    /**
+     * 买家确认收到款状态
+     */
+    private String buyerStatus;
+    /**
+     * 卖家确认收到货状态
+     */
+    private String sellerStatus;
 
     public Integer getId() {
         return id;
@@ -114,5 +122,21 @@ public class Refund {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getBuyerStatus() {
+        return buyerStatus;
+    }
+
+    public void setBuyerStatus(String buyerStatus) {
+        this.buyerStatus = buyerStatus;
+    }
+
+    public String getSellerStatus() {
+        return sellerStatus;
+    }
+
+    public void setSellerStatus(String sellerStatus) {
+        this.sellerStatus = sellerStatus;
     }
 }

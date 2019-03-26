@@ -150,6 +150,15 @@ function loadOrderDetail(id){
       }else if(order.status == '4'){
         $("#payBtn").css("background", "#d5d5d6");
         $("#payBtn").unbind();
+        if(isMyUpload == 1){
+          $("#luruBtn").show();
+          $("#goLogisticsBtn").show();
+        } else {
+          // 买家申请退货
+          if(order.wxid == localStorage.getItem("openId")){
+            $("#tuihuoBtn").show();
+          }
+        }
         statuName = '订单已发货';
 
         $("#goLogisticsBtn").show();
@@ -182,6 +191,88 @@ function loadOrderDetail(id){
         $("#payBtn").css("background", "#d5d5d6");
         $("#payBtn").unbind()
         statuName = '订单已完成';
+      }else if(order.status == '6'){
+        $("#payBtn").css("background", "#d5d5d6");
+        $("#payBtn").unbind();
+        $("#refundShow").text("申请退货退款中,原因:" + order.reason);
+        $("#refundShow").show();
+        statuName = '申请退货退款中';
+
+        var refundBean = {};
+        refundBean.wxid = localStorage.getItem('openId');
+        refundBean.orderId = id;
+        var url= '/weixin/order/ajaxRefundConfirm.do';
+        if(order.wxid == localStorage.getItem("openId")){
+          //订单是我创建的
+          $("#refundBtn").text("已收到款");
+          $("#refundBtn").click(function () {
+            // 买家调用后台修改确认收到款状态
+            refundBean.buyerStatus = "1";
+            $("#refundBtn").click(function () {
+              $('#loadingToast').show();
+              $.ajax({
+                url: url,
+                type: 'post',
+                data:JSON.stringify(refundBean),
+                contentType : "application/json;charset=utf-8",
+                dataType: 'JSON',
+                cache: false,
+                success:function(data){
+                  $('#loadingToast').hide();
+                  var code = data.code;
+                  if(code == 0) {
+                    $("#refundBtn").css("background", "#d5d5d6");
+                    $("#refundBtn").unbind();
+                    loadOrderDetail(id);
+                  }
+                  $("#msgLabel").html(data.msg);
+                  $("#msgDialog").show();
+                }
+              })
+            });
+          });
+          if(order.buyerStatus == '1') {
+            $("#refundBtn").css("background", "#d5d5d6");
+            $("#refundBtn").unbind();
+          }
+        } else {
+          $("#refundBtn").text("已收到货");
+          $("#refundBtn").click(function () {
+            // 卖家调用后台修改确认收到货状态
+            refundBean.sellerStatus = "1";
+            $("#refundBtn").click(function () {
+              $('#loadingToast').show();
+              $.ajax({
+                url: url,
+                type: 'post',
+                data:JSON.stringify(refundBean),
+                contentType : "application/json;charset=utf-8",
+                dataType: 'JSON',
+                cache: false,
+                success:function(data){
+                  $('#loadingToast').hide();
+                  var code = data.code;
+                  if(code == 0) {
+                    $("#refundBtn").css("background", "#d5d5d6");
+                    $("#refundBtn").unbind();
+                    loadOrderDetail(id);
+                  }
+                  $("#msgLabel").html(data.msg);
+                  $("#msgDialog").show();
+                }
+              })
+            });
+          });
+          if(order.sellerStatus == '1') {
+            $("#refundBtn").css("background", "#d5d5d6");
+            $("#refundBtn").unbind();
+          }
+        }
+        $("#refundBtn").show();
+      }else if(order.status == '7'){
+        $("#payBtn").css("background", "#d5d5d6");
+        $("#payBtn").unbind()
+        statuName = '已退货退款';
       }else{
         $("#payBtn").text("已删除");
         $("#payBtn").css("background", "#d5d5d6");
@@ -199,7 +290,6 @@ function confirmationOfOrder (id){
   params.wxid = localStorage.getItem("openId");
   params.id = id;
   var url = "/weixin/order/confirmationOfOrder.do";
-  // 发起统一下单请求
   $.ajax({
     url: url,
     type: 'post',
@@ -273,13 +363,15 @@ function confirmRefund() {
         $('#loadingToast').hide();
         var code = data.code;
         if(code == 0) {
-
-        } else {
-          $("#msgLabel").html(data.msg);
-          $("#msgDialog").show();
+          $("#tuihuoBtn").hide();
+          $("#refundShow").text("申请退货退款中,原因:" + refundReason);
+          $("#refundShow").show();
+          loadOrderDetail(id);
         }
+        $("#msgLabel").html(data.msg);
+        $("#msgDialog").show();
       }
-    })
+    });
   } else {
     showToast("请输入退货原因", function () {
     });

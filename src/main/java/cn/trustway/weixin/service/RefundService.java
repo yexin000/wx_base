@@ -16,4 +16,8 @@ public class RefundService<T> extends BaseService<T> {
     public RefundDao<T> getDao() {
         return dao;
     }
+
+    public T queryByOrderId(Object id) {
+        return getDao().queryByOrderId(id);
+    }
 }
