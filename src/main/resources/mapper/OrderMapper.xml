@@ -216,4 +216,7 @@
         where to_days(teo.suretime) = to_days(now()) and teai.uploadwxid = #{wxid}
     </select>
 
+    <select id="queryRefundByCount" resultType="int">
+        select count(1) from t_e_order where status='6'
+    </select>
 </mapper>

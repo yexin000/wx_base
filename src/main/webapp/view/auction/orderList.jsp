@@ -22,6 +22,17 @@
                 <option value="5">鉴定支付</option>
                 <option value="6">V5支付</option>
             </select>
+            <label class="ui-label">订单状态:</label>
+            <select class="easyui-combobox" name="status" id="statuses" data-options="required:true">
+                <option value="" selected="selected">全部</option>
+                <option value="1">失效</option>
+                <option value="2">待支付</option>
+                <option value="3">已支付</option>
+                <option value="4">已发货</option>
+                <option value="5">已完成</option>
+                <option value="6">退货中</option>
+                <option value="7">已退货</option>
+            </select>
         </p>
         <a id="btn-search" class="easyui-linkbutton" iconCls="icon-search">查询</a>
     </form>

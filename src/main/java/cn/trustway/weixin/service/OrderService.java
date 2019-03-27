@@ -58,4 +58,8 @@ public class OrderService<T> extends BaseService<T> {
     public List<T> queryMyOutOrderByList(OrderModel params) {
         return getDao().queryMyOutOrderByList(params);
     }
+
+    public int queryRefundByCount() {
+        return getDao().queryRefundByCount();
+    }
 }

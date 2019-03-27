@@ -126,7 +126,12 @@ public class OrderController extends BaseController {
     @RequestMapping("/dataList")
     public void dataList(OrderModel model, HttpServletResponse response)
         throws Exception {
-        queryDataList(model, response, false);
+        List<Order> dataList = orderService.queryByList(model);
+        // 设置页面数据
+        Map<String, Object> jsonMap = new HashMap<String, Object>(2);
+        jsonMap.put("total",orderService.queryByCount(model));
+        jsonMap.put("rows", dataList);
+        HtmlUtil.writerJson(response, jsonMap);
     }
 
     /**
@@ -614,5 +619,20 @@ public class OrderController extends BaseController {
         }
         refundService.updateBySelective(newRefund);
         sendSuccess(response, AppInitConstants.HttpCode.HTTP_SUCCESS, "操作成功");
+    }
+
+    /**
+     * 查询退货退款订单数
+     *
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/refundCount", method = RequestMethod.POST)
+    public void refundCount(HttpServletResponse response) throws Exception {
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        jsonMap.put("total",orderService.queryRefundByCount());
+        jsonMap.put(SUCCESS, true);
+        HtmlUtil.writerJson(response, jsonMap);
     }
 }

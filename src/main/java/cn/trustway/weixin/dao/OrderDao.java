@@ -59,4 +59,10 @@ public interface OrderDao<T> extends BaseDao<T> {
      * @return
      */
     Integer queryByCollectionTodayNum(String wxid);
+
+    /**
+     * 查询退货退款订单数
+     * @return
+     */
+    int queryRefundByCount();
 }
